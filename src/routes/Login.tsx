@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createUseStyles } from "react-jss";
 import { checkSignedInAction } from "../store/ducks/authDuck";
-import { InputText } from "primereact/inputtext";
+import { InputText,  } from "primereact/inputtext";
 import { Button } from "primereact/button";
+import { Dropdown } from "primereact/dropdown";
 const classnames = require("classnames");
+
+const companyList: Array<{name: String, label: String}> = new Array(20).fill(0).map((_,i) => ({name: `Company ${i}`, label: `company${i}`}))
+const locations: Array<{name: String, label: String}> = new Array(20).fill(0).map((_,i) => ({name: `City ${i}`, label: `city${i}`}))
 
 const useStyles = createUseStyles({
   alignEnd: {
@@ -13,12 +17,29 @@ const useStyles = createUseStyles({
   buttonsWrapper: {
     marginTop: "50px",
   },
+  dropDownTrigger: {
+    '& .p-dropdown-trigger': {
+      background: '#87BCBF',
+      '& .p-dropdown-trigger-icon': {
+        color: 'white'
+      }
+    },
+    '&:not(.p-disabled):hover': {
+      borderColor: '#87BCBF'
+    },
+    '&:not(.p-disabled).p-focus': {
+      borderColor: '#87BCBF',
+      boxShadow: '0 0 0 0.2rem #8ddadfb5'
+    }
+  }
 });
 
 const Login = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [values1, setValues1] = useState<any>("");
+  const [selectedCompany, setSelectedCompany] = useState<{name: String, label:String} | null>(null)
+  const [selectedCity, setSelectedCity] = useState<{name: String, label:String} | null>(null)
 
   useEffect(() => {
     dispatch(checkSignedInAction());
@@ -57,6 +78,20 @@ const Login = () => {
               <div className="p-field p-col-6 p-md-12">
                 <label htmlFor="inputtext">Phone</label>
                 <InputText id="inputtext" value={values1} onChange={(e) => setValues1(e.target.value)} />
+              </div>
+              <div className="p-field p-col-6 p-md-12">
+                <label htmlFor="inputtext">Company</label>
+                <Dropdown  
+                className={classes.dropDownTrigger} 
+                value={selectedCompany} 
+                options={companyList} 
+                onChange={(e) => setSelectedCompany(e.target.value)} 
+                optionLabel="name" 
+                placeholder="Select a Company" />
+              </div>
+              <div className="p-field p-col-6 p-md-12">
+                <label htmlFor="inputtext">Location</label>
+                <Dropdown  className={classes.dropDownTrigger} value={selectedCity} options={locations} onChange={e => setSelectedCity(e.target.value)} optionLabel="name" placeholder="Select a City" />
               </div>
             </div>
             <Button label="Save user information" className="p-button-info p-mt-2" />
