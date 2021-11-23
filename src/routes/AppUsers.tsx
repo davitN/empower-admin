@@ -3624,6 +3624,7 @@ const AppUsers = () => {
   const classes = useStyles();
   const paginatorLeft = <Button type="button" icon="pi pi-refresh" className="p-button-text" />;
   const paginatorRight = <Button type="button" icon="pi pi-cloud" className="p-button-text" />;
+  const editUserRemplate = (rowData: any) => <Button icon="pi pi-cog" style={{backgroundColor: 'var(--cyan-900)'}} onClick={() => console.log(rowData)} />
 
   const renderHeader = () => {
     return (
@@ -3659,6 +3660,7 @@ const AppUsers = () => {
           <Column field="country.name" header="LAST NAME"></Column>
           <Column field="company" header="EMAIL"></Column>
           <Column field="representative.name" header="Representative"></Column>
+          <Column body={editUserRemplate} header="Settings"></Column>
         </DataTable>
       </div>
     </div>
