@@ -6,10 +6,12 @@ import SideNav from "./SideNav";
 
 const useStyles = createUseStyles({
   container: {
-    height: "100vh",
+    minHeight: "100vh",
   },
   subContainer: {
-    height: "calc(100vh - 80px)",
+    // minHeight: "calc(100vh - 80px)", //if header excises
+    minHeight: "100vh",
+    display: "flex",
   },
   flex1: {
     flex: 1,
@@ -21,7 +23,7 @@ function Layout() {
   return (
     <div className={classes.container}>
       <Header />
-      <div className={"p-grid p-mt-0 " + classes.subContainer}>
+      <div className={classes.subContainer}>
         <div>
           <SideNav />
         </div>

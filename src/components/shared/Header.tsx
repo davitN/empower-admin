@@ -1,6 +1,5 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
-import { Link } from "react-router-dom";
 const useStyles = createUseStyles({
   container: {
     width: "100%",
@@ -10,11 +9,7 @@ const useStyles = createUseStyles({
 });
 function Header() {
   const classes = useStyles();
-  return (
-    <div className={classes.container}>
-      <Link to="/companies">companies</Link> | <Link to="/app-users">app users</Link> | <Link to="/auth">log in</Link>
-    </div>
-  );
+  return null;
 }
 
 export default Header;
