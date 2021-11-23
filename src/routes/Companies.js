@@ -984,7 +984,7 @@ const Companies = () => {
   useEffect(() => {
     // customerService.getCustomersMedium().then((data) => setCustomers(data));
     setCustomers(customerService.getCustomersMedium());
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const onCustomSaveState = (state) => {
     window.sessionStorage.setItem("dt-state-demo-custom", JSON.stringify(state));

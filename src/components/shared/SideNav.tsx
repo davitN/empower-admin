@@ -2,7 +2,8 @@ import React from "react";
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
 import COLORS from "../../services/colors.service";
-var classNames = require("classnames");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const classNames = require("classnames");
 
 const useStyles = createUseStyles({
   container: { height: "100%", width: "200px", backgroundColor: "#3B82F6" },

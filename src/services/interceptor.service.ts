@@ -82,6 +82,7 @@ const onResponseRejected = (error: AxiosError) => {
   }
   if (error.response.status === 401 || error.response.status === 404 || error.response.status === 403) {
     if (
+      // eslint-disable-next-line no-constant-condition
       true
       // navigationService.getCurrentRoute()?.name !== 'Ping' &&
       // navigationService.getCurrentRoute()?.name !== 'EnableNotifications' &&
