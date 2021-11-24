@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss';
 import COLORS from '../../../../services/colors.service';
 
 interface PropsTypes {
-  value: string;
+  value: string | number | null;
   handleChange: (val: any) => void;
   label?: string;
   placeholder?: string;
@@ -30,10 +30,15 @@ const TextInput = ({ value, handleChange, label, placeholder, type = 'text', cos
   const classes = useStyles();
 
   return (
-    <span className={classNames('p-float-label', costumClasses)}>
-      {label && <label htmlFor="username">{label}</label>}
+    <span className={classNames('p-field p-mb-0', costumClasses)}>
+      {label && (
+        <label htmlFor="label" className="p-pl-1">
+          {label}
+        </label>
+      )}
       <InputText
-        value={value}
+        id="label"
+        value={value || ''}
         placeholder={placeholder}
         onChange={({ target }) => handleChange(target.value)}
         type={type}
