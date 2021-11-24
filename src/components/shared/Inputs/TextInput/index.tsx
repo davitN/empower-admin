@@ -38,7 +38,7 @@ const TextInput = ({
 
   return (
     <span className={classNames('p-float-label', costumClasses)}>
-      {label && <label htmlFor="username">Username</label>}
+      {label && <label htmlFor="username">{label}</label>}
       <InputText
         value={value}
         placeholder={placeholder}
