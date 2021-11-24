@@ -7,6 +7,10 @@ import { Divider } from 'primereact/divider';
 import Button from '../shared/Inputs/Button';
 
 const useStyles = createUseStyles({
+  root: {
+    minWidth: '1300px',
+    overflow: 'auto',
+  },
   logo: {
     fontSize: '48px',
   },
@@ -89,7 +93,7 @@ const Payments = () => {
   });
 
   return (
-    <div className="p-d-flex p-flex-column p-jc-center p-ai-center p-p-4">
+    <div className={classNames('p-d-flex p-flex-column p-jc-center p-ai-center p-p-4', classes.root)}>
       <div className={classes.logo}>Logo</div>
       <div className={classNames('p-d-flex p-flex-column p-jc-center p-text-center', classes.header)}>
         <h1 className={classes.title}>JOIN THE EMPOWER PROGRAM</h1>
