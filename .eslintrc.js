@@ -4,17 +4,23 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended"],
+  extends: ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended", "airbnb-typescript"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
+    project: './tsconfig.json',
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 13,
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "import", "prettier"],
+  "ignorePatterns": [".eslintrc.js"],
   rules: {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", "tsx"] }],
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": "error",
+    "prettier/prettier": ["error", { "singleQuote": true }],
     "@typescript-eslint/ban-types": [
       "error",
       {

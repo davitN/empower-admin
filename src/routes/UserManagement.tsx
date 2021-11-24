@@ -39,7 +39,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const Login = () => {
+const UserManagement = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [values1, setValues1] = useState<any>("");
@@ -107,7 +107,7 @@ const Login = () => {
                 />
               </div>
             </div>
-            <Button label="Save user information" className="p-button-info p-mt-2" />
+            <Button label="Save user information" className="p-text-sm p-button-info p-mt-2" />
           </div>
         </div>
         <div className={classnames("p-col-12 p-md-5 p-grid p-dir-col", classes.alignEnd)}>
@@ -124,4 +124,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default UserManagement;
