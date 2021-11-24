@@ -1,4 +1,4 @@
-import GlobalLoader from "../components/shared/GlobalLoader";
+import GlobalLoader from '../components/shared/GlobalLoader';
 
 let loaderRef: GlobalLoader | null;
 export function setLoaderRef(ref: GlobalLoader | null) {

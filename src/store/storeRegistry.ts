@@ -1,4 +1,4 @@
-import { Store } from "redux";
+import { Store } from 'redux';
 
 let reduxStore: Store;
 export default {

@@ -1,11 +1,11 @@
-import { put } from "redux-saga/effects";
-import axiosInstance from "../../services/interceptor.service";
-import { ISignInData, ISignUpData } from "../../types/auth";
+import { put } from 'redux-saga/effects';
+import axiosInstance from '../../services/interceptor.service';
+import { ISignInData, ISignUpData } from '../../types/auth';
 // import {pushNotificationData} from '../../services/pushNotificationService';
-import { IUserData } from "../../types/main";
+import { IUserData } from '../../types/main';
 // import {setMonitoringUsername} from '../../utils/monitoring';
-import { setUserDataAction } from "../ducks/authDuck";
-import { DEFAULT, resetStoreAction } from "../ducks/mainDuck";
+import { setUserDataAction } from '../ducks/authDuck';
+import { DEFAULT, resetStoreAction } from '../ducks/mainDuck';
 
 export function* signInSaga(payload: { data: ISignInData; callback: Function; type: string }) {
   try {
@@ -14,7 +14,7 @@ export function* signInSaga(payload: { data: ISignInData; callback: Function; ty
     //   OS: Platform.OS,
     //   // deviceToken: pushNotificationData.token,
     // });
-    const res: IUserData = yield axiosInstance.post("authorization/login", payload.data);
+    const res: IUserData = yield axiosInstance.post('authorization/login', payload.data);
     console.log(res);
     // setMonitoringUsername(res.username);
     // yield AsyncStorage.setItem("token", res.accessToken);
@@ -31,7 +31,7 @@ export function* signUpSaga(payload: { data: ISignUpData; callback: Function; ty
     //   OS: Platform.OS,
     //   // deviceToken: pushNotificationData.token,
     // });
-    const res: IUserData = yield axiosInstance.post("registration/register", payload.data);
+    const res: IUserData = yield axiosInstance.post('registration/register', payload.data);
     // yield notifyAction(
     //   'success',
     //   'Success',

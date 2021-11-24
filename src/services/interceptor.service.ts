@@ -1,13 +1,13 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from 'axios';
 // import AsyncStorage from '@react-native-community/async-storage';
 // import notificationService from './notification.service';
 // import loader from './loader.service';
-import { backendUrl } from "./credentials.service";
-import storeRegistry from "../store/storeRegistry";
-import { resetStoreAction } from "../store/ducks/mainDuck";
+import { backendUrl } from './credentials.service';
+import storeRegistry from '../store/storeRegistry';
+import { resetStoreAction } from '../store/ducks/mainDuck';
 // import navigationService, {_navigator} from './navigation.service';
 
-declare module "axios" {
+declare module 'axios' {
   export interface AxiosRequestConfig {
     removeLoader?: boolean;
   }
@@ -26,7 +26,7 @@ axiosInstance.interceptors.request.use(
     if (++counter < 2 && !request.removeLoader) {
       // loader.show();
     }
-    const token = await localStorage.getItem("token");
+    const token = await localStorage.getItem('token');
     if (token) {
       if (request.headers) {
         request.headers.Authorization = `Bearer ${token}`;
@@ -40,7 +40,7 @@ axiosInstance.interceptors.request.use(
     canNotPressBackButton = false;
     // loader.hide();
     return Promise.reject({ ...error });
-  }
+  },
 );
 
 axiosInstance.interceptors.response.use(
@@ -49,7 +49,7 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     return onResponseRejected(error);
-  }
+  },
 );
 
 const onResponseFulfilled = (response: AxiosResponse) => {
@@ -90,7 +90,7 @@ const onResponseRejected = (error: AxiosError) => {
       // navigationService.getCurrentRoute()?.name !== 'EnterPassword'
     ) {
       // _navigator?.current?.resetRoot();
-      localStorage.setItem("authData", "");
+      localStorage.setItem('authData', '');
       storeRegistry?.getStore().dispatch(resetStoreAction());
     }
   }

@@ -1,11 +1,11 @@
-import { AnyAction } from "redux";
+import { AnyAction } from 'redux';
 // import navigationService from "../../services/navigation.service";
 // import notificationService from "../../services/notification.service";
 
-export const DEFAULT = "socialize/main/default";
-export const RESET_STORE = "socialize/main/resetStore";
-export const CHECKED_SIGNED_IN = "socialize/main/checkedSignedIn";
-export const SET_DEVICE_TOKEN = "socialize/main/setDeviceToken";
+export const DEFAULT = 'socialize/main/default';
+export const RESET_STORE = 'socialize/main/resetStore';
+export const CHECKED_SIGNED_IN = 'socialize/main/checkedSignedIn';
+export const SET_DEVICE_TOKEN = 'socialize/main/setDeviceToken';
 
 const initialState = {
   isLoading: true,
