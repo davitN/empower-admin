@@ -9,9 +9,9 @@ import { Provider } from "react-redux";
 import configureStore, { sagaMiddleware } from "./store/configureStore";
 import rootSaga from "./store/sagas";
 import storeRegistry from "./store/storeRegistry";
-import Login from "./routes/Login";
 import Companies from "./routes/Companies";
 import AppUsers from "./routes/AppUsers";
+import UserManagement from "./routes/UserManagement";
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -26,7 +26,8 @@ ReactDOM.render(
           <Route path="/" element={<App />}>
             <Route path="companies" element={<Companies />} />
             <Route path="app-users" element={<AppUsers />} />
-            <Route path="auth" element={<Login />} />
+            <Route path="user-management" element={<UserManagement />} />
+            <Route path="/auth" />
             <Route
               path="*"
               element={

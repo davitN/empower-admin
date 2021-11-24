@@ -11,10 +11,8 @@ const useStyles = createUseStyles({
   subContainer: {
     // minHeight: "calc(100vh - 80px)", //if header excises
     minHeight: "100vh",
-    display: "flex",
-  },
-  flex1: {
-    flex: 1,
+    display: "grid",
+    gridTemplateColumns: 'minmax(300px, 1fr) 5fr'
   },
 });
 
@@ -27,9 +25,7 @@ function Layout() {
         <div>
           <SideNav />
         </div>
-        <div className={classes.flex1}>
           <Outlet />
-        </div>
       </div>
     </div>
   );
