@@ -37,7 +37,7 @@ const Auth = () => {
       <p className={classNames('text-sm p-mb-4 p-mt-0', classes.forgotPassword)}>
         Forget your pasword? Click <Link to="/">here.</Link>
       </p>
-      <div>
+      <div className="p-d-flex p-flex-column">
         <TextInput
           value={values.userName}
           handleChange={(val) => setValues({ ...values, userName: val })}
