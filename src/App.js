@@ -7,14 +7,12 @@ import { setLoaderRef } from './services/loader.service';
 import GlobalLoader from './components/shared/GlobalLoader';
 import { NotificationContainer } from 'react-notifications';
 import Layout from './components/shared/Layout';
-import Payments from './components/Payments';
 
 function App() {
   return (
     <>
       <div className="App">
-        {/* <Layout /> */}
-        <Payments />
+        <Layout />
       </div>
       <NotificationContainer />
       <GlobalLoader ref={(ref) => setLoaderRef(ref)} />
