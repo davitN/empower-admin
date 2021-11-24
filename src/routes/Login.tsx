@@ -75,7 +75,7 @@ const Login = () => {
             </div>
             <div className="p-fluid p-grid p-dir-col">
               <div className="p-field p-col-6 p-md-12">
-                <label htmlFor="inputtext" className="p-text-normal">
+                <label htmlFor="inputtext" className="p-text-normal p-text-sm">
                   Email
                 </label>
                 <InputText id="inputtext" value={values1} onChange={(e) => setValues1(e.target.value)} />
