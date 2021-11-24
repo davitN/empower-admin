@@ -34,26 +34,17 @@ export default function SideNav() {
       ) : (
         <div>
           <div className="p-col">
-            <Link
-              to="/companies"
-              className={classNames('p-text-bold', classes.text)}
-            >
+            <Link to="/companies" className={classNames('p-text-bold', classes.text)}>
               companies
             </Link>
           </div>
           <div className="p-col">
-            <Link
-              to="/auth"
-              className={classNames('p-text-bold', classes.text)}
-            >
+            <Link to="/auth" className={classNames('p-text-bold', classes.text)}>
               log in
             </Link>
           </div>
           <div className="p-col">
-            <Link
-              to="/app-users"
-              className={classNames('p-text-bold', classes.text)}
-            >
+            <Link to="/app-users" className={classNames('p-text-bold', classes.text)}>
               app users
             </Link>
           </div>

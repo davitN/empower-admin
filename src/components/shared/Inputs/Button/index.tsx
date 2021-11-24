@@ -33,17 +33,10 @@ const useStyles = createUseStyles({
   },
 });
 
-const ButtonComponent = ({
-  children,
-  costumClasses,
-  handleClick,
-}: PropTypes) => {
+const ButtonComponent = ({ children, costumClasses, handleClick }: PropTypes) => {
   const classes = useStyles();
   return (
-    <Button
-      className={classNames(classes.root, costumClasses)}
-      onClick={handleClick}
-    >
+    <Button className={classNames(classes.root, costumClasses)} onClick={handleClick}>
       {children}
     </Button>
   );

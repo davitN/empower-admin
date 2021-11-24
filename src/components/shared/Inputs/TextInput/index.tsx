@@ -26,14 +26,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const TextInput = ({
-  value,
-  handleChange,
-  label,
-  placeholder,
-  type = 'text',
-  costumClasses,
-}: PropsTypes) => {
+const TextInput = ({ value, handleChange, label, placeholder, type = 'text', costumClasses }: PropsTypes) => {
   const classes = useStyles();
 
   return (
