@@ -1,5 +1,5 @@
 const COLORS = {
-  while: "#FFFFFF",
+  while: '#FFFFFF',
   lightBlue: '#77C8CC',
 };
 
