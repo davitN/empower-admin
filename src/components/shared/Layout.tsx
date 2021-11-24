@@ -1,8 +1,10 @@
-import React from 'react';
+import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 import { Outlet } from 'react-router-dom';
+import COLORS from '../../services/colors.service';
 import Header from './Header';
 import SideNav from './SideNav';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = createUseStyles({
   container: {
@@ -14,10 +16,20 @@ const useStyles = createUseStyles({
     display: 'grid',
     gridTemplateColumns: 'minmax(350px, 1fr) 5fr',
   },
+  text: {
+    margin: 'auto',
+    fontWeight: 400,
+    textAlign: 'center',
+    '& > span': {
+      color: COLORS.orange,
+    },
+  },
 });
 
 function Layout() {
+  const { pathname } = useLocation();
   const classes = useStyles();
+
   return (
     <div className={classes.container}>
       <Header />
@@ -26,6 +38,11 @@ function Layout() {
           <SideNav />
         </div>
         <Outlet />
+        {pathname === '/auth' && (
+          <h1 className={classNames(classes.text, 'text-5xl')}>
+            THE POWER OF <span>US</span> BEGINS WITH <span>YOU</span>
+          </h1>
+        )}
       </div>
     </div>
   );
