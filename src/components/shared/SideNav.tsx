@@ -3,18 +3,23 @@ import { Link, useLocation } from 'react-router-dom';
 import COLORS from '../../services/colors.service';
 import Login from '../Login/index';
 import classNames from 'classnames';
+import Logo from '../../assets/images/logo.png';
 
 const useStyles = createUseStyles({
   container: {
     height: '100%',
     width: '100%',
     backgroundColor: COLORS.lightBlue,
+    padding: '50px 30px',
   },
   logo: {
-    height: '100px',
+    height: '60px',
+    width: '180px',
+    margin: 'auto',
+    display: 'flex',
   },
   text: {
-    color: COLORS.while,
+    color: COLORS.white,
   },
 });
 
@@ -23,7 +28,7 @@ export default function SideNav() {
   const { pathname } = useLocation();
   return (
     <div className={classes.container}>
-      <div className={classNames('p-col', classes.logo)}>Logo</div>
+      <img className={classNames('p-col', classes.logo)} src={Logo} />
       {pathname === '/auth' ? (
         <Login />
       ) : (
