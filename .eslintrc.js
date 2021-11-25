@@ -4,13 +4,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'airbnb',
-    'airbnb-typescript',
-  ],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended', 'airbnb', 'airbnb-typescript',],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
@@ -20,16 +14,17 @@ module.exports = {
     ecmaVersion: 13,
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint', 'import', 'prettier'],
+  plugins: ['react', '@typescript-eslint', 'import'],
   ignorePatterns: ['.eslintrc.js'],
   rules: {
     'react/function-component-definition': 'off',
+    '@typescript-eslint/explicit-module-boundary-types':'off',
     'arrow-body-style': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', 'tsx'] }],
     'react/react-in-jsx-scope': 'off',
-    'prettier/prettier': 'error',
+    'jsx-a11y/label-has-associated-control':'off',
     'max-len': 'off',
-    'prettier/prettier': ['error', { singleQuote: true }],
+    'react/require-default-props': 'off',
     '@typescript-eslint/ban-types': [
       'error',
       {

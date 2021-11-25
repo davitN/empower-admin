@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { useState } from 'react';
+import { Divider } from 'primereact/divider';
 import { createUseStyles } from 'react-jss';
 import COLORS from '../../services/colors.service';
 import TextInput from '../shared/Inputs/TextInput';
-import { Divider } from 'primereact/divider';
 import Button from '../shared/Inputs/Button';
 
 const useStyles = createUseStyles({
@@ -67,29 +67,28 @@ const useStyles = createUseStyles({
     },
   },
 });
-
 interface ValuesTypes {
-  email: string | null;
-  nameOnCard: string | null;
-  cardNumber: number | null;
+  email: string;
+  nameOnCard: string;
+  cardNumber: string;
   expirationDate: {
-    year: number | null;
-    month: number | null;
+    year: string;
+    month: string;
   };
-  cvc: number | null;
+  cvc: string;
 }
 
 const Payments = () => {
   const classes = useStyles();
   const [values, setValues] = useState<ValuesTypes>({
-    email: null,
-    nameOnCard: null,
-    cardNumber: null,
+    email: '',
+    nameOnCard: '',
+    cardNumber: '',
     expirationDate: {
-      year: null,
-      month: null,
+      year: '',
+      month: '',
     },
-    cvc: null,
+    cvc: '',
   });
 
   return (
@@ -113,35 +112,35 @@ const Payments = () => {
             placeholder="Email"
             value={values.email}
             handleChange={(email) => setValues({ ...values, email })}
-            costumClasses={classes.inputClasses}
+            customClasses={classes.inputClasses}
           />
           <TextInput
             label="Name on Card"
             placeholder="Name on Card"
             value={values.nameOnCard}
             handleChange={(nameOnCard) => setValues({ ...values, nameOnCard })}
-            costumClasses={classes.inputClasses}
+            customClasses={classes.inputClasses}
           />
           <TextInput
             label="Card Number"
             placeholder="Card Number"
             value={values.cardNumber}
             handleChange={(cardNumber) => setValues({ ...values, cardNumber })}
-            costumClasses={classes.inputClasses}
+            customClasses={classes.inputClasses}
           />
           <div className="p-d-flex p-flex-row p-ai-center p-pt-4">
             <TextInput
               placeholder="mm"
               value={values.expirationDate.month}
               handleChange={(month) => setValues({ ...values, expirationDate: { ...values.expirationDate, month } })}
-              costumClasses={classNames(classes.inputClasses, 'p-pt-0', classes.expirationDate)}
+              customClasses={classNames(classes.inputClasses, 'p-pt-0', classes.expirationDate)}
             />
             <h3 className="p-px-2"> / </h3>
             <TextInput
               placeholder="yy"
               value={values.expirationDate.year}
               handleChange={(year) => setValues({ ...values, expirationDate: { ...values.expirationDate, year } })}
-              costumClasses={classNames(classes.inputClasses, 'p-pt-0', classes.expirationDate)}
+              customClasses={classNames(classes.inputClasses, 'p-pt-0', classes.expirationDate)}
             />
           </div>
         </div>
@@ -149,9 +148,11 @@ const Payments = () => {
         <div>
           <h1 className={classes.title}>ORDER SUBTOTAL</h1>
           <p className={classNames('text-3xl p-py-4', classes.subTitle)}>
-            Empower program <span className="text-2xl">$600/year</span>
+            Empower program
+            {' '}
+            <span className="text-2xl">$600/year</span>
           </p>
-          <Button costumClasses={classNames(classes.button, 'p-py-4')}>Complete payment</Button>
+          <Button customClasses={classNames(classes.button, 'p-py-4')}>Complete payment</Button>
           <p className="p-py-4 p-text-center text-sm" style={{ color: COLORS.blueWood }}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores fuga saepe officia a. Molestias deleniti
             vitae omnis a ipsa praesentium minima in voluptatum repellendus debitis at nostrum laboriosam, tempora unde!

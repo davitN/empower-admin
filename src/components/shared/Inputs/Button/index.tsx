@@ -1,14 +1,8 @@
+import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import { Button } from 'primereact/button';
-import { ReactNode } from 'react';
 import { createUseStyles } from 'react-jss';
 import COLORS from '../../../../services/colors.service';
-
-interface PropTypes {
-  children: ReactNode;
-  costumClasses?: any;
-  handleClick?: () => void;
-}
 
 const useStyles = createUseStyles({
   root: {
@@ -33,10 +27,16 @@ const useStyles = createUseStyles({
   },
 });
 
-const ButtonComponent = ({ children, costumClasses, handleClick }: PropTypes) => {
+interface PropTypes {
+  children: ReactNode;
+  customClasses?: string;
+  handleClick?: () => void;
+}
+
+const ButtonComponent: React.FC<PropTypes> = ({ children, customClasses, handleClick }) => {
   const classes = useStyles();
   return (
-    <Button className={classNames(classes.root, costumClasses)} onClick={handleClick}>
+    <Button className={classNames(classes.root, customClasses)} onClick={handleClick}>
       {children}
     </Button>
   );

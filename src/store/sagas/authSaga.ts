@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
 import { ISignInData, ISignUpData } from '../../types/auth';
@@ -15,7 +16,6 @@ export function* signInSaga(payload: { data: ISignInData; callback: Function; ty
     //   // deviceToken: pushNotificationData.token,
     // });
     const res: IUserData = yield axiosInstance.post('authorization/login', payload.data);
-    console.log(res);
     // setMonitoringUsername(res.username);
     // yield AsyncStorage.setItem("token", res.accessToken);
     yield put(setUserDataAction(res));

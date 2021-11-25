@@ -4,9 +4,8 @@ import { createUseStyles } from 'react-jss';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
+import classnames from 'classnames';
 import { checkSignedInAction } from '../store/ducks/authDuck';
-
-const classnames = require('classnames');
 
 const companyList: Array<{ name: string; label: string }> = new Array(20)
   .fill(0)
@@ -42,7 +41,7 @@ const useStyles = createUseStyles({
 const UserManagement = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [values1, setValues1] = useState<any>('');
+  const [values1, setValues1] = useState<string>('');
   const [selectedCompany, setSelectedCompany] = useState<{ name: string; label: string } | null>(null);
   const [selectedCity, setSelectedCity] = useState<{ name: string; label: string } | null>(null);
 
@@ -120,7 +119,7 @@ const UserManagement = () => {
             <div>User ID</div>
             <div>123456</div>
           </div>
-          <div className={classes.buttonsWrapper}></div>
+          <div className={classes.buttonsWrapper} />
           <Button label="Send reset password link" className="p-button-info p-mt-2" />
           <Button label="Delete user" className="p-button-info p-mt-2 p-button-danger" />
         </div>

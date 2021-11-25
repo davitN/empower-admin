@@ -1,4 +1,3 @@
-import React from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
@@ -3624,7 +3623,9 @@ const AppUsers = () => {
   const classes = useStyles();
   const paginatorLeft = <Button type="button" icon="pi pi-refresh" className="p-button-text" />;
   const paginatorRight = <Button type="button" icon="pi pi-cloud" className="p-button-text" />;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const editUserRemplate = (rowData: any) => (
+    // eslint-disable-next-line no-console
     <Button icon="pi pi-cog" style={{ backgroundColor: 'var(--cyan-900)' }} onClick={() => console.log(rowData)} />
   );
 
@@ -3632,7 +3633,7 @@ const AppUsers = () => {
     return (
       <div className={classes.header}>
         <span className="p-text-bold p-text-left">USERS</span>
-        <span className={classes.flex1}></span>
+        <span className={classes.flex1} />
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText type="search" value="" placeholder="Global Search" />
@@ -3658,11 +3659,11 @@ const AppUsers = () => {
           paginatorRight={paginatorRight}
           header={renderHeader}
         >
-          <Column field="name" header="FIRST NAME"></Column>
-          <Column field="country.name" header="LAST NAME"></Column>
-          <Column field="company" header="EMAIL"></Column>
-          <Column field="representative.name" header="Representative"></Column>
-          <Column body={editUserRemplate} header="Settings"></Column>
+          <Column field="name" header="FIRST NAME" />
+          <Column field="country.name" header="LAST NAME" />
+          <Column field="company" header="EMAIL" />
+          <Column field="representative.name" header="Representative" />
+          <Column body={editUserRemplate} header="Settings" />
         </DataTable>
       </div>
     </div>

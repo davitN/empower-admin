@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
 import { IUserData } from '../../types/main';
@@ -27,7 +28,6 @@ export function* setDeviceTokenSaga(payload: any) {
       removeLoader: true,
     });
   } catch (error) {
-    console.log(error);
   } finally {
     yield put({ type: DEFAULT });
   }

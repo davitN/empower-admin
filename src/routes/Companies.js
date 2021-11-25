@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import React, { useState, useEffect } from 'react';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
@@ -929,9 +930,9 @@ const customerService = {
 
   getCustomers(params) {
     const queryParams = Object.keys(params)
-      .map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+      .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
       .join('&');
-    return fetch('https://www.primefaces.org/data/customers?' + queryParams).then((res) => res.json());
+    return fetch(`https://www.primefaces.org/data/customers?${queryParams}`).then((res) => res.json());
   },
 };
 
@@ -969,7 +970,6 @@ const Companies = () => {
   });
   const [selectedCustomer1, setSelectedCustomer1] = useState(null);
   const [selectedCustomer2, setSelectedCustomer2] = useState(null);
-  const [selectedCustomer3, setSelectedCustomer3] = useState(null);
   const representatives = [
     { name: 'Amy Elsner', image: 'amyelsner.png' },
     { name: 'Anna Fali', image: 'annafali.png' },
@@ -995,13 +995,13 @@ const Companies = () => {
     setCustomers(customerService.getCustomersMedium());
   }, []);
 
-  const onCustomSaveState = (state) => {
-    window.sessionStorage.setItem('dt-state-demo-custom', JSON.stringify(state));
-  };
+  // const onCustomSaveState = (state) => {
+  //   window.sessionStorage.setItem('dt-state-demo-custom', JSON.stringify(state));
+  // };
 
-  const onCustomRestoreState = () => {
-    return JSON.parse(window.sessionStorage.getItem('dt-state-demo-custom'));
-  };
+  // const onCustomRestoreState = () => {
+  //   return JSON.parse(window.sessionStorage.getItem('dt-state-demo-custom'));
+  // };
 
   const countryBodyTemplate = (rowData) => {
     return (
@@ -1033,20 +1033,6 @@ const Companies = () => {
     );
   };
 
-  const representativeFilterTemplate = (options) => {
-    return (
-      <MultiSelect
-        value={options.value}
-        options={representatives}
-        itemTemplate={representativesItemTemplate}
-        onChange={(e) => options.filterCallback(e.value)}
-        optionLabel="name"
-        placeholder="Any"
-        className="p-column-filter"
-      />
-    );
-  };
-
   const representativesItemTemplate = (option) => {
     return (
       <div className="p-multiselect-representative-option">
@@ -1062,8 +1048,26 @@ const Companies = () => {
     );
   };
 
+  const representativeFilterTemplate = (options) => {
+    return (
+      <MultiSelect
+        value={options.value}
+        options={representatives}
+        itemTemplate={representativesItemTemplate}
+        onChange={(e) => options.filterCallback(e.value)}
+        optionLabel="name"
+        placeholder="Any"
+        className="p-column-filter"
+      />
+    );
+  };
+
   const statusBodyTemplate = (rowData) => {
     return <span className={`customer-badge status-${rowData.status}`}>{rowData.status}</span>;
+  };
+
+  const statusItemTemplate = (option) => {
+    return <span className={`customer-badge status-${option}`}>{option}</span>;
   };
 
   const statusFilterTemplate = (options) => {
@@ -1080,13 +1084,9 @@ const Companies = () => {
     );
   };
 
-  const statusItemTemplate = (option) => {
-    return <span className={`customer-badge status-${option}`}>{option}</span>;
-  };
-
   const onGlobalFilterChange = (event, filtersKey) => {
     const { value } = event.target;
-    let filters = { ...filtersMap[filtersKey].value };
+    const filters = { ...filtersMap[filtersKey].value };
     filters.global.value = value;
 
     filtersMap[filtersKey].callback(filters);
@@ -1141,7 +1141,7 @@ const Companies = () => {
             filter
             filterField="country.name"
             filterPlaceholder="Search by country"
-          ></Column>
+          />
           <Column
             header="Agent"
             body={representativeBodyTemplate}
@@ -1152,7 +1152,7 @@ const Companies = () => {
             showFilterMatchModes={false}
             filterElement={representativeFilterTemplate}
             filterMenuStyle={{ width: '14rem' }}
-          ></Column>
+          />
           <Column
             field="status"
             header="Status"
@@ -1161,7 +1161,7 @@ const Companies = () => {
             filter
             filterElement={statusFilterTemplate}
             filterMenuStyle={{ width: '14rem' }}
-          ></Column>
+          />
         </DataTable>
       </div>
 
@@ -1183,7 +1183,7 @@ const Companies = () => {
           stateKey="dt-state-demo-local"
           emptyMessage="No customers found."
         >
-          <Column field="name" header="Name" sortable filter filterPlaceholder="Search by name"></Column>
+          <Column field="name" header="Name" sortable filter filterPlaceholder="Search by name" />
           <Column
             header="Country"
             body={countryBodyTemplate}
@@ -1192,7 +1192,7 @@ const Companies = () => {
             filter
             filterField="country.name"
             filterPlaceholder="Search by country"
-          ></Column>
+          />
           <Column
             header="Agent"
             body={representativeBodyTemplate}
@@ -1203,7 +1203,7 @@ const Companies = () => {
             showFilterMatchModes={false}
             filterElement={representativeFilterTemplate}
             filterMenuStyle={{ width: '14rem' }}
-          ></Column>
+          />
           <Column
             field="status"
             header="Status"
@@ -1212,14 +1212,14 @@ const Companies = () => {
             filter
             filterElement={statusFilterTemplate}
             filterMenuStyle={{ width: '14rem' }}
-          ></Column>
+          />
         </DataTable>
       </div>
 
       <div className="card">
         <h5>Custom Storage</h5>
         <DataTable value={customers} paginator rows={10} header={header3} dataKey="id" responsiveLayout="scroll">
-          <Column field="name" header="Name" sortable filter filterPlaceholder="Search by name"></Column>
+          <Column field="name" header="Name" sortable filter filterPlaceholder="Search by name" />
           <Column
             header="Country"
             body={countryBodyTemplate}
@@ -1228,7 +1228,7 @@ const Companies = () => {
             filter
             filterField="country.name"
             filterPlaceholder="Search by country"
-          ></Column>
+          />
           <Column
             header="Agent"
             body={representativeBodyTemplate}
@@ -1239,7 +1239,7 @@ const Companies = () => {
             showFilterMatchModes={false}
             filterElement={representativeFilterTemplate}
             filterMenuStyle={{ width: '14rem' }}
-          ></Column>
+          />
           <Column
             field="status"
             header="Status"
@@ -1248,7 +1248,7 @@ const Companies = () => {
             filter
             filterElement={statusFilterTemplate}
             filterMenuStyle={{ width: '14rem' }}
-          ></Column>
+          />
         </DataTable>
       </div>
     </div>

@@ -1,4 +1,7 @@
-import { AnyAction, applyMiddleware, combineReducers, createStore, compose } from 'redux';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  AnyAction, applyMiddleware, combineReducers, createStore,
+} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -15,16 +18,17 @@ const appReducer = combineReducers({
 export type RootState = ReturnType<typeof appReducer>;
 
 const rootReducer = (state: ReturnType<typeof Object>, action: AnyAction) => {
+  let temp = state;
   if (action.type === RESET_STORE) {
-    state = {
+    temp = {
       mainReducer: {
         isLoading: action.isLoading,
         isSignedIn: false,
       },
     };
-    return appReducer(state, action);
+    return appReducer(temp, action);
   }
-  return appReducer(state, action);
+  return appReducer(temp, action);
 };
 
 export default function configureStore() {
@@ -34,7 +38,7 @@ export default function configureStore() {
     // Specify name here, actionsBlacklist, actionsCreators and other options if needed
   });
   const composedEnhancers = composeEnhancers(
-    middlewareEnhancer
+    middlewareEnhancer,
     // other store enhancers if any
   );
 

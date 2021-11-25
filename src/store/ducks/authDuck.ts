@@ -21,7 +21,6 @@ export const authReducer = (state = initialState, action: AnyAction) => {
         userData: action.userData,
       };
     case UPDATE_USER_DATA:
-      console.log(action);
       return {
         ...state,
         userData: { ...state.userData, ...action.userData },
