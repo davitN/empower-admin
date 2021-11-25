@@ -9,6 +9,7 @@ phases:
     commands:
       - npm run build
       - cp appspec.yml build/
+      - cp -r scripts build/scripts 
 artifacts:
   files:
     - appspec.yml
