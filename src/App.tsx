@@ -23,7 +23,7 @@ const App = () => {
   }, []);
 
   return (
-    !isLoading && (
+    isLoading ? null : (
       <>
         <div className="App">
           <Layout />
