@@ -1,19 +1,20 @@
 import { createUseStyles } from 'react-jss';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 import COLORS from '../../services/colors.service';
 import Login from '../LogIn/LogIn';
 import Logo from '../../assets/images/logo.png';
+import { RootState } from '../../store/configureStore';
 
 const SideNav = () => {
   const classes = useStyles();
-  const { pathname } = useLocation();
+  const { isSignedIn } = useSelector((state: RootState) => state.mainReducer);
+
   return (
     <div className={classes.container}>
       <img className={classNames('p-col', classes.logo)} src={Logo} alt="Ups." />
-      {pathname === '/auth' ? (
-        <Login />
-      ) : (
+      {isSignedIn ? (
         <div>
           <div className="p-col">
             <Link to="/companies" className={classNames('p-text-bold', classes.text)}>
@@ -31,6 +32,8 @@ const SideNav = () => {
             </Link>
           </div>
         </div>
+      ) : (
+        <Login />
       )}
     </div>
   );

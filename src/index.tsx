@@ -14,6 +14,8 @@ import Companies from './routes/Companies';
 import AppUsers from './routes/AppUsers';
 import UserManagement from './routes/UserManagement';
 import Payments from './routes/Payments';
+import WithoutAuth from './components/shared/WithoutAuth';
+import WithAuth from './components/shared/WithAuth';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -26,10 +28,9 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route path="companies" element={<Companies />} />
-            <Route path="app-users" element={<AppUsers />} />
-            <Route path="user-management" element={<UserManagement />} />
-            <Route path="/auth" />
+            <Route path="companies" element={<WithAuth><Companies /></WithAuth>} />
+            <Route path="app-users" element={<WithAuth><AppUsers /></WithAuth>} />
+            <Route path="user-management" element={<WithAuth><UserManagement /></WithAuth>} />
             <Route path="/payments" element={<Payments />} />
             <Route
               path="*"

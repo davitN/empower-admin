@@ -8,13 +8,16 @@ interface PropTypes {
   children: ReactNode;
   customClasses?: string;
   handleClick?: () => void;
+  loading?: boolean,
 }
 
-const ButtonComponent: React.FC<PropTypes> = ({ children, customClasses, handleClick }) => {
+const ButtonComponent: React.FC<PropTypes> = ({
+  children, customClasses, handleClick, loading,
+}) => {
   const classes = useStyles();
   return (
-    <Button className={classNames(classes.root, customClasses)} onClick={handleClick}>
-      {children}
+    <Button disabled={loading} className={classNames(classes.root, customClasses)} onClick={handleClick}>
+      {loading ? <i className="pi pi-spin pi-spinner" style={{ fontSize: '1.5em' }} /> : children }
     </Button>
   );
 };

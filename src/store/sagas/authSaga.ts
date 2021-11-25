@@ -2,26 +2,24 @@
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
 import { ISignInData, ISignUpData } from '../../types/auth';
-// import {pushNotificationData} from '../../services/pushNotificationService';
+import notificationService from '../../services/notification.service';
 import { IUserData } from '../../types/main';
 // import {setMonitoringUsername} from '../../utils/monitoring';
 import { setUserDataAction } from '../ducks/authDuck';
-import { DEFAULT, resetStoreAction } from '../ducks/mainDuck';
+import { DEFAULT, resetStoreAction, checkedSignedInAction } from '../ducks/mainDuck';
 
-export function* signInSaga(payload: { data: ISignInData; callback: Function; type: string }) {
+export function* signInSaga(payload: { data: ISignInData; callback?: Function; type: string }) {
   try {
-    // const res: IUserData = yield axiosInstance.post('authorization/login', {
-    //   data: payload.data,
-    //   OS: Platform.OS,
-    //   // deviceToken: pushNotificationData.token,
-    // });
     const res: IUserData = yield axiosInstance.post('authorization/login', payload.data);
-    // setMonitoringUsername(res.username);
-    // yield AsyncStorage.setItem("token", res.accessToken);
+    yield localStorage.setItem('token', res.accessToken);
     yield put(setUserDataAction(res));
-    payload.callback();
+    yield put(checkedSignedInAction(true));
+    if (payload.callback) {
+      payload.callback();
+    }
   } catch (error: any) {
     // yield put(notifyAction("warning", "Note", error.response?.data.message, true));
+    notificationService.error(error.response.data.message, '', 500);
   }
 }
 

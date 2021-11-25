@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { ISignInData, ISignUpData } from '../../types/auth';
+import { ISignInData, ISignUpData, UserData } from '../../types/auth';
 import { IUserData } from '../../types/main';
 
 export const CHECK_SIGNED_IN = 'socialize/auth/checkSignedIn';
@@ -9,8 +9,18 @@ export const REQUEST_SIGN_IN_SG = 'socialize/auth/requestSignIn_sg';
 export const REQUEST_SIGN_UP_SG = 'socialize/auth/requestSignUp_sg';
 export const LOGOUT = 'socialize/auth/logout';
 
-const initialState = {
-  userData: {},
+const initialState: UserData = {
+  userData: {
+    accessToken: '',
+    email: '',
+    firstName: '',
+    id: null,
+    lastName: '',
+    phone: '',
+    role: { _id: '', name: '', description: '' },
+    description: '',
+    name: '',
+  },
 };
 
 export const authReducer = (state = initialState, action: AnyAction) => {
@@ -34,7 +44,7 @@ export const checkSignedInAction = () => ({
   type: CHECK_SIGNED_IN,
 });
 
-export const signInActionSG = (data: ISignInData, callback: Function) => ({
+export const signInActionSG = (data: ISignInData, callback?: Function) => ({
   type: REQUEST_SIGN_IN_SG,
   data,
   callback,

@@ -9,13 +9,7 @@ import { checkedSignedInAction } from '../ducks/mainDuck';
 
 export function* checkSignedInSaga() {
   try {
-    const userData: IUserData = yield axiosInstance.post('authorization/ping', null, {
-      removeLoader: true,
-    });
-    // if (userData.accessToken) {
-    //   yield AsyncStorage.setItem('token', userData.accessToken);
-    // }
-    // yield put(getLastTimeSelectedCardsActionSG());
+    const userData: IUserData = yield axiosInstance.get('authorization/ping');
     yield put(setUserDataAction(userData));
     yield put(checkedSignedInAction(true));
   } catch (error) {
