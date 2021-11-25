@@ -11,15 +11,17 @@ import { DEFAULT, resetStoreAction, checkedSignedInAction } from '../ducks/mainD
 export function* signInSaga(payload: { data: ISignInData; callback?: Function; type: string }) {
   try {
     const res: IUserData = yield axiosInstance.post('authorization/login', payload.data);
-    yield localStorage.setItem('token', res.accessToken);
-    yield put(setUserDataAction(res));
-    yield put(checkedSignedInAction(true));
     if (payload.callback) {
       payload.callback();
     }
+    yield localStorage.setItem('token', res.accessToken);
+    yield put(setUserDataAction(res));
+    yield put(checkedSignedInAction(true));
   } catch (error: any) {
-    // yield put(notifyAction("warning", "Note", error.response?.data.message, true));
     notificationService.error(error.response.data.message, '', 500);
+    if (payload.callback) {
+      payload.callback();
+    }
   }
 }
 

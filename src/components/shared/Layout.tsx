@@ -48,6 +48,7 @@ const useStyles = createUseStyles({
     textAlign: 'center',
     '& > span': {
       color: COLORS.orange,
+      padding: '0 10px',
     },
   },
 });

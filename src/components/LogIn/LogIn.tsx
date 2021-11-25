@@ -19,7 +19,7 @@ const Auth = () => {
 
   const handleAuth = () => {
     setLoading(true);
-    dispatch(signInActionSG(values));
+    dispatch(signInActionSG(values, () => setLoading(false)));
   };
 
   return (
