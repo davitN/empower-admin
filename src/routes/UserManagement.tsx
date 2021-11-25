@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createUseStyles } from 'react-jss';
-import { checkSignedInAction } from '../store/ducks/authDuck';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+import { checkSignedInAction } from '../store/ducks/authDuck';
+
 const classnames = require('classnames');
 
 const companyList: Array<{ name: string; label: string }> = new Array(20)

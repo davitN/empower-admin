@@ -1005,7 +1005,7 @@ const Companies = () => {
 
   const countryBodyTemplate = (rowData) => {
     return (
-      <React.Fragment>
+      <>
         <img
           alt={rowData.country.code}
           src="showcase/demo/images/flag_placeholder.png"
@@ -1014,13 +1014,13 @@ const Companies = () => {
           width="30"
         />
         <span className="image-text">{rowData.country.name}</span>
-      </React.Fragment>
+      </>
     );
   };
 
   const representativeBodyTemplate = (rowData) => {
     return (
-      <React.Fragment>
+      <>
         <img
           alt={rowData.representative.name}
           src={`showcase/demo/images/avatar/${rowData.representative.image}`}
@@ -1029,7 +1029,7 @@ const Companies = () => {
           style={{ verticalAlign: 'middle' }}
         />
         <span className="image-text">{rowData.representative.name}</span>
-      </React.Fragment>
+      </>
     );
   };
 
@@ -1085,7 +1085,7 @@ const Companies = () => {
   };
 
   const onGlobalFilterChange = (event, filtersKey) => {
-    const value = event.target.value;
+    const { value } = event.target;
     let filters = { ...filtersMap[filtersKey].value };
     filters.global.value = value;
 
@@ -1132,7 +1132,7 @@ const Companies = () => {
           stateKey="dt-state-demo-session"
           emptyMessage="No customers found."
         >
-          <Column field="name" header="Name" sortable filter filterPlaceholder="Search by name"></Column>
+          <Column field="name" header="Name" sortable filter filterPlaceholder="Search by name" />
           <Column
             header="Country"
             body={countryBodyTemplate}

@@ -12,6 +12,7 @@ import storeRegistry from './store/storeRegistry';
 import Companies from './routes/Companies';
 import AppUsers from './routes/AppUsers';
 import UserManagement from './routes/UserManagement';
+import Payments from './components/Payments';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -28,6 +29,7 @@ ReactDOM.render(
             <Route path="app-users" element={<AppUsers />} />
             <Route path="user-management" element={<UserManagement />} />
             <Route path="/auth" />
+            <Route path="/payments" element={<Payments />} />
             <Route
               path="*"
               element={
@@ -41,7 +43,7 @@ ReactDOM.render(
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -28,6 +28,7 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', 'tsx'] }],
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': 'error',
+    'max-len': 'off',
     'prettier/prettier': ['error', { singleQuote: true }],
     '@typescript-eslint/ban-types': [
       'error',
