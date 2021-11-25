@@ -14,7 +14,15 @@ phases:
 artifacts:
   files:
     - appspec.yml
-    - public/*
     - scripts/*
+    - index.html
+    - static/css/*
+    - static/js/*
+    - static/media/*
+    - asset-manifest.json
+    - favicon.ico
+    - logo192.png
+    - logo512.png
+    - manifest.json  
     - ./*
   base-directory: 'build'
