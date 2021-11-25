@@ -10,9 +10,11 @@ phases:
       - npm run build
       - cp appspec.yml build/
       - cp -r scripts build/scripts 
+      - cp -r public/* build/
 artifacts:
   files:
     - appspec.yml
     - public/*
     - scripts/*
+    - *
   base-directory: 'build'
