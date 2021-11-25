@@ -1,11 +1,12 @@
+/* eslint-disable import/prefer-default-export */
 import 'react-notifications/lib/notifications.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
+import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
 import configureStore, { sagaMiddleware } from './store/configureStore';
 import rootSaga from './store/sagas';
 import storeRegistry from './store/storeRegistry';
@@ -32,18 +33,18 @@ ReactDOM.render(
             <Route path="/payments" element={<Payments />} />
             <Route
               path="*"
-              element={
+              element={(
                 <main style={{ padding: '1rem' }}>
                   <p>Theres nothing here!</p>
                 </main>
-              }
+              )}
             />
           </Route>
         </Routes>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

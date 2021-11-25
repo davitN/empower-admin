@@ -1,10 +1,11 @@
+/* eslint-disable import/prefer-default-export */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
 import { IUserData } from '../../types/main';
 // import {setMonitoringUsername} from '../../utils/monitoring';
 import { setUserDataAction } from '../ducks/authDuck';
-import { checkedSignedInAction, DEFAULT } from '../ducks/mainDuck';
+import { checkedSignedInAction } from '../ducks/mainDuck';
 
 export function* checkSignedInSaga() {
   try {
@@ -19,16 +20,5 @@ export function* checkSignedInSaga() {
     yield put(checkedSignedInAction(true));
   } catch (error) {
     yield put(checkedSignedInAction(false));
-  }
-}
-
-export function* setDeviceTokenSaga(payload: any) {
-  try {
-    yield axiosInstance.post('auth/set_device_token_and_OS', payload.data, {
-      removeLoader: true,
-    });
-  } catch (error) {
-  } finally {
-    yield put({ type: DEFAULT });
   }
 }

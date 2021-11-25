@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { InputText } from 'primereact/inputtext';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
@@ -13,7 +13,9 @@ interface PropsTypes {
   customClasses?: string;
 }
 
-const TextInput: React.FC<PropsTypes> = ({ value, handleChange, label, placeholder, type = 'text', customClasses }) => {
+const TextInput: React.FC<PropsTypes> = ({
+  value, handleChange, label, placeholder, type = 'text', customClasses,
+}) => {
   const classes = useStyles();
 
   return (

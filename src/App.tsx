@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import 'primereact/resources/themes/lara-light-indigo/theme.css'; // theme
 import 'primereact/resources/primereact.min.css'; // core css
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import './App.css';
-import { NotificationContainer } from 'react-notifications';
 import { setLoaderRef } from './services/loader.service';
 import GlobalLoader from './components/shared/GlobalLoader';
 import Layout from './components/shared/Layout';
+
+const { NotificationContainer } = require('react-notifications');
 
 const App = () => {
   return (

@@ -4,6 +4,22 @@ import { Button } from 'primereact/button';
 import { createUseStyles } from 'react-jss';
 import COLORS from '../../../../services/colors.service';
 
+interface PropTypes {
+  children: ReactNode;
+  customClasses?: string;
+  handleClick?: () => void;
+}
+
+const ButtonComponent: React.FC<PropTypes> = ({ children, customClasses, handleClick }) => {
+  const classes = useStyles();
+  return (
+    <Button className={classNames(classes.root, customClasses)} onClick={handleClick}>
+      {children}
+    </Button>
+  );
+};
+export default ButtonComponent;
+
 const useStyles = createUseStyles({
   root: {
     color: '#87BCBF',
@@ -26,19 +42,3 @@ const useStyles = createUseStyles({
     },
   },
 });
-
-interface PropTypes {
-  children: ReactNode;
-  customClasses?: string;
-  handleClick?: () => void;
-}
-
-const ButtonComponent: React.FC<PropTypes> = ({ children, customClasses, handleClick }) => {
-  const classes = useStyles();
-  return (
-    <Button className={classNames(classes.root, customClasses)} onClick={handleClick}>
-      {children}
-    </Button>
-  );
-};
-export default ButtonComponent;

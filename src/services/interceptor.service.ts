@@ -1,3 +1,5 @@
+/* eslint-disable prefer-promise-reject-errors */
+/* eslint-disable no-plusplus */
 import axios, { AxiosError, AxiosResponse } from 'axios';
 // import AsyncStorage from '@react-native-community/async-storage';
 // import notificationService from './notification.service';
@@ -13,7 +15,6 @@ declare module 'axios' {
   }
 }
 
-let canNotPressBackButton = false;
 let counter = 0;
 
 const axiosInstance = axios.create({
@@ -22,7 +23,6 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (request) => {
-    canNotPressBackButton = true;
     if (++counter < 2 && !request.removeLoader) {
       // loader.show();
     }
@@ -37,8 +37,8 @@ axiosInstance.interceptors.request.use(
     return request;
   },
   (error) => {
-    canNotPressBackButton = false;
     // loader.hide();
+    // eslint-disable-next-line prefer-promise-reject-errors
     return Promise.reject({ ...error });
   },
 );
@@ -53,7 +53,6 @@ axiosInstance.interceptors.response.use(
 );
 
 const onResponseFulfilled = (response: AxiosResponse) => {
-  canNotPressBackButton = false;
   if (--counter < 1) {
     // loader.hide();
   }
@@ -61,7 +60,6 @@ const onResponseFulfilled = (response: AxiosResponse) => {
 };
 
 const onResponseRejected = (error: AxiosError) => {
-  canNotPressBackButton = false;
   if (--counter < 1) {
     // loader.hide();
   }

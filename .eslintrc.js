@@ -23,8 +23,10 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', 'tsx'] }],
     'react/react-in-jsx-scope': 'off',
     'jsx-a11y/label-has-associated-control':'off',
+    '@typescript-eslint/no-use-before-define':'off',
     'max-len': 'off',
     'react/require-default-props': 'off',
+    'default-param-last':'off',
     '@typescript-eslint/ban-types': [
       'error',
       {
