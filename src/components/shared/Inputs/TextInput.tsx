@@ -2,7 +2,7 @@ import React from 'react';
 import { InputText } from 'primereact/inputtext';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
-import COLORS from '../../../../services/colors.service';
+import COLORS from '../../../services/colors.service';
 
 interface PropsTypes {
   value: string | number | null;

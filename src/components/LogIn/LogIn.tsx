@@ -6,25 +6,6 @@ import COLORS from '../../services/colors.service';
 import TextInput from '../shared/Inputs/TextInput';
 import Button from '../shared/Inputs/Button';
 
-const useStyles = createUseStyles({
-  root: {
-    color: COLORS.white,
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    height: '80%',
-  },
-  forgotPassword: {
-    display: 'flex',
-    '& > a': {
-      textDecoration: 'none',
-      color: COLORS.orange,
-      paddingLeft: '5px',
-    },
-  },
-});
-
 const Auth = () => {
   const classes = useStyles();
   const [values, setValues] = useState<{ userName: string; password: string }>({
@@ -59,3 +40,22 @@ const Auth = () => {
 };
 
 export default Auth;
+
+const useStyles = createUseStyles({
+  root: {
+    color: COLORS.white,
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    height: '80%',
+  },
+  forgotPassword: {
+    display: 'flex',
+    '& > a': {
+      textDecoration: 'none',
+      color: COLORS.orange,
+      paddingLeft: '5px',
+    },
+  },
+});

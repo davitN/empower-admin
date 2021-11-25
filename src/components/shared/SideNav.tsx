@@ -2,7 +2,7 @@ import { createUseStyles } from 'react-jss';
 import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import COLORS from '../../services/colors.service';
-import Login from '../Login/index';
+import Login from '../LogIn/LogIn';
 import Logo from '../../assets/images/logo.png';
 
 const SideNav = () => {

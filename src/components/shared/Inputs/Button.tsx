@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import { Button } from 'primereact/button';
 import { createUseStyles } from 'react-jss';
-import COLORS from '../../../../services/colors.service';
+import COLORS from '../../../services/colors.service';
 
 interface PropTypes {
   children: ReactNode;

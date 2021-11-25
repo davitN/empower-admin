@@ -2,71 +2,10 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { Divider } from 'primereact/divider';
 import { createUseStyles } from 'react-jss';
-import COLORS from '../../services/colors.service';
-import TextInput from '../shared/Inputs/TextInput';
-import Button from '../shared/Inputs/Button';
+import COLORS from '../services/colors.service';
+import TextInput from '../components/shared/Inputs/TextInput';
+import Button from '../components/shared/Inputs/Button';
 
-const useStyles = createUseStyles({
-  root: {
-    minWidth: '1300px',
-    overflow: 'auto',
-  },
-  logo: {
-    fontSize: '48px',
-  },
-  header: {
-    maxWidth: '50rem',
-    '& p': {
-      color: COLORS.blueWood,
-    },
-  },
-  title: {
-    color: COLORS.blueWood,
-    letterSpacing: '2px',
-    fontWeight: 400,
-  },
-  container: {
-    maxWidth: '70rem',
-    width: '100%',
-    display: 'grid',
-    gridTemplateColumns: '2fr minmax(0, min-content) 1fr',
-    gap: '1.5rem',
-  },
-  inputClasses: {
-    paddingTop: '1.5rem',
-    '& label': {
-      color: COLORS.blueWood,
-    },
-    '& input': {
-      color: COLORS.blueWood,
-    },
-  },
-  expirationDate: {
-    maxWidth: '3rem',
-    width: '100%',
-  },
-  divider: {
-    '&:before': {
-      borderLeft: '3px solid #dee2e6 !important',
-    },
-  },
-  subTitle: {
-    color: COLORS.blueWood,
-    fontWeight: 600,
-    '& span': {
-      color: COLORS.blueWood,
-      fontWeight: 500,
-    },
-  },
-  button: {
-    backgroundColor: COLORS.lightBlue,
-    color: COLORS.white,
-    '&:hover': {
-      backgroundColor: `${COLORS.lightBlue} !important`,
-      color: `${COLORS.white} !important`,
-    },
-  },
-});
 interface ValuesTypes {
   email: string;
   nameOnCard: string;
@@ -164,3 +103,65 @@ const Payments = () => {
 };
 
 export default Payments;
+
+const useStyles = createUseStyles({
+  root: {
+    minWidth: '1300px',
+    overflow: 'auto',
+  },
+  logo: {
+    fontSize: '48px',
+  },
+  header: {
+    maxWidth: '50rem',
+    '& p': {
+      color: COLORS.blueWood,
+    },
+  },
+  title: {
+    color: COLORS.blueWood,
+    letterSpacing: '2px',
+    fontWeight: 400,
+  },
+  container: {
+    maxWidth: '70rem',
+    width: '100%',
+    display: 'grid',
+    gridTemplateColumns: '2fr minmax(0, min-content) 1fr',
+    gap: '1.5rem',
+  },
+  inputClasses: {
+    paddingTop: '1.5rem',
+    '& label': {
+      color: COLORS.blueWood,
+    },
+    '& input': {
+      color: COLORS.blueWood,
+    },
+  },
+  expirationDate: {
+    maxWidth: '3rem',
+    width: '100%',
+  },
+  divider: {
+    '&:before': {
+      borderLeft: '3px solid #dee2e6 !important',
+    },
+  },
+  subTitle: {
+    color: COLORS.blueWood,
+    fontWeight: 600,
+    '& span': {
+      color: COLORS.blueWood,
+      fontWeight: 500,
+    },
+  },
+  button: {
+    backgroundColor: COLORS.lightBlue,
+    color: COLORS.white,
+    '&:hover': {
+      backgroundColor: `${COLORS.lightBlue} !important`,
+      color: `${COLORS.white} !important`,
+    },
+  },
+});

@@ -13,7 +13,7 @@ import storeRegistry from './store/storeRegistry';
 import Companies from './routes/Companies';
 import AppUsers from './routes/AppUsers';
 import UserManagement from './routes/UserManagement';
-import Payments from './components/Payments';
+import Payments from './routes/Payments';
 
 export const store = configureStore();
 storeRegistry.register(store);
