@@ -17,14 +17,16 @@ function Layout() {
         <div>
           <SideNav />
         </div>
-        {isSignedIn ? <Outlet /> : (
-          <h1 className={classNames(classes.text, 'text-5xl')}>
-            THE POWER OF
-            <span>US</span>
-            BEGINS WITH
-            <span>YOU</span>
-          </h1>
-        )}
+        <div className={classes.content}>
+          {isSignedIn ? <Outlet /> : (
+            <h1 className={classNames(classes.text, 'text-5xl')}>
+              THE POWER OF
+              <span>US</span>
+              BEGINS WITH
+              <span>YOU</span>
+            </h1>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -50,5 +52,9 @@ const useStyles = createUseStyles({
       color: COLORS.orange,
       padding: '0 10px',
     },
+  },
+  content: {
+    height: '100vh',
+    overflow: 'auto',
   },
 });
