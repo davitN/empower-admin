@@ -18,7 +18,7 @@ const ButtonComponent: React.FC<PropTypes> = ({
   const classes = useStyles();
   return (
     <Button disabled={loading || disabled} className={classNames(classes.root, customClasses)} onClick={handleClick}>
-      {loading ? <i className="pi pi-spin pi-spinner" style={{ fontSize: '1.5em' }} /> : children }
+      {loading ? <i className="pi pi-spin pi-spinner" style={{ fontSize: '1.3em' }} /> : children }
     </Button>
   );
 };
