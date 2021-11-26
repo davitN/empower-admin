@@ -9,14 +9,15 @@ interface PropTypes {
   customClasses?: string;
   handleClick?: () => void;
   loading?: boolean,
+  disabled?: boolean,
 }
 
 const ButtonComponent: React.FC<PropTypes> = ({
-  children, customClasses, handleClick, loading,
+  children, customClasses, handleClick, loading, disabled,
 }) => {
   const classes = useStyles();
   return (
-    <Button disabled={loading} className={classNames(classes.root, customClasses)} onClick={handleClick}>
+    <Button disabled={loading || disabled} className={classNames(classes.root, customClasses)} onClick={handleClick}>
       {loading ? <i className="pi pi-spin pi-spinner" style={{ fontSize: '1.5em' }} /> : children }
     </Button>
   );

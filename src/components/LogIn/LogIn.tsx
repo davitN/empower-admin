@@ -42,7 +42,7 @@ const Auth = () => {
           type="password"
           customClasses="p-mt-4"
         />
-        <Button customClasses="p-mt-4" handleClick={handleAuth} loading={loading}>Log In </Button>
+        <Button customClasses="p-mt-4" handleClick={handleAuth} loading={loading} disabled={!values.email || !values.password}>Log In </Button>
       </div>
     </div>
   );
