@@ -1,11 +1,13 @@
 export interface IUserData {
-  _id: string;
-  accessToken: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  companyCode: string;
+  accessToken: string,
+  email: string
+  firstName: string
+  id: string | null
+  lastName: string
+  phone: string
+  role: { _id: string, name: string, description: string }
+  description:string
+  name: string
 }
 
 export interface NotificationManager {

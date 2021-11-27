@@ -10,17 +10,7 @@ export const REQUEST_SIGN_UP_SG = 'socialize/auth/requestSignUp_sg';
 export const LOGOUT = 'socialize/auth/logout';
 
 const initialState: UserData = {
-  userData: {
-    accessToken: '',
-    email: '',
-    firstName: '',
-    id: null,
-    lastName: '',
-    phone: '',
-    role: { _id: '', name: '', description: '' },
-    description: '',
-    name: '',
-  },
+  userData: { },
 };
 
 export const authReducer = (state = initialState, action: AnyAction) => {

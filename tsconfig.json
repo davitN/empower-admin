@@ -20,5 +20,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["**/*.ts", "**/*.tsx", "src/routes/Companies.js"],
+  "include": ["**/*.ts", "**/*.tsx"],
 }

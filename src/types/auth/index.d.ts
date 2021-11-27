@@ -23,5 +23,5 @@ export interface UserData {
     role: { _id: string, name: string, description: string }
     description:string
     name: string
-  }
+  } | {}
 }
