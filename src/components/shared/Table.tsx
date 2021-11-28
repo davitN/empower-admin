@@ -3,6 +3,7 @@ import { createUseStyles } from 'react-jss';
 import { DataTable } from 'primereact/datatable';
 import { Paginator } from 'primereact/paginator';
 import { Column } from 'primereact/column';
+import { Skeleton } from 'primereact/skeleton';
 import { useState } from 'react';
 import classNames from 'classnames';
 import COLORS from '../../services/colors.service';
@@ -71,23 +72,25 @@ const Table = ({
         </div>
       </div>
       <DataTable
-        value={data}
+        value={data || new Array(5).fill(0)}
         responsiveLayout="scroll"
         rows={10}
-        loading={!data}
         tableClassName={classes.table}
       >
-        {header.map(({ name, field }) => <Column field={field} header={name} key={field} />)}
-        <Column body={editAction} header="Settings" />
+        {data && header.map(({ name, field }) => <Column field={field} header={name} key={field} />)}
+        {!data && header.map(({ name, field }) => <Column field={field} header={name} key={field} body={<Skeleton />} />)}
+        <Column body={data ? editAction : <Skeleton />} header="Settings" />
       </DataTable>
-      <Paginator
-        template="PrevPageLink PageLinks NextPageLink"
-        className={classes.paginator}
-        first={currentPage}
-        rows={10}
-        totalRecords={data?.length || 0}
-        onPageChange={handleChange}
-      />
+      {data && (
+        <Paginator
+          template="PrevPageLink PageLinks NextPageLink"
+          className={classes.paginator}
+          first={currentPage}
+          rows={10}
+          totalRecords={data?.length || 0}
+          onPageChange={handleChange}
+        />
+      )}
     </div>
   );
 };
@@ -104,7 +107,6 @@ const useStyles = createUseStyles({
     },
   },
   table: {
-    minHeight: '30rem',
     '& > thead > tr > th': {
       background: 'transparent !important',
       color: `${COLORS.blueWood} !important`,
@@ -125,6 +127,7 @@ const useStyles = createUseStyles({
     '& > tbody > tr > td:last-child': {
       paddingTop: '0 !important',
       paddingBottom: '0 !important',
+      textAlign: 'center',
     },
   },
   actionButton: {
