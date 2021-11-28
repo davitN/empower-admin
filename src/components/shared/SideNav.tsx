@@ -52,9 +52,11 @@ const useStyles = createUseStyles({
     color: COLORS.white,
   },
   li: {
-    borderTop: `1px solid ${COLORS.white}`,
-    borderBottom: `1px solid ${COLORS.white}`,
+    borderTop: `2px solid ${COLORS.white}`,
     padding: '1rem',
+    '&:last-child': {
+      borderBottom: `2px solid ${COLORS.white}`,
+    },
   },
   ul: { listStyleType: 'none' },
 });

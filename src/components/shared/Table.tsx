@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import COLORS from '../../services/colors.service';
 import ButtonComponent from './Inputs/Button';
 import Input from './Inputs/TextInput';
+import Title from './Title';
 
 interface PropTyoes {
   data: any,
@@ -18,10 +19,12 @@ interface PropTyoes {
   handlePageChange?: (page: number) => void,
   handleEdit?: (data: any) => void,
   handleAdd?: () => void,
+  tableTitle?: string,
+  handleSearch?: (keyword: string) => void
 }
 
 const Table = ({
-  data, header, handlePageChange, handleEdit, handleAdd,
+  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch,
 }: PropTyoes) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -43,21 +46,29 @@ const Table = ({
   return (
     <div className={classes.tableContainer}>
       <div className={classes.header}>
-        <Input
-          icon={<i className="pi pi-search" />}
-          placeholder="Search..."
-          value={value}
-          handleChange={(val) => setValue(val)}
-          customClasses={classes.input}
-        />
-        <ButtonComponent
-          bgColor={COLORS.lightBlue}
-          textColor={COLORS.white}
-          customClasses={classNames(classes.button, 'p-ml-5')}
-          handleClick={handleAdd || undefined}
-        >
-          + Add User
-        </ButtonComponent>
+        {tableTitle && <Title title={tableTitle} fontSize="text-4xl" />}
+        <div className={classNames(classes.wrapper, 'p-ml-4')}>
+          <Input
+            icon={<i className="pi pi-search" />}
+            placeholder="Search..."
+            value={value}
+            handleChange={(val) => {
+              setValue(val);
+              if (handleSearch) {
+                handleSearch(val);
+              }
+            }}
+            customClasses={classes.input}
+          />
+          <ButtonComponent
+            bgColor={COLORS.lightBlue}
+            textColor={COLORS.white}
+            customClasses={classNames(classes.button, 'p-ml-5')}
+            handleClick={handleAdd || undefined}
+          >
+            + Add User
+          </ButtonComponent>
+        </div>
       </div>
       <DataTable
         value={data}
@@ -88,9 +99,6 @@ const useStyles = createUseStyles({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
     '& > .p-datatable ': {
       width: '100%',
     },
@@ -172,10 +180,15 @@ const useStyles = createUseStyles({
   },
   header: {
     width: '100%',
-    display: 'flex',
-    justifyContent: 'flex-end',
     margin: '1rem 0',
+    display: 'flex',
+    justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  wrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    marginLeft: 'auto',
   },
   input: {
     maxWidth: '16rem',
