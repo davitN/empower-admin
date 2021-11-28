@@ -30,7 +30,7 @@ ReactDOM.render(
             <Route path="companies" element={<WithAuth><Companies /></WithAuth>} />
             <Route path="app-users" element={<WithAuth><AppUsers /></WithAuth>} />
             <Route path="user-management" element={<WithAuth><UserManagement /></WithAuth>} />
-            <Route path="/payments" element={<WithAuth><Payments /></WithAuth>} />
+            <Route path="payments" element={<WithAuth><Payments /></WithAuth>} />
             <Route
               path="*"
               element={(
