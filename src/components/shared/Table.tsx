@@ -1,12 +1,18 @@
-/* eslint-disable react/no-unstable-nested-components */
 import { createUseStyles } from 'react-jss';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import React from 'react';
 import COLORS from '../../services/colors.service';
 import ButtonComponent from './Inputs/Button';
 
-const Table = ({ data }: { data: any }) => {
+interface PropTyoes {
+  data: any,
+  header: Array<{
+    name: string,
+    field: string
+  }>
+}
+
+const Table = ({ data, header }: PropTyoes) => {
   const classes = useStyles();
 
   const editAction = (rowData: any) => (
@@ -24,10 +30,7 @@ const Table = ({ data }: { data: any }) => {
         loading={!data}
         tableClassName={classes.table}
       >
-        <Column field="name" header="COMPANY" />
-        <Column field="code" header="COMPANY ID" />
-        <Column field="locations" header="LOCATIONS" />
-        <Column field="userCount" header="USERS" />
+        {header.map(({ name, field }) => <Column field={field} header={name} />)}
         <Column body={editAction} header="Settings" />
       </DataTable>
     </div>
