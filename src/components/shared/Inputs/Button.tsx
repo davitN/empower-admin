@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import { Button } from 'primereact/button';
@@ -10,39 +11,62 @@ interface PropTypes {
   handleClick?: () => void;
   loading?: boolean,
   disabled?: boolean,
+  bgColor?: string,
+  textColor?: string,
+  borderColor?: string,
 }
 
 const ButtonComponent: React.FC<PropTypes> = ({
-  children, customClasses, handleClick, loading, disabled,
+  children,
+  customClasses,
+  handleClick,
+  loading,
+  disabled,
+  bgColor = COLORS.white,
+  textColor = COLORS.blueWood,
+  borderColor = 'transparent',
 }) => {
-  const classes = useStyles();
+  // @ts-ignore
+  const classes = useStyles({
+    bgColor, textColor, borderColor,
+  });
+
   return (
-    <Button disabled={loading || disabled} className={classNames(classes.root, customClasses)} onClick={handleClick}>
+    <Button disabled={loading || disabled} className={classNames(customClasses, classes.root)} onClick={handleClick}>
       {loading ? <i className="pi pi-spin pi-spinner" style={{ fontSize: '1.3em' }} /> : children }
     </Button>
   );
 };
 export default ButtonComponent;
 
-const useStyles = createUseStyles({
-  root: {
-    color: '#87BCBF',
-    backgroundColor: COLORS.white,
+const styles = () => ({
+  root: ({
+    bgColor, textColor, borderColor,
+  }: any) => ({
+    color: textColor,
+    backgroundColor: bgColor,
+    border: '1px solid transparent',
     width: '100%',
     fontWeight: 600,
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-    borderColor: '#87BCBF',
     '&:hover': {
-      background: `${COLORS.white} !important`,
-      color: '#87BCBF !important',
-      borderColor: '#87BCBF !important',
+      background: `${bgColor} !important`,
+      color: `${textColor} !important`,
+      border: `1px solid ${borderColor} !important`,
     },
     '&:focus': {
-      boxShadow: '0 0 0 0.2rem #04b6bfad !important',
-      borderColor: `${COLORS.lightBlue} !important`,
+      boxShadow: 'none !important',
+      border: `1px solid ${borderColor} !important`,
     },
-  },
+    '&:active': {
+      background: `${bgColor} !important`,
+      color: `${textColor} !important`,
+      border: `1px solid ${borderColor} !important`,
+    },
+  }),
 });
+
+const useStyles = createUseStyles(styles);

@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, ReactNode } from 'react';
 import { InputText } from 'primereact/inputtext';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
@@ -11,20 +11,22 @@ interface PropsTypes {
   placeholder?: string;
   type?: string;
   customClasses?: string;
+  icon?: ReactNode
 }
 
-const TextInput: React.FC<PropsTypes> = ({
-  value, handleChange, label, placeholder, type = 'text', customClasses,
+const TextInput: FC<PropsTypes> = ({
+  value, handleChange, label, placeholder, type = 'text', customClasses, icon,
 }) => {
   const classes = useStyles();
 
   return (
-    <span className={classNames('p-field p-mb-0', customClasses)}>
+    <span className={classNames('p-field p-mb-0', icon && 'p-input-icon-left', customClasses)}>
       {label && (
         <label htmlFor="label" className="p-pl-1">
           {label}
         </label>
       )}
+      {icon && icon}
       <InputText
         id="label"
         value={value || ''}

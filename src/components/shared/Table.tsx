@@ -4,8 +4,10 @@ import { DataTable } from 'primereact/datatable';
 import { Paginator } from 'primereact/paginator';
 import { Column } from 'primereact/column';
 import { useState } from 'react';
+import classNames from 'classnames';
 import COLORS from '../../services/colors.service';
 import ButtonComponent from './Inputs/Button';
+import Input from './Inputs/TextInput';
 
 interface PropTyoes {
   data: any,
@@ -13,21 +15,50 @@ interface PropTyoes {
     name: string,
     field: string
   }>
+  handlePageChange?: (page: number) => void,
+  handleEdit?: (data: any) => void,
+  handleAdd?: () => void,
 }
 
-const Table = ({ data, header }: PropTyoes) => {
+const Table = ({
+  data, header, handlePageChange, handleEdit, handleAdd,
+}: PropTyoes) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [value, setValue] = useState<string>('');
 
   const editAction = (rowData: any) => (
-    <ButtonComponent customClasses={classes.actionButton} handleClick={() => console.log(rowData)}><i className="pi pi-cog" /></ButtonComponent>
+    <ButtonComponent customClasses={classes.actionButton} handleClick={handleEdit ? () => handleEdit(rowData) : undefined}>
+      <i className="pi pi-cog" />
+    </ButtonComponent>
   );
 
-  const handlePageChange = (e: any) => {
-    setCurrentPage(e.first);
+  const handleChange = ({ first, page }: { first: number, page: number }) => {
+    setCurrentPage(first);
+    if (handlePageChange) {
+      handlePageChange(page);
+    }
   };
+
   return (
     <div className={classes.tableContainer}>
+      <div className={classes.header}>
+        <Input
+          icon={<i className="pi pi-search" />}
+          placeholder="Search..."
+          value={value}
+          handleChange={(val) => setValue(val)}
+          customClasses={classes.input}
+        />
+        <ButtonComponent
+          bgColor={COLORS.lightBlue}
+          textColor={COLORS.white}
+          customClasses={classNames(classes.button, 'p-ml-5')}
+          handleClick={handleAdd || undefined}
+        >
+          + Add User
+        </ButtonComponent>
+      </div>
       <DataTable
         value={data}
         responsiveLayout="scroll"
@@ -35,10 +66,17 @@ const Table = ({ data, header }: PropTyoes) => {
         loading={!data}
         tableClassName={classes.table}
       >
-        {header.map(({ name, field }) => <Column field={field} header={name} />)}
+        {header.map(({ name, field }) => <Column field={field} header={name} key={field} />)}
         <Column body={editAction} header="Settings" />
       </DataTable>
-      <Paginator template="PrevPageLink PageLinks NextPageLink" className={classes.paginator} first={currentPage} rows={10} totalRecords={120} onPageChange={handlePageChange} />
+      <Paginator
+        template="PrevPageLink PageLinks NextPageLink"
+        className={classes.paginator}
+        first={currentPage}
+        rows={10}
+        totalRecords={data?.length || 0}
+        onPageChange={handleChange}
+      />
     </div>
   );
 };
@@ -58,6 +96,7 @@ const useStyles = createUseStyles({
     },
   },
   table: {
+    minHeight: '30rem',
     '& > thead > tr > th': {
       background: 'transparent !important',
       color: `${COLORS.blueWood} !important`,
@@ -130,5 +169,33 @@ const useStyles = createUseStyles({
         fontWeight: '700 !important',
       },
     },
+  },
+  header: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: '1rem 0',
+    alignItems: 'center',
+  },
+  input: {
+    maxWidth: '16rem',
+    '& > input': {
+      borderRadius: '1rem',
+      paddingTop: '0.5rem !important',
+      paddingBottom: '0.5rem !important',
+      border: `2px solid ${COLORS.blueWood} !important`,
+      color: `${COLORS.blueWood} !important`,
+      '&:hover': {
+        border: `2px solid ${COLORS.blueWood} !important`,
+      },
+      '&:focus': {
+        boxShadow: 'none !important',
+        border: `2px solid ${COLORS.blueWood} !important`,
+      },
+    },
+  },
+  button: {
+    maxWidth: 'max-content',
+    padding: '0.5rem 2rem !important',
   },
 });
