@@ -18,7 +18,7 @@ const SideNav = () => {
       {isSignedIn ? (
         <ul className={classNames('p-pt-6 p-pl-0', classes.ul)}>
           {routes.map(({ title, path }) => (
-            <li className={classNames(classes.li, pathname === path && 'p-text-bold')} key={path}>
+            <li className={classNames(classes.li, pathname.includes(path) && 'p-text-bold')} key={path}>
               <Link to={path} className={classes.link}>
                 {title}
               </Link>
