@@ -53,7 +53,7 @@ const tableHeaders = [
   },
   {
     name: 'LOCATIONS',
-    field: 'locations',
+    field: 'locationCount',
   },
   {
     name: 'USERS',
