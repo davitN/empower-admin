@@ -21,7 +21,7 @@ export const companiesReducer = (state = initialState, action: AnyAction) => {
     case GET_COMPANIES_FAILED:
       return {
         ...initialState,
-        companies: [],
+        companies: null,
         isFailed: true,
       };
     default:

@@ -72,7 +72,7 @@ const Table = ({
         </div>
       </div>
       <DataTable
-        value={data || new Array(5).fill(0)}
+        value={isError ? [] : (data || new Array(5).fill(0))}
         responsiveLayout="scroll"
         rows={10}
         tableClassName={classes.table}
