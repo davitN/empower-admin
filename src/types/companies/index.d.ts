@@ -3,7 +3,7 @@ export interface GetDataOptions {
   limit: number
 }
 
-export interface DataTypes {
+export interface CompanyItem {
   code: string
   createdAt: string
   individualLocationPaymentPage: string
@@ -21,4 +21,8 @@ export interface DataTypes {
   userCount: number
   __v: number
   _id: string
+}
+
+export interface InitialState {
+  companies: CompanyItem[];
 }

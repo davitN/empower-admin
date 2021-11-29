@@ -1,25 +1,28 @@
 import { AnyAction } from 'redux';
-import { GetDataOptions, DataTypes } from '../../types/companies';
+import { GetDataOptions, CompanyItem, InitialState } from '../../types/companies';
 
 export const GET_COMPANIES = 'socialize/companies/getCompanies';
 export const SET_COMPANIES = 'socialize/companies/setCompanies';
 
-const initialState: Array<DataTypes> | null = null;
+const initialState: InitialState = {
+  companies: [],
+};
 
 export const companiesReducer = (state = initialState, action: AnyAction) => {
+  const { payload } = action;
   switch (action.type) {
     case SET_COMPANIES:
-      return [
-        ...action.data,
-      ];
+      return {
+        companies: (payload as CompanyItem[]),
+      };
     default:
       return state;
   }
 };
 
-export const setCompanies = (data: Array<DataTypes>) => ({
+export const setCompanies = (companies: CompanyItem[]) => ({
   type: SET_COMPANIES,
-  data,
+  payload: companies,
 });
 
 export const getCompanies = (data: GetDataOptions, callback?: Function) => ({

@@ -22,6 +22,10 @@ const Auth = () => {
     dispatch(signInActionSG(values, () => setLoading(false)));
   };
 
+  const disableSubmit = () => {
+    return !values.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/) || !values.password;
+  };
+
   return (
     <div className={classes.root}>
       <h1 className="text-3xl p-flex-initial flex-column p-mb-2">LOG IN</h1>
@@ -42,7 +46,7 @@ const Auth = () => {
           type="password"
           customClasses="p-mt-4"
         />
-        <Button customClasses="p-mt-4" handleClick={handleAuth} loading={loading} disabled={!values.email || !values.password}>Log In </Button>
+        <Button customClasses="p-mt-4" handleClick={handleAuth} loading={loading} disabled={disableSubmit()}>Log In </Button>
       </div>
     </div>
   );

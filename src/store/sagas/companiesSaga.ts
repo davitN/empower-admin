@@ -3,11 +3,11 @@
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
 import { setCompanies } from '../ducks/companiesDuck';
-import { DataTypes } from '../../types/companies';
+import { CompanyItem } from '../../types/companies';
 
 export function* getCompanies(action: any) {
   try {
-    const data: Array<DataTypes> = yield axiosInstance.get('/company/get_companies', {
+    const data: CompanyItem[] = yield axiosInstance.get('/company/get_companies', {
       params: action.data,
     });
     yield put(setCompanies(data));
