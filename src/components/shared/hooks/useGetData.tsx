@@ -4,10 +4,13 @@ import { useDispatch } from 'react-redux';
 interface PropTypes {
   getDataAction: Function,
   resetState: Function,
-  LIMIT?: number
+  LIMIT?: number,
+  resetOnUnmount?: boolean
 }
 
-const useGetData = ({ getDataAction, resetState, LIMIT = 10 }: PropTypes) => {
+const useGetData = ({
+  getDataAction, resetState, LIMIT = 10, resetOnUnmount,
+}: PropTypes) => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState<string | null>(null);
 
@@ -40,6 +43,7 @@ const useGetData = ({ getDataAction, resetState, LIMIT = 10 }: PropTypes) => {
       offset: 0,
       searchWord: searchValue,
     }));
+    return resetOnUnmount ? () => dispatch(resetState()) : undefined;
   }, []);
 
   return {

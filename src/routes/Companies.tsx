@@ -20,6 +20,7 @@ const Companies = () => {
     getDataAction: getCompanies,
     resetState: resetCompaniesState,
     LIMIT,
+    resetOnUnmount: true,
   });
 
   return (

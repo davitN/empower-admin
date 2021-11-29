@@ -28,6 +28,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'default-param-last':'off',
     "@typescript-eslint/no-unused-expressions":'off',
+    "consistent-return": "off",
     '@typescript-eslint/ban-types': [
       'error',
       {
