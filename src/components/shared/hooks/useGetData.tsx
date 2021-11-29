@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-const INITIAL_PAGE = 1;
-
 interface PropTypes {
   getDataAction: Function,
   resetState: Function,
@@ -14,7 +12,7 @@ const useGetData = ({ getDataAction, resetState, LIMIT = 10 }: PropTypes) => {
   const [searchValue, setSearchValue] = useState<string | null>(null);
 
   const handleSearch = (val: string) => {
-    if (val) {
+    if (val?.length > 0) {
       setSearchValue(val);
     } else {
       dispatch(resetState());
@@ -22,8 +20,8 @@ const useGetData = ({ getDataAction, resetState, LIMIT = 10 }: PropTypes) => {
     }
     dispatch(getDataAction({
       limit: LIMIT,
-      offset: (INITIAL_PAGE - 1) * LIMIT,
-      searchWord: val,
+      offset: 0,
+      searchWord: val || null,
     }));
   };
 
