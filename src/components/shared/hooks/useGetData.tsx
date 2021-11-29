@@ -23,7 +23,7 @@ const useGetData = ({ getDataAction, resetState, LIMIT = 10 }: PropTypes) => {
     dispatch(getDataAction({
       limit: LIMIT,
       offset: (INITIAL_PAGE - 1) * LIMIT,
-      searchWord: searchValue,
+      searchWord: val,
     }));
   };
 
