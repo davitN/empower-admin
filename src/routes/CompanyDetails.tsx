@@ -146,6 +146,7 @@ export default CompanyDetails;
 const useStyles = createUseStyles({
   root: {
     width: '100%',
+    minWidth: '950px',
   },
   textColor: {
     color: COLORS.blueWood,
