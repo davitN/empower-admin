@@ -1,12 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Title from '../components/shared/Title';
 import COLORS from '../services/colors.service';
 import TextInput from '../components/shared/Inputs/TextInput';
 import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 import Label from '../components/shared/Inputs/Label';
+import { getCompanyDetails } from '../store/ducks/companyDetailsDuck';
 
 interface InputsTypes {
   companyName: string,
@@ -15,12 +17,19 @@ interface InputsTypes {
 
 const CompanyDetails = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { id: companyId } = useParams();
   const [values, setValues] = useState<InputsTypes>({
     companyName: '',
-    payment: 'all',
+    payment: '',
   });
   // const isCompanyNew = companyId === 'new';
+
+  useEffect(() => {
+    if (companyId !== 'new' && typeof companyId === 'string') {
+      dispatch(getCompanyDetails(companyId));
+    }
+  }, [companyId]);
 
   return (
     <div className={classNames('p-p-6', classes.root)}>
@@ -45,14 +54,14 @@ const CompanyDetails = () => {
           <div className="p-d-flex">
             <RadioButtonComponent
               label="Company pay for all"
-              checked={values.payment === 'all'}
-              onChange={() => setValues({ ...values, payment: 'all' })}
+              checked={values.payment === 'COMPANY_PAY_FOR_ALL'}
+              onChange={() => setValues({ ...values, payment: 'COMPANY_PAY_FOR_ALL' })}
               costumeClasses="p-mr-6"
             />
             <RadioButtonComponent
               label="Individual locations pay"
-              checked={values.payment !== 'all'}
-              onChange={() => setValues({ ...values, payment: 'individual' })}
+              checked={values.payment === 'INDIVIDUAL_LOCATIONS_PAY'}
+              onChange={() => setValues({ ...values, payment: 'INDIVIDUAL_LOCATIONS_PAY' })}
             />
           </div>
         </div>

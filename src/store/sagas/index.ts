@@ -6,6 +6,8 @@ import {
 } from '../ducks/authDuck';
 import { GET_COMPANIES } from '../ducks/companiesDuck';
 import { getCompanies } from './companiesSaga';
+import { getCompanyDetails } from './companyDetailsSaga';
+import { GET_COMPANY_DETAILS } from '../ducks/companyDetailsDuck';
 
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
@@ -13,6 +15,7 @@ function* actionWatcher() {
   yield takeLatest(REQUEST_SIGN_UP_SG, signUpSaga);
   yield takeLatest(LOGOUT, logoutSaga);
   yield takeLatest(GET_COMPANIES, getCompanies);
+  yield takeLatest(GET_COMPANY_DETAILS, getCompanyDetails);
 }
 
 export default function* rootSaga() {
