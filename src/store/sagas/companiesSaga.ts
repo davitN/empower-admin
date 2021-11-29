@@ -7,13 +7,15 @@ import { CompanyItem, GetDataOptions } from '../../types/companies';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
 
-export function* getCompanies({ data }:{ data: GetDataOptions, callbacks: CallBacks, type:string }) {
+export function* getCompanies({ data, callbacks }:{ data: GetDataOptions, callbacks: CallBacks, type:string }) {
   try {
     const res: CompanyItem[] = yield axiosInstance.get('/company/get_companies', {
       params: data,
     });
     yield put(setCompanies(res));
+    callbacks?.success && callbacks.success();
   } catch (error: any) {
+    callbacks?.error && callbacks.error();
     yield put(
       notifyAction({
         type: 'error',

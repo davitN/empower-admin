@@ -27,6 +27,7 @@ module.exports = {
     'max-len': 'off',
     'react/require-default-props': 'off',
     'default-param-last':'off',
+    "@typescript-eslint/no-unused-expressions":'off',
     '@typescript-eslint/ban-types': [
       'error',
       {
