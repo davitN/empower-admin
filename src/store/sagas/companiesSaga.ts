@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
-import { setCompanies, getCompaniesFailed } from '../ducks/companiesDuck';
+import { setCompanies } from '../ducks/companiesDuck';
 import { CompanyItem, GetDataOptions } from '../../types/companies';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
@@ -16,7 +16,6 @@ export function* getCompanies({ data, callbacks }:{ data: GetDataOptions, callba
     callbacks?.success && callbacks.success();
   } catch (error: any) {
     callbacks?.error && callbacks.error();
-    yield put(getCompaniesFailed());
     yield put(
       notifyAction({
         type: 'error',

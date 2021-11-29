@@ -22,11 +22,10 @@ interface PropTypes {
   handleAdd?: () => void,
   tableTitle?: string,
   handleSearch?: (keyword: string) => void,
-  isError: boolean
 }
 
 const Table = ({
-  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, isError,
+  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch,
 }: PropTypes) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -72,11 +71,11 @@ const Table = ({
         </div>
       </div>
       <DataTable
-        value={isError ? [] : (data || new Array(5).fill(0))}
+        value={(data || new Array(5).fill(0))}
         responsiveLayout="scroll"
         rows={10}
         tableClassName={classes.table}
-        emptyMessage={isError ? 'Something went wrong...' : 'Data not found...'}
+        emptyMessage="Data not found..."
       >
         {data && header.map(({ name, field }) => <Column field={field} header={name} key={field} />)}
         {!data && header.map(({ name, field }) => <Column field={field} header={name} key={field} body={<Skeleton />} />)}

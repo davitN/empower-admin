@@ -11,7 +11,7 @@ import COLORS from '../services/colors.service';
 const Companies = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { companies, isFailed: getCompaniesFailed } = useSelector((state: RootState) => state.companiesReducer);
+  const { companies } = useSelector((state: RootState) => state.companiesReducer);
   const classes = useStyles();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Companies = () => {
 
   return (
     <div className={classes.root}>
-      <Table isError={getCompaniesFailed} data={companies} header={tableHeaders} tableTitle="COMPANIES" handleEdit={({ _id }) => navigate(_id)} />
+      <Table data={companies} header={tableHeaders} tableTitle="COMPANIES" handleEdit={({ _id }) => navigate(_id)} />
     </div>
   );
 };

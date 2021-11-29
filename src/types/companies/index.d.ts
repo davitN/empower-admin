@@ -25,5 +25,4 @@ export interface CompanyItem {
 
 export interface InitialState {
   companies: CompanyItem[] | null;
-  isFailed: boolean
 }
