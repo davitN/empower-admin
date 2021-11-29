@@ -4,9 +4,11 @@ import { CallBacks } from '../../types/main';
 
 export const GET_COMPANIES = 'socialize/companies/getCompanies';
 export const SET_COMPANIES = 'socialize/companies/setCompanies';
+export const GET_COMPANIES_FAILED = 'socialize/companies/getCompaniesFailed';
 
 const initialState: InitialState = {
-  companies: [],
+  companies: null,
+  isFailed: false,
 };
 
 export const companiesReducer = (state = initialState, action: AnyAction) => {
@@ -15,6 +17,12 @@ export const companiesReducer = (state = initialState, action: AnyAction) => {
     case SET_COMPANIES:
       return {
         companies: (payload as CompanyItem[]),
+      };
+    case GET_COMPANIES_FAILED:
+      return {
+        ...initialState,
+        companies: [],
+        isFailed: true,
       };
     default:
       return state;
@@ -30,4 +38,8 @@ export const getCompanies = (data: GetDataOptions, callbacks?: CallBacks) => ({
   type: GET_COMPANIES,
   data,
   callbacks,
+});
+
+export const getCompaniesFailed = () => ({
+  type: GET_COMPANIES_FAILED,
 });

@@ -21,11 +21,12 @@ interface PropTypes {
   handleEdit?: (data: any) => void,
   handleAdd?: () => void,
   tableTitle?: string,
-  handleSearch?: (keyword: string) => void
+  handleSearch?: (keyword: string) => void,
+  isError: boolean
 }
 
 const Table = ({
-  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch,
+  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, isError,
 }: PropTypes) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -43,7 +44,6 @@ const Table = ({
       handlePageChange(page);
     }
   };
-
   return (
     <div className={classes.tableContainer}>
       <div className={classes.header}>
@@ -76,12 +76,13 @@ const Table = ({
         responsiveLayout="scroll"
         rows={10}
         tableClassName={classes.table}
+        emptyMessage={isError ? 'Something went wrong...' : 'Data not found...'}
       >
         {data && header.map(({ name, field }) => <Column field={field} header={name} key={field} />)}
         {!data && header.map(({ name, field }) => <Column field={field} header={name} key={field} body={<Skeleton />} />)}
         <Column body={data ? editAction : <Skeleton />} header="Settings" />
       </DataTable>
-      {data && (
+      {data?.length > 0 && (
         <Paginator
           template="PrevPageLink PageLinks NextPageLink"
           className={classes.paginator}
@@ -128,6 +129,9 @@ const useStyles = createUseStyles({
       paddingTop: '0 !important',
       paddingBottom: '0 !important',
       textAlign: 'center',
+    },
+    '& > tbody > .p-datatable-emptymessage > td': {
+      height: '10rem',
     },
   },
   actionButton: {
