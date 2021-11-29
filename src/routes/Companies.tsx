@@ -8,13 +8,18 @@ import { RootState } from '../store/configureStore';
 import COLORS from '../services/colors.service';
 import useGetData from '../components/shared/hooks/useGetData';
 
+const LIMIT = 8;
+
 const Companies = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const { companies } = useSelector((state: RootState) => state.companiesReducer);
-  const { searchValue, handleSearch } = useGetData({
+  const {
+    searchValue, handleSearch, handlePageChange,
+  } = useGetData({
     getDataAction: getCompanies,
     resetState: resetCompaniesState,
+    LIMIT,
   });
 
   return (
@@ -26,6 +31,8 @@ const Companies = () => {
         header={tableHeaders}
         tableTitle="COMPANIES"
         handleEdit={({ _id }) => navigate(_id)}
+        LIMIT={LIMIT}
+        handlePageChange={(val) => handlePageChange(val)}
       />
     </div>
   );

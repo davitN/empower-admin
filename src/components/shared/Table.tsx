@@ -4,8 +4,8 @@ import { DataTable } from 'primereact/datatable';
 import { Paginator } from 'primereact/paginator';
 import { Column } from 'primereact/column';
 import { Skeleton } from 'primereact/skeleton';
-import { useState } from 'react';
 import classNames from 'classnames';
+import { useState } from 'react';
 import COLORS from '../../services/colors.service';
 import ButtonComponent from './Inputs/Button';
 import Input from './Inputs/TextInput';
@@ -22,14 +22,15 @@ interface PropTypes {
   handleAdd?: () => void,
   tableTitle?: string,
   handleSearch?: (keyword: string) => void,
-  searchValue: string
+  searchValue: string,
+  LIMIT?: number,
 }
 
 const Table = ({
-  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, searchValue,
+  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, searchValue, LIMIT = 10,
 }: PropTypes) => {
   const classes = useStyles();
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(0);
 
   const editAction = (rowData: any) => (
     <ButtonComponent customClasses={classes.actionButton} handleClick={handleEdit ? () => handleEdit(rowData) : undefined}>
@@ -37,12 +38,13 @@ const Table = ({
     </ButtonComponent>
   );
 
-  const handleChange = ({ first, page }: { first: number, page: number }) => {
-    setCurrentPage(first);
+  const handleChange = (val: any) => {
+    setCurrentPage(val.first);
     if (handlePageChange) {
-      handlePageChange(page);
+      handlePageChange(val.page + 1);
     }
   };
+
   return (
     <div className={classes.tableContainer}>
       <div className={classes.header}>
@@ -55,6 +57,7 @@ const Table = ({
             handleChange={(val) => {
               if (handleSearch) {
                 handleSearch(val);
+                setCurrentPage(0);
               }
             }}
             customClasses={classes.input}
@@ -72,7 +75,7 @@ const Table = ({
       <DataTable
         value={(data || new Array(5).fill(0))}
         responsiveLayout="scroll"
-        rows={10}
+        rows={LIMIT}
         tableClassName={classes.table}
         emptyMessage="Data not found..."
       >
@@ -80,13 +83,14 @@ const Table = ({
         {!data && header.map(({ name, field }) => <Column field={field} header={name} key={field} body={<Skeleton />} />)}
         <Column body={data ? editAction : <Skeleton />} header="Settings" />
       </DataTable>
-      {data?.length > 0 && (
+      {data && data?.length > 0 && (
         <Paginator
           template="PrevPageLink PageLinks NextPageLink"
-          className={classes.paginator}
           first={currentPage}
-          rows={10}
-          totalRecords={data?.length || 0}
+          className={classes.paginator}
+          rows={LIMIT}
+          // wait for api to add total record num
+          totalRecords={25}
           onPageChange={handleChange}
         />
       )}
