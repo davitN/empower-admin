@@ -22,14 +22,14 @@ interface PropTypes {
   handleAdd?: () => void,
   tableTitle?: string,
   handleSearch?: (keyword: string) => void,
+  searchValue: string
 }
 
 const Table = ({
-  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch,
+  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, searchValue,
 }: PropTypes) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [value, setValue] = useState<string>('');
 
   const editAction = (rowData: any) => (
     <ButtonComponent customClasses={classes.actionButton} handleClick={handleEdit ? () => handleEdit(rowData) : undefined}>
@@ -51,9 +51,8 @@ const Table = ({
           <Input
             icon={<i className="pi pi-search" />}
             placeholder="Search..."
-            value={value}
+            value={searchValue}
             handleChange={(val) => {
-              setValue(val);
               if (handleSearch) {
                 handleSearch(val);
               }

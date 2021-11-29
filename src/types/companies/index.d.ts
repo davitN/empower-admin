@@ -1,6 +1,7 @@
 export interface GetDataOptions {
   offset: number,
-  limit: number
+  limit: number,
+  searchWord?: string | null
 }
 
 export interface CompanyItem {

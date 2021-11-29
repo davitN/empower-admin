@@ -1,26 +1,32 @@
 /* eslint-disable no-return-assign */
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { createUseStyles } from 'react-jss';
 import { useNavigate } from 'react-router-dom';
 import Table from '../components/shared/Table';
-import { getCompanies } from '../store/ducks/companiesDuck';
+import { getCompanies, resetCompaniesState } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
 import COLORS from '../services/colors.service';
+import useGetData from '../components/shared/hooks/useGetData';
 
 const Companies = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { companies } = useSelector((state: RootState) => state.companiesReducer);
   const classes = useStyles();
-
-  useEffect(() => {
-    dispatch(getCompanies({ offset: 0, limit: 10 }));
-  }, []);
+  const navigate = useNavigate();
+  const { companies } = useSelector((state: RootState) => state.companiesReducer);
+  const { searchValue, handleSearch } = useGetData({
+    getDataAction: getCompanies,
+    resetState: resetCompaniesState,
+  });
 
   return (
     <div className={classes.root}>
-      <Table data={companies} header={tableHeaders} tableTitle="COMPANIES" handleEdit={({ _id }) => navigate(_id)} />
+      <Table
+        searchValue={searchValue || ''}
+        handleSearch={(val) => handleSearch(val)}
+        data={companies}
+        header={tableHeaders}
+        tableTitle="COMPANIES"
+        handleEdit={({ _id }) => navigate(_id)}
+      />
     </div>
   );
 };
