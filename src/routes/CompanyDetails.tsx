@@ -6,6 +6,7 @@ import Title from '../components/shared/Title';
 import COLORS from '../services/colors.service';
 import TextInput from '../components/shared/Inputs/TextInput';
 import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
+import Label from '../components/shared/Inputs/Label';
 
 interface InputsTypes {
   companyName: string,
@@ -39,7 +40,8 @@ const CompanyDetails = () => {
           placeholder="Enter company name..."
           required
         />
-        <div>
+        <div className="p-d-flex p-flex-column">
+          <Label label="Payment" required costumeStyles="p-mb-3" />
           <div className="p-d-flex">
             <RadioButtonComponent
               label="Company pay for all"

@@ -12,7 +12,7 @@ const RadioButtonComponent = ({
   return (
     <div className={classNames('p-field-radiobutton', classes.root, costumeClasses)}>
       <RadioButton id={label} onChange={(e) => onChange(e)} checked={checked} />
-      <Label htmlFor={label} label={label} />
+      <Label htmlFor={label} label={label} costumeStyles="text-sm" />
     </div>
   );
 };
@@ -21,8 +21,18 @@ export default RadioButtonComponent;
 
 const useStyles = createUseStyles({
   root: {
+    '& > .p-radiobutton': {
+      width: '17px',
+      height: '16px',
+    },
     '& > div > .p-radiobutton-box': {
       border: `1px solid ${COLORS.blueWood} !important`,
+      width: '17px',
+      height: '16px',
+      '& > .p-radiobutton-icon': {
+        width: '9px',
+        height: '9px',
+      },
     },
     '& > div > .p-radiobutton-box:focus': {
       boxShadow: 'none !important',

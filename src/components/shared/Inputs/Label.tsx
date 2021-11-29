@@ -8,7 +8,7 @@ const Label = ({
   const classes = useStyles();
 
   return (
-    <label htmlFor={htmlFor} className={classNames(classes.label, costumeStyles, 'text-sm')}>
+    <label htmlFor={htmlFor} className={classNames(classes.label, costumeStyles)}>
       {label}
       {required && <span>*</span>}
     </label>
@@ -20,5 +20,8 @@ export default Label;
 const useStyles = createUseStyles({
   label: {
     color: COLORS.blueWood,
+    '& > span': {
+      color: COLORS.lightBlue,
+    },
   },
 });

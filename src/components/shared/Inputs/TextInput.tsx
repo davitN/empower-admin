@@ -23,7 +23,7 @@ const TextInput: FC<PropsTypes> = ({
   return (
     <span className={classNames('p-field p-mb-0', icon && 'p-input-icon-left', customClasses)}>
       {label && (
-        <label htmlFor="label" className={classNames('p-pl-0', classes.textColor)}>
+        <label htmlFor="label" className={classNames('p-mb-3', classes.textColor)}>
           {label}
           {required && <span>*</span>}
         </label>
