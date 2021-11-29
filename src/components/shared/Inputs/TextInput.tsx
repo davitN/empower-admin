@@ -12,11 +12,12 @@ interface PropsTypes {
   type?: string;
   customClasses?: string;
   icon?: ReactNode
-  required?: boolean
+  required?: boolean,
+  desc?: string
 }
 
 const TextInput: FC<PropsTypes> = ({
-  value, handleChange, label, placeholder, type = 'text', customClasses, icon, required,
+  value, handleChange, label, placeholder, type = 'text', customClasses, icon, required, desc,
 }) => {
   const classes = useStyles();
 
@@ -26,6 +27,7 @@ const TextInput: FC<PropsTypes> = ({
         <label htmlFor="label" className={classNames('p-mb-3', classes.textColor)}>
           {label}
           {required && <span>*</span>}
+          {desc && <p className={classes.desc}>{desc}</p>}
         </label>
       )}
       {icon && icon}
@@ -60,5 +62,11 @@ const useStyles = createUseStyles({
     '& > span': {
       color: COLORS.lightBlue,
     },
+  },
+  desc: {
+    color: COLORS.blueWood,
+    fontSize: '0.65rem',
+    opacity: 0.8,
+    marginTop: '0.3rem',
   },
 });

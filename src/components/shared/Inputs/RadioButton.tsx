@@ -10,9 +10,9 @@ const RadioButtonComponent = ({
   const classes = useStyles();
 
   return (
-    <div className={classNames('p-field-radiobutton', classes.root, costumeClasses)}>
+    <div className={classNames(classes.root, costumeClasses)}>
       <RadioButton id={label} onChange={(e) => onChange(e)} checked={checked} />
-      <Label htmlFor={label} label={label} costumeStyles="text-sm" />
+      <Label htmlFor={label} label={label} costumeStyles="text-sm p-pl-2" />
     </div>
   );
 };
