@@ -74,7 +74,7 @@ const Table = ({
         </div>
       </div>
       <DataTable
-        value={(data || new Array(5).fill(0))}
+        value={(data?.data || new Array(5).fill(0))}
         responsiveLayout="scroll"
         rows={LIMIT}
         tableClassName={classes.table}
@@ -84,14 +84,14 @@ const Table = ({
         {!data && header.map(({ name, field }) => <Column field={field} header={name} key={field} body={<Skeleton />} />)}
         <Column body={data ? editAction : <Skeleton />} header="Settings" />
       </DataTable>
-      {data && data?.length > 0 && (
+      {data && data.data.length > 0 && (
         <Paginator
           template="PrevPageLink PageLinks NextPageLink"
           first={currentPage}
           className={classes.paginator}
           rows={LIMIT}
           // wait for api to add total record num
-          totalRecords={25}
+          totalRecords={data.count}
           onPageChange={handleChange}
         />
       )}

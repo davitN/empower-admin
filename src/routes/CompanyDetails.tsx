@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Title from '../components/shared/Title';
 import COLORS from '../services/colors.service';
 import TextInput from '../components/shared/Inputs/TextInput';
+import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 
 interface InputsTypes {
   companyName: string,
@@ -38,6 +39,21 @@ const CompanyDetails = () => {
           placeholder="Enter company name..."
           required
         />
+        <div>
+          <div className="p-d-flex">
+            <RadioButtonComponent
+              label="Company pay for all"
+              checked={values.payment === 'all'}
+              onChange={() => setValues({ ...values, payment: 'all' })}
+              costumeClasses="p-mr-6"
+            />
+            <RadioButtonComponent
+              label="Individual locations pay"
+              checked={values.payment !== 'all'}
+              onChange={() => setValues({ ...values, payment: 'individual' })}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

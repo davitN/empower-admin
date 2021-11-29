@@ -25,5 +25,8 @@ export interface CompanyItem {
 }
 
 export interface InitialState {
-  companies: CompanyItem[] | null;
+  companies: {
+    data: CompanyItem[] | null,
+    count: number
+  } | null;
 }

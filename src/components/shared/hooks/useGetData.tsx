@@ -39,7 +39,7 @@ const useGetData = ({ getDataAction, resetState, LIMIT = 10 }: PropTypes) => {
   useEffect(() => {
     dispatch(getDataAction({
       limit: LIMIT,
-      offset: LIMIT,
+      offset: 0,
       searchWord: searchValue,
     }));
   }, []);
