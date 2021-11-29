@@ -24,10 +24,11 @@ interface PropTypes {
   handleSearch?: (keyword: string) => void,
   searchValue: string,
   LIMIT?: number,
+  buttonText: string
 }
 
 const Table = ({
-  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, searchValue, LIMIT = 10,
+  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, searchValue, LIMIT = 10, buttonText,
 }: PropTypes) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -48,7 +49,7 @@ const Table = ({
   return (
     <div className={classes.tableContainer}>
       <div className={classes.header}>
-        {tableTitle && <Title title={tableTitle} fontSize="text-4xl" />}
+        {tableTitle && <Title title={tableTitle} costumeStyles="text-4xl" />}
         <div className={classNames(classes.wrapper, 'p-ml-4')}>
           <Input
             icon={<i className="pi pi-search" />}
@@ -68,7 +69,7 @@ const Table = ({
             customClasses={classNames(classes.button, 'p-ml-5')}
             handleClick={handleAdd || undefined}
           >
-            + Add User
+            {buttonText}
           </ButtonComponent>
         </div>
       </div>

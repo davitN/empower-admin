@@ -12,18 +12,20 @@ interface PropsTypes {
   type?: string;
   customClasses?: string;
   icon?: ReactNode
+  required?: boolean
 }
 
 const TextInput: FC<PropsTypes> = ({
-  value, handleChange, label, placeholder, type = 'text', customClasses, icon,
+  value, handleChange, label, placeholder, type = 'text', customClasses, icon, required,
 }) => {
   const classes = useStyles();
 
   return (
     <span className={classNames('p-field p-mb-0', icon && 'p-input-icon-left', customClasses)}>
       {label && (
-        <label htmlFor="label" className="p-pl-1">
+        <label htmlFor="label" className={classNames('p-pl-0', classes.textColor)}>
           {label}
+          {required && <span>*</span>}
         </label>
       )}
       {icon && icon}
@@ -49,8 +51,14 @@ const useStyles = createUseStyles({
       borderColor: `${COLORS.lightBlue} !important`,
     },
     '&:focus': {
-      boxShadow: '0 0 0 0.2rem #04b6bfad !important',
+      boxShadow: 'none !important',
       borderColor: `${COLORS.lightBlue} !important`,
+    },
+  },
+  textColor: {
+    color: COLORS.blueWood,
+    '& > span': {
+      color: COLORS.lightBlue,
     },
   },
 });
