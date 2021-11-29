@@ -1,5 +1,6 @@
 import { AnyAction } from 'redux';
 import { GetDataOptions, CompanyItem, InitialState } from '../../types/companies';
+import { CallBacks } from '../../types/main';
 
 export const GET_COMPANIES = 'socialize/companies/getCompanies';
 export const SET_COMPANIES = 'socialize/companies/setCompanies';
@@ -25,8 +26,8 @@ export const setCompanies = (companies: CompanyItem[]) => ({
   payload: companies,
 });
 
-export const getCompanies = (data: GetDataOptions, callback?: Function) => ({
+export const getCompanies = (data: GetDataOptions, callbacks?: CallBacks) => ({
   type: GET_COMPANIES,
   data,
-  callback,
+  callbacks,
 });

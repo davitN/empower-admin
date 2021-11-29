@@ -1,4 +1,4 @@
-/* eslint-disable react/destructuring-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createUseStyles } from 'react-jss';
 import { DataTable } from 'primereact/datatable';
 import { Paginator } from 'primereact/paginator';
@@ -11,7 +11,7 @@ import ButtonComponent from './Inputs/Button';
 import Input from './Inputs/TextInput';
 import Title from './Title';
 
-interface PropTyoes {
+interface PropTypes {
   data: any,
   header: Array<{
     name: string,
@@ -26,7 +26,7 @@ interface PropTyoes {
 
 const Table = ({
   data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch,
-}: PropTyoes) => {
+}: PropTypes) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [value, setValue] = useState<string>('');

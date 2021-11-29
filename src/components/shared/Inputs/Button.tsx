@@ -26,7 +26,6 @@ const ButtonComponent: React.FC<PropTypes> = ({
   textColor = COLORS.blueWood,
   borderColor = 'transparent',
 }) => {
-  // @ts-ignore
   const classes = useStyles({
     bgColor, textColor, borderColor,
   });
@@ -42,7 +41,7 @@ export default ButtonComponent;
 const styles = () => ({
   root: ({
     bgColor, textColor, borderColor,
-  }: any) => ({
+  }:{ bgColor: string, textColor:string, borderColor:string }) => ({
     color: textColor,
     backgroundColor: bgColor,
     border: '1px solid transparent',

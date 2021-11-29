@@ -3,15 +3,23 @@
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
 import { setCompanies } from '../ducks/companiesDuck';
-import { CompanyItem } from '../../types/companies';
+import { CompanyItem, GetDataOptions } from '../../types/companies';
+import { CallBacks } from '../../types/main';
+import { notifyAction } from '../ducks/mainDuck';
 
-export function* getCompanies(action: any) {
+export function* getCompanies({ data }:{ data: GetDataOptions, callbacks: CallBacks, type:string }) {
   try {
-    const data: CompanyItem[] = yield axiosInstance.get('/company/get_companies', {
-      params: action.data,
+    const res: CompanyItem[] = yield axiosInstance.get('/company/get_companies', {
+      params: data,
     });
-    yield put(setCompanies(data));
-  } catch (error) {
-    console.log(error);
+    yield put(setCompanies(res));
+  } catch (error: any) {
+    yield put(
+      notifyAction({
+        type: 'error',
+        message: error.response?.data.message,
+        showError: false,
+      }),
+    );
   }
 }

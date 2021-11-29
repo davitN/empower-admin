@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux';
+import notificationService from '../../services/notification.service';
 
 export const DEFAULT = 'socialize/main/default';
 export const RESET_STORE = 'socialize/main/resetStore';
@@ -24,6 +25,29 @@ export const mainReducer = (state = initialState, action: AnyAction) => {
     default:
       return state;
   }
+};
+
+export const notifyAction = ({
+  type,
+  message,
+  title,
+  duration,
+  callback,
+  showError,
+}: {
+  type: 'error' | 'info' | 'success' | 'warning';
+  message: string;
+  title?: string | undefined;
+  duration?: number | undefined;
+  callback?: Function | undefined;
+  showError?: boolean;
+}) => {
+  if (!(!showError && type === 'error')) {
+    notificationService[type](message, title, duration, callback);
+  }
+  return {
+    type: DEFAULT,
+  };
 };
 
 export const checkedSignedInAction = (isSignedIn: boolean) => ({
