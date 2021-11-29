@@ -9,7 +9,7 @@ import COLORS from '../services/colors.service';
 import TextInput from '../components/shared/Inputs/TextInput';
 import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 import Label from '../components/shared/Inputs/Label';
-import { getCompanyDetails } from '../store/ducks/companyDetailsDuck';
+import { getCompanyDetails, resetCompanyDetailsState } from '../store/ducks/companyDetailsDuck';
 import { RootState } from '../store/configureStore';
 
 interface InputsTypes {
@@ -51,6 +51,10 @@ const CompanyDetails = () => {
       });
     }
   }, [company]);
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  useEffect(() => () => dispatch(resetCompanyDetailsState()), []);
 
   return (
     <div className={classNames('p-p-6', classes.root)}>
