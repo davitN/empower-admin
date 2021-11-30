@@ -11,6 +11,7 @@ import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 import Label from '../components/shared/Inputs/Label';
 import { getCompanyDetails, resetCompanyDetailsState } from '../store/ducks/companyDetailsDuck';
 import { RootState } from '../store/configureStore';
+import Button from '../components/shared/Inputs/Button';
 
 interface InputsTypes {
   name: string,
@@ -133,9 +134,15 @@ const CompanyDetails = () => {
               </div>
             </>
           )}
-
         </div>
-        <div className={classes.justifyEnd}>left</div>
+        <div className={classes.justifyEnd}>
+          <Label label="Update Company Logo" costumeStyles="text-3xl" required />
+          <div className="p-d-flex p-ai-end p-flex-column">
+            <Button bgColor={COLORS.lightBlue} textColor={COLORS.white} customClasses={classNames(classes.button, 'p-my-3 p-py-2 p-px-4')}>+ Choose</Button>
+            <p className={classes.infoText}>This is the logo that shows on the team screen in the empower app</p>
+            <Button bgColor={COLORS.lightBlue} textColor={COLORS.white} customClasses={classNames(classes.button, 'p-my-3 p-py-2 p-px-4')}>+ Delete Company</Button>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -163,5 +170,13 @@ const useStyles = createUseStyles({
   },
   justifyEnd: {
     justifySelf: 'end',
+  },
+  button: {
+    width: 'max-content',
+  },
+  infoText: {
+    fontSize: '0.73rem',
+    maxWidth: '12rem',
+    color: COLORS.blueWood,
   },
 });
