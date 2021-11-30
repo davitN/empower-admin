@@ -24,11 +24,12 @@ interface PropTypes {
   handleSearch?: (keyword: string) => void,
   searchValue: string,
   LIMIT?: number,
-  buttonText: string
+  buttonText: string,
+  costumeClasses?: string
 }
 
 const Table = ({
-  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, searchValue, LIMIT = 10, buttonText,
+  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, searchValue, LIMIT = 10, buttonText, costumeClasses,
 }: PropTypes) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -45,7 +46,7 @@ const Table = ({
   };
 
   return (
-    <div className={classes.tableContainer}>
+    <div className={classNames(classes.tableContainer, costumeClasses)}>
       <div className={classes.header}>
         {tableTitle && <Title title={tableTitle} costumeStyles="text-4xl" />}
         <div className={classNames(classes.wrapper, 'p-ml-4')}>

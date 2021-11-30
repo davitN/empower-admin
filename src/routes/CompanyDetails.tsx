@@ -14,6 +14,8 @@ import { RootState } from '../store/configureStore';
 import Button from '../components/shared/Inputs/Button';
 import { CompanyItem } from '../types/companies';
 import ImgPreview from '../components/ImgPreview/ImgPreview';
+import Table from '../components/shared/Table';
+import useGetData from '../helpers/hooks/useGetData';
 
 interface InputsTypes {
   name: string,
@@ -33,6 +35,13 @@ const CompanyDetails = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {
+    searchValue: locationsSearchValue, handleSearch: locationsHandleSearch, handlePageChange: locationsHandlePageChange,
+  } = useGetData({
+    getDataAction: getCompanyDetails,
+    resetState: getCompanyDetails,
+    resetOnUnmount: true,
+  });
   const { id: companyId } = useParams();
   const { companyDetails } : { companyDetails: CompanyItem } = useSelector((state: RootState) => state.companiesReducer);
   const [img, setImg] = useState<{ newImg: any, imgPrev: string | null }>(imgInitialState);
@@ -201,6 +210,29 @@ const CompanyDetails = () => {
           </Button>
         </div>
       </div>
+      <Table
+        searchValue={locationsSearchValue || ''}
+        handleSearch={(val) => locationsHandleSearch(val)}
+        data={{ data: [], count: 0 }}
+        header={locationsHeader}
+        tableTitle="LOCATIONS"
+        handleEdit={() => navigate('')}
+        handlePageChange={(val) => locationsHandlePageChange(val)}
+        handleAdd={() => navigate('new')}
+        buttonText="+ Add location"
+        costumeClasses={classes.tablePadding}
+      />
+      <Table
+        searchValue={locationsSearchValue || ''}
+        handleSearch={(val) => locationsHandleSearch(val)}
+        data={{ data: [], count: 0 }}
+        header={companyAppUserHeader}
+        tableTitle="COMPANY APP USERS"
+        handleEdit={() => navigate('')}
+        handlePageChange={(val) => locationsHandlePageChange(val)}
+        handleAdd={() => navigate('new')}
+        buttonText="+ Add User"
+      />
     </div>
   );
 };
@@ -257,4 +289,37 @@ const useStyles = createUseStyles({
       cursor: 'pointer',
     },
   },
+  tablePadding: {
+    margin: '8rem 0 5rem',
+  },
 });
+
+const locationsHeader = [
+  {
+    name: 'LOCATION NAME',
+    field: 'name',
+  },
+  {
+    name: 'LOCATION ID',
+    field: 'code',
+  },
+];
+
+const companyAppUserHeader = [
+  {
+    name: 'FIST NAME',
+    field: 'name',
+  },
+  {
+    name: 'LAST NAME',
+    field: 'code',
+  },
+  {
+    name: 'EMAIL',
+    field: 'code',
+  },
+  {
+    name: 'PHONE',
+    field: 'code',
+  },
+];
