@@ -41,9 +41,7 @@ const Table = ({
 
   const handleChange = (val: any) => {
     setCurrentPage(val.first);
-    if (handlePageChange) {
-      handlePageChange(val.page + 1);
-    }
+    handlePageChange && handlePageChange(val.page + 1);
   };
 
   return (
