@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import {
-  GetCompaniesOptions, CompaniesTypes, InitialStateCompanies, CompanyItem, GetCompanyDetailsTypes,
+  GetCompaniesOptions, CompaniesTypes, InitialStateCompanies, CompanyItem, GetCompanyDetailsTypes, SaveDataTypes,
 } from '../../types/companies';
 import { CallBacks } from '../../types/main';
 
@@ -11,6 +11,7 @@ export const RESET_COMPANIES_STATE = 'socialize/companies/resetCompaniesState';
 export const GET_COMPANY_DETAILS = 'socialize/companies/getCompanyDetails';
 export const SET_COMPANY_DETAILS = 'socialize/companies/setCompanyDetails';
 export const RESET_COMPANY_DETAILS_STATE = 'socialize/companies/resetCompanyDetailsState';
+export const SAVE_COMPANY_DETAILS = 'socialize/companies/saveCompanyDetails';
 
 const initialState: InitialStateCompanies = {
   companies: null,
@@ -72,4 +73,9 @@ export const getCompanyDetails = (id: GetCompanyDetailsTypes, callbacks?: CallBa
 
 export const resetCompanyDetailsState = () => ({
   type: RESET_COMPANY_DETAILS_STATE,
+});
+
+export const saveCompany = (data: SaveDataTypes) => ({
+  type: SAVE_COMPANY_DETAILS,
+  data,
 });

@@ -4,7 +4,7 @@ import { put, delay } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
 import { setCompanies, resetCompaniesState, setCompanyDetails } from '../ducks/companiesDuck';
 import {
-  CompaniesTypes, GetCompaniesOptions, GetCompanyDetailsTypes, CompanyItem,
+  CompaniesTypes, GetCompaniesOptions, GetCompanyDetailsTypes, CompanyItem, SaveDataTypes,
 } from '../../types/companies';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
@@ -37,6 +37,20 @@ export function* getCompanyDetails({ id, callbacks }:{ id: GetCompanyDetailsType
   try {
     const res: CompanyItem = yield axiosInstance.get(`/company/get/${id}`);
     yield put(setCompanyDetails(res));
+    callbacks?.success && callbacks.success();
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response.data.message, '', 500);
+  }
+}
+
+export function* saveCompanyDetails({ data, callbacks }:{ data: SaveDataTypes, callbacks: CallBacks, type: string }) {
+  try {
+    const formData = new FormData();
+    formData.append('logo', data.logo);
+    formData.append('logoThumbnail', data.logoThumbnail);
+    formData.append('data', JSON.stringify(data.data));
+    yield axiosInstance.post('/company/create_company', formData);
     callbacks?.success && callbacks.success();
   } catch (error: any) {
     callbacks?.error && callbacks.error();

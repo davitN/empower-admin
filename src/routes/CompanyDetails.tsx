@@ -9,7 +9,7 @@ import COLORS from '../services/colors.service';
 import TextInput from '../components/shared/Inputs/TextInput';
 import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 import Label from '../components/shared/Inputs/Label';
-import { getCompanyDetails, resetCompanyDetailsState } from '../store/ducks/companiesDuck';
+import { getCompanyDetails, resetCompanyDetailsState, saveCompany } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
 import Button from '../components/shared/Inputs/Button';
 import { CompanyItem } from '../types/companies';
@@ -20,7 +20,8 @@ interface InputsTypes {
   paymentType: string,
   individualLocationPrice: number | null,
   individualLocationPaymentPage: string,
-  showTeamSection: boolean
+  showTeamSection: boolean,
+  code: null | string
 }
 
 const imgInitialState = {
@@ -41,6 +42,7 @@ const CompanyDetails = () => {
     individualLocationPrice: null,
     individualLocationPaymentPage: '',
     showTeamSection: true,
+    code: null,
   });
   const isNewCompany = companyId === 'new';
 
@@ -50,7 +52,11 @@ const CompanyDetails = () => {
   };
 
   const handleSave = () => {
-    console.log('save');
+    dispatch(saveCompany({
+      logo: img.newImg,
+      logoThumbnail: null,
+      data: values,
+    }));
   };
 
   useEffect(() => {
@@ -67,6 +73,7 @@ const CompanyDetails = () => {
         individualLocationPrice: companyDetails.individualLocationPrice,
         individualLocationPaymentPage: companyDetails.individualLocationPaymentPage,
         showTeamSection: companyDetails.showTeamSection,
+        code: companyDetails.code,
       });
       setImg({
         ...img,

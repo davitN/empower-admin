@@ -40,3 +40,16 @@ export interface CompaniesTypes {
 }
 
 export type GetCompanyDetailsTypes = string;
+
+export interface SaveDataTypes {
+  data: {
+    individualLocationPaymentPage: string
+    individualLocationPrice: number | null
+    showTeamSection: boolean,
+    name: string,
+    code?: string | null,
+    paymentType: string
+  },
+  logo: any,
+  logoThumbnail: any
+}
