@@ -6,7 +6,7 @@ import Table from '../components/shared/Table';
 import { getCompanies, resetCompaniesState } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
 import COLORS from '../services/colors.service';
-import useGetData from '../components/shared/hooks/useGetData';
+import useGetData from '../helpers/hooks/useGetData';
 
 const LIMIT = 8;
 

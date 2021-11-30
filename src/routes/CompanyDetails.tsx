@@ -9,9 +9,10 @@ import COLORS from '../services/colors.service';
 import TextInput from '../components/shared/Inputs/TextInput';
 import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 import Label from '../components/shared/Inputs/Label';
-import { getCompanyDetails, resetCompanyDetailsState } from '../store/ducks/companyDetailsDuck';
+import { getCompanyDetails, resetCompanyDetailsState } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
 import Button from '../components/shared/Inputs/Button';
+import { CompanyItem } from '../types/companies';
 
 interface InputsTypes {
   name: string,
@@ -25,7 +26,7 @@ const CompanyDetails = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { id: companyId } = useParams();
-  const { company } = useSelector((state: RootState) => state.companyDetailsReducer);
+  const { companyDetails } : { companyDetails: CompanyItem } = useSelector((state: RootState) => state.companiesReducer);
   const [values, setValues] = useState<InputsTypes>({
     name: '',
     paymentType: '',
@@ -42,16 +43,16 @@ const CompanyDetails = () => {
   }, [companyId]);
 
   useEffect(() => {
-    if (company) {
+    if (companyDetails) {
       setValues({
-        name: company.name,
-        paymentType: company.paymentType,
-        individualLocationPrice: company.individualLocationPrice,
-        individualLocationPaymentPage: company.individualLocationPaymentPage,
-        showTeamSection: company.showTeamSection,
+        name: companyDetails.name,
+        paymentType: companyDetails.paymentType,
+        individualLocationPrice: companyDetails.individualLocationPrice,
+        individualLocationPaymentPage: companyDetails.individualLocationPaymentPage,
+        showTeamSection: companyDetails.showTeamSection,
       });
     }
-  }, [company]);
+  }, [companyDetails]);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -71,9 +72,9 @@ const CompanyDetails = () => {
       <Title title="COMPANY INFORMATION" costumeStyles="p-pt-6 p-pb-4" />
       <div className={classes.wrapper}>
         <div className={classNames(classes.inputs)}>
-          {!isNewCompany && !company ? (
+          {!isNewCompany && !companyDetails ? (
             <>
-              {new Array(8).fill(0).map(() => <Skeleton width="100%" height="2rem" />)}
+              {new Array(8).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" />)}
             </>
           ) : (
             <>

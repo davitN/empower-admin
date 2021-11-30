@@ -1,8 +1,9 @@
-export interface InitialStateGetCompanies {
+export interface InitialStateCompanies {
   companies: {
     data: CompanyItem[] | null,
     count: number
   } | null;
+  companyDetails: CompanyItem | null
 }
 export interface GetCompaniesOptions {
   offset: number,
@@ -36,10 +37,6 @@ export interface CompanyItem {
 export interface CompaniesTypes {
   count: number,
   data: CompanyItem[]
-}
-
-export interface InitialStateGetCompanyDetails {
-  company?: CompanyItem | null
 }
 
 export type GetCompanyDetailsTypes = string;
