@@ -53,6 +53,7 @@ const CompanyDetails = () => {
     showTeamSection: true,
     code: null,
   });
+  const [saving, setSaving] = useState<boolean>(false);
   const isNewCompany = companyId === 'new';
 
   const handleImgUpload = (e: any) => {
@@ -61,10 +62,14 @@ const CompanyDetails = () => {
   };
 
   const handleSave = () => {
+    setSaving(true);
     dispatch(saveCompany({
       logo: img.newImg,
       logoThumbnail: null,
       data: values,
+    }, {
+      success: () => setSaving(false),
+      error: () => setSaving(false),
     }));
   };
 
@@ -205,6 +210,7 @@ const CompanyDetails = () => {
             textColor={COLORS.white}
             customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
             handleClick={handleSave}
+            loading={saving}
           >
             Save
           </Button>

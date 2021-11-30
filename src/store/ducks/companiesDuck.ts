@@ -75,7 +75,8 @@ export const resetCompanyDetailsState = () => ({
   type: RESET_COMPANY_DETAILS_STATE,
 });
 
-export const saveCompany = (data: SaveDataTypes) => ({
+export const saveCompany = (data: SaveDataTypes, callbacks?: CallBacks) => ({
   type: SAVE_COMPANY_DETAILS,
   data,
+  callbacks,
 });
