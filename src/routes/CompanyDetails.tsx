@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
@@ -13,6 +13,7 @@ import { getCompanyDetails, resetCompanyDetailsState } from '../store/ducks/comp
 import { RootState } from '../store/configureStore';
 import Button from '../components/shared/Inputs/Button';
 import { CompanyItem } from '../types/companies';
+import ImgPreview from '../components/ImgPreview/ImgPreview';
 
 interface InputsTypes {
   name: string,
@@ -22,11 +23,18 @@ interface InputsTypes {
   showTeamSection: boolean
 }
 
+const imgInitialState = {
+  newImg: null,
+  imgPrev: null,
+};
+
 const CompanyDetails = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id: companyId } = useParams();
   const { companyDetails } : { companyDetails: CompanyItem } = useSelector((state: RootState) => state.companiesReducer);
+  const [img, setImg] = useState<{ newImg: any, imgPrev: string | null }>(imgInitialState);
   const [values, setValues] = useState<InputsTypes>({
     name: '',
     paymentType: '',
@@ -36,9 +44,18 @@ const CompanyDetails = () => {
   });
   const isNewCompany = companyId === 'new';
 
+  const handleImgUpload = (e: any) => {
+    setImg({ ...imgInitialState, newImg: e.target.files && e.target.files[0], imgPrev: URL.createObjectURL(e.target.files && e.target.files[0]) });
+    e.target.value = '';
+  };
+
+  const handleSave = () => {
+    console.log('save');
+  };
+
   useEffect(() => {
     if (companyId !== 'new' && typeof companyId === 'string') {
-      dispatch(getCompanyDetails(companyId));
+      dispatch(getCompanyDetails(companyId, { error: () => navigate('/companies/new') }));
     }
   }, [companyId]);
 
@@ -50,6 +67,10 @@ const CompanyDetails = () => {
         individualLocationPrice: companyDetails.individualLocationPrice,
         individualLocationPaymentPage: companyDetails.individualLocationPaymentPage,
         showTeamSection: companyDetails.showTeamSection,
+      });
+      setImg({
+        ...img,
+        imgPrev: companyDetails.logo.imgURL,
       });
     }
   }, [companyDetails]);
@@ -138,11 +159,39 @@ const CompanyDetails = () => {
         </div>
         <div className={classes.justifyEnd}>
           <Label label="Update Company Logo" costumeStyles="text-3xl" required />
-          <div className="p-d-flex p-ai-end p-flex-column">
-            <Button bgColor={COLORS.lightBlue} textColor={COLORS.white} customClasses={classNames(classes.button, 'p-my-3 p-py-2 p-px-4')}>+ Choose</Button>
-            <p className={classes.infoText}>This is the logo that shows on the team screen in the empower app</p>
-            <Button bgColor={COLORS.lightBlue} textColor={COLORS.white} customClasses={classNames(classes.button, 'p-my-3 p-py-2 p-px-4')}>+ Delete Company</Button>
+          <div className={classes.uploadButton}>
+            <label htmlFor="file-input">
+              <Button
+                bgColor={COLORS.lightBlue}
+                textColor={COLORS.white}
+                customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
+              >
+                + Choose
+              </Button>
+            </label>
+            <input
+              id="file-input"
+              type="file"
+              onChange={handleImgUpload}
+            />
           </div>
+          {!isNewCompany && !companyDetails ? <Skeleton className={classes.uploadImg} />
+            : (
+              <ImgPreview
+                url={img.imgPrev}
+                handleRemove={() => setImg(imgInitialState)}
+                costumeClasses={classes.uploadImg}
+              />
+            ) }
+          <p className={classes.infoText}>This is the logo that shows on the team screen in the empower app</p>
+          <Button
+            bgColor={COLORS.lightBlue}
+            textColor={COLORS.white}
+            customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
+            handleClick={handleSave}
+          >
+            Save
+          </Button>
         </div>
       </div>
     </div>
@@ -171,6 +220,10 @@ const useStyles = createUseStyles({
   },
   justifyEnd: {
     justifySelf: 'end',
+    display: 'grid',
+    gridTemplateRows: 'repeat( auto-fit, minmax(0, max-content) )',
+    gap: '1rem',
+    justifyItems: 'end',
   },
   button: {
     width: 'max-content',
@@ -179,5 +232,22 @@ const useStyles = createUseStyles({
     fontSize: '0.73rem',
     maxWidth: '12rem',
     color: COLORS.blueWood,
+  },
+  uploadImg: {
+    width: '10rem !important',
+    height: '8rem !important',
+  },
+  uploadButton: {
+    position: 'relative',
+    cursor: 'pointer',
+    '& > input': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      opacity: 0,
+      width: '100%',
+      height: '100%',
+      cursor: 'pointer',
+    },
   },
 });

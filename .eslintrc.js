@@ -29,6 +29,8 @@ module.exports = {
     'default-param-last':'off',
     "@typescript-eslint/no-unused-expressions":'off',
     "consistent-return": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
     '@typescript-eslint/ban-types': [
       'error',
       {

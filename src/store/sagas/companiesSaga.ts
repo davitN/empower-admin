@@ -8,6 +8,7 @@ import {
 } from '../../types/companies';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
+import notificationService from '../../services/notification.service';
 
 export function* getCompanies({ data, callbacks }:{ data: GetCompaniesOptions, callbacks: CallBacks, type:string }) {
   try {
@@ -39,12 +40,6 @@ export function* getCompanyDetails({ id, callbacks }:{ id: GetCompanyDetailsType
     callbacks?.success && callbacks.success();
   } catch (error: any) {
     callbacks?.error && callbacks.error();
-    yield put(
-      notifyAction({
-        type: 'error',
-        message: error.response?.data.message,
-        showError: false,
-      }),
-    );
+    notificationService.error(error.response.data.message, '', 500);
   }
 }
