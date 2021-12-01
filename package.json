@@ -11,6 +11,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "axios": "^0.24.0",
+    "browser-image-compression": "^1.0.17",
     "classnames": "^2.3.1",
     "eslint-config-airbnb-typescript": "^16.0.0",
     "history": "5",
@@ -34,10 +35,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
-
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-      "lint:fix": "eslint --fix --ext .ts,.tsx ."
+    "lint:fix": "eslint --fix --ext .ts,.tsx ."
   },
   "eslintConfig": {
     "extends": [

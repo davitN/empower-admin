@@ -47,8 +47,8 @@ export function* getCompanyDetails({ id, callbacks }:{ id: GetCompanyDetailsType
 export function* saveCompanyData({ data, callbacks }:{ data: SaveDataTypes, callbacks: CallBacks, type: string }) {
   try {
     const formData = new FormData();
-    formData.append('logo', data.logo);
-    formData.append('logoThumbnail', data.logoThumbnail);
+    data.logo && formData.append('logo', data.logo);
+    data.thumbnail && formData.append('logoThumbnail', data.thumbnail);
     formData.append('data', JSON.stringify(data.data));
     if (data?.companyId) {
       yield axiosInstance.put(`/company/edit/${data.companyId}`, formData);

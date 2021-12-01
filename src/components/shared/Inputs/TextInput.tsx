@@ -6,18 +6,19 @@ import COLORS from '../../../services/colors.service';
 
 interface PropsTypes {
   value: string | number | null;
-  handleChange: (val: string) => void;
+  handleChange?: (val: string) => void;
   label?: string;
   placeholder?: string;
   type?: string;
   customClasses?: string;
   icon?: ReactNode
   required?: boolean,
-  desc?: string
+  desc?: string,
+  disabled?: boolean
 }
 
 const TextInput: FC<PropsTypes> = ({
-  value, handleChange, label, placeholder, type = 'text', customClasses, icon, required, desc,
+  value, handleChange, label, placeholder, type = 'text', customClasses, icon, required, desc, disabled,
 }) => {
   const classes = useStyles();
 
@@ -33,9 +34,10 @@ const TextInput: FC<PropsTypes> = ({
       {icon && icon}
       <InputText
         id="label"
+        disabled={disabled}
         value={value || ''}
         placeholder={placeholder}
-        onChange={({ target }) => handleChange(target.value)}
+        onChange={({ target }) => handleChange && handleChange(target.value)}
         type={type}
         className={classes.root}
       />

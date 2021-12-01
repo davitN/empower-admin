@@ -10,14 +10,15 @@ import TextInput from '../components/shared/Inputs/TextInput';
 import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 import Label from '../components/shared/Inputs/Label';
 import {
-  getCompanyDetails, resetCompanyDetailsState, saveCompanyData, getCompanies,
+  getCompanyDetails, resetCompanyDetailsState, saveCompanyData,
 } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
 import Button from '../components/shared/Inputs/Button';
 import { CompanyItem } from '../types/companies';
 import ImgPreview from '../components/ImgPreview/ImgPreview';
-import Table from '../components/shared/Table';
-import useGetData from '../helpers/hooks/useGetData';
+// import Table from '../components/shared/Table';
+// import useGetData from '../helpers/hooks/useGetData';
+import readImgAsync from '../helpers/utils/readImgAsync';
 
 interface InputsTypes {
   name: string,
@@ -25,7 +26,15 @@ interface InputsTypes {
   individualLocationPrice: number | null,
   individualLocationPaymentPage: string,
   showTeamSection: boolean,
-  code: null | string
+  code: null | string,
+  logo?: any,
+  thumbnail?: any
+}
+
+interface ImgTypes {
+  newImg: any,
+  imgPrev: string | null,
+  thumbnail?: any
 }
 
 const imgInitialState = {
@@ -37,16 +46,16 @@ const CompanyDetails = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {
-    searchValue: locationsSearchValue, handleSearch: locationsHandleSearch, handlePageChange: locationsHandlePageChange,
-  } = useGetData({
-    getDataAction: getCompanies,
-    resetState: getCompanies,
-    resetOnUnmount: true,
-  });
+  // const {
+  //   searchValue: locationsSearchValue, handleSearch: locationsHandleSearch, handlePageChange: locationsHandlePageChange,
+  // } = useGetData({
+  //   getDataAction: getCompanies,
+  //   resetState: getCompanies,
+  //   resetOnUnmount: true,
+  // });
   const { id: companyId } = useParams();
   const { companyDetails } : { companyDetails: CompanyItem } = useSelector((state: RootState) => state.companiesReducer);
-  const [img, setImg] = useState<{ newImg: any, imgPrev: string | null }>(imgInitialState);
+  const [img, setImg] = useState<ImgTypes>(imgInitialState);
   const [values, setValues] = useState<InputsTypes>({
     name: '',
     paymentType: '',
@@ -58,16 +67,29 @@ const CompanyDetails = () => {
   const [saving, setSaving] = useState<boolean>(false);
   const isNewCompany = companyId === 'new';
 
-  const handleImgUpload = (e: any) => {
-    setImg({ ...imgInitialState, newImg: e.target.files && e.target.files[0], imgPrev: URL.createObjectURL(e.target.files && e.target.files[0]) });
-    e.target.value = '';
+  const handleImgUpload = async (e: any) => {
+    const {
+      img: newImg,
+      imgPrev,
+      imgDimension,
+      thumbnail,
+      thumbnailDimension,
+    } = await readImgAsync(e);
+
+    setImg({
+      newImg,
+      imgPrev,
+      thumbnail,
+    });
+
+    setValues({ ...values, logo: { ...imgDimension }, thumbnail: { ...thumbnailDimension } });
   };
 
   const handleSave = () => {
     setSaving(true);
     dispatch(saveCompanyData({
       logo: img.newImg,
-      logoThumbnail: img.newImg,
+      thumbnail: img.thumbnail,
       data: values,
       companyId: isNewCompany ? null : companyId,
     }, {
@@ -155,13 +177,15 @@ const CompanyDetails = () => {
                 required
                 type="number"
               />
+              {!isNewCompany && (
               <TextInput
                 value={values.individualLocationPaymentPage}
-                handleChange={(individualLocationPaymentPage) => setValues({ ...values, individualLocationPaymentPage })}
                 label="Individual Location Payment Page"
                 placeholder="Enter payment page..."
                 desc="This is the page where individual locations can go to play for access to the app"
+                disabled
               />
+              )}
               <div className="p-d-flex p-flex-column">
                 <Label label="Team Section" required costumeStyles="p-mb-3" />
                 <div className="p-d-flex">
@@ -219,7 +243,7 @@ const CompanyDetails = () => {
           </Button>
         </div>
       </div>
-      <Table
+      {/* <Table
         searchValue={locationsSearchValue || ''}
         handleSearch={(val) => locationsHandleSearch(val)}
         data={{ data: [], count: 0 }}
@@ -230,7 +254,7 @@ const CompanyDetails = () => {
         handleAdd={() => navigate('new')}
         buttonText="+ Add location"
         costumeClasses={classes.tablePadding}
-      />
+      /> */}
     </div>
   );
 };
@@ -292,13 +316,13 @@ const useStyles = createUseStyles({
   },
 });
 
-const locationsHeader = [
-  {
-    name: 'LOCATION NAME',
-    field: 'name',
-  },
-  {
-    name: 'LOCATION ID',
-    field: 'code',
-  },
-];
+// const locationsHeader = [
+//   {
+//     name: 'LOCATION NAME',
+//     field: 'name',
+//   },
+//   {
+//     name: 'LOCATION ID',
+//     field: 'code',
+//   },
+// ];
