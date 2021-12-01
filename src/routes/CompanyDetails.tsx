@@ -42,6 +42,11 @@ const imgInitialState = {
   imgPrev: null,
 };
 
+const paymentType = {
+  all: 'COMPANY_PAYS_FOR_ALL',
+  individual: 'INDIVIDUAL_LOCATIONS_PAY',
+};
+
 const CompanyDetails = () => {
   const classes = useStyles();
   const navigate = useNavigate();
@@ -58,7 +63,7 @@ const CompanyDetails = () => {
   const [img, setImg] = useState<ImgTypes>(imgInitialState);
   const [values, setValues] = useState<InputsTypes>({
     name: '',
-    paymentType: '',
+    paymentType: paymentType.all,
     individualLocationPrice: null,
     individualLocationPaymentPage: '',
     showTeamSection: true,
@@ -158,20 +163,20 @@ const CompanyDetails = () => {
                   <RadioButtonComponent
                     label="Company pay for all"
                     checked={values.paymentType === 'COMPANY_PAYS_FOR_ALL'}
-                    onChange={() => setValues({ ...values, paymentType: 'COMPANY_PAYS_FOR_ALL' })}
+                    onChange={() => setValues({ ...values, paymentType: paymentType.all })}
                     costumeClasses="p-mr-6"
                   />
                   <RadioButtonComponent
                     label="Individual locations pay"
                     checked={values.paymentType === 'INDIVIDUAL_LOCATIONS_PAY'}
-                    onChange={() => setValues({ ...values, paymentType: 'INDIVIDUAL_LOCATIONS_PAY' })}
+                    onChange={() => setValues({ ...values, paymentType: paymentType.individual })}
                   />
                 </div>
               </div>
               <TextInput
                 value={values.individualLocationPrice}
                 handleChange={(individualLocationPrice) => setValues({ ...values, individualLocationPrice: Number(individualLocationPrice) })}
-                label="Individual Location Price"
+                label={`${values.paymentType === paymentType.individual ? 'Individual Location' : ''} Price`}
                 placeholder="Enter price..."
                 desc="Enter the yearly price that each location will need to pay to access the app."
                 required
@@ -180,7 +185,7 @@ const CompanyDetails = () => {
               {!isNewCompany && (
               <TextInput
                 value={values.individualLocationPaymentPage}
-                label="Individual Location Payment Page"
+                label={`${values.paymentType === paymentType.individual ? 'Individual Location' : ''}Payment Page`}
                 placeholder="Enter payment page..."
                 desc="This is the page where individual locations can go to play for access to the app"
                 disabled
