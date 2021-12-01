@@ -13,13 +13,12 @@ import {
   getCompanyDetails, resetCompanyDetailsState, saveCompanyData,
 } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
-import Button from '../components/shared/Inputs/Button';
 import { CompanyItem } from '../types/companies';
-import ImgPreview from '../components/ImgPreview/ImgPreview';
 // import Table from '../components/shared/Table';
 // import useGetData from '../helpers/hooks/useGetData';
 import readImgAsync from '../helpers/utils/readImgAsync';
 import Container from '../components/shared/Container';
+import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 
 interface InputsTypes {
   name: string,
@@ -203,41 +202,16 @@ const CompanyDetails = () => {
           )}
         </div>
         <div className={classes.justifyEnd}>
-          <Label label="Update Company Logo" costumeStyles="text-3xl" required />
-          <div className={classes.uploadButton}>
-            <label htmlFor="file-input">
-              <Button
-                bgColor={COLORS.lightBlue}
-                textColor={COLORS.white}
-                customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
-              >
-                + Choose
-              </Button>
-            </label>
-            <input
-              id="file-input"
-              type="file"
-              onChange={handleImgUpload}
-            />
-          </div>
-          {!isNewCompany && !companyDetails ? <Skeleton className={classes.uploadImg} />
-            : (
-              <ImgPreview
-                url={img.imgPrev}
-                handleRemove={() => setImg(imgInitialState)}
-                costumeClasses={classes.uploadImg}
-              />
-            ) }
-          <p className={classes.infoText}>This is the logo that shows on the team screen in the empower app</p>
-          <Button
-            bgColor={COLORS.lightBlue}
-            textColor={COLORS.white}
-            customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
-            handleClick={handleSave}
-            loading={saving}
-          >
-            Save
-          </Button>
+          <FormsSharedComponent
+            handleImgUpload={(e) => handleImgUpload(e)}
+            loadingImg={!isNewCompany && !companyDetails}
+            imgUrl={img.imgPrev}
+            handleImgRemove={() => setImg(imgInitialState)}
+            isSaving={saving}
+            handleSave={handleSave}
+            title="Update Company Logo"
+            desc="This is the logo that shows on the team screen in the empower app"
+          />
         </div>
       </div>
       {/* <Table
@@ -264,7 +238,7 @@ const useStyles = createUseStyles({
   },
   inputs: {
     display: 'grid',
-    gridAutoFlow: 'row',
+    gridTemplateRows: 'repeat( auto-fit, minmax(0, max-content) )',
     gridGap: '1.5rem',
   },
   wrapper: {

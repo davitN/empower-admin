@@ -4,10 +4,17 @@ import { useParams } from 'react-router-dom';
 import Container from '../components/shared/Container';
 import Title from '../components/shared/Title';
 import TextInput from '../components/shared/Inputs/TextInput';
+import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 
 interface ValuesTypes {
   name: string,
   company: string
+}
+
+interface ImgTypes {
+  newImg: any,
+  imgPrev: string | null,
+  thumbnail?: any
 }
 
 const initialState = {
@@ -15,10 +22,18 @@ const initialState = {
   company: '',
 };
 
+const imgInitialStateImg = {
+  newImg: null,
+  imgPrev: null,
+};
+
 const LocationDetails = () => {
   const classes = useStyles();
   const { id: locationId } = useParams();
   const [values, setValues] = useState<ValuesTypes>(initialState);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [img, setImg] = useState<ImgTypes>(imgInitialStateImg);
+
   //   const isNewLocation = locationId === 'new';
 
   return (
@@ -41,6 +56,18 @@ const LocationDetails = () => {
             disabled
           />
         </div>
+        <div className={classes.justifyEnd}>
+          <FormsSharedComponent
+            handleImgUpload={(e) => console.log(e)}
+            loadingImg={false}
+            imgUrl={img.imgPrev}
+            handleImgRemove={() => console.log('rm img')}
+            isSaving={false}
+            handleSave={() => console.log('save')}
+            title="Update Location Logo"
+            desc="This logo will replace the company logo in the empower app."
+          />
+        </div>
       </div>
     </Container>
   );
@@ -56,7 +83,14 @@ const useStyles = createUseStyles({
   },
   inputs: {
     display: 'grid',
-    gridAutoFlow: 'row',
+    gridTemplateRows: 'repeat( auto-fit, minmax(0, max-content) )',
     gridGap: '1.5rem',
+  },
+  justifyEnd: {
+    justifySelf: 'end',
+    display: 'grid',
+    gridTemplateRows: 'repeat( auto-fit, minmax(0, max-content) )',
+    gap: '1rem',
+    justifyItems: 'end',
   },
 });
