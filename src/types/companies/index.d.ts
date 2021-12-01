@@ -51,5 +51,6 @@ export interface SaveDataTypes {
     paymentType: string
   },
   logo: any,
-  logoThumbnail: any
+  logoThumbnail: any,
+  companyId?: string | null
 }

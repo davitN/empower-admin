@@ -44,13 +44,17 @@ export function* getCompanyDetails({ id, callbacks }:{ id: GetCompanyDetailsType
   }
 }
 
-export function* saveCompanyDetails({ data, callbacks }:{ data: SaveDataTypes, callbacks: CallBacks, type: string }) {
+export function* saveCompanyData({ data, callbacks }:{ data: SaveDataTypes, callbacks: CallBacks, type: string }) {
   try {
     const formData = new FormData();
     formData.append('logo', data.logo);
     formData.append('logoThumbnail', data.logoThumbnail);
     formData.append('data', JSON.stringify(data.data));
-    yield axiosInstance.post('/company/create_company', formData);
+    if (data?.companyId) {
+      yield axiosInstance.put(`/company/edit/${data.companyId}`, formData);
+    } else {
+      yield axiosInstance.post('/company/create_company', formData);
+    }
     callbacks?.success && callbacks.success();
   } catch (error: any) {
     callbacks?.error && callbacks.error();

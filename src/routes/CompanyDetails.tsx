@@ -9,7 +9,9 @@ import COLORS from '../services/colors.service';
 import TextInput from '../components/shared/Inputs/TextInput';
 import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 import Label from '../components/shared/Inputs/Label';
-import { getCompanyDetails, resetCompanyDetailsState, saveCompany } from '../store/ducks/companiesDuck';
+import {
+  getCompanyDetails, resetCompanyDetailsState, saveCompanyData, getCompanies,
+} from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
 import Button from '../components/shared/Inputs/Button';
 import { CompanyItem } from '../types/companies';
@@ -38,8 +40,8 @@ const CompanyDetails = () => {
   const {
     searchValue: locationsSearchValue, handleSearch: locationsHandleSearch, handlePageChange: locationsHandlePageChange,
   } = useGetData({
-    getDataAction: getCompanyDetails,
-    resetState: getCompanyDetails,
+    getDataAction: getCompanies,
+    resetState: getCompanies,
     resetOnUnmount: true,
   });
   const { id: companyId } = useParams();
@@ -63,10 +65,11 @@ const CompanyDetails = () => {
 
   const handleSave = () => {
     setSaving(true);
-    dispatch(saveCompany({
+    dispatch(saveCompanyData({
       logo: img.newImg,
-      logoThumbnail: null,
+      logoThumbnail: img.newImg,
       data: values,
+      companyId: isNewCompany ? null : companyId,
     }, {
       success: () => setSaving(false),
       error: () => setSaving(false),
@@ -132,8 +135,8 @@ const CompanyDetails = () => {
                 <div className="p-d-flex">
                   <RadioButtonComponent
                     label="Company pay for all"
-                    checked={values.paymentType === 'COMPANY_PAY_FOR_ALL'}
-                    onChange={() => setValues({ ...values, paymentType: 'COMPANY_PAY_FOR_ALL' })}
+                    checked={values.paymentType === 'COMPANY_PAYS_FOR_ALL'}
+                    onChange={() => setValues({ ...values, paymentType: 'COMPANY_PAYS_FOR_ALL' })}
                     costumeClasses="p-mr-6"
                   />
                   <RadioButtonComponent
@@ -228,17 +231,6 @@ const CompanyDetails = () => {
         buttonText="+ Add location"
         costumeClasses={classes.tablePadding}
       />
-      <Table
-        searchValue={locationsSearchValue || ''}
-        handleSearch={(val) => locationsHandleSearch(val)}
-        data={{ data: [], count: 0 }}
-        header={companyAppUserHeader}
-        tableTitle="COMPANY APP USERS"
-        handleEdit={() => navigate('')}
-        handlePageChange={(val) => locationsHandlePageChange(val)}
-        handleAdd={() => navigate('new')}
-        buttonText="+ Add User"
-      />
     </div>
   );
 };
@@ -307,25 +299,6 @@ const locationsHeader = [
   },
   {
     name: 'LOCATION ID',
-    field: 'code',
-  },
-];
-
-const companyAppUserHeader = [
-  {
-    name: 'FIST NAME',
-    field: 'name',
-  },
-  {
-    name: 'LAST NAME',
-    field: 'code',
-  },
-  {
-    name: 'EMAIL',
-    field: 'code',
-  },
-  {
-    name: 'PHONE',
     field: 'code',
   },
 ];

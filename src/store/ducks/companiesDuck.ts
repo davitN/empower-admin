@@ -11,7 +11,8 @@ export const RESET_COMPANIES_STATE = 'socialize/companies/resetCompaniesState';
 export const GET_COMPANY_DETAILS = 'socialize/companies/getCompanyDetails';
 export const SET_COMPANY_DETAILS = 'socialize/companies/setCompanyDetails';
 export const RESET_COMPANY_DETAILS_STATE = 'socialize/companies/resetCompanyDetailsState';
-export const SAVE_COMPANY_DETAILS = 'socialize/companies/saveCompanyDetails';
+export const SAVE_COMPANY_DATA = 'socialize/companies/saveCompanyData';
+export const UPDATE_COMPANY_DETAILS = 'socialize/companies/updateCompanyDetails';
 
 const initialState: InitialStateCompanies = {
   companies: null,
@@ -75,8 +76,8 @@ export const resetCompanyDetailsState = () => ({
   type: RESET_COMPANY_DETAILS_STATE,
 });
 
-export const saveCompany = (data: SaveDataTypes, callbacks?: CallBacks) => ({
-  type: SAVE_COMPANY_DETAILS,
+export const saveCompanyData = (data: SaveDataTypes, callbacks?: CallBacks) => ({
+  type: SAVE_COMPANY_DATA,
   data,
   callbacks,
 });
