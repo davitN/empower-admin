@@ -162,13 +162,13 @@ const CompanyDetails = () => {
                 <div className="p-d-flex">
                   <RadioButtonComponent
                     label="Company pay for all"
-                    checked={values.paymentType === 'COMPANY_PAYS_FOR_ALL'}
+                    checked={values.paymentType === paymentType.all}
                     onChange={() => setValues({ ...values, paymentType: paymentType.all })}
                     costumeClasses="p-mr-6"
                   />
                   <RadioButtonComponent
                     label="Individual locations pay"
-                    checked={values.paymentType === 'INDIVIDUAL_LOCATIONS_PAY'}
+                    checked={values.paymentType === paymentType.individual}
                     onChange={() => setValues({ ...values, paymentType: paymentType.individual })}
                   />
                 </div>
