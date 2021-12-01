@@ -15,6 +15,7 @@ import CompanyDetails from './routes/CompanyDetails';
 import AppUsers from './routes/AppUsers';
 import UserManagement from './routes/UserManagement';
 import Payments from './routes/Payments';
+import LocationDetails from './routes/LocationDetails';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -32,6 +33,7 @@ ReactDOM.render(
             <Route path="app-users" element={<AppUsers />} />
             <Route path="user-management" element={<UserManagement />} />
             <Route path="payments" element={<Payments />} />
+            <Route path="locations/:id" element={<LocationDetails />} />
             <Route
               path="*"
               element={(

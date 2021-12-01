@@ -19,6 +19,7 @@ import ImgPreview from '../components/ImgPreview/ImgPreview';
 // import Table from '../components/shared/Table';
 // import useGetData from '../helpers/hooks/useGetData';
 import readImgAsync from '../helpers/utils/readImgAsync';
+import Container from '../components/shared/Container';
 
 interface InputsTypes {
   name: string,
@@ -131,17 +132,8 @@ const CompanyDetails = () => {
   useEffect(() => () => dispatch(resetCompanyDetailsState()), []);
 
   return (
-    <div className={classNames('p-p-6', classes.root)}>
-      <div className="p-d-flex p-jc-between p-ai-center">
-        <Title title="VETERINARY GROWTH PARTNERS" fontSize="text-4xl" costumeStyles="p-mr-6" />
-        {!isNewCompany && (
-          <p className={classNames('p-d-flex p-ai-center p-flex-column text-lg p-text-bold', classes.textColor)}>
-            Company ID
-            <span className="p-text-normal">{companyId}</span>
-          </p>
-        )}
-      </div>
-      <Title title="COMPANY INFORMATION" costumeStyles="p-pt-6 p-pb-4" />
+    <Container sectionTitle="VETERINARY GROWTH PARTNERS" idText="Company ID" itemId={companyId}>
+      <Title title="COMPANY INFORMATION" costumeStyles="p-pb-4" />
       <div className={classes.wrapper}>
         <div className={classNames(classes.inputs)}>
           {!isNewCompany && !companyDetails ? (
@@ -260,17 +252,13 @@ const CompanyDetails = () => {
         buttonText="+ Add location"
         costumeClasses={classes.tablePadding}
       /> */}
-    </div>
+    </Container>
   );
 };
 
 export default CompanyDetails;
 
 const useStyles = createUseStyles({
-  root: {
-    width: '100%',
-    minWidth: '950px',
-  },
   textColor: {
     color: COLORS.blueWood,
   },
