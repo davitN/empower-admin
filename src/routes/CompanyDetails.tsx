@@ -216,6 +216,7 @@ const CompanyDetails = () => {
             handleSave={handleSave}
             title="Update Company Logo"
             desc="This is the logo that shows on the team screen in the empower app"
+            requiredLogo
           />
         </div>
       </div>
@@ -227,7 +228,7 @@ const CompanyDetails = () => {
         tableTitle="LOCATIONS"
         handleEdit={({ _id }) => navigate(`/locations/${_id}`, { state: { companyId, companyName: companyDetails.name } })}
         handlePageChange={(val) => locationsHandlePageChange(val)}
-        handleAdd={() => navigate('new')}
+        handleAdd={() => navigate('/locations/new', { state: { companyId, companyName: companyDetails.name } })}
         buttonText="+ Add location"
         costumeClasses={classes.tablePadding}
       />

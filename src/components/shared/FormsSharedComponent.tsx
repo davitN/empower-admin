@@ -14,16 +14,17 @@ interface PropsTypes {
   isSaving: boolean,
   imgUrl: string | null,
   title?: string,
-  desc?:string
+  desc?:string,
+  requiredLogo?: boolean
 }
 
 const FormsSharedComponent = ({
-  handleImgUpload, loadingImg, handleImgRemove, handleSave, isSaving, imgUrl, title, desc,
+  handleImgUpload, loadingImg, handleImgRemove, handleSave, isSaving, imgUrl, title, desc, requiredLogo,
 }: PropsTypes) => {
   const classes = useStyles();
   return (
     <>
-      <Label label={title || ''} costumeStyles="text-3xl" required />
+      <Label label={title || ''} costumeStyles="text-3xl" required={requiredLogo} />
       <div className={classes.uploadButton}>
         <label htmlFor="file-input">
           <Button

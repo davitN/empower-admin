@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Container from '../components/shared/Container';
 import Title from '../components/shared/Title';
 import TextInput from '../components/shared/Inputs/TextInput';
@@ -31,12 +31,23 @@ const LocationDetails = () => {
   const classes = useStyles();
   const { id: locationId } = useParams();
   const location = useLocation();
-  console.log(location);
+  const navigate = useNavigate();
   const [values, setValues] = useState<ValuesTypes>(initialState);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [img, setImg] = useState<ImgTypes>(imgInitialStateImg);
 
-  //   const isNewLocation = locationId === 'new';
+  const isNewLocation = locationId === 'new';
+
+  useEffect(() => {
+    if (isNewLocation) {
+      // if new location, check if exist company name in router state and set company name otherwise redirect to companies page
+      if (!location.state?.companyName) {
+        navigate('/companies');
+      } else {
+        setValues({ ...values, company: location.state.companyName });
+      }
+    }
+  }, []);
 
   return (
     <Container itemId={locationId} idText="Location ID" sectionTitle="STAR OF TEXAS VETERINARY HOSPITAL">
