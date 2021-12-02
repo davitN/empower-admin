@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Skeleton } from 'primereact/skeleton';
 import Container from '../components/shared/Container';
 import Title from '../components/shared/Title';
 import TextInput from '../components/shared/Inputs/TextInput';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 import readImgAsync from '../helpers/utils/readImgAsync';
-import { saveLocation } from '../store/ducks/locationsDuck';
+import { saveLocation, getLocationDetails } from '../store/ducks/locationsDuck';
+import { RootState } from '../store/configureStore';
+import { LocationItem } from '../types/locations';
 
 interface ValuesTypes {
   name: string,
   company: string,
-  companyId?: string,
+  companyId: string,
   logo?: {
     width: number,
     height: number,
@@ -22,7 +25,7 @@ interface ValuesTypes {
     width: number,
     height: number,
     imgUrl: string
-  }
+  },
 }
 
 interface ImgTypes {
@@ -45,6 +48,7 @@ const imgInitialStateImg = {
 const LocationDetails = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const { locationDetails }: { locationDetails: LocationItem } = useSelector((state: RootState) => state.locationsReducer);
   const { id: locationId } = useParams();
   const location = useLocation();
   const [saving, setSaving] = useState<boolean>(false);
@@ -52,7 +56,6 @@ const LocationDetails = () => {
   const [values, setValues] = useState<ValuesTypes>(initialState);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [img, setImg] = useState<ImgTypes>(imgInitialStateImg);
-
   const isNewLocation = locationId === 'new';
 
   const handleImgUpload = async (e: any) => {
@@ -73,11 +76,12 @@ const LocationDetails = () => {
     setValues({ ...values, logo: { ...imgDimension }, thumbnail: { ...thumbnailDimension } });
   };
   const handleSave = () => {
+    setSaving(true);
     dispatch(saveLocation({
       logo: img.newImg,
       thumbnail: img.thumbnail,
       data: {
-        companyId: values?.companyId,
+        companyId: values.companyId,
         name: values.name,
       },
       locationId: isNewLocation ? null : locationId,
@@ -95,34 +99,54 @@ const LocationDetails = () => {
       } else {
         setValues({ ...values, company: location.state?.companyName, companyId: location.state?.companyId });
       }
+    } else {
+      locationId && dispatch(getLocationDetails(locationId, { error: () => navigate('/companies') }));
     }
   }, [location, isNewLocation]);
+
+  useEffect(() => {
+    if (locationDetails) {
+      setValues({ ...values, name: locationDetails?.name, company: locationDetails?.company });
+      setImg({
+        ...img,
+        imgPrev: locationDetails?.logo?.imgURL || null,
+      });
+    }
+  }, [locationDetails]);
 
   return (
     <Container itemId={locationId} idText="Location ID" sectionTitle="STAR OF TEXAS VETERINARY HOSPITAL">
       <Title title="LOCATION INFORMATION" costumeStyles="p-pb-4" />
       <div className={classes.wrapper}>
         <div className={classes.inputs}>
-          <TextInput
-            value={values.name}
-            handleChange={(name) => setValues({ ...values, name })}
-            label="Location Name"
-            placeholder="Enter location name..."
-            required
-          />
-          <TextInput
-            value={values.company}
-            label="Company"
-            placeholder="Enter company name..."
-            disabled
-          />
+          {!isNewLocation && !locationDetails ? (
+            <>
+              {new Array(2).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" />)}
+            </>
+          ) : (
+            <>
+              <TextInput
+                value={values.name}
+                handleChange={(name) => setValues({ ...values, name })}
+                label="Location Name"
+                placeholder="Enter location name..."
+                required
+              />
+              <TextInput
+                value={values.company}
+                label="Company"
+                placeholder="Enter company name..."
+                disabled
+              />
+            </>
+          )}
         </div>
         <div className={classes.justifyEnd}>
           <FormsSharedComponent
             handleImgUpload={(e) => handleImgUpload(e)}
-            loadingImg={false}
+            loadingImg={!isNewLocation && !locationDetails}
             imgUrl={img.imgPrev}
-            handleImgRemove={() => console.log('rm img')}
+            handleImgRemove={() => setImg(imgInitialStateImg)}
             isSaving={saving}
             handleSave={handleSave}
             title="Update Location Logo"

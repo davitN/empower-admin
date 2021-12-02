@@ -2,8 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { put, delay } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
-import { setLocations, resetLocationsState } from '../ducks/locationsDuck';
-import { GetLocationsOptions, GetLocationsData } from '../../types/locations';
+import { setLocations, resetLocationsState, setLocationDetails } from '../ducks/locationsDuck';
+import {
+  GetLocationsOptions, GetLocationsData, GetLocationDetails, LocationItem,
+} from '../../types/locations';
 import notificationService from '../../services/notification.service';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
@@ -31,8 +33,18 @@ export function* getLocations({ data, callbacks }:{ data: GetLocationsOptions, c
   }
 }
 
+export function* getLocationDetails({ locationId, callbacks }:{ locationId: GetLocationDetails, callbacks: CallBacks, type: string }) {
+  try {
+    const res: LocationItem = yield axiosInstance.get(`/location/get/${locationId}`);
+    yield put(setLocationDetails(res));
+    callbacks?.success && callbacks.success();
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response.data.message, '', 500);
+  }
+}
+
 export function* saveLocationData({ data, callbacks }:{ data: any, callbacks: CallBacks, type: string }) {
-  console.log(data);
   try {
     const formData = new FormData();
     data.logo && formData.append('logo', data.logo);

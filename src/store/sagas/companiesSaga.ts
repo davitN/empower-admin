@@ -40,7 +40,13 @@ export function* getCompanyDetails({ id, callbacks }:{ id: GetCompanyDetailsType
     callbacks?.success && callbacks.success();
   } catch (error: any) {
     callbacks?.error && callbacks.error();
-    notificationService.error(error.response.data.message, '', 500);
+    yield put(
+      notifyAction({
+        type: 'error',
+        message: error.response?.data.message,
+        showError: false,
+      }),
+    );
   }
 }
 
