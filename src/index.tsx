@@ -13,6 +13,7 @@ import storeRegistry from './store/storeRegistry';
 import Companies from './routes/Companies';
 import CompanyDetails from './routes/CompanyDetails';
 import AppUsers from './routes/AppUsers';
+import UserDetails from './routes/UserDetails';
 import UserManagement from './routes/UserManagement';
 import Payments from './routes/Payments';
 import LocationDetails from './routes/LocationDetails';
@@ -31,6 +32,7 @@ ReactDOM.render(
             <Route path="companies" element={<Companies />} />
             <Route path="companies/:id" element={<CompanyDetails />} />
             <Route path="app-users" element={<AppUsers />} />
+            <Route path="app-users/:id" element={<UserDetails />} />
             <Route path="user-management" element={<UserManagement />} />
             <Route path="payments" element={<Payments />} />
             <Route path="locations/:id" element={<LocationDetails />} />

@@ -23,7 +23,7 @@ const TextInput: FC<PropsTypes> = ({
   const classes = useStyles();
 
   return (
-    <span className={classNames('p-field p-mb-0', icon && 'p-input-icon-left', customClasses)}>
+    <span className={classNames(classes.fullWidth, 'p-field p-mb-0', icon && 'p-input-icon-left', customClasses)}>
       {label && (
         <label htmlFor="label" className={classNames('p-mb-3', classes.textColor)}>
           {label}
@@ -48,6 +48,9 @@ const TextInput: FC<PropsTypes> = ({
 export default TextInput;
 
 const useStyles = createUseStyles({
+  fullWidth: {
+    width: '100%',
+  },
   root: {
     width: '100%',
     backgroundColor: COLORS.white,
