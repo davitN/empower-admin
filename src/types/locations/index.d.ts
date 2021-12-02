@@ -1,5 +1,13 @@
 export interface LocationItem {
-  company: string,
+  company: {
+    logo?: {
+      width: number,
+      height: number,
+      imgURL: string
+    },
+    name: string,
+    _id: string
+  },
   createdAt: string,
   name: string,
   updatedAt: string,
@@ -45,7 +53,7 @@ export interface SaveDataOptions {
     height: number
   },
   data: {
-    companyId: string,
+    companyId: string | null,
     name: string,
   },
   locationId?: string | null,

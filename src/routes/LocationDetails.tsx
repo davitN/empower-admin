@@ -15,7 +15,7 @@ import { LocationItem } from '../types/locations';
 interface ValuesTypes {
   name: string,
   company: string,
-  companyId: string,
+  companyId: string | null,
   logo?: {
     width: number,
     height: number,
@@ -37,7 +37,7 @@ interface ImgTypes {
 const initialState = {
   name: '',
   company: '',
-  companyId: '',
+  companyId: null,
 };
 
 const imgInitialStateImg = {
@@ -84,7 +84,7 @@ const LocationDetails = () => {
         companyId: values.companyId,
         name: values.name,
       },
-      locationId: isNewLocation ? null : locationId,
+      locationId: isNewLocation ? undefined : locationId,
     }, {
       success: () => setSaving(false),
       error: () => setSaving(false),
@@ -106,7 +106,7 @@ const LocationDetails = () => {
 
   useEffect(() => {
     if (locationDetails) {
-      setValues({ ...values, name: locationDetails?.name, company: locationDetails?.company });
+      setValues({ ...values, name: locationDetails?.name, company: locationDetails?.company.name });
       setImg({
         ...img,
         imgPrev: locationDetails?.logo?.imgURL || null,
