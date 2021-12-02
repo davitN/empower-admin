@@ -5,6 +5,7 @@ import { CallBacks } from '../../types/main';
 export const GET_LOCATIONS = 'socialize/locations/getLocations';
 export const SET_LOCATIONS = 'socialize/locations/setLocations';
 export const RESET_LOCATIONS_STATE = 'socialize/locations/resetLocationsState';
+export const SAVE_LOCATION = 'socialize/locations/saveLocation';
 
 const initialState: InitialStateLocations = {
   locations: null,
@@ -42,4 +43,10 @@ export const getLocations = (data: GetLocationsOptions, callbacks?: CallBacks) =
 
 export const resetLocationsState = () => ({
   type: RESET_LOCATIONS_STATE,
+});
+
+export const saveLocation = (data, callbacks?: CallBacks) => ({
+  type: SAVE_LOCATION,
+  data,
+  callbacks,
 });

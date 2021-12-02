@@ -14,7 +14,7 @@ export interface CompanyItem {
   code: string
   createdAt: string
   individualLocationPaymentPage: string
-  individualLocationPrice: number
+  price: number
   locationCount: number,
   location?: {
     data: any[],
@@ -44,7 +44,7 @@ export type GetCompanyDetailsTypes = string;
 export interface SaveDataTypes {
   data: {
     individualLocationPaymentPage: string
-    individualLocationPrice: number | null
+    price: number | null
     showTeamSection: boolean,
     name: string,
     code?: string | null,

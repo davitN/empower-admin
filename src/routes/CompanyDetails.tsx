@@ -24,7 +24,7 @@ import { getLocations, resetLocationsState } from '../store/ducks/locationsDuck'
 interface InputsTypes {
   name: string,
   paymentType: string,
-  individualLocationPrice: number | null,
+  price: number | null,
   individualLocationPaymentPage: string,
   showTeamSection: boolean,
   code: null | string,
@@ -69,7 +69,7 @@ const CompanyDetails = () => {
   const [values, setValues] = useState<InputsTypes>({
     name: '',
     paymentType: paymentType.all,
-    individualLocationPrice: null,
+    price: null,
     individualLocationPaymentPage: '',
     showTeamSection: true,
     code: null,
@@ -119,7 +119,7 @@ const CompanyDetails = () => {
       setValues({
         name: companyDetails.name,
         paymentType: companyDetails.paymentType,
-        individualLocationPrice: companyDetails.individualLocationPrice,
+        price: companyDetails.price,
         individualLocationPaymentPage: companyDetails.individualLocationPaymentPage,
         showTeamSection: companyDetails.showTeamSection,
         code: companyDetails.code,
@@ -170,8 +170,8 @@ const CompanyDetails = () => {
                 </div>
               </div>
               <TextInput
-                value={values.individualLocationPrice}
-                handleChange={(individualLocationPrice) => setValues({ ...values, individualLocationPrice: Number(individualLocationPrice) })}
+                value={values.price}
+                handleChange={(price) => setValues({ ...values, price: Number(price) })}
                 label={`${values.paymentType === paymentType.individual ? 'Individual Location' : ''} Price`}
                 placeholder="Enter price..."
                 desc="Enter the yearly price that each location will need to pay to access the app."

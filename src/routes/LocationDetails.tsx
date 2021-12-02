@@ -5,10 +5,21 @@ import Container from '../components/shared/Container';
 import Title from '../components/shared/Title';
 import TextInput from '../components/shared/Inputs/TextInput';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
+import readImgAsync from '../helpers/utils/readImgAsync';
 
 interface ValuesTypes {
   name: string,
-  company: string
+  company: string,
+  logo?: {
+    width: number,
+    height: number,
+    imgUrl: string
+  },
+  thumbnail?: {
+    width: number,
+    height: number,
+    imgUrl: string
+  }
 }
 
 interface ImgTypes {
@@ -38,6 +49,24 @@ const LocationDetails = () => {
 
   const isNewLocation = locationId === 'new';
 
+  const handleImgUpload = async (e: any) => {
+    const {
+      img: newImg,
+      imgPrev,
+      imgDimension,
+      thumbnail,
+      thumbnailDimension,
+    } = await readImgAsync(e);
+
+    setImg({
+      newImg,
+      imgPrev,
+      thumbnail,
+    });
+
+    setValues({ ...values, logo: { ...imgDimension }, thumbnail: { ...thumbnailDimension } });
+  };
+
   useEffect(() => {
     if (isNewLocation) {
       // if new location, check if exist company name in router state and set company name otherwise redirect to companies page
@@ -65,13 +94,12 @@ const LocationDetails = () => {
             value={values.company}
             label="Company"
             placeholder="Enter company name..."
-            required
             disabled
           />
         </div>
         <div className={classes.justifyEnd}>
           <FormsSharedComponent
-            handleImgUpload={(e) => console.log(e)}
+            handleImgUpload={(e) => handleImgUpload(e)}
             loadingImg={false}
             imgUrl={img.imgPrev}
             handleImgRemove={() => console.log('rm img')}

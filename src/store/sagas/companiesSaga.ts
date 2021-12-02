@@ -56,6 +56,7 @@ export function* saveCompanyData({ data, callbacks }:{ data: SaveDataTypes, call
       yield axiosInstance.post('/company/create_company', formData);
     }
     callbacks?.success && callbacks.success();
+    notificationService.success(data.companyId ? 'Company has been successfully saved' : 'Company has been successfully added', '', 500);
   } catch (error: any) {
     callbacks?.error && callbacks.error();
     notificationService.error(error.response.data.message, '', 500);
