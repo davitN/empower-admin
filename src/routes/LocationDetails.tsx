@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Container from '../components/shared/Container';
 import Title from '../components/shared/Title';
 import TextInput from '../components/shared/Inputs/TextInput';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 import readImgAsync from '../helpers/utils/readImgAsync';
+import { saveLocation } from '../store/ducks/locationsDuck';
 
 interface ValuesTypes {
   name: string,
   company: string,
+  companyId?: string,
   logo?: {
     width: number,
     height: number,
@@ -31,6 +34,7 @@ interface ImgTypes {
 const initialState = {
   name: '',
   company: '',
+  companyId: '',
 };
 
 const imgInitialStateImg = {
@@ -39,9 +43,11 @@ const imgInitialStateImg = {
 };
 
 const LocationDetails = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const { id: locationId } = useParams();
   const location = useLocation();
+  const [saving, setSaving] = useState<boolean>(false);
   const navigate = useNavigate();
   const [values, setValues] = useState<ValuesTypes>(initialState);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -66,17 +72,31 @@ const LocationDetails = () => {
 
     setValues({ ...values, logo: { ...imgDimension }, thumbnail: { ...thumbnailDimension } });
   };
+  const handleSave = () => {
+    dispatch(saveLocation({
+      logo: img.newImg,
+      thumbnail: img.thumbnail,
+      data: {
+        companyId: values?.companyId,
+        name: values.name,
+      },
+      locationId: isNewLocation ? null : locationId,
+    }, {
+      success: () => setSaving(false),
+      error: () => setSaving(false),
+    }));
+  };
 
   useEffect(() => {
     if (isNewLocation) {
       // if new location, check if exist company name in router state and set company name otherwise redirect to companies page
-      if (!location.state?.companyName) {
+      if (!location.state) {
         navigate('/companies');
       } else {
-        setValues({ ...values, company: location.state.companyName });
+        setValues({ ...values, company: location.state?.companyName, companyId: location.state?.companyId });
       }
     }
-  }, []);
+  }, [location, isNewLocation]);
 
   return (
     <Container itemId={locationId} idText="Location ID" sectionTitle="STAR OF TEXAS VETERINARY HOSPITAL">
@@ -103,8 +123,8 @@ const LocationDetails = () => {
             loadingImg={false}
             imgUrl={img.imgPrev}
             handleImgRemove={() => console.log('rm img')}
-            isSaving={false}
-            handleSave={() => console.log('save')}
+            isSaving={saving}
+            handleSave={handleSave}
             title="Update Location Logo"
             desc="This logo will replace the company logo in the empower app."
           />

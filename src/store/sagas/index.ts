@@ -10,8 +10,8 @@ import {
 import {
   getCompanies, getCompanyDetails, saveCompanyData,
 } from './companiesSaga';
-import { GET_LOCATIONS } from '../ducks/locationsDuck';
-import { getLocations } from './locationsSaga';
+import { GET_LOCATIONS, SAVE_LOCATION } from '../ducks/locationsDuck';
+import { getLocations, saveLocationData } from './locationsSaga';
 
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
@@ -22,6 +22,7 @@ function* actionWatcher() {
   yield takeLatest(GET_COMPANY_DETAILS, getCompanyDetails);
   yield takeLatest(SAVE_COMPANY_DATA, saveCompanyData);
   yield takeLatest(GET_LOCATIONS, getLocations);
+  yield takeLatest(SAVE_LOCATION, saveLocationData);
 }
 
 export default function* rootSaga() {
