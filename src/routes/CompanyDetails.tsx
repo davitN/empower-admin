@@ -103,7 +103,10 @@ const CompanyDetails = () => {
       data: values,
       companyId: isNewCompany ? null : companyId,
     }, {
-      success: () => setSaving(false),
+      success: () => {
+        setSaving(false);
+        navigate('/companies/');
+      },
       error: () => setSaving(false),
     }));
   };
