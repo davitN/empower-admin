@@ -114,6 +114,8 @@ const LocationDetails = () => {
     }
   }, [locationDetails]);
 
+  const validateInputs = () : boolean => values.name.length < 1;
+
   return (
     <Container itemId={locationId} idText="Location ID" sectionTitle="STAR OF TEXAS VETERINARY HOSPITAL">
       <Title title="LOCATION INFORMATION" costumeStyles="p-pb-4" />
@@ -151,6 +153,8 @@ const LocationDetails = () => {
             handleSave={handleSave}
             title="Update Location Logo"
             desc="This logo will replace the company logo in the empower app."
+            disableSave={validateInputs()}
+            isNewItem={isNewLocation}
           />
         </div>
       </div>

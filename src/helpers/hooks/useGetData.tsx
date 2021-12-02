@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 interface PropTypes {
-  getDataAction: Function,
-  resetState: Function,
+  getDataAction?: Function | undefined,
+  resetState?: Function | undefined,
   LIMIT?: number,
   resetOnUnmount?: boolean,
   costumeParams?: any
@@ -18,10 +18,10 @@ const useGetData = ({
     if (val?.length > 0) {
       setSearchValue(val);
     } else {
-      dispatch(resetState());
+      resetState && dispatch(resetState());
       setSearchValue(null);
     }
-    dispatch(getDataAction({
+    getDataAction && dispatch(getDataAction({
       limit: LIMIT,
       offset: 0,
       searchWord: val || null,
@@ -30,8 +30,8 @@ const useGetData = ({
   };
 
   const handlePageChange = (val: number) => {
-    dispatch(resetState());
-    dispatch(getDataAction({
+    resetState && dispatch(resetState());
+    getDataAction && dispatch(getDataAction({
       limit: LIMIT,
       offset: (val - 1) * LIMIT,
       searchWord: searchValue,
@@ -40,13 +40,13 @@ const useGetData = ({
   };
 
   useEffect(() => {
-    dispatch(getDataAction({
+    getDataAction && dispatch(getDataAction({
       limit: LIMIT,
       offset: 0,
       searchWord: searchValue,
       ...costumeParams,
     }));
-    return resetOnUnmount ? () => dispatch(resetState()) : undefined;
+    return resetOnUnmount ? () => resetState && dispatch(resetState()) : undefined;
   }, []);
 
   return {

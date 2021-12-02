@@ -53,12 +53,13 @@ const CompanyDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id: companyId } = useParams();
+  const isNewCompany = companyId === 'new';
   const { locations } = useSelector((state: RootState) => state.locationsReducer);
   const {
     searchValue: locationsSearchValue, handleSearch: locationsHandleSearch, handlePageChange: locationsHandlePageChange,
   } = useGetData({
-    getDataAction: getLocations,
-    resetState: resetLocationsState,
+    getDataAction: isNewCompany ? undefined : getLocations,
+    resetState: isNewCompany ? undefined : resetLocationsState,
     resetOnUnmount: true,
     costumeParams: {
       companyId,
@@ -75,7 +76,6 @@ const CompanyDetails = () => {
     code: null,
   });
   const [saving, setSaving] = useState<boolean>(false);
-  const isNewCompany = companyId === 'new';
 
   const handleImgUpload = async (e: any) => {
     const {
@@ -107,6 +107,8 @@ const CompanyDetails = () => {
       error: () => setSaving(false),
     }));
   };
+
+  const validateInputs = () : boolean => values.name.length < 1 || !values.price || !img.imgPrev;
 
   useEffect(() => {
     if (companyId !== 'new' && typeof companyId === 'string') {
@@ -217,9 +219,12 @@ const CompanyDetails = () => {
             title="Update Company Logo"
             desc="This is the logo that shows on the team screen in the empower app"
             requiredLogo
+            disableSave={validateInputs()}
+            isNewItem={isNewCompany}
           />
         </div>
       </div>
+      {!isNewCompany && (
       <Table
         searchValue={locationsSearchValue || ''}
         handleSearch={(val) => locationsHandleSearch(val)}
@@ -232,6 +237,7 @@ const CompanyDetails = () => {
         buttonText="+ Add location"
         costumeClasses={classes.tablePadding}
       />
+      )}
     </Container>
   );
 };

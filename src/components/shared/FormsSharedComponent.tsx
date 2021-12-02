@@ -15,11 +15,13 @@ interface PropsTypes {
   imgUrl: string | null,
   title?: string,
   desc?:string,
-  requiredLogo?: boolean
+  requiredLogo?: boolean,
+  disableSave?: boolean,
+  isNewItem?: boolean
 }
 
 const FormsSharedComponent = ({
-  handleImgUpload, loadingImg, handleImgRemove, handleSave, isSaving, imgUrl, title, desc, requiredLogo,
+  handleImgUpload, loadingImg, handleImgRemove, handleSave, isSaving, imgUrl, title, desc, requiredLogo, disableSave, isNewItem,
 }: PropsTypes) => {
   const classes = useStyles();
   return (
@@ -56,8 +58,9 @@ const FormsSharedComponent = ({
         customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
         handleClick={handleSave}
         loading={isSaving}
+        disabled={disableSave}
       >
-        Save
+        {isNewItem ? 'Save' : 'Update'}
       </Button>
     </>
   );
@@ -68,6 +71,10 @@ export default FormsSharedComponent;
 const useStyles = createUseStyles({
   button: {
     width: 'max-content',
+    '&:disabled': {
+      cursor: 'not-allowed !important',
+      pointerEvents: 'inherit',
+    },
   },
   infoText: {
     fontSize: '0.73rem',
