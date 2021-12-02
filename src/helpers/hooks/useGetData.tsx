@@ -5,15 +5,15 @@ interface PropTypes {
   getDataAction: Function,
   resetState: Function,
   LIMIT?: number,
-  resetOnUnmount?: boolean
+  resetOnUnmount?: boolean,
+  costumeParams?: any
 }
 
 const useGetData = ({
-  getDataAction, resetState, LIMIT = 10, resetOnUnmount,
+  getDataAction, resetState, LIMIT = 10, resetOnUnmount, costumeParams = {},
 }: PropTypes) => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState<string | null>(null);
-
   const handleSearch = (val: string) => {
     if (val?.length > 0) {
       setSearchValue(val);
@@ -25,6 +25,7 @@ const useGetData = ({
       limit: LIMIT,
       offset: 0,
       searchWord: val || null,
+      ...costumeParams,
     }));
   };
 
@@ -34,14 +35,17 @@ const useGetData = ({
       limit: LIMIT,
       offset: (val - 1) * LIMIT,
       searchWord: searchValue,
+      ...costumeParams,
     }));
   };
 
   useEffect(() => {
+    console.log(costumeParams);
     dispatch(getDataAction({
       limit: LIMIT,
       offset: 0,
       searchWord: searchValue,
+      ...costumeParams,
     }));
     return resetOnUnmount ? () => dispatch(resetState()) : undefined;
   }, []);

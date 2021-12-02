@@ -14,11 +14,12 @@ import {
 } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
 import { CompanyItem } from '../types/companies';
-// import Table from '../components/shared/Table';
-// import useGetData from '../helpers/hooks/useGetData';
+import Table from '../components/shared/Table';
+import useGetData from '../helpers/hooks/useGetData';
 import readImgAsync from '../helpers/utils/readImgAsync';
 import Container from '../components/shared/Container';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
+import { getLocations, resetLocationsState } from '../store/ducks/locationsDuck';
 
 interface InputsTypes {
   name: string,
@@ -51,14 +52,18 @@ const CompanyDetails = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const {
-  //   searchValue: locationsSearchValue, handleSearch: locationsHandleSearch, handlePageChange: locationsHandlePageChange,
-  // } = useGetData({
-  //   getDataAction: getCompanies,
-  //   resetState: getCompanies,
-  //   resetOnUnmount: true,
-  // });
   const { id: companyId } = useParams();
+  const { locations } = useSelector((state: RootState) => state.locationsReducer);
+  const {
+    searchValue: locationsSearchValue, handleSearch: locationsHandleSearch, handlePageChange: locationsHandlePageChange,
+  } = useGetData({
+    getDataAction: getLocations,
+    resetState: resetLocationsState,
+    resetOnUnmount: true,
+    costumeParams: {
+      companyId,
+    },
+  });
   const { companyDetails } : { companyDetails: CompanyItem } = useSelector((state: RootState) => state.companiesReducer);
   const [img, setImg] = useState<ImgTypes>(imgInitialState);
   const [values, setValues] = useState<InputsTypes>({
@@ -214,10 +219,10 @@ const CompanyDetails = () => {
           />
         </div>
       </div>
-      {/* <Table
+      <Table
         searchValue={locationsSearchValue || ''}
         handleSearch={(val) => locationsHandleSearch(val)}
-        data={{ data: [], count: 0 }}
+        data={locations}
         header={locationsHeader}
         tableTitle="LOCATIONS"
         handleEdit={() => navigate('')}
@@ -225,7 +230,7 @@ const CompanyDetails = () => {
         handleAdd={() => navigate('new')}
         buttonText="+ Add location"
         costumeClasses={classes.tablePadding}
-      /> */}
+      />
     </Container>
   );
 };
@@ -283,13 +288,13 @@ const useStyles = createUseStyles({
   },
 });
 
-// const locationsHeader = [
-//   {
-//     name: 'LOCATION NAME',
-//     field: 'name',
-//   },
-//   {
-//     name: 'LOCATION ID',
-//     field: 'code',
-//   },
-// ];
+const locationsHeader = [
+  {
+    name: 'LOCATION NAME',
+    field: 'name',
+  },
+  {
+    name: 'LOCATION ID',
+    field: 'company',
+  },
+];

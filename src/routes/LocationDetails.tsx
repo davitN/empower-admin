@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useParams } from 'react-router-dom';
 import Container from '../components/shared/Container';
