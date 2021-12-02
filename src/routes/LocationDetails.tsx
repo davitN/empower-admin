@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import Container from '../components/shared/Container';
 import Title from '../components/shared/Title';
 import TextInput from '../components/shared/Inputs/TextInput';
@@ -30,6 +30,8 @@ const imgInitialStateImg = {
 const LocationDetails = () => {
   const classes = useStyles();
   const { id: locationId } = useParams();
+  const location = useLocation();
+  console.log(location);
   const [values, setValues] = useState<ValuesTypes>(initialState);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [img, setImg] = useState<ImgTypes>(imgInitialStateImg);

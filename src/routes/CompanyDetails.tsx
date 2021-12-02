@@ -225,7 +225,7 @@ const CompanyDetails = () => {
         data={locations}
         header={locationsHeader}
         tableTitle="LOCATIONS"
-        handleEdit={() => navigate('')}
+        handleEdit={({ _id }) => navigate(`/locations/${_id}`, { state: { companyId, companyName: companyDetails.name } })}
         handlePageChange={(val) => locationsHandlePageChange(val)}
         handleAdd={() => navigate('new')}
         buttonText="+ Add location"

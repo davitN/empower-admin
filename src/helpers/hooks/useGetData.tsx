@@ -40,7 +40,6 @@ const useGetData = ({
   };
 
   useEffect(() => {
-    console.log(costumeParams);
     dispatch(getDataAction({
       limit: LIMIT,
       offset: 0,
