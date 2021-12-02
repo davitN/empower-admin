@@ -1,12 +1,12 @@
 import { AnyAction } from 'redux';
-
+import { InitialStateLocations, GetLocationsOptions, GetLocationsData } from '../../types/locations';
 import { CallBacks } from '../../types/main';
 
 export const GET_LOCATIONS = 'socialize/locations/getLocations';
 export const SET_LOCATIONS = 'socialize/locations/setLocations';
 export const RESET_LOCATIONS_STATE = 'socialize/locations/resetLocationsState';
 
-const initialState = {
+const initialState: InitialStateLocations = {
   locations: null,
 };
 
@@ -15,7 +15,7 @@ export const locationsReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case SET_LOCATIONS:
       return {
-        locations: (payload as any),
+        locations: (payload as GetLocationsData),
       };
     case RESET_LOCATIONS_STATE:
       return {
@@ -27,12 +27,12 @@ export const locationsReducer = (state = initialState, action: AnyAction) => {
   }
 };
 
-export const setLocations = (locations: any) => ({
+export const setLocations = (data: GetLocationsData) => ({
   type: SET_LOCATIONS,
-  payload: locations,
+  payload: data,
 });
 
-export const getLocations = (data: any, callbacks?: CallBacks) => {
+export const getLocations = (data: GetLocationsOptions, callbacks?: CallBacks) => {
   return {
     type: GET_LOCATIONS,
     data,

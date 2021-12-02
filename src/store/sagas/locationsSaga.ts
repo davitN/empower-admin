@@ -3,19 +3,18 @@
 import { put, delay } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
 import { setLocations, resetLocationsState } from '../ducks/locationsDuck';
-// import {
-//   CompaniesTypes, GetCompaniesOptions, GetCompanyDetailsTypes, CompanyItem, SaveDataTypes,
-// } from '../../types/companies';
+import { GetLocationsOptions, GetLocationsData } from '../../types/locations';
+
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
 
-export function* getLocations({ data, callbacks }:{ data: any, callbacks: CallBacks, type:string }) {
+export function* getLocations({ data, callbacks }:{ data: GetLocationsOptions, callbacks: CallBacks, type:string }) {
   try {
     if (data.searchWord) {
       yield put(resetLocationsState());
       yield delay(300);
     }
-    const res: any = yield axiosInstance.get('/location/get_locations', {
+    const res: GetLocationsData = yield axiosInstance.get('/location/get_locations', {
       params: data,
     });
     yield put(setLocations(res));
