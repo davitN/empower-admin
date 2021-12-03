@@ -32,7 +32,7 @@ export const appUsersReducer = (state = initialState, action: AnyAction) => {
     case SET_APP_USER_DETAILS:
       return {
         ...state,
-        users: (payload as GetAppUserDetailsData),
+        userDetails: (payload as GetAppUserDetailsData),
       };
     case RESET_APP_USER_DETAILS:
       return {
