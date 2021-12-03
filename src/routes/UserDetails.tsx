@@ -1,14 +1,26 @@
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Container from '../components/shared/Container';
 import TextInput from '../components/shared/Inputs/TextInput';
 import Button from '../components/shared/Inputs/Button';
 import COLORS from '../services/colors.service';
+import { getAppUserDetails } from '../store/ducks/appUsersDuck';
 
 const UserDetails = () => {
   const { id: userId } = useParams();
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const isNewUser = userId === 'new';
+
+  useEffect(() => {
+    if (!isNewUser) {
+      userId && dispatch(getAppUserDetails(userId));
+    }
+  }, [isNewUser, userId]);
   return (
     <Container sectionTitle="New User" idText="User ID" itemId={userId}>
       <div className={classes.wrapper}>
