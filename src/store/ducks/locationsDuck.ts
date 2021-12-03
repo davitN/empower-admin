@@ -24,7 +24,7 @@ export const locationsReducer = (state = initialState, action: AnyAction) => {
       return {
         locations: (payload as GetLocationsData),
       };
-    case RESET_LOCATION_DETAILS:
+    case RESET_LOCATIONS_STATE:
       return {
         ...state,
         locations: null,
@@ -38,7 +38,7 @@ export const locationsReducer = (state = initialState, action: AnyAction) => {
       return {
         locationDetails: (payload as LocationItem),
       };
-    case RESET_LOCATIONS_STATE:
+    case RESET_LOCATION_DETAILS:
       return {
         ...state,
         locationDetails: null,
