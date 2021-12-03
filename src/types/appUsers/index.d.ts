@@ -30,7 +30,7 @@ export interface GetAppUserDetailsData extends AppUser {
       imgURL: string
     }
   },
-  company: {
+  companyId: {
     _id: string,
     name: string,
     logo: {

@@ -101,7 +101,7 @@ const UserDetails = () => {
                 placeholder="Enter phone..."
               />
               <TextInput
-                value={userDetails?.company?.name || ''}
+                value={userDetails?.companyId?.name || ''}
                 label="Company"
                 disabled
               />
