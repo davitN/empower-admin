@@ -1,11 +1,12 @@
 import { AnyAction } from 'redux';
 import { CallBacks } from '../../types/main';
+import { InitialState, GetAppUsersData, GetAppUsersOptions } from '../../types/appUsers';
 
 export const GET_APP_USERS = 'socialize/locations/getAppUsers';
 export const SET_APP_USERS = 'socialize/locations/setAppUsers';
 export const RESET_APP_USERS_STATE = 'socialize/locations/resetAppUsers';
 
-const initialState: any = {
+const initialState: InitialState = {
   users: null,
 };
 
@@ -14,7 +15,7 @@ export const appUsersReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case SET_APP_USERS:
       return {
-        users: (payload as any),
+        users: (payload as GetAppUsersData),
       };
     case RESET_APP_USERS_STATE:
       return {
@@ -26,12 +27,12 @@ export const appUsersReducer = (state = initialState, action: AnyAction) => {
   }
 };
 
-export const setAppUsers = (data: any) => ({
+export const setAppUsers = (data: GetAppUsersData) => ({
   type: SET_APP_USERS,
   payload: data,
 });
 
-export const getAppUsers = (data: any, callbacks?: CallBacks) => ({
+export const getAppUsers = (data: GetAppUsersOptions, callbacks?: CallBacks) => ({
   type: GET_APP_USERS,
   data,
   callbacks,

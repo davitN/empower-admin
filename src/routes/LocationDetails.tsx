@@ -14,6 +14,7 @@ import { LocationItem } from '../types/locations';
 import useGetData from '../helpers/hooks/useGetData';
 import Table from '../components/shared/Table';
 import { getAppUsers, resetAppUsersState } from '../store/ducks/appUsersDuck';
+import { GetAppUsersData } from '../types/appUsers';
 
 interface ValuesTypes {
   name: string,
@@ -52,6 +53,7 @@ const LocationDetails = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { locationDetails }: { locationDetails: LocationItem } = useSelector((state: RootState) => state.locationsReducer);
+  const { users }: { users: GetAppUsersData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { id: locationId } = useParams();
   const { state } = useLocation();
   const {
@@ -174,7 +176,7 @@ const LocationDetails = () => {
       <Table
         searchValue={searchValue || ''}
         handleSearch={(val) => handleSearch(val)}
-        data={{ data: [], count: 0 }}
+        data={users}
         header={tableHeaders}
         tableTitle="LOCATION APP USERS"
         handleEdit={({ _id }) => navigate(_id)}
@@ -211,18 +213,18 @@ const useStyles = createUseStyles({
 const tableHeaders = [
   {
     name: 'FIRST NAME',
-    field: 'name',
+    field: 'firstName',
   },
   {
     name: 'LAST NAME',
-    field: 'code',
+    field: 'lastName',
   },
   {
     name: 'EMAIL',
-    field: 'locationCount',
+    field: 'email',
   },
   {
     name: 'PHONE',
-    field: 'userCount',
+    field: 'phone',
   },
 ];
