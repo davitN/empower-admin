@@ -19,6 +19,8 @@ export interface GetAppUsersOptions {
   searchWord?: string
 }
 
+export type GetAppUserDetailsOptions = string;
+
 export interface InitialState {
   users: GetAppUsersData | null
 }

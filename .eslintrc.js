@@ -31,6 +31,7 @@ module.exports = {
     "consistent-return": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-static-element-interactions": "off",
+    "@typescript-eslint/dot-notation": "off",
     '@typescript-eslint/ban-types': [
       'error',
       {

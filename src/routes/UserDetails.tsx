@@ -1,14 +1,16 @@
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
+import { useParams } from 'react-router-dom';
 import Container from '../components/shared/Container';
 import TextInput from '../components/shared/Inputs/TextInput';
 import Button from '../components/shared/Inputs/Button';
 import COLORS from '../services/colors.service';
 
 const UserDetails = () => {
+  const { id: userId } = useParams();
   const classes = useStyles();
   return (
-    <Container sectionTitle="JOHN DOE" idText="User ID" itemId="1">
+    <Container sectionTitle="New User" idText="User ID" itemId={userId}>
       <div className={classes.wrapper}>
         <div className={classNames(classes.inputs)}>
           <div className="p-d-flex">

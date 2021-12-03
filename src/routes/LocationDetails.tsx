@@ -123,7 +123,9 @@ const LocationDetails = () => {
 
   useEffect(() => {
     if (locationDetails) {
-      setValues({ ...values, name: locationDetails?.name, company: locationDetails?.company.name });
+      setValues({
+        ...values, name: locationDetails?.name, company: locationDetails?.company.name, companyId: locationDetails.company['_id'],
+      });
       setImg({
         ...img,
         imgPrev: locationDetails?.logo?.imgURL || null,

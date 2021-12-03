@@ -61,6 +61,10 @@ const useStyles = createUseStyles({
       boxShadow: 'none !important',
       borderColor: `${COLORS.lightBlue} !important`,
     },
+    '&:disabled': {
+      cursor: 'not-allowed !important',
+      pointerEvents: 'all',
+    },
   },
   textColor: {
     color: COLORS.blueWood,
