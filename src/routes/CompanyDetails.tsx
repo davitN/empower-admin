@@ -186,7 +186,7 @@ const CompanyDetails = () => {
               {!isNewCompany && (
               <TextInput
                 value={values.individualLocationPaymentPage}
-                label={`${values.paymentType === paymentType.individual ? 'Individual Location' : ''}Payment Page`}
+                label={`${values.paymentType === paymentType.individual ? 'Individual Location' : ''} Payment Page`}
                 placeholder="Enter payment page..."
                 desc="This is the page where individual locations can go to play for access to the app"
                 disabled
