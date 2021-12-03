@@ -29,7 +29,7 @@ export const locationsReducer = (state = initialState, action: AnyAction) => {
         ...state,
         locations: null,
       };
-    case GET_LOCATIONS:
+    case GET_LOCATION_DETAILS:
       return {
         ...state,
         locationDetails: (payload as LocationItem),

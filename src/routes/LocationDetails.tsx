@@ -11,6 +11,9 @@ import readImgAsync from '../helpers/utils/readImgAsync';
 import { saveLocation, getLocationDetails } from '../store/ducks/locationsDuck';
 import { RootState } from '../store/configureStore';
 import { LocationItem } from '../types/locations';
+import useGetData from '../helpers/hooks/useGetData';
+import Table from '../components/shared/Table';
+import { getAppUsers, resetAppUsersState } from '../store/ducks/appUsersDuck';
 
 interface ValuesTypes {
   name: string,
@@ -50,13 +53,26 @@ const LocationDetails = () => {
   const classes = useStyles();
   const { locationDetails }: { locationDetails: LocationItem } = useSelector((state: RootState) => state.locationsReducer);
   const { id: locationId } = useParams();
-  const location = useLocation();
+  const { state } = useLocation();
+  const {
+    searchValue, handleSearch, handlePageChange,
+  } = useGetData({
+    resetOnUnmount: true,
+    getDataAction: getAppUsers,
+    resetState: resetAppUsersState,
+    costumeParams: {
+      companyId: state?.companyId,
+      locationId,
+    },
+  });
   const [saving, setSaving] = useState<boolean>(false);
   const navigate = useNavigate();
   const [values, setValues] = useState<ValuesTypes>(initialState);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [img, setImg] = useState<ImgTypes>(imgInitialStateImg);
   const isNewLocation = locationId === 'new';
+
+  const validateInputs = () : boolean => values.name.length < 1;
 
   const handleImgUpload = async (e: any) => {
     const {
@@ -66,15 +82,14 @@ const LocationDetails = () => {
       thumbnail,
       thumbnailDimension,
     } = await readImgAsync(e);
-
     setImg({
       newImg,
       imgPrev,
       thumbnail,
     });
-
     setValues({ ...values, logo: { ...imgDimension }, thumbnail: { ...thumbnailDimension } });
   };
+
   const handleSave = () => {
     setSaving(true);
     dispatch(saveLocation({
@@ -94,15 +109,15 @@ const LocationDetails = () => {
   useEffect(() => {
     if (isNewLocation) {
       // if new location, check if exist company name in router state and set company name otherwise redirect to companies page
-      if (!location.state) {
+      if (state?.companyName && state?.companyId) {
         navigate('/companies');
       } else {
-        setValues({ ...values, company: location.state?.companyName, companyId: location.state?.companyId });
+        setValues({ ...values, company: state.companyName, companyId: state.companyId });
       }
     } else {
       locationId && dispatch(getLocationDetails(locationId, { error: () => navigate('/companies') }));
     }
-  }, [location, isNewLocation]);
+  }, [state, isNewLocation]);
 
   useEffect(() => {
     if (locationDetails) {
@@ -113,8 +128,6 @@ const LocationDetails = () => {
       });
     }
   }, [locationDetails]);
-
-  const validateInputs = () : boolean => values.name.length < 1;
 
   return (
     <Container itemId={locationId} idText="Location ID" sectionTitle="STAR OF TEXAS VETERINARY HOSPITAL">
@@ -158,6 +171,17 @@ const LocationDetails = () => {
           />
         </div>
       </div>
+      <Table
+        searchValue={searchValue || ''}
+        handleSearch={(val) => handleSearch(val)}
+        data={{ data: [], count: 0 }}
+        header={tableHeaders}
+        tableTitle="LOCATION APP USERS"
+        handleEdit={({ _id }) => navigate(_id)}
+        handlePageChange={(val) => handlePageChange(val)}
+        handleAdd={() => navigate('new')}
+        buttonText="+ Add user"
+      />
     </Container>
   );
 };
@@ -183,3 +207,22 @@ const useStyles = createUseStyles({
     justifyItems: 'end',
   },
 });
+
+const tableHeaders = [
+  {
+    name: 'FIRST NAME',
+    field: 'name',
+  },
+  {
+    name: 'LAST NAME',
+    field: 'code',
+  },
+  {
+    name: 'EMAIL',
+    field: 'locationCount',
+  },
+  {
+    name: 'PHONE',
+    field: 'userCount',
+  },
+];
