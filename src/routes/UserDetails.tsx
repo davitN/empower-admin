@@ -8,7 +8,7 @@ import Container from '../components/shared/Container';
 import TextInput from '../components/shared/Inputs/TextInput';
 import Button from '../components/shared/Inputs/Button';
 import COLORS from '../services/colors.service';
-import { getAppUserDetails, resetAppUserDetails } from '../store/ducks/appUsersDuck';
+import { getAppUserDetails, resetAppUserDetails, saveAppUserDetails } from '../store/ducks/appUsersDuck';
 import { RootState } from '../store/configureStore';
 import { GetAppUserDetailsData } from '../types/appUsers';
 
@@ -17,6 +17,8 @@ const initialState = {
   lastName: '',
   email: '',
   phone: '',
+  locationId: null,
+  _id: null,
 };
 
 interface ValuesTypes {
@@ -24,12 +26,15 @@ interface ValuesTypes {
   lastName: string,
   email: string,
   phone: string,
+  locationId?: string | null,
+  _id: null | string
 }
 
 const UserDetails = () => {
   const { id: userId } = useParams();
   const navigate = useNavigate();
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { userDetails }: { userDetails: GetAppUserDetailsData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const [values, setValues] = useState<ValuesTypes>(initialState);
@@ -38,6 +43,20 @@ const UserDetails = () => {
   const validateInputs = () => (values.firstName.length < 1 || values.lastName.length < 1
     || values.phone.length < 1 || !values.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/));
 
+  const handleSave = () => {
+    setLoading(true);
+    dispatch(saveAppUserDetails(
+      {
+        data: values,
+        userId,
+      },
+      {
+        error: () => setLoading(false),
+        success: () => setLoading(false),
+      },
+    ));
+  };
+
   useEffect(() => {
     if (userDetails) {
       setValues({
@@ -45,6 +64,8 @@ const UserDetails = () => {
         lastName: userDetails.lastName,
         email: userDetails.email,
         phone: userDetails.phone,
+        locationId: userDetails.location['_id'],
+        _id: userDetails['_id'],
       });
     }
   }, [userDetails]);
@@ -126,6 +147,8 @@ const UserDetails = () => {
             textColor={COLORS.white}
             customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
             disabled={validateInputs()}
+            handleClick={handleSave}
+            loading={loading}
           >
             Save user information
           </Button>
@@ -156,7 +179,7 @@ const useStyles = createUseStyles({
     justifyItems: 'end',
   },
   button: {
-    width: 'max-content',
+    width: '100%',
     '&:disabled': {
       cursor: 'not-allowed !important',
       pointerEvents: 'inherit',

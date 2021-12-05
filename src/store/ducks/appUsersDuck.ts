@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import { CallBacks } from '../../types/main';
 import {
-  InitialState, GetAppUsersData, GetAppUsersOptions, GetAppUserDetailsOptions, GetAppUserDetailsData,
+  InitialState, GetAppUsersData, GetAppUsersOptions, GetAppUserDetailsOptions, GetAppUserDetailsData, SaveAppUserDetails,
 } from '../../types/appUsers';
 
 export const GET_APP_USERS = 'socialize/locations/getAppUsers';
@@ -10,6 +10,7 @@ export const RESET_APP_USERS_STATE = 'socialize/locations/resetAppUsers';
 export const GET_APP_USER_DETAILS = 'socialize/locations/getAppUserDetails';
 export const SET_APP_USER_DETAILS = 'socialize/locations/setAppUserDetails';
 export const RESET_APP_USER_DETAILS = 'socialize/locations/resetAppUserDetails';
+export const SAVE_APP_USER_DETAILS = 'socialize/locations/saveAppUserDetails';
 
 const initialState: InitialState = {
   users: null,
@@ -72,4 +73,10 @@ export const setAppUserDetails = (data: any) => ({
 
 export const resetAppUserDetails = () => ({
   type: RESET_APP_USER_DETAILS,
+});
+
+export const saveAppUserDetails = (data: SaveAppUserDetails, callbacks?: CallBacks) => ({
+  type: SAVE_APP_USER_DETAILS,
+  data,
+  callbacks,
 });

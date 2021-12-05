@@ -41,6 +41,18 @@ export interface GetAppUserDetailsData extends AppUser {
   },
 }
 
+export interface SaveAppUserDetails {
+  data: {
+    firstName: string,
+    lastName: string,
+    email: string,
+    phone: string,
+    locationId?: string | null,
+    _id: null | string
+  },
+  userId?: string | null
+}
+
 export interface InitialState {
   users: GetAppUsersData | null,
   userDetails: GetAppUserDetailsData | null
