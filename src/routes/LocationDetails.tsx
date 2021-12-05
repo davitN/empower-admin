@@ -56,12 +56,13 @@ const LocationDetails = () => {
   const { users }: { users: GetAppUsersData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { id: locationId } = useParams();
   const { state } = useLocation();
+  const isNewLocation = locationId === 'new';
   const {
     searchValue, handleSearch, handlePageChange,
   } = useGetData({
     resetOnUnmount: true,
-    getDataAction: getAppUsers,
-    resetState: resetAppUsersState,
+    getDataAction: isNewLocation ? undefined : getAppUsers,
+    resetState: isNewLocation ? undefined : resetAppUsersState,
     costumeParams: {
       companyId: state?.companyId,
       locationId,
@@ -72,7 +73,6 @@ const LocationDetails = () => {
   const [values, setValues] = useState<ValuesTypes>(initialState);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [img, setImg] = useState<ImgTypes>(imgInitialStateImg);
-  const isNewLocation = locationId === 'new';
 
   const validateInputs = () : boolean => values.name.length < 1;
 
@@ -111,10 +111,10 @@ const LocationDetails = () => {
   useEffect(() => {
     if (isNewLocation) {
       // if new location, check if exist company name in router state and set company name otherwise redirect to companies page
-      if (state?.companyName && state?.companyId) {
+      if (!state?.companyName && !state?.companyId) {
         navigate('/companies');
       } else {
-        setValues({ ...values, company: state.companyName, companyId: state.companyId });
+        setValues({ ...values, company: state?.companyName, companyId: state?.companyId });
       }
     } else {
       locationId && dispatch(getLocationDetails(locationId, { error: () => navigate('/companies') }));
@@ -175,6 +175,7 @@ const LocationDetails = () => {
           />
         </div>
       </div>
+      {!isNewLocation && (
       <Table
         searchValue={searchValue || ''}
         handleSearch={(val) => handleSearch(val)}
@@ -186,6 +187,7 @@ const LocationDetails = () => {
         handleAdd={() => navigate('new')}
         buttonText="+ Add user"
       />
+      )}
     </Container>
   );
 };
