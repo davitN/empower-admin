@@ -189,7 +189,7 @@ const LocationDetails = () => {
         tableTitle="LOCATION APP USERS"
         handleEdit={({ _id }) => navigate(`/app-users/${_id}`)}
         handlePageChange={(val) => handlePageChange(val)}
-        handleAdd={() => navigate('new')}
+        handleAdd={() => navigate('/app-users/new')}
         buttonText="+ Add user"
       />
       )}
