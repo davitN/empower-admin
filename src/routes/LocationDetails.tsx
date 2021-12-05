@@ -103,8 +103,13 @@ const LocationDetails = () => {
       },
       locationId: isNewLocation ? undefined : locationId,
     }, {
-      success: () => setSaving(false),
-      error: () => setSaving(false),
+      success: () => {
+        setSaving(false);
+        isNewLocation && navigate(`/companies/${state?.companyId}`);
+      },
+      error: () => {
+        setSaving(false);
+      },
     }));
   };
 
