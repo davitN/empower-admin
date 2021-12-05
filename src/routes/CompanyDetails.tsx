@@ -111,7 +111,7 @@ const CompanyDetails = () => {
     }));
   };
 
-  const validateInputs = () : boolean => values.name.length < 1 || !values.price || !img.imgPrev;
+  const validateInputs = () : boolean => values.name.length < 1 || (values.paymentType === paymentType.all && !values.price) || !img.imgPrev;
 
   useEffect(() => {
     if (companyId !== 'new' && typeof companyId === 'string') {
