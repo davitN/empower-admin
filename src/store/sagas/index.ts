@@ -14,6 +14,8 @@ import { GET_LOCATIONS, SAVE_LOCATION, GET_LOCATION_DETAILS } from '../ducks/loc
 import { getLocations, saveLocationData, getLocationDetails } from './locationsSaga';
 import { getAppUsers, getAppUserDetails, saveAppUserDetails } from './appUsersSaga';
 import { GET_APP_USERS, GET_APP_USER_DETAILS, SAVE_APP_USER_DETAILS } from '../ducks/appUsersDuck';
+import { GET_APP_CONTENT } from '../ducks/appContentDuck';
+import { getAppContent } from './appContentSaga';
 
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
@@ -29,6 +31,7 @@ function* actionWatcher() {
   yield takeLatest(GET_APP_USERS, getAppUsers);
   yield takeLatest(GET_APP_USER_DETAILS, getAppUserDetails);
   yield takeLatest(SAVE_APP_USER_DETAILS, saveAppUserDetails);
+  yield takeLatest(GET_APP_CONTENT, getAppContent);
 }
 
 export default function* rootSaga() {
