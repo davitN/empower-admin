@@ -102,7 +102,6 @@ export default Table;
 
 const useStyles = createUseStyles({
   tableContainer: {
-    minHeight: '40rem',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
