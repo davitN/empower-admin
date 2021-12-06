@@ -73,7 +73,7 @@ const Table = ({
         </div>
       </div>
       <DataTable
-        value={(data?.data || new Array(5).fill(0))}
+        value={(data?.data || new Array(10).fill(0))}
         responsiveLayout="scroll"
         rows={LIMIT}
         tableClassName={classes.table}
@@ -102,6 +102,7 @@ export default Table;
 
 const useStyles = createUseStyles({
   tableContainer: {
+    minHeight: '40rem',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
