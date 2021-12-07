@@ -15,7 +15,8 @@ interface PropTypes {
   data: any,
   header: Array<{
     name: string,
-    field: string
+    field?: string,
+    body?: (val: any) => any
   }>
   handlePageChange?: (page: number) => void,
   handleEdit?: (data: any) => void,
@@ -79,7 +80,7 @@ const Table = ({
         tableClassName={classes.table}
         emptyMessage="Data not found..."
       >
-        {data && header.map(({ name, field }) => <Column field={field} header={name} key={field} />)}
+        {data && header.map(({ name, field, body }) => <Column field={field} header={name} key={field} body={body} />)}
         {!data && header.map(({ name, field }) => <Column field={field} header={name} key={field} body={<Skeleton />} />)}
         <Column body={data ? editAction : <Skeleton />} header="Settings" />
       </DataTable>

@@ -186,11 +186,11 @@ const tableHeaders = [
   },
   {
     name: 'START DATE/TIME',
-    field: 'startDate',
+    body: ({ startDate }: { startDate: Date }) => startDate && dateFormatter.format(new Date(startDate)),
   },
   {
     name: 'END DATE/TIME',
-    field: 'endDate',
+    body: ({ endDate }: { endDate: Date }) => endDate && dateFormatter.format(new Date(endDate)),
   },
   {
     name: 'COMPANY',
@@ -205,10 +205,25 @@ const communityDataHeader = [
   },
   {
     name: 'PUBLISHED',
-    field: 'createdAt',
+    body: ({ createdAt }: { createdAt: Date }) => createdAt && communityDateFormatter.format(new Date(createdAt)),
   },
   {
     name: 'CATEGORY',
     field: 'category.name',
   },
 ];
+
+const dateFormatter = Intl.DateTimeFormat(undefined, {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  second: 'numeric',
+});
+
+const communityDateFormatter = Intl.DateTimeFormat(undefined, {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+});
