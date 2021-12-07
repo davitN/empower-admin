@@ -49,7 +49,7 @@ export function* saveAppUserDetails({ data, callbacks }:{ data: SaveAppUserDetai
     if (data?.userId) {
       yield axiosInstance.put(`/app_user/edit/${data.userId}`, data.data);
     } else {
-      yield axiosInstance.post('/app-user/create_app_user', data.data);
+      yield axiosInstance.post('/app_user/create_app_user', data.data);
     }
     callbacks?.success && callbacks.success();
     notificationService.success(data.userId ? 'User has been successfully saved' : 'User has been successfully added', '', 500);

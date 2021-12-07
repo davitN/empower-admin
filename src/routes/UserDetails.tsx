@@ -19,7 +19,6 @@ const initialState = {
   email: '',
   phone: '',
   locationId: null,
-  _id: null,
 };
 
 interface ValuesTypes {
@@ -28,7 +27,7 @@ interface ValuesTypes {
   email: string,
   phone: string,
   locationId?: string | null,
-  _id: null | string
+  _id?: string
 }
 
 const UserDetails = () => {
@@ -50,7 +49,7 @@ const UserDetails = () => {
     dispatch(saveAppUserDetails(
       {
         data: values,
-        userId: isNewUser ? null : userId,
+        ...!isNewUser && ({ userId }),
       },
       {
         error: () => setLoading(false),
