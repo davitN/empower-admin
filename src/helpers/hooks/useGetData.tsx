@@ -6,11 +6,12 @@ interface PropTypes {
   resetState?: Function | undefined,
   LIMIT?: number,
   resetOnUnmount?: boolean,
-  costumeParams?: any
+  costumeParams?: any,
+  fetchOnMount? : boolean
 }
 
 const useGetData = ({
-  getDataAction, resetState, LIMIT = 10, resetOnUnmount, costumeParams = {},
+  getDataAction, resetState, LIMIT = 10, resetOnUnmount, costumeParams = {}, fetchOnMount = true,
 }: PropTypes) => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState<string | null>(null);
@@ -40,7 +41,7 @@ const useGetData = ({
   };
 
   useEffect(() => {
-    getDataAction && dispatch(getDataAction({
+    getDataAction && fetchOnMount && dispatch(getDataAction({
       limit: LIMIT,
       offset: 0,
       searchWord: searchValue,

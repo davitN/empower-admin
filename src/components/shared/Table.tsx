@@ -48,7 +48,7 @@ const Table = ({
   return (
     <div className={classNames(classes.tableContainer, costumeClasses)}>
       <div className={classes.header}>
-        {tableTitle && <Title title={tableTitle} costumeStyles="text-4xl" />}
+        {tableTitle && <Title title={tableTitle} fontSize="text-xl" />}
         <div className={classNames(classes.wrapper, 'p-ml-4')}>
           <Input
             icon={<i className="pi pi-search" />}
