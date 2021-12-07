@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
+import classNames from 'classnames';
 import {
   getAppContent, resetAppContentState, getCommunityData, getAppContentItem, resetAppContentItem,
 } from '../store/ducks/appContentDuck';
@@ -89,75 +90,77 @@ const AppContent = () => {
 
   return (
     <Container sectionTitle="EMPOWER APP CONTENT">
-      <Title title="MONTHLY COMPANY CONTENT" fontSize="text-2xl" />
-      <div className={classes.wrapper}>
-        <Table
-          searchValue={kickOffSearchValue || ''}
-          handleSearch={(val) => kickOffHandleSearch(val)}
-          data={initialData.kickOff}
-          header={tableHeaders}
-          tableTitle="Kickoff Content"
-          handleEdit={({ _id }) => navigate(_id)}
-          handlePageChange={(val) => kickOffHandlePageChange(val)}
-          handleAdd={() => navigate('new')}
-          buttonText="+ Add content"
-        />
-        <Table
-          searchValue={ethosSearchValue || ''}
-          handleSearch={(val) => ethosHandleSearch(val)}
-          data={initialData.ethos}
-          header={tableHeaders}
-          tableTitle="Ethos Content"
-          handleEdit={({ _id }) => navigate(_id)}
-          handlePageChange={(val) => ethosHandlePageChange(val)}
-          handleAdd={() => navigate('new')}
-          buttonText="+ Add content"
-        />
-        <Table
-          searchValue={gratitudeSearchValue || ''}
-          handleSearch={(val) => gratitudeHandleSearch(val)}
-          data={initialData.gratitude}
-          header={tableHeaders}
-          tableTitle="Gratitude Content"
-          handleEdit={({ _id }) => navigate(_id)}
-          handlePageChange={(val) => gratitudeHandlePageChange(val)}
-          handleAdd={() => navigate('new')}
-          buttonText="+ Add content"
-        />
-        <Table
-          searchValue={powerUpSearchValue || ''}
-          handleSearch={(val) => powerUpHandleSearch(val)}
-          data={initialData.powerUp}
-          header={tableHeaders}
-          tableTitle="Power-Up Content"
-          handleEdit={({ _id }) => navigate(_id)}
-          handlePageChange={(val) => powerUpHandlePageChange(val)}
-          handleAdd={() => navigate('new')}
-          buttonText="+ Add content"
-        />
-        <Table
-          searchValue={powerDownSearchValue || ''}
-          handleSearch={(val) => powerDownHandleSearch(val)}
-          data={initialData.powerDown}
-          header={tableHeaders}
-          tableTitle="Power-Down Content"
-          handleEdit={({ _id }) => navigate(_id)}
-          handlePageChange={(val) => powerDownHandlePageChange(val)}
-          handleAdd={() => navigate('new')}
-          buttonText="+ Add content"
-        />
-        <Title title="COMMUNITY CONTENT" fontSize="text-2xl" />
-        <Table
-          searchValue={communitySearchValue || ''}
-          handleSearch={(val) => communityHandleSearch(val)}
-          data={initialData.communityData}
-          header={communityDataHeader}
-          tableTitle="Community Content"
-          handleEdit={({ _id }) => navigate(_id)}
-          handlePageChange={(val) => communityHandlePageChange(val)}
-          handleAdd={() => navigate('new')}
-          buttonText="+ Add content"
-        />
+      <div className="p-px-3">
+        <Title title="MONTHLY COMPANY CONTENT" fontSize="text-2xl" costumeStyles="p-mb-6" />
+        <div className={classNames(classes.wrapper, 'p-px-3')}>
+          <Table
+            searchValue={kickOffSearchValue || ''}
+            handleSearch={(val) => kickOffHandleSearch(val)}
+            data={initialData.kickOff}
+            header={tableHeaders}
+            tableTitle="Kickoff Content"
+            handleEdit={({ _id }) => navigate(_id)}
+            handlePageChange={(val) => kickOffHandlePageChange(val)}
+            handleAdd={() => navigate('new')}
+            buttonText="+ Add content"
+          />
+          <Table
+            searchValue={ethosSearchValue || ''}
+            handleSearch={(val) => ethosHandleSearch(val)}
+            data={initialData.ethos}
+            header={tableHeaders}
+            tableTitle="Ethos Content"
+            handleEdit={({ _id }) => navigate(_id)}
+            handlePageChange={(val) => ethosHandlePageChange(val)}
+            handleAdd={() => navigate('new')}
+            buttonText="+ Add content"
+          />
+          <Table
+            searchValue={gratitudeSearchValue || ''}
+            handleSearch={(val) => gratitudeHandleSearch(val)}
+            data={initialData.gratitude}
+            header={tableHeaders}
+            tableTitle="Gratitude Content"
+            handleEdit={({ _id }) => navigate(_id)}
+            handlePageChange={(val) => gratitudeHandlePageChange(val)}
+            handleAdd={() => navigate('new')}
+            buttonText="+ Add content"
+          />
+          <Table
+            searchValue={powerUpSearchValue || ''}
+            handleSearch={(val) => powerUpHandleSearch(val)}
+            data={initialData.powerUp}
+            header={tableHeaders}
+            tableTitle="Power-Up Content"
+            handleEdit={({ _id }) => navigate(_id)}
+            handlePageChange={(val) => powerUpHandlePageChange(val)}
+            handleAdd={() => navigate('new')}
+            buttonText="+ Add content"
+          />
+          <Table
+            searchValue={powerDownSearchValue || ''}
+            handleSearch={(val) => powerDownHandleSearch(val)}
+            data={initialData.powerDown}
+            header={tableHeaders}
+            tableTitle="Power-Down Content"
+            handleEdit={({ _id }) => navigate(_id)}
+            handlePageChange={(val) => powerDownHandlePageChange(val)}
+            handleAdd={() => navigate('new')}
+            buttonText="+ Add content"
+          />
+          <Title title="COMMUNITY CONTENT" fontSize="text-2xl" costumeStyles="p-mb-6" />
+          <Table
+            searchValue={communitySearchValue || ''}
+            handleSearch={(val) => communityHandleSearch(val)}
+            data={initialData.communityData}
+            header={communityDataHeader}
+            tableTitle="Community Content"
+            handleEdit={({ _id }) => navigate(_id)}
+            handlePageChange={(val) => communityHandlePageChange(val)}
+            handleAdd={() => navigate('new')}
+            buttonText="+ Add content"
+          />
+        </div>
       </div>
     </Container>
   );
