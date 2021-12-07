@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'primereact/skeleton';
@@ -35,6 +35,7 @@ const UserDetails = () => {
   const { id: userId } = useParams();
   const navigate = useNavigate();
   const classes = useStyles();
+  const { state: locationState } = useLocation();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { userDetails }: { userDetails: GetAppUserDetailsData | null } = useSelector((state: RootState) => state.appUsersReducer);
@@ -56,6 +57,16 @@ const UserDetails = () => {
         success: () => setLoading(false),
       },
     ));
+  };
+
+  const selectedCompany = {
+    name: isNewUser ? locationState?.company?.name : userDetails?.companyId?.name,
+    label: isNewUser ? locationState?.company?.name : userDetails?.companyId?.name,
+  };
+
+  const selectedLocation = {
+    name: isNewUser ? locationState?.location?.name : userDetails?.companyId?.name,
+    label: isNewUser ? locationState?.location?.name : userDetails?.location?.name,
   };
 
   useEffect(() => {
@@ -80,6 +91,15 @@ const UserDetails = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   useEffect(() => () => dispatch(resetAppUserDetails()), []);
+
+  // check if location and company details exist in router state, if location is new
+  useEffect(() => {
+    if ((!locationState?.company || !locationState?.location) && isNewUser) {
+      navigate('/companies');
+    } else {
+      setValues({ ...values, locationId: locationState?.location['_id'] });
+    }
+  }, [locationState]);
 
   return (
     <Container sectionTitle="New User" idText="User ID" itemId={userId}>
@@ -123,14 +143,14 @@ const UserDetails = () => {
                 placeholder="Enter phone..."
               />
               <Select
-                selectedValue={{ name: userDetails?.companyId?.name, label: userDetails?.companyId?.name }}
-                data={[{ name: userDetails?.companyId?.name, label: userDetails?.companyId?.name }]}
+                selectedValue={selectedCompany}
+                data={[selectedCompany]}
                 label="Company Name"
                 disabled
               />
               <Select
-                selectedValue={{ name: userDetails?.location?.name, label: userDetails?.location?.name }}
-                data={[{ name: userDetails?.location?.name, label: userDetails?.location?.name }]}
+                selectedValue={selectedLocation}
+                data={[selectedLocation]}
                 label="Location Name"
                 disabled
               />
