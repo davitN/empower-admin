@@ -189,7 +189,12 @@ const LocationDetails = () => {
         tableTitle="LOCATION APP USERS"
         handleEdit={({ _id }) => navigate(`/app-users/${_id}`)}
         handlePageChange={(val) => handlePageChange(val)}
-        handleAdd={() => navigate('/app-users/new')}
+        handleAdd={() => navigate(
+          '/app-users/new',
+          {
+            state: { location: { name: locationDetails.name, _id: locationDetails['_id'] }, company: locationDetails.company },
+          },
+        )}
         buttonText="+ Add user"
       />
       )}
