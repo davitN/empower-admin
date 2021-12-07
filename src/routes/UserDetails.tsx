@@ -53,7 +53,10 @@ const UserDetails = () => {
       },
       {
         error: () => setLoading(false),
-        success: () => setLoading(false),
+        success: () => {
+          setLoading(false);
+          isNewUser && navigate(`/locations/${locationState?.location['_id']}`);
+        },
       },
     ));
   };
