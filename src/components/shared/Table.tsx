@@ -84,7 +84,7 @@ const Table = ({
         {!data && header.map(({ name, field }) => <Column field={field} header={name} key={field} body={<Skeleton />} />)}
         <Column body={data ? editAction : <Skeleton />} header="Settings" />
       </DataTable>
-      {data && data.data.length > 0 && (
+      {data && data.data.length > 0 && LIMIT < data.count && (
         <Paginator
           template="PrevPageLink PageLinks NextPageLink"
           first={currentPage}
