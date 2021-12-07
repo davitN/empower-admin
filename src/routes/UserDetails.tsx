@@ -50,7 +50,7 @@ const UserDetails = () => {
     dispatch(saveAppUserDetails(
       {
         data: values,
-        userId,
+        userId: isNewUser ? null : userId,
       },
       {
         error: () => setLoading(false),
