@@ -92,7 +92,7 @@ const UserDetails = () => {
   // @ts-ignore
   useEffect(() => () => dispatch(resetAppUserDetails()), []);
 
-  // check if location and company details exist in router state, if location is new
+  // if user is new check, location and company details exist in router state
   useEffect(() => {
     if ((!locationState?.company || !locationState?.location) && isNewUser) {
       navigate('/companies');
