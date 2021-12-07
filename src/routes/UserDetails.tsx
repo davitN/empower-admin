@@ -11,6 +11,7 @@ import COLORS from '../services/colors.service';
 import { getAppUserDetails, resetAppUserDetails, saveAppUserDetails } from '../store/ducks/appUsersDuck';
 import { RootState } from '../store/configureStore';
 import { GetAppUserDetailsData } from '../types/appUsers';
+import Select from '../components/shared/Inputs/Select';
 
 const initialState = {
   firstName: '',
@@ -121,14 +122,16 @@ const UserDetails = () => {
                 handleChange={(phone) => setValues({ ...values, phone })}
                 placeholder="Enter phone..."
               />
-              <TextInput
-                value={userDetails?.companyId?.name || ''}
-                label="Company"
+              <Select
+                selectedValue={{ name: userDetails?.companyId?.name, label: userDetails?.companyId?.name }}
+                data={[{ name: userDetails?.companyId?.name, label: userDetails?.companyId?.name }]}
+                label="Company Name"
                 disabled
               />
-              <TextInput
-                value={userDetails?.location?.name || ''}
-                label="Location"
+              <Select
+                selectedValue={{ name: userDetails?.location?.name, label: userDetails?.location?.name }}
+                data={[{ name: userDetails?.location?.name, label: userDetails?.location?.name }]}
+                label="Location Name"
                 disabled
               />
             </>

@@ -33,7 +33,7 @@ const useStyles = createUseStyles({
     },
     '&:not(.p-disabled).p-focus': {
       borderColor: '#87BCBF',
-      boxShadow: '0 0 0 0.2rem #8ddadfb5',
+      boxShadow: 'none',
     },
   },
 });
