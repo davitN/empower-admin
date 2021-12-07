@@ -1,4 +1,5 @@
 import { Dropdown } from 'primereact/dropdown';
+import { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import Label from './Label';
 
@@ -11,6 +12,8 @@ interface PropTypes {
 const Select = ({
   data, selectedValue, label, disabled,
 } : PropTypes) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [value, setValue] = useState(selectedValue);
   const classes = useStyles();
   return (
     <div className="p-d-flex p-flex-column">
@@ -18,8 +21,8 @@ const Select = ({
       <Dropdown
         disabled={disabled}
         className={classes.dropDownTrigger}
-        value={selectedValue}
-        options={data}
+        value={value}
+        options={data || [value]}
         onChange={(e) => console.log(e.target.value)}
         optionLabel="name"
         placeholder="Select a City"

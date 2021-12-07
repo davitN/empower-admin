@@ -84,7 +84,7 @@ const UserDetails = () => {
 
   useEffect(() => {
     if (!isNewUser) {
-      userId && dispatch(getAppUserDetails(userId, { error: () => navigate('companies') }));
+      userId && dispatch(getAppUserDetails(userId, { error: () => navigate('/companies') }));
     }
   }, [isNewUser, userId]);
 
@@ -144,13 +144,13 @@ const UserDetails = () => {
               />
               <Select
                 selectedValue={selectedCompany}
-                data={[selectedCompany]}
+                data={null}
                 label="Company Name"
                 disabled
               />
               <Select
                 selectedValue={selectedLocation}
-                data={[selectedLocation]}
+                data={null}
                 label="Location Name"
                 disabled
               />
