@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
 import {
-  getAppContent, resetAppContentState, getCommunityData, resetCommunityData,
+  getAppContent, resetAppContentState, getCommunityData, getAppContentItem, resetAppContentItem,
 } from '../store/ducks/appContentDuck';
 import { RootState } from '../store/configureStore';
 import { AppContentGetData } from '../types/appContent';
@@ -19,17 +19,65 @@ const AppContent = () => {
   const initialData: AppContentGetData = useSelector((state: RootState) => state.appContentReducer);
 
   const {
-    searchValue, handleSearch, handlePageChange,
-  } = useGetData({
-    resetOnUnmount: true,
-  });
-
-  const {
     searchValue: communitySearchValue, handleSearch: communityHandleSearch, handlePageChange: communityHandlePageChange,
   } = useGetData({
     getDataAction: getCommunityData,
-    resetState: resetCommunityData,
     fetchOnMount: false,
+  });
+
+  const {
+    searchValue: kickOffSearchValue, handleSearch: kickOffHandleSearch, handlePageChange: kickOffHandlePageChange,
+  } = useGetData({
+    getDataAction: getAppContentItem,
+    resetState: () => resetAppContentItem('kickOff'),
+    fetchOnMount: false,
+    costumeParams: {
+      fieldName: 'kickOff',
+    },
+  });
+
+  const {
+    searchValue: ethosSearchValue, handleSearch: ethosHandleSearch, handlePageChange: ethosHandlePageChange,
+  } = useGetData({
+    getDataAction: getAppContentItem,
+    resetState: () => resetAppContentItem('ethos'),
+    fetchOnMount: false,
+    costumeParams: {
+      fieldName: 'ethos',
+    },
+  });
+
+  const {
+    searchValue: gratitudeSearchValue, handleSearch: gratitudeHandleSearch, handlePageChange: gratitudeHandlePageChange,
+  } = useGetData({
+    getDataAction: getAppContentItem,
+    resetState: () => resetAppContentItem('gratitude'),
+    fetchOnMount: false,
+    costumeParams: {
+      fieldName: 'gratitude',
+    },
+  });
+
+  const {
+    searchValue: powerUpSearchValue, handleSearch: powerUpHandleSearch, handlePageChange: powerUpHandlePageChange,
+  } = useGetData({
+    getDataAction: getAppContentItem,
+    resetState: () => resetAppContentItem('powerUp'),
+    fetchOnMount: false,
+    costumeParams: {
+      fieldName: 'powerUp',
+    },
+  });
+
+  const {
+    searchValue: powerDownSearchValue, handleSearch: powerDownHandleSearch, handlePageChange: powerDownHandlePageChange,
+  } = useGetData({
+    getDataAction: getAppContentItem,
+    resetState: () => resetAppContentItem('powerDown'),
+    fetchOnMount: false,
+    costumeParams: {
+      fieldName: 'powerDown',
+    },
   });
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -44,57 +92,57 @@ const AppContent = () => {
       <Title title="MONTHLY COMPANY CONTENT" fontSize="text-2xl" />
       <div className={classes.wrapper}>
         <Table
-          searchValue={searchValue || ''}
-          handleSearch={(val) => handleSearch(val)}
+          searchValue={kickOffSearchValue || ''}
+          handleSearch={(val) => kickOffHandleSearch(val)}
           data={initialData.kickOff}
           header={tableHeaders}
           tableTitle="Kickoff Content"
           handleEdit={({ _id }) => navigate(_id)}
-          handlePageChange={(val) => handlePageChange(val)}
+          handlePageChange={(val) => kickOffHandlePageChange(val)}
           handleAdd={() => navigate('new')}
           buttonText="+ Add content"
         />
         <Table
-          searchValue={searchValue || ''}
-          handleSearch={(val) => handleSearch(val)}
+          searchValue={ethosSearchValue || ''}
+          handleSearch={(val) => ethosHandleSearch(val)}
           data={initialData.ethos}
           header={tableHeaders}
           tableTitle="Ethos Content"
           handleEdit={({ _id }) => navigate(_id)}
-          handlePageChange={(val) => handlePageChange(val)}
+          handlePageChange={(val) => ethosHandlePageChange(val)}
           handleAdd={() => navigate('new')}
           buttonText="+ Add content"
         />
         <Table
-          searchValue={searchValue || ''}
-          handleSearch={(val) => handleSearch(val)}
+          searchValue={gratitudeSearchValue || ''}
+          handleSearch={(val) => gratitudeHandleSearch(val)}
           data={initialData.gratitude}
           header={tableHeaders}
           tableTitle="Gratitude Content"
           handleEdit={({ _id }) => navigate(_id)}
-          handlePageChange={(val) => handlePageChange(val)}
+          handlePageChange={(val) => gratitudeHandlePageChange(val)}
           handleAdd={() => navigate('new')}
           buttonText="+ Add content"
         />
         <Table
-          searchValue={searchValue || ''}
-          handleSearch={(val) => handleSearch(val)}
+          searchValue={powerUpSearchValue || ''}
+          handleSearch={(val) => powerUpHandleSearch(val)}
           data={initialData.powerUp}
           header={tableHeaders}
           tableTitle="Power-Up Content"
           handleEdit={({ _id }) => navigate(_id)}
-          handlePageChange={(val) => handlePageChange(val)}
+          handlePageChange={(val) => powerUpHandlePageChange(val)}
           handleAdd={() => navigate('new')}
           buttonText="+ Add content"
         />
         <Table
-          searchValue={searchValue || ''}
-          handleSearch={(val) => handleSearch(val)}
+          searchValue={powerDownSearchValue || ''}
+          handleSearch={(val) => powerDownHandleSearch(val)}
           data={initialData.powerDown}
           header={tableHeaders}
           tableTitle="Power-Down Content"
           handleEdit={({ _id }) => navigate(_id)}
-          handlePageChange={(val) => handlePageChange(val)}
+          handlePageChange={(val) => powerDownHandlePageChange(val)}
           handleAdd={() => navigate('new')}
           buttonText="+ Add content"
         />

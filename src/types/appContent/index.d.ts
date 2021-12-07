@@ -41,6 +41,13 @@ export interface GetCommunityDataParams {
   searchWord?: string
 }
 
+export interface GetAppContentItemOptions {
+  offset: string,
+  limit: string,
+  searchWord?: string,
+  fieldName: string
+}
+
 export interface AppContentGetData {
   communityData: {
     data: CommunityItemModel[],
@@ -67,7 +74,9 @@ export interface AppContentGetData {
     count: number
   }
 }
-
 export interface GetCommunityData extends CommunityItemModel {
+  count: number
+}
+export interface GetAppContentItemData extends ItemModel {
   count: number
 }
