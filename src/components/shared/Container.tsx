@@ -37,6 +37,8 @@ const useStyles = createUseStyles({
   root: {
     width: '100%',
     minWidth: '950px',
+    height: '100vh',
+    overflow: 'auto',
   },
   textColor: COLORS.blueWood,
 });

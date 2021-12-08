@@ -54,7 +54,7 @@ const useStyles = createUseStyles({
     },
   },
   content: {
-    height: '100vh',
+    maxHeight: '100vh',
     overflow: 'auto',
     display: 'flex',
   },
