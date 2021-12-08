@@ -26,11 +26,15 @@ interface PropTypes {
   searchValue: string,
   LIMIT?: number,
   buttonText: string,
-  costumeClasses?: string
+  costumeClasses?: string,
+  costumeButtons?: {
+    label: string,
+    handler: () => void
+  }[]
 }
 
 const Table = ({
-  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, searchValue, LIMIT = 10, buttonText, costumeClasses,
+  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, searchValue, LIMIT = 10, buttonText, costumeClasses, costumeButtons,
 }: PropTypes) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -71,6 +75,16 @@ const Table = ({
           >
             {buttonText}
           </ButtonComponent>
+          {costumeButtons && costumeButtons.map(({ label, handler }) => (
+            <ButtonComponent
+              bgColor={COLORS.lightBlue}
+              textColor={COLORS.white}
+              customClasses={classNames(classes.button, 'p-ml-5')}
+              handleClick={() => handler || undefined}
+            >
+              {label}
+            </ButtonComponent>
+          ))}
         </div>
       </div>
       <DataTable
