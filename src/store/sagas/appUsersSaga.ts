@@ -46,12 +46,10 @@ export function* getAppUserDetails({ userId, callbacks }:{ userId: GetAppUserDet
 
 export function* saveAppUserDetails({ data, callbacks }:{ data: SaveAppUserDetails, callbacks: CallBacks, type: string }) {
   try {
-    const formData = new FormData();
-    formData.append('data', JSON.stringify(data.data));
     if (data?.userId) {
-      yield axiosInstance.put(`/app_user/edit/${data.userId}`, formData);
+      yield axiosInstance.put(`/app_user/edit/${data.userId}`, data.data);
     } else {
-      yield axiosInstance.post('/company/create_company', formData);
+      yield axiosInstance.post('/app_user/create_app_user', data.data);
     }
     callbacks?.success && callbacks.success();
     notificationService.success(data.userId ? 'User has been successfully saved' : 'User has been successfully added', '', 500);

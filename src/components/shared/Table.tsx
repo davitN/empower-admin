@@ -15,7 +15,8 @@ interface PropTypes {
   data: any,
   header: Array<{
     name: string,
-    field: string
+    field?: string,
+    body?: (val: any) => any
   }>
   handlePageChange?: (page: number) => void,
   handleEdit?: (data: any) => void,
@@ -48,7 +49,7 @@ const Table = ({
   return (
     <div className={classNames(classes.tableContainer, costumeClasses)}>
       <div className={classes.header}>
-        {tableTitle && <Title title={tableTitle} costumeStyles="text-4xl" />}
+        {tableTitle && <Title title={tableTitle} fontSize="text-xl" />}
         <div className={classNames(classes.wrapper, 'p-ml-4')}>
           <Input
             icon={<i className="pi pi-search" />}
@@ -79,11 +80,11 @@ const Table = ({
         tableClassName={classes.table}
         emptyMessage="Data not found..."
       >
-        {data && header.map(({ name, field }) => <Column field={field} header={name} key={field} />)}
+        {data && header.map(({ name, field, body }) => <Column field={field} header={name} key={field} body={body} />)}
         {!data && header.map(({ name, field }) => <Column field={field} header={name} key={field} body={<Skeleton />} />)}
         <Column body={data ? editAction : <Skeleton />} header="Settings" />
       </DataTable>
-      {data && data.data.length > 0 && (
+      {data && data.data.length > 0 && LIMIT < data.count && (
         <Paginator
           template="PrevPageLink PageLinks NextPageLink"
           first={currentPage}
@@ -102,7 +103,6 @@ export default Table;
 
 const useStyles = createUseStyles({
   tableContainer: {
-    minHeight: '40rem',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',

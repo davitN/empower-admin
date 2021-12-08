@@ -48,7 +48,7 @@ export interface SaveAppUserDetails {
     email: string,
     phone: string,
     locationId?: string | null,
-    _id: null | string
+    _id?: string
   },
   userId?: string | null
 }

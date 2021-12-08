@@ -19,7 +19,6 @@ const initialState = {
   email: '',
   phone: '',
   locationId: null,
-  _id: null,
 };
 
 interface ValuesTypes {
@@ -28,7 +27,7 @@ interface ValuesTypes {
   email: string,
   phone: string,
   locationId?: string | null,
-  _id: null | string
+  _id?: string
 }
 
 const UserDetails = () => {
@@ -50,11 +49,14 @@ const UserDetails = () => {
     dispatch(saveAppUserDetails(
       {
         data: values,
-        userId,
+        ...!isNewUser && ({ userId }),
       },
       {
         error: () => setLoading(false),
-        success: () => setLoading(false),
+        success: () => {
+          setLoading(false);
+          isNewUser && navigate(`/locations/${locationState?.location['_id']}`);
+        },
       },
     ));
   };
@@ -84,7 +86,7 @@ const UserDetails = () => {
 
   useEffect(() => {
     if (!isNewUser) {
-      userId && dispatch(getAppUserDetails(userId, { error: () => navigate('companies') }));
+      userId && dispatch(getAppUserDetails(userId, { error: () => navigate('/companies') }));
     }
   }, [isNewUser, userId]);
 
@@ -92,7 +94,7 @@ const UserDetails = () => {
   // @ts-ignore
   useEffect(() => () => dispatch(resetAppUserDetails()), []);
 
-  // check if location and company details exist in router state, if location is new
+  // if user is new check, location and company details exist in router state
   useEffect(() => {
     if ((!locationState?.company || !locationState?.location) && isNewUser) {
       navigate('/companies');
@@ -144,13 +146,13 @@ const UserDetails = () => {
               />
               <Select
                 selectedValue={selectedCompany}
-                data={[selectedCompany]}
+                data={null}
                 label="Company Name"
                 disabled
               />
               <Select
                 selectedValue={selectedLocation}
-                data={[selectedLocation]}
+                data={null}
                 label="Location Name"
                 disabled
               />
