@@ -101,8 +101,6 @@ const AppContent = () => {
             tableTitle="Kickoff Content"
             handleEdit={({ _id }) => navigate(_id)}
             handlePageChange={(val) => kickOffHandlePageChange(val)}
-            handleAdd={() => navigate('new')}
-            buttonText="+ Add content"
           />
           <Table
             searchValue={ethosSearchValue || ''}
@@ -112,8 +110,6 @@ const AppContent = () => {
             tableTitle="Ethos Content"
             handleEdit={({ _id }) => navigate(_id)}
             handlePageChange={(val) => ethosHandlePageChange(val)}
-            handleAdd={() => navigate('new')}
-            buttonText="+ Add content"
           />
           <Table
             searchValue={gratitudeSearchValue || ''}
@@ -123,8 +119,6 @@ const AppContent = () => {
             tableTitle="Gratitude Content"
             handleEdit={({ _id }) => navigate(_id)}
             handlePageChange={(val) => gratitudeHandlePageChange(val)}
-            handleAdd={() => navigate('new')}
-            buttonText="+ Add content"
           />
           <Table
             searchValue={powerUpSearchValue || ''}
@@ -134,8 +128,6 @@ const AppContent = () => {
             tableTitle="Power-Up Content"
             handleEdit={({ _id }) => navigate(_id)}
             handlePageChange={(val) => powerUpHandlePageChange(val)}
-            handleAdd={() => navigate('new')}
-            buttonText="+ Add content"
           />
           <Table
             searchValue={powerDownSearchValue || ''}
@@ -145,8 +137,6 @@ const AppContent = () => {
             tableTitle="Power-Down Content"
             handleEdit={({ _id }) => navigate(_id)}
             handlePageChange={(val) => powerDownHandlePageChange(val)}
-            handleAdd={() => navigate('new')}
-            buttonText="+ Add content"
           />
           <Title title="COMMUNITY CONTENT" fontSize="text-2xl" costumeStyles="p-mb-6" />
           <Table

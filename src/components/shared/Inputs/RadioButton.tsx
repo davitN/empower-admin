@@ -21,6 +21,8 @@ export default RadioButtonComponent;
 
 const useStyles = createUseStyles({
   root: {
+    display: 'flex',
+    width: 'max-content',
     '& > .p-radiobutton': {
       width: '17px',
       height: '16px',

@@ -10,6 +10,7 @@ import { notifyAction } from '../ducks/mainDuck';
 import {
   AppContentGetData, GetAppContentItemData, GetAppContentItemOptions, GetCommunityData, GetCommunityDataParams,
 } from '../../types/appContent';
+import notificationService from '../../services/notification.service';
 
 export function* getAppContent({ callbacks }:{ data: any, callbacks: CallBacks, type:string }) {
   try {
@@ -71,5 +72,19 @@ export function* getAppContentItem({ params, callbacks }:{ params: GetAppContent
         showError: false,
       }),
     );
+  }
+}
+
+export function* addAppContentItem({ data, callbacks }:{ data: any, callbacks: CallBacks, type: string }) {
+  try {
+    const formData = new FormData();
+    data.file && formData.append('content', data.file);
+    formData.append('data', JSON.stringify(data.data));
+    yield axiosInstance.post('/content/my_team_data/add_content', formData);
+    callbacks?.success && callbacks.success();
+    notificationService.success('Item has been successfully added', '', 500);
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response.data.message, '', 500);
   }
 }

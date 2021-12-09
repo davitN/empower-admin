@@ -11,7 +11,7 @@ interface PropsTypes {
   uploadedFile: any,
   handleUpload: (val: any) => void,
   values: any,
-  setValues : Function
+  setValues : Function,
 }
 
 const FIleUploadForm = ({
@@ -24,10 +24,10 @@ const FIleUploadForm = ({
       <div className={classes.inputsWrapper}>
         <TextInput label="Title" required value={values.title} handleChange={(title) => setValues({ ...values, title })} />
         <TextInput label="Subtitle" required value={values.subTitle} handleChange={(subTitle) => setValues({ ...values, subTitle })} />
-        {type === 'VIDEO' && <Textarea label="Description" value={values.description} required handleChange={(description) => setValues({ ...values, description })} />}
+        <Textarea label="Description" value={values.description} required handleChange={(description) => setValues({ ...values, description })} />
         <div className="p-d-flex p-ai-center">
           <div>
-            <input type="file" id="upload" hidden onChange={(e) => handleUpload(e.target.files && e.target.files[0])} />
+            <input type="file" id="upload" accept={type === 'VIDEO' ? '.mp4' : '.mp3'} hidden onChange={(e) => handleUpload(e.target.files && e.target.files[0])} />
             <label htmlFor="upload" className={classes.label}>
               <ButtonComponent
                 customClasses={classes.uploadBtn}

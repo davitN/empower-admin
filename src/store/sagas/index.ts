@@ -14,8 +14,12 @@ import { GET_LOCATIONS, SAVE_LOCATION, GET_LOCATION_DETAILS } from '../ducks/loc
 import { getLocations, saveLocationData, getLocationDetails } from './locationsSaga';
 import { getAppUsers, getAppUserDetails, saveAppUserDetails } from './appUsersSaga';
 import { GET_APP_USERS, GET_APP_USER_DETAILS, SAVE_APP_USER_DETAILS } from '../ducks/appUsersDuck';
-import { GET_APP_CONTENT, GET_COMMUNITY_DATA, GET_APP_CONTENT_ITEM } from '../ducks/appContentDuck';
-import { getAppContent, getCommunityData, getAppContentItem } from './appContentSaga';
+import {
+  GET_APP_CONTENT, GET_COMMUNITY_DATA, GET_APP_CONTENT_ITEM, ADD_APP_CONTENT_ITEM,
+} from '../ducks/appContentDuck';
+import {
+  getAppContent, getCommunityData, getAppContentItem, addAppContentItem,
+} from './appContentSaga';
 
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
@@ -34,6 +38,7 @@ function* actionWatcher() {
   yield takeLatest(GET_APP_CONTENT, getAppContent);
   yield takeLatest(GET_COMMUNITY_DATA, getCommunityData);
   yield takeLatest(GET_APP_CONTENT_ITEM, getAppContentItem);
+  yield takeLatest(ADD_APP_CONTENT_ITEM, addAppContentItem);
 }
 
 export default function* rootSaga() {

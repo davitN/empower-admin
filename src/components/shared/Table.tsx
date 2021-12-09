@@ -25,23 +25,29 @@ interface PropTypes {
   handleSearch?: (keyword: string) => void,
   searchValue: string,
   LIMIT?: number,
-  buttonText: string,
+  buttonText?: string,
   costumeClasses?: string,
-  costumeButtons?: {
-    label: string,
-    handler: () => void
-  }[]
 }
 
 const Table = ({
-  data, header, handlePageChange, handleEdit, handleAdd, tableTitle, handleSearch, searchValue, LIMIT = 10, buttonText, costumeClasses, costumeButtons,
+  data,
+  header,
+  handlePageChange,
+  handleEdit,
+  handleAdd,
+  tableTitle,
+  handleSearch,
+  searchValue,
+  LIMIT = 10,
+  buttonText,
+  costumeClasses,
 }: PropTypes) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(0);
 
   const editAction = (rowData: any) => (
     <ButtonComponent customClasses={classes.actionButton} handleClick={handleEdit ? () => handleEdit(rowData) : undefined}>
-      <i className="pi pi-cog" />
+      <i className="pi pi-cog" style={{ color: COLORS.white }} />
     </ButtonComponent>
   );
 
@@ -67,6 +73,7 @@ const Table = ({
             }}
             customClasses={classes.input}
           />
+          {(handleAdd && buttonText) && (
           <ButtonComponent
             bgColor={COLORS.lightBlue}
             textColor={COLORS.white}
@@ -75,16 +82,7 @@ const Table = ({
           >
             {buttonText}
           </ButtonComponent>
-          {costumeButtons && costumeButtons.map(({ label, handler }) => (
-            <ButtonComponent
-              bgColor={COLORS.lightBlue}
-              textColor={COLORS.white}
-              customClasses={classNames(classes.button, 'p-ml-5')}
-              handleClick={() => handler || undefined}
-            >
-              {label}
-            </ButtonComponent>
-          ))}
+          )}
         </div>
       </div>
       <DataTable

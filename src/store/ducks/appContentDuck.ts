@@ -16,6 +16,8 @@ export const GET_APP_CONTENT_ITEM = 'socialize/content/getAppContentItem';
 export const SET_APP_CONTENT_ITEM = 'socialize/content/setAppContentItem';
 export const RESET_APP_CONTENT_ITEM_STATE = 'socialize/content/resetAppContentItemState';
 
+export const ADD_APP_CONTENT_ITEM = 'socialize/content/addAppContentItem';
+
 const initialState: InitialState = {
   communityData: null,
   ethos: null,
@@ -94,4 +96,10 @@ export const setAppContentItem = (data: GetAppContentItemData, fieldName: string
 export const resetAppContentItem = (fieldName: string) => ({
   type: RESET_APP_CONTENT_ITEM_STATE,
   payload: fieldName,
+});
+
+export const addAppContentItem = (data: any, callbacks?: CallBacks) => ({
+  type: ADD_APP_CONTENT_ITEM,
+  callbacks,
+  data,
 });
