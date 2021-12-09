@@ -80,3 +80,7 @@ export interface GetCommunityData extends CommunityItemModel {
 export interface GetAppContentItemData extends ItemModel {
   count: number
 }
+
+export type Types = 'KICK_OFF' | 'ETHOS' | 'GRATITUDE' | 'POWER_UP' | 'POWER_DOWN';
+
+export type ContentType = 'VIDEO' | 'AUDIO';
