@@ -224,6 +224,10 @@ const CompanyDetails = () => {
             requiredLogo
             disableSave={validateInputs()}
             isNewItem={isNewCompany}
+            handleRemove={() => console.log('rm company')}
+            removeButtonText="Remove company"
+            disableRemove={!isNewCompany && !companyDetails}
+            showRemoveButton={!isNewCompany}
           />
         </div>
       </div>

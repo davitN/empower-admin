@@ -17,11 +17,29 @@ interface PropsTypes {
   desc?:string,
   requiredLogo?: boolean,
   disableSave?: boolean,
-  isNewItem?: boolean
+  isNewItem?: boolean,
+  handleRemove?: () => void,
+  removeButtonText?: string,
+  disableRemove?: boolean,
+  showRemoveButton?: boolean
 }
 
 const FormsSharedComponent = ({
-  handleImgUpload, loadingImg, handleImgRemove, handleSave, isSaving, imgUrl, title, desc, requiredLogo, disableSave, isNewItem,
+  handleImgUpload,
+  loadingImg,
+  handleImgRemove,
+  handleSave,
+  isSaving,
+  imgUrl,
+  title,
+  desc,
+  requiredLogo,
+  disableSave,
+  isNewItem,
+  handleRemove,
+  removeButtonText,
+  disableRemove,
+  showRemoveButton,
 }: PropsTypes) => {
   const classes = useStyles();
   return (
@@ -62,6 +80,18 @@ const FormsSharedComponent = ({
       >
         {isNewItem ? 'Save' : 'Update'}
       </Button>
+      {showRemoveButton && (
+        <Button
+          bgColor={COLORS.red}
+          textColor={COLORS.white}
+          customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
+          handleClick={handleRemove}
+          loading={isSaving}
+          disabled={disableRemove}
+        >
+          {removeButtonText}
+        </Button>
+      )}
     </>
   );
 };

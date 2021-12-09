@@ -177,6 +177,10 @@ const LocationDetails = () => {
             desc="This logo will replace the company logo in the empower app."
             disableSave={validateInputs()}
             isNewItem={isNewLocation}
+            handleRemove={() => console.log('rm location')}
+            removeButtonText="Remove location"
+            disableRemove={!isNewLocation && !locationDetails}
+            showRemoveButton={!isNewLocation}
           />
         </div>
       </div>
