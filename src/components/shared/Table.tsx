@@ -23,7 +23,7 @@ interface PropTypes {
   handleAdd?: () => void,
   tableTitle?: string,
   handleSearch?: (keyword: string) => void,
-  searchValue: string,
+  searchValue: string | null,
   LIMIT?: number,
   buttonText?: string,
   costumeClasses?: string,
@@ -37,7 +37,7 @@ const Table = ({
   handleAdd,
   tableTitle,
   handleSearch,
-  searchValue,
+  searchValue = '',
   LIMIT = 10,
   buttonText,
   costumeClasses,
@@ -64,7 +64,7 @@ const Table = ({
           <Input
             icon={<i className="pi pi-search" />}
             placeholder="Search..."
-            value={searchValue}
+            value={searchValue || ''}
             handleChange={(val) => {
               if (handleSearch) {
                 handleSearch(val);

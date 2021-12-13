@@ -1,27 +1,29 @@
 import { createUseStyles } from 'react-jss';
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import Container from '../components/shared/Container';
-import Title from '../components/shared/Title';
-import Label from '../components/shared/Inputs/Label';
-import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
-import { Types, ContentType } from '../types/appContent';
-import FileUploadForm from '../components/shared/FileUploadForm';
+import MonthlyActivity from '../components/AppContent/MonthlyActivity';
+import { MonthlyActivityTypes, MonthlyActivityContentType, CommunityArticleType } from '../types/appContent';
 import COLORS from '../services/colors.service';
 import Button from '../components/shared/Inputs/Button';
 import { addAppContentItem } from '../store/ducks/appContentDuck';
+import CommunityArticle from '../components/AppContent/CommunityArticle';
 
-interface ValueTypes {
-  type: Types,
-  contentType: ContentType,
+interface MonthlyActivityValueTypes {
+  type: MonthlyActivityTypes,
+  contentType: MonthlyActivityContentType,
   title: string,
   subTitle: string,
   description: string,
   companyId?: string | null
 }
 
-const type: { label: string, value: Types }[] = [
+interface CommunityArticleValuesTypes {
+  contentType: CommunityArticleType
+}
+
+const monthlyActivityTypes: { label: string, value: MonthlyActivityTypes }[] = [
   {
     label: 'KickOff',
     value: 'KICK_OFF',
@@ -44,7 +46,7 @@ const type: { label: string, value: Types }[] = [
   },
 ];
 
-const contentType : { label: string, value: ContentType }[] = [
+const monthlyActivityContentType : { label: string, value: MonthlyActivityContentType }[] = [
   {
     label: 'Audio',
     value: 'AUDIO',
@@ -55,12 +57,23 @@ const contentType : { label: string, value: ContentType }[] = [
   },
 ];
 
+const communityArticleContentType: { value: string, label: string }[] = [
+  {
+    label: 'Written Content',
+    value: 'WRITTEN',
+  },
+  {
+    label: 'External Content',
+    value: 'EXTERNAL',
+  },
+];
+
 const AppContentDetail = () => {
   const dispatch = useDispatch();
-  const [searchParams] = useSearchParams();
   const classes = useStyles();
+  const [searchParams] = useSearchParams();
   const [saving, setSaving] = useState(false);
-  const [values, setValues] = useState<ValueTypes>({
+  const [monthlyActivityValues, setMonthlyActivityValues] = useState<MonthlyActivityValueTypes>({
     type: 'KICK_OFF',
     contentType: 'AUDIO',
     title: '',
@@ -68,76 +81,46 @@ const AppContentDetail = () => {
     description: '',
     companyId: '',
   });
+  const [communityArticleValues, setCommunityArticleValues] = useState<CommunityArticleValuesTypes>({
+    contentType: 'WRITTEN',
+  });
   const [uploadedFile, setUploadedFIle] = useState<any>(null);
 
   const handleSave = () => {
     setSaving(true);
     dispatch(addAppContentItem(
       {
-        data: values,
+        data: monthlyActivityValues,
         file: uploadedFile,
       },
       { success: () => setSaving(false), error: () => setSaving(false) },
     ));
   };
 
-  const validateInputs = () => !values.title || !values.subTitle || !values.description || !uploadedFile;
-
-  useEffect(() => {
-    if (searchParams.get('companyId') && searchParams.get('companyName')) {
-      setValues({ ...values, companyId: searchParams.get('companyId') });
-    }
-  }, [searchParams]);
+  const validateInputs = () => !monthlyActivityValues.title || !monthlyActivityValues.subTitle || !monthlyActivityValues.description || !uploadedFile;
 
   return (
     <Container sectionTitle="EDIT CONTENT">
       <div className={classes.wrapper}>
-        <div className={classes.gridWrapper}>
-          <div>
-            <Title title="Monthly Team Activity Details" fontSize="text-2xl" costumeStyles="p-mb-5" />
-            <div className={classes.gridInputsWrapper}>
-              <div className="p-d-flex p-flex-column">
-                <Label label="Monthly Team Activity" costumeStyles="p-mb-3" />
-                <div className="p-d-flex">
-                  {type.map(({ label, value }) => (
-                    <RadioButtonComponent
-                      label={label}
-                      value={value}
-                      checked={values.type === value}
-                      onChange={() => setValues({ ...values, type: value, contentType: value === 'KICK_OFF' ? 'AUDIO' : values.contentType })}
-                      costumeClasses="p-mr-3"
-                      key={label}
-                    />
-                  ))}
-                </div>
-              </div>
-              {values.type !== 'KICK_OFF' && (
-              <div className="p-d-flex p-flex-column">
-                <Label label="Content Type" costumeStyles="p-mb-2" />
-                <div className="p-d-flex">
-                  {contentType.map(({ label, value }) => (
-                    <RadioButtonComponent
-                      label={label}
-                      value={value}
-                      checked={values.contentType === value}
-                      onChange={() => setValues({ ...values, contentType: value })}
-                      costumeClasses="p-mr-3"
-                      key={label}
-                    />
-                  ))}
-                </div>
-              </div>
-              )}
-            </div>
-          </div>
-          <FileUploadForm
-            type={values.contentType}
+        {searchParams.get('companyId') && searchParams.get('companyName') ? (
+          <MonthlyActivity
+            values={monthlyActivityValues}
+            setValues={setMonthlyActivityValues}
+            types={monthlyActivityTypes}
             uploadedFile={uploadedFile}
-            handleUpload={(val: any) => setUploadedFIle(val)}
-            values={values}
-            setValues={setValues}
+            setUploadedFIle={setUploadedFIle}
+            contentType={monthlyActivityContentType}
           />
-        </div>
+        ) : (
+          <CommunityArticle
+            contentType={communityArticleContentType}
+            values={communityArticleValues}
+            setValues={setCommunityArticleValues}
+            uploadedFile={uploadedFile}
+            setUploadedFIle={setUploadedFIle}
+          />
+        )}
+
         <div className={classes.justifyEnd}>
           <Button
             bgColor={COLORS.lightBlue}

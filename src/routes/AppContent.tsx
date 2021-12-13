@@ -94,7 +94,7 @@ const AppContent = () => {
         <Title title="MONTHLY COMPANY CONTENT" fontSize="text-2xl" costumeStyles="p-mb-6" />
         <div className={classNames(classes.wrapper, 'p-px-3')}>
           <Table
-            searchValue={kickOffSearchValue || ''}
+            searchValue={kickOffSearchValue}
             handleSearch={(val) => kickOffHandleSearch(val)}
             data={initialData.kickOff}
             header={tableHeaders}
@@ -103,7 +103,7 @@ const AppContent = () => {
             handlePageChange={(val) => kickOffHandlePageChange(val)}
           />
           <Table
-            searchValue={ethosSearchValue || ''}
+            searchValue={ethosSearchValue}
             handleSearch={(val) => ethosHandleSearch(val)}
             data={initialData.ethos}
             header={tableHeaders}
@@ -112,7 +112,7 @@ const AppContent = () => {
             handlePageChange={(val) => ethosHandlePageChange(val)}
           />
           <Table
-            searchValue={gratitudeSearchValue || ''}
+            searchValue={gratitudeSearchValue}
             handleSearch={(val) => gratitudeHandleSearch(val)}
             data={initialData.gratitude}
             header={tableHeaders}
@@ -121,7 +121,7 @@ const AppContent = () => {
             handlePageChange={(val) => gratitudeHandlePageChange(val)}
           />
           <Table
-            searchValue={powerUpSearchValue || ''}
+            searchValue={powerUpSearchValue}
             handleSearch={(val) => powerUpHandleSearch(val)}
             data={initialData.powerUp}
             header={tableHeaders}
@@ -130,7 +130,7 @@ const AppContent = () => {
             handlePageChange={(val) => powerUpHandlePageChange(val)}
           />
           <Table
-            searchValue={powerDownSearchValue || ''}
+            searchValue={powerDownSearchValue}
             handleSearch={(val) => powerDownHandleSearch(val)}
             data={initialData.powerDown}
             header={tableHeaders}
@@ -140,7 +140,7 @@ const AppContent = () => {
           />
           <Title title="COMMUNITY CONTENT" fontSize="text-2xl" costumeStyles="p-mb-6" />
           <Table
-            searchValue={communitySearchValue || ''}
+            searchValue={communitySearchValue}
             handleSearch={(val) => communityHandleSearch(val)}
             data={initialData.communityData}
             header={communityDataHeader}
