@@ -198,13 +198,13 @@ const AppContentDetail = () => {
           >
             Save content
           </Button>
-          {/* <Button
+          <Button
             bgColor={COLORS.red}
             textColor={COLORS.white}
-            handleClick={handleSave}
+            handleClick={undefined}
           >
             Delete content
-          </Button> */}
+          </Button>
         </div>
       </div>
     </Container>

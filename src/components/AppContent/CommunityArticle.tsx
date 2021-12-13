@@ -1,5 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
+import { Skeleton } from 'primereact/skeleton';
 import Title from '../shared/Title';
 import Label from '../shared/Inputs/Label';
 import RadioButtonComponent from '../shared/Inputs/RadioButton';
@@ -90,14 +91,17 @@ const CommunityArticle = ({
                 fileType="image/png, image/gif, image/jpeg"
               />
             </div>
-            <Select
-              placeholder="Select Category"
-              data={categories}
-              selectedValue={values.written.category}
-              label="Category"
-              required
-              handleChange={(category) => setValues({ ...values, written: { ...values.written, category } })}
-            />
+
+            {categories ? (
+              <Select
+                placeholder="Select Category"
+                data={categories}
+                selectedValue={values.written.category}
+                label="Category"
+                required
+                handleChange={(category) => setValues({ ...values, written: { ...values.written, category } })}
+              />
+            ) : <Skeleton height="40px" />}
             <Textarea
               value={values.written.text}
               label="Article Content"
@@ -122,14 +126,16 @@ const CommunityArticle = ({
               value={values.external.URL}
               handleChange={(URL) => setValues({ ...values, external: { ...values.external, URL } })}
             />
-            <Select
-              placeholder="Select Category"
-              data={categories}
-              selectedValue={values.external.category}
-              label="Category"
-              required
-              handleChange={(category) => setValues({ ...values, external: { ...values.external, category } })}
-            />
+            {categories ? (
+              <Select
+                placeholder="Select Category"
+                data={categories}
+                selectedValue={values.external.category}
+                label="Category"
+                required
+                handleChange={(category) => setValues({ ...values, external: { ...values.external, category } })}
+              />
+            ) : <Skeleton height="40px" />}
             <Textarea
               label="Description"
               required
