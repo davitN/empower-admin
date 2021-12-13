@@ -176,15 +176,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import CheckoutForm from '../components/Payments/CheckoutForm';
 import '../styles/payments.css';
 import { backendUrl } from '../services/credentials.service';
+import useQuery from '../helpers/hooks/useQuery';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // loadStripe is initialized with a fake API key.
-
-function useQuery() {
-  const { search } = useLocation();
-  return React.useMemo(() => new URLSearchParams(search), [search]);
-}
 
 const stripePromise = loadStripe('pk_test_51Hqt0jEPVI7wKwnS67prIlDm75i5woaRf9ER3MKXZz9EjtzjI8ZvzSXewSg5kZZKlri5SLHcmjpTx9PxXPWv0sgY006pMc4Qd8');
 
