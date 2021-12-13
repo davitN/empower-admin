@@ -25,7 +25,7 @@ const CommunityArticle = ({
         <Title title="Community Article Details" fontSize="text-2xl" costumeStyles="p-mb-4" />
         <div className={classes.gridInputsWrapper}>
           <div className="p-d-flex p-flex-column">
-            <Label label="Content Type" costumeStyles="p-mb-2" />
+            <Label label="Content Type" costumeStyles="p-mb-3" />
             <div className="p-d-flex">
               {contentType.map(({ label, value }) => (
                 <RadioButtonComponent
