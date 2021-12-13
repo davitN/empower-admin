@@ -19,6 +19,7 @@ import Payments from './routes/Payments';
 import LocationDetails from './routes/LocationDetails';
 import AppContent from './routes/AppContent';
 import AppContentDetail from './routes/AppContentDetail';
+import SetPassword from './routes/SetPassword';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -31,6 +32,7 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="payments" element={<Payments />} />
+          <Route path="set-password" element={<SetPassword />} />
           <Route path="/" element={<App />}>
             <Route path="companies" element={<Companies />} />
             <Route path="companies/:id" element={<CompanyDetails />} />
