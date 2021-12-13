@@ -1,10 +1,14 @@
 import { createUseStyles } from 'react-jss';
+import { useSelector } from 'react-redux';
 import Title from '../shared/Title';
 import Label from '../shared/Inputs/Label';
 import RadioButtonComponent from '../shared/Inputs/RadioButton';
 import FileUploadForm from '../shared/FileUploadForm';
 import Textarea from '../shared/Inputs/Textarea';
 import TextInput from '../shared/Inputs/TextInput';
+import Select from '../shared/Inputs/Select';
+import { RootState } from '../../store/configureStore';
+import { AppContentCategory } from '../../types/appContent';
 
 interface PropTypes {
   values: any,
@@ -18,7 +22,7 @@ const CommunityArticle = ({
   values, setValues, contentType, uploadedFile, setUploadedFIle,
 }: PropTypes) => {
   const classes = useStyles();
-
+  const { categories } : { categories: AppContentCategory[] } = useSelector((state: RootState) => state.appContentReducer);
   return (
     <div className={classes.gridWrapper}>
       <div>
@@ -31,22 +35,53 @@ const CommunityArticle = ({
                 <RadioButtonComponent
                   label={label}
                   value={value}
-                  checked={values.contentType === value}
-                  onChange={() => setValues({ ...values, contentType: value })}
+                  checked={values.type === value}
+                  onChange={() => setValues({ ...values, type: value })}
                   costumeClasses="p-mr-3"
                   key={label}
                 />
               ))}
             </div>
           </div>
+          <div className="p-d-flex p-flex-column">
+            <Label label="Is Featured?" costumeStyles="p-mb-3" />
+            <div className="p-d-flex">
+              <RadioButtonComponent
+                label="YES"
+                value="yes"
+                checked={values.isFeatured}
+                onChange={() => setValues({ ...values, isFeatured: true })}
+                costumeClasses="p-mr-3"
+              />
+              <RadioButtonComponent
+                label="NO"
+                value="no"
+                checked={!values.isFeatured}
+                onChange={() => setValues({ ...values, isFeatured: false })}
+                costumeClasses="p-mr-3"
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div className={classes.gridInputsWrapper}>
-        {values.contentType === 'WRITTEN' ? (
+        {values.type === 'WRITTEN' ? (
           <>
             <Title title="Written Content Details" fontSize="text-2xl" costumeStyles="p-mb-0" />
-            <TextInput label="Title" required placeholder="How to empower yourself to improve your well-being." value="" />
-            <TextInput label="Subtitle" required placeholder="How to empower yourself to improve your well-being." value="" />
+            <TextInput
+              label="Title"
+              required
+              placeholder="How to empower yourself to improve your well-being."
+              value={values.written.title}
+              handleChange={(title) => setValues({ ...values, written: { ...values.written, title } })}
+            />
+            <TextInput
+              label="Subtitle"
+              required
+              placeholder="How to empower yourself to improve your well-being."
+              value={values.written.subTitle}
+              handleChange={(subTitle) => setValues({ ...values, written: { ...values.written, subTitle } })}
+            />
             <div>
               <Title title="Featured Image" fontSize="text-base" costumeStyles="p-mb-2" />
               <FileUploadForm
@@ -55,14 +90,52 @@ const CommunityArticle = ({
                 fileType="image/png, image/gif, image/jpeg"
               />
             </div>
-            <Textarea value="" label="Article Content" required />
+            <Select
+              placeholder="Select Category"
+              data={categories}
+              selectedValue={values.written.category}
+              label="Category"
+              required
+              handleChange={(category) => setValues({ ...values, written: { ...values.written, category } })}
+            />
+            <Textarea
+              value={values.written.text}
+              label="Article Content"
+              required
+              handleChange={(text) => setValues({ ...values, written: { ...values.written, text } })}
+            />
           </>
         ) : (
           <>
             <Title title="External Content Details" fontSize="text-2xl" costumeStyles="p-mb-0" />
-            <TextInput label="Title" required placeholder="How to empower yourself to improve your well-being." value="" />
-            <TextInput label="URL" required placeholder="URL" value="" />
-            <Textarea value="" label="Description" required />
+            <TextInput
+              label="Title"
+              required
+              placeholder="How to empower yourself to improve your well-being."
+              value={values.external.title}
+              handleChange={(title) => setValues({ ...values, external: { ...values.external, title } })}
+            />
+            <TextInput
+              label="URL"
+              required
+              placeholder="URL"
+              value={values.external.URL}
+              handleChange={(URL) => setValues({ ...values, external: { ...values.external, URL } })}
+            />
+            <Select
+              placeholder="Select Category"
+              data={categories}
+              selectedValue={values.external.category}
+              label="Category"
+              required
+              handleChange={(category) => setValues({ ...values, external: { ...values.external, category } })}
+            />
+            <Textarea
+              label="Description"
+              required
+              value={values.external.description}
+              handleChange={(description) => setValues({ ...values, external: { ...values.external, description } })}
+            />
           </>
         )}
       </div>

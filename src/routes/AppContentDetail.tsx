@@ -1,13 +1,13 @@
 import { createUseStyles } from 'react-jss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import Container from '../components/shared/Container';
 import MonthlyActivity from '../components/AppContent/MonthlyActivity';
 import { MonthlyActivityTypes, MonthlyActivityContentType, CommunityArticleType } from '../types/appContent';
 import COLORS from '../services/colors.service';
 import Button from '../components/shared/Inputs/Button';
-import { addAppContentItem } from '../store/ducks/appContentDuck';
+import { addAppContentItem, getAppContentCategory, addCommunityData } from '../store/ducks/appContentDuck';
 import CommunityArticle from '../components/AppContent/CommunityArticle';
 
 interface MonthlyActivityValueTypes {
@@ -20,7 +20,20 @@ interface MonthlyActivityValueTypes {
 }
 
 interface CommunityArticleValuesTypes {
-  contentType: CommunityArticleType
+  type: CommunityArticleType,
+  isFeatured: boolean,
+  written: {
+    title: string,
+    subTitle: string,
+    category: any,
+    text: string,
+  },
+  external: {
+    title: string,
+    category: null,
+    description: string,
+    URL: string,
+  }
 }
 
 const monthlyActivityTypes: { label: string, value: MonthlyActivityTypes }[] = [
@@ -72,6 +85,7 @@ const AppContentDetail = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [searchParams] = useSearchParams();
+  const { pathname } = useLocation();
   const [saving, setSaving] = useState(false);
   const [monthlyActivityValues, setMonthlyActivityValues] = useState<MonthlyActivityValueTypes>({
     type: 'KICK_OFF',
@@ -82,27 +96,88 @@ const AppContentDetail = () => {
     companyId: '',
   });
   const [communityArticleValues, setCommunityArticleValues] = useState<CommunityArticleValuesTypes>({
-    contentType: 'WRITTEN',
+    type: 'WRITTEN',
+    isFeatured: true,
+    written: {
+      title: '',
+      subTitle: '',
+      category: null,
+      text: '',
+    },
+    external: {
+      title: '',
+      category: null,
+      description: '',
+      URL: '',
+    },
   });
   const [uploadedFile, setUploadedFIle] = useState<any>(null);
 
   const handleSave = () => {
     setSaving(true);
-    dispatch(addAppContentItem(
-      {
-        data: monthlyActivityValues,
-        file: uploadedFile,
-      },
-      { success: () => setSaving(false), error: () => setSaving(false) },
-    ));
+    if (searchParams.get('type') === 'community-data') {
+      const reqData = {
+        type: communityArticleValues.type,
+        isFeatured: communityArticleValues.isFeatured,
+        ...communityArticleValues.type === 'WRITTEN' ? {
+          ...communityArticleValues.written,
+          category: communityArticleValues.written.category['_id'],
+        } : {
+          ...communityArticleValues.external,
+          category: communityArticleValues.external.category && communityArticleValues.external.category['_id'],
+        },
+      };
+      dispatch(addCommunityData(
+        {
+          data: reqData,
+          image: uploadedFile,
+        },
+        { success: () => setSaving(false), error: () => setSaving(false) },
+      ));
+    } else {
+      dispatch(addAppContentItem(
+        {
+          data: monthlyActivityValues,
+          file: uploadedFile,
+        },
+        { success: () => setSaving(false), error: () => setSaving(false) },
+      ));
+    }
   };
 
-  const validateInputs = () => !monthlyActivityValues.title || !monthlyActivityValues.subTitle || !monthlyActivityValues.description || !uploadedFile;
+  const validateInputs = () => {
+    if (searchParams.get('type') !== 'community-data') {
+      return (!monthlyActivityValues.title || !monthlyActivityValues.subTitle || !monthlyActivityValues.description || !uploadedFile);
+    }
+    if (communityArticleValues.type === 'WRITTEN') {
+      return (!communityArticleValues.written.title || !communityArticleValues.written.subTitle
+        || !communityArticleValues.written.category || !communityArticleValues.written.text);
+    }
+    if (communityArticleValues.type === 'EXTERNAL') {
+      return (!communityArticleValues.external.title || !communityArticleValues.external.URL
+        || !communityArticleValues.external.category || !communityArticleValues.external.description);
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    if (searchParams.get('type') === 'community-data') {
+      dispatch(getAppContentCategory());
+    }
+  }, [searchParams]);
 
   return (
-    <Container sectionTitle="EDIT CONTENT">
+    <Container sectionTitle={pathname.includes('new') ? 'NEW CONTENT' : 'EDIT CONTENT'}>
       <div className={classes.wrapper}>
-        {searchParams.get('companyId') && searchParams.get('companyName') ? (
+        {searchParams.get('type') === 'community-data' ? (
+          <CommunityArticle
+            contentType={communityArticleContentType}
+            values={communityArticleValues}
+            setValues={setCommunityArticleValues}
+            uploadedFile={uploadedFile}
+            setUploadedFIle={setUploadedFIle}
+          />
+        ) : (
           <MonthlyActivity
             values={monthlyActivityValues}
             setValues={setMonthlyActivityValues}
@@ -110,14 +185,6 @@ const AppContentDetail = () => {
             uploadedFile={uploadedFile}
             setUploadedFIle={setUploadedFIle}
             contentType={monthlyActivityContentType}
-          />
-        ) : (
-          <CommunityArticle
-            contentType={communityArticleContentType}
-            values={communityArticleValues}
-            setValues={setCommunityArticleValues}
-            uploadedFile={uploadedFile}
-            setUploadedFIle={setUploadedFIle}
           />
         )}
 

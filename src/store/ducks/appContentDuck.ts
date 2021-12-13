@@ -1,7 +1,13 @@
 import { AnyAction } from 'redux';
 import { CallBacks } from '../../types/main';
 import {
-  InitialState, AppContentGetData, GetCommunityData, GetCommunityDataParams, GetAppContentItemOptions, GetAppContentItemData,
+  InitialState,
+  AppContentGetData,
+  GetCommunityData,
+  GetCommunityDataParams,
+  GetAppContentItemOptions,
+  GetAppContentItemData,
+  AppContentCategory,
 } from '../../types/appContent';
 
 export const GET_APP_CONTENT = 'socialize/content/getAppContent';
@@ -17,6 +23,11 @@ export const SET_APP_CONTENT_ITEM = 'socialize/content/setAppContentItem';
 export const RESET_APP_CONTENT_ITEM_STATE = 'socialize/content/resetAppContentItemState';
 
 export const ADD_APP_CONTENT_ITEM = 'socialize/content/addAppContentItem';
+export const ADD_COMMUNITY_DATA = 'socialize/content/addCommunityData';
+
+export const GET_APP_CONTENT_CATEGORIES = 'socialize/content/getAppContentCategories';
+export const SET_APP_CONTENT_CATEGORIES = 'socialize/content/setAppContentCategories';
+export const RESET_APP_CONTENT_CATEGORIES_STATE = 'socialize/content/resetAppContentCategoriesState';
 
 const initialState: InitialState = {
   communityData: null,
@@ -25,6 +36,7 @@ const initialState: InitialState = {
   kickOff: null,
   powerDown: null,
   powerUp: null,
+  categories: null,
 };
 
 export const appContentReducer = (state = initialState, action: AnyAction) => {
@@ -53,6 +65,16 @@ export const appContentReducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         [action.payload]: null,
+      };
+    case SET_APP_CONTENT_CATEGORIES:
+      return {
+        ...state,
+        categories: payload as AppContentCategory[],
+      };
+    case RESET_APP_CONTENT_CATEGORIES_STATE:
+      return {
+        ...state,
+        categories: null,
       };
     default:
       return state as InitialState;
@@ -100,6 +122,23 @@ export const resetAppContentItem = (fieldName: string) => ({
 
 export const addAppContentItem = (data: any, callbacks?: CallBacks) => ({
   type: ADD_APP_CONTENT_ITEM,
+  callbacks,
+  data,
+});
+
+export const getAppContentCategory = () => ({
+  type: GET_APP_CONTENT_CATEGORIES,
+});
+export const setAppContentCategory = (data: AppContentCategory[]) => ({
+  type: SET_APP_CONTENT_CATEGORIES,
+  payload: data,
+});
+export const resetAppContentCategory = () => ({
+  type: RESET_APP_CONTENT_CATEGORIES_STATE,
+});
+
+export const addCommunityData = (data: any, callbacks?: CallBacks) => ({
+  type: ADD_COMMUNITY_DATA,
   callbacks,
   data,
 });

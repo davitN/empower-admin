@@ -32,7 +32,8 @@ export interface InitialState {
   gratitude: null,
   kickOff: null,
   powerDown: null,
-  powerUp: null
+  powerUp: null,
+  categories: null
 }
 
 export interface GetCommunityDataParams {
@@ -86,3 +87,12 @@ export type MonthlyActivityTypes = 'KICK_OFF' | 'ETHOS' | 'GRATITUDE' | 'POWER_U
 export type MonthlyActivityContentType = 'VIDEO' | 'AUDIO';
 
 export type CommunityArticleType = 'WRITTEN' | 'EXTERNAL';
+
+export interface AppContentCategory {
+  createdAt:string,
+  name: string,
+  ordering: number,
+  updatedAt:string,
+  __v: number,
+  _id: string,
+}

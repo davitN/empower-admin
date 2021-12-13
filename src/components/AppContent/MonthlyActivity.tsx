@@ -51,7 +51,7 @@ const MonthlyActivity = ({
           </div>
           {values.type !== 'KICK_OFF' && (
           <div className="p-d-flex p-flex-column">
-            <Label label="Content Type" costumeStyles="p-mb-3" />
+            <Label label="Content Type" costumeStyles="p-mb-2" />
             <div className="p-d-flex">
               {contentType.map(({ label, value }) => (
                 <RadioButtonComponent
