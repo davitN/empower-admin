@@ -169,7 +169,10 @@
 import React, { useState, useEffect } from 'react';
 import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
 import axios from 'axios';
+import { createUseStyles } from 'react-jss';
+import classNames from 'classnames';
 import { Elements } from '@stripe/react-stripe-js';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CheckoutForm from '../components/Payments/CheckoutForm';
 import '../styles/payments.css';
 import { backendUrl } from '../services/credentials.service';
@@ -177,10 +180,30 @@ import { backendUrl } from '../services/credentials.service';
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // loadStripe is initialized with a fake API key.
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
+const stripePromise = loadStripe('pk_test_51Hqt0jEPVI7wKwnS67prIlDm75i5woaRf9ER3MKXZz9EjtzjI8ZvzSXewSg5kZZKlri5SLHcmjpTx9PxXPWv0sgY006pMc4Qd8');
 
 export default function App() {
+  const classes = useStyles();
+  const query = useQuery();
+  const navigate = useNavigate();
+  const loc = useLocation();
+  console.log(loc);
+
   const [clientSecret, setClientSecret] = useState('');
+  const redirectStatus = query.get('redirect_status');
+  useEffect(() => {
+    if (redirectStatus === 'succeeded') {
+      setTimeout(() => {
+        // navigate('auth', { state: null });
+      }, 1000);
+    }
+  }, [query]);
 
   useEffect(() => {
     (async () => {
@@ -202,7 +225,7 @@ export default function App() {
   };
 
   return (
-    <div className="app">
+    <div className={classNames('p-d-flex p-jc-center p-ai-center', classes.container)}>
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm />
@@ -211,3 +234,9 @@ export default function App() {
     </div>
   );
 }
+
+const useStyles = createUseStyles({
+  container: {
+    flex: 1,
+  },
+});

@@ -30,13 +30,13 @@ ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
+          <Route path="payments" element={<Payments />} />
           <Route path="/" element={<App />}>
             <Route path="companies" element={<Companies />} />
             <Route path="companies/:id" element={<CompanyDetails />} />
             <Route path="app-users" element={<AppUsers />} />
             <Route path="app-users/:id" element={<UserDetails />} />
             <Route path="user-management" element={<UserManagement />} />
-            <Route path="payments" element={<Payments />} />
             <Route path="locations/:id" element={<LocationDetails />} />
             <Route path="app-content" element={<AppContent />} />
             <Route path="app-content/:id" element={<AppContentDetail />} />
