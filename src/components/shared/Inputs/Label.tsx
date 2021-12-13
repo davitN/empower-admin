@@ -20,6 +20,7 @@ export default Label;
 const useStyles = createUseStyles({
   label: {
     color: COLORS.blueWood,
+    fontWeight: 500,
     '& > span': {
       color: COLORS.lightBlue,
     },

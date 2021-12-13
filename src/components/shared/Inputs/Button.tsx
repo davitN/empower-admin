@@ -32,7 +32,8 @@ const ButtonComponent: React.FC<PropTypes> = ({
 
   return (
     <Button disabled={loading || disabled} className={classNames(customClasses, classes.root)} onClick={handleClick}>
-      {loading ? <i className="pi pi-spin pi-spinner" style={{ fontSize: '1.3em' }} /> : children }
+      <div style={{ opacity: loading ? 0 : 1 }}>{children}</div>
+      {loading && <i className={classNames('pi pi-spin pi-spinner', classes.loader)} style={{ fontSize: '1.3em' }} />}
     </Button>
   );
 };
@@ -42,6 +43,7 @@ const styles = () => ({
   root: ({
     bgColor, textColor, borderColor,
   }:{ bgColor: string, textColor:string, borderColor:string }) => ({
+    height: 'max-content',
     color: textColor,
     backgroundColor: bgColor,
     border: '1px solid transparent',
@@ -65,7 +67,14 @@ const styles = () => ({
       color: `${textColor} !important`,
       border: `1px solid ${borderColor} !important`,
     },
+    '&:disabled': {
+      cursor: 'not-allowed !important',
+      pointerEvents: 'all',
+    },
   }),
+  loader: {
+    position: 'absolute',
+  },
 });
 
 const useStyles = createUseStyles(styles);

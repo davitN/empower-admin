@@ -5,14 +5,14 @@ import COLORS from '../../../services/colors.service';
 import Label from './Label';
 
 const RadioButtonComponent = ({
-  label, checked, onChange, costumeClasses,
-}: { label: string, checked: boolean, onChange: Function, costumeClasses?: string }) => {
+  label, checked, onChange, costumeClasses, value,
+}: { label: string, checked: boolean, onChange: Function, costumeClasses?: string, value?: string }) => {
   const classes = useStyles();
 
   return (
     <div className={classNames(classes.root, costumeClasses)}>
-      <RadioButton id={label} onChange={(e) => onChange(e)} checked={checked} />
-      <Label htmlFor={label} label={label} costumeStyles="text-sm p-pl-2" />
+      <RadioButton id={label} onChange={(e) => onChange(e)} checked={checked} value={value} />
+      <Label htmlFor={label} label={label} costumeStyles="text-sm p-pl-2 p-text-normal" />
     </div>
   );
 };
@@ -21,6 +21,8 @@ export default RadioButtonComponent;
 
 const useStyles = createUseStyles({
   root: {
+    display: 'flex',
+    width: 'max-content',
     '& > .p-radiobutton': {
       width: '17px',
       height: '16px',

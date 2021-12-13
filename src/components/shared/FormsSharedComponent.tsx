@@ -4,7 +4,7 @@ import { Skeleton } from 'primereact/skeleton';
 import COLORS from '../../services/colors.service';
 import Label from './Inputs/Label';
 import Button from './Inputs/Button';
-import ImgPreview from '../ImgPreview/ImgPreview';
+import ImgPreview from './ImgPreview';
 
 interface PropsTypes {
   handleImgUpload: (e: any) => void,
@@ -21,7 +21,11 @@ interface PropsTypes {
   handleRemove?: () => void,
   removeButtonText?: string,
   disableRemove?: boolean,
-  showRemoveButton?: boolean
+  showRemoveButton?: boolean,
+  costumeButtons?: {
+    label: string,
+    handler: () => void
+  }[]
 }
 
 const FormsSharedComponent = ({
@@ -40,6 +44,7 @@ const FormsSharedComponent = ({
   removeButtonText,
   disableRemove,
   showRemoveButton,
+  costumeButtons,
 }: PropsTypes) => {
   const classes = useStyles();
   return (
@@ -80,17 +85,29 @@ const FormsSharedComponent = ({
       >
         {isNewItem ? 'Save' : 'Update'}
       </Button>
-      {showRemoveButton && (
+      {costumeButtons && costumeButtons.map(({ label, handler }) => (
         <Button
-          bgColor={COLORS.red}
+          key={label}
+          bgColor={COLORS.lightBlue}
           textColor={COLORS.white}
           customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
-          handleClick={handleRemove}
-          loading={isSaving}
-          disabled={disableRemove}
+          handleClick={() => handler()}
+          disabled={disableSave}
         >
-          {removeButtonText}
+          {label}
         </Button>
+      ))}
+      {showRemoveButton && (
+      <Button
+        bgColor={COLORS.red}
+        textColor={COLORS.white}
+        customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
+        handleClick={handleRemove}
+        loading={isSaving}
+        disabled={disableRemove}
+      >
+        {removeButtonText}
+      </Button>
       )}
     </>
   );
