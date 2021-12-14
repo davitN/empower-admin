@@ -1,7 +1,7 @@
 import imageCompression from 'browser-image-compression';
 
-export default async (e: any) => {
-  const img = await e.target.files[0];
+export default async (currentFile: any) => {
+  const img = await currentFile;
   const imgPrev = URL.createObjectURL(img);
   const imgDimension: any = await getImageDimensions(img);
   const thumbnail: any = await imageCompression(img, {
@@ -9,7 +9,6 @@ export default async (e: any) => {
     maxWidthOrHeight: 200,
   });
   const thumbnailDimension: any = await getImageDimensions(thumbnail);
-  e.target.value = '';
   return {
     img,
     imgPrev,

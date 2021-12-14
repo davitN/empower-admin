@@ -140,9 +140,10 @@ const LocationDetails = () => {
 
   return (
     <Container itemId={locationId} idText="Location ID" sectionTitle="STAR OF TEXAS VETERINARY HOSPITAL">
-      <Title title="LOCATION INFORMATION" costumeStyles="p-pb-4" />
       <div className={classes.wrapper}>
         <div className={classes.inputs}>
+          <Title title="LOCATION INFORMATION" costumeStyles="p-pb-4" />
+
           {!isNewLocation && !locationDetails ? (
             <>
               {new Array(2).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" />)}
@@ -167,20 +168,26 @@ const LocationDetails = () => {
         </div>
         <div className={classes.justifyEnd}>
           <FormsSharedComponent
-            handleImgUpload={(e) => handleImgUpload(e)}
-            loadingImg={!isNewLocation && !locationDetails}
-            imgUrl={img.imgPrev}
-            handleImgRemove={() => setImg(imgInitialStateImg)}
-            isSaving={saving}
-            handleSave={handleSave}
-            title="Update Location Logo"
-            desc="This logo will replace the company logo in the empower app."
-            disableSave={validateInputs()}
+            title="Update Company Logo"
             isNewItem={isNewLocation}
-            handleRemove={() => console.log('rm location')}
-            removeButtonText="Remove location"
-            disableRemove={!isNewLocation && !locationDetails}
-            showRemoveButton={!isNewLocation}
+            image={{
+              url: img.imgPrev,
+              handleUpload: (e) => handleImgUpload(e),
+              handleRemove: () => setImg(imgInitialStateImg),
+              description: 'This logo will replace the company logo in the empower app.',
+              loading: !isNewLocation && !locationDetails,
+            }}
+            save={{
+              loading: saving,
+              handler: handleSave,
+              disabled: validateInputs(),
+            }}
+            remove={{
+              handler: () => console.log('remove item'),
+              label: 'Remove Location',
+              disabled: false,
+              hidden: !isNewLocation && !locationDetails,
+            }}
           />
         </div>
       </div>
@@ -213,6 +220,7 @@ const useStyles = createUseStyles({
     display: 'grid',
     gridTemplateColumns: '1.5fr 1fr',
     gap: '5rem',
+    marginBottom: '5rem',
   },
   inputs: {
     display: 'grid',

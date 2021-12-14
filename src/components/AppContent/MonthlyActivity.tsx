@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import Title from '../shared/Title';
 import Label from '../shared/Inputs/Label';
 import RadioButtonComponent from '../shared/Inputs/RadioButton';
-import FileUploadForm from '../shared/FileUploadForm';
+import UploadButton from '../shared/UploadButton';
 import TextInput from '../shared/Inputs/TextInput';
 import Textarea from '../shared/Inputs/Textarea';
 
@@ -71,7 +71,7 @@ const MonthlyActivity = ({
             <TextInput label="Title" required value={values.title} handleChange={(title) => setValues({ ...values, title })} />
             <TextInput label="Subtitle" required value={values.subTitle} handleChange={(subTitle) => setValues({ ...values, subTitle })} />
             <Textarea label="Description" value={values.description} required handleChange={(description) => setValues({ ...values, description })} />
-            <FileUploadForm
+            <UploadButton
               fileType={values.contentType === 'VIDEO' ? '.mp4' : '.mp3'}
               uploadedFile={uploadedFile}
               handleUpload={(val: any) => setUploadedFIle(val)}

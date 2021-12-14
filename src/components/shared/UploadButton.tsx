@@ -4,13 +4,14 @@ import COLORS from '../../services/colors.service';
 import Label from './Inputs/Label';
 
 interface PropsTypes {
-  uploadedFile: any,
-  handleUpload: (val: any) => void,
-  fileType: string
+  uploadedFile?: any,
+  handleUpload?: (val: any) => void,
+  fileType?: string,
+  disabled?: boolean
 }
 
-const FIleUploadForm = ({
-  uploadedFile, handleUpload, fileType,
+const UploadButton = ({
+  uploadedFile, handleUpload, fileType, disabled,
 } : PropsTypes) => {
   const classes = useStyles();
   return (
@@ -18,12 +19,22 @@ const FIleUploadForm = ({
       <div className={classes.inputsWrapper}>
         <div className="p-d-flex p-ai-center">
           <div>
-            <input type="file" id="upload" accept={fileType} hidden onChange={(e) => handleUpload(e.target.files && e.target.files[0])} />
+            <input
+              type="file"
+              id="upload"
+              accept={fileType}
+              hidden
+              onChange={(e) => {
+                handleUpload && handleUpload(e.target.files && e.target.files[0]);
+                e.target.value = '';
+              }}
+            />
             <label htmlFor="upload" className={classes.label}>
               <ButtonComponent
                 customClasses={classes.uploadBtn}
                 bgColor={COLORS.lightBlue}
                 textColor={COLORS.white}
+                disabled={disabled}
               >
                 + Choose
               </ButtonComponent>
@@ -36,7 +47,7 @@ const FIleUploadForm = ({
   );
 };
 
-export default FIleUploadForm;
+export default UploadButton;
 
 const useStyles = createUseStyles({
   inputsWrapper: {

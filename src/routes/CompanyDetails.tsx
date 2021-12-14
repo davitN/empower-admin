@@ -213,21 +213,27 @@ const CompanyDetails = () => {
         </div>
         <div className={classes.justifyEnd}>
           <FormsSharedComponent
-            handleImgUpload={(e) => handleImgUpload(e)}
-            loadingImg={!isNewCompany && !companyDetails}
-            imgUrl={img.imgPrev}
-            handleImgRemove={() => setImg(imgInitialState)}
-            isSaving={saving}
-            handleSave={handleSave}
             title="Update Company Logo"
-            desc="This is the logo that shows on the team screen in the empower app"
-            requiredLogo
-            disableSave={validateInputs()}
             isNewItem={isNewCompany}
-            handleRemove={() => console.log('rm company')}
-            removeButtonText="Remove company"
-            disableRemove={!isNewCompany && !companyDetails}
-            showRemoveButton={!isNewCompany}
+            image={{
+              url: img.imgPrev,
+              handleUpload: (e) => handleImgUpload(e),
+              handleRemove: () => setImg(imgInitialState),
+              description: 'This is the logo that shows on the team screen in the empower app',
+              loading: !isNewCompany && !companyDetails,
+              requiredImg: true,
+            }}
+            save={{
+              loading: saving,
+              handler: handleSave,
+              disabled: validateInputs(),
+            }}
+            remove={{
+              handler: () => console.log('remove item'),
+              label: 'Remove Company',
+              disabled: false,
+              hidden: !isNewCompany && !companyDetails,
+            }}
             costumeButtons={[{
               label: 'Add monthly team activity',
               handler: () => navigate(`/app-content/monthly-team-activity/new/${companyDetails['_id']}`),

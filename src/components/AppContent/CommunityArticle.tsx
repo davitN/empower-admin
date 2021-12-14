@@ -4,7 +4,7 @@ import { Skeleton } from 'primereact/skeleton';
 import Title from '../shared/Title';
 import Label from '../shared/Inputs/Label';
 import RadioButtonComponent from '../shared/Inputs/RadioButton';
-import FileUploadForm from '../shared/FileUploadForm';
+import UploadButton from '../shared/UploadButton';
 import Textarea from '../shared/Inputs/Textarea';
 import TextInput from '../shared/Inputs/TextInput';
 import Select from '../shared/Inputs/Select';
@@ -85,7 +85,7 @@ const CommunityArticle = ({
             />
             <div>
               <Title title="Featured Image" fontSize="text-base" costumeStyles="p-mb-2" />
-              <FileUploadForm
+              <UploadButton
                 uploadedFile={uploadedFile}
                 handleUpload={(val: any) => setUploadedFIle(val)}
                 fileType="image/png, image/gif, image/jpeg"

@@ -5,109 +5,107 @@ import COLORS from '../../services/colors.service';
 import Label from './Inputs/Label';
 import Button from './Inputs/Button';
 import ImgPreview from './ImgPreview';
+import UploadButton from './UploadButton';
 
 interface PropsTypes {
-  handleImgUpload: (e: any) => void,
-  loadingImg: boolean,
-  handleImgRemove: () => void,
-  handleSave: () => void,
-  isSaving: boolean,
-  imgUrl: string | null,
   title?: string,
-  desc?:string,
-  requiredLogo?: boolean,
-  disableSave?: boolean,
   isNewItem?: boolean,
-  handleRemove?: () => void,
-  removeButtonText?: string,
-  disableRemove?: boolean,
-  showRemoveButton?: boolean,
   costumeButtons?: {
     label: string,
-    handler: () => void
-  }[]
+    handler: () => void,
+    disabled?: boolean
+  }[],
+  image?: {
+    url: string | null,
+    handleRemove: () => void,
+    handleUpload: (e : EventTarget) => void,
+    description?: string,
+    loading?: boolean,
+    requiredImg?: boolean,
+    disableUpload?: boolean
+  },
+  save: {
+    label?: string,
+    disabled?: boolean,
+    handler?: () => void,
+    loading?: boolean,
+  },
+  remove: {
+    label?: string,
+    disabled?: boolean,
+    handler?: () => void,
+    loading?: boolean,
+    hidden?: boolean
+  },
 }
 
 const FormsSharedComponent = ({
-  handleImgUpload,
-  loadingImg,
-  handleImgRemove,
-  handleSave,
-  isSaving,
-  imgUrl,
   title,
-  desc,
-  requiredLogo,
-  disableSave,
   isNewItem,
-  handleRemove,
-  removeButtonText,
-  disableRemove,
-  showRemoveButton,
   costumeButtons,
+  /// /////////////
+  image,
+  save,
+  remove,
 }: PropsTypes) => {
   const classes = useStyles();
+
+  const saveButtonLabel = isNewItem ? 'Save' : 'Update';
   return (
     <>
-      <Label label={title || ''} costumeStyles="text-3xl" required={requiredLogo} />
-      <div className={classes.uploadButton}>
-        <label htmlFor="file-input">
-          <Button
-            bgColor={COLORS.lightBlue}
-            textColor={COLORS.white}
-            customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
-          >
-            + Choose
-          </Button>
-        </label>
-        <input
-          id="file-input"
-          type="file"
-          onChange={handleImgUpload}
-        />
+      {title && <Label label={title} costumeStyles="text-3xl" required={image?.requiredImg} />}
+      {image && (
+      <div className="p-d-flex p-ai-end p-flex-column">
+        <UploadButton disabled={image?.disableUpload} handleUpload={image?.handleUpload} fileType="image/png, image/gif, image/jpeg" />
+        { image?.loading ? <Skeleton className={classes.uploadImg} />
+          : (
+            <ImgPreview
+              url={image.url}
+              handleRemove={image.handleRemove}
+              costumeClasses={classes.uploadImg}
+            />
+          )}
+        {image?.description && <p className={classes.infoText}>{image.description}</p>}
       </div>
-      {loadingImg ? <Skeleton className={classes.uploadImg} />
-        : (
-          <ImgPreview
-            url={imgUrl}
-            handleRemove={handleImgRemove}
-            costumeClasses={classes.uploadImg}
-          />
-        ) }
-      <p className={classes.infoText}>{desc}</p>
+      )}
+
+      {save && (
       <Button
         bgColor={COLORS.lightBlue}
         textColor={COLORS.white}
         customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
-        handleClick={handleSave}
-        loading={isSaving}
-        disabled={disableSave}
+        handleClick={save?.handler ? save.handler : undefined}
+        loading={save?.loading}
+        disabled={save?.disabled}
       >
-        {isNewItem ? 'Save' : 'Update'}
+        {save?.label ? save.label : saveButtonLabel}
       </Button>
-      {costumeButtons && costumeButtons.map(({ label, handler }) => (
+      )}
+      {costumeButtons && costumeButtons.map(({ label, handler, disabled }) => (
         <Button
           key={label}
           bgColor={COLORS.lightBlue}
           textColor={COLORS.white}
           customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
           handleClick={() => handler()}
-          disabled={disableSave}
+          disabled={disabled}
         >
           {label}
         </Button>
       ))}
-      {showRemoveButton && (
-      <Button
-        bgColor={COLORS.red}
-        textColor={COLORS.white}
-        customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
-        handleClick={handleRemove}
-        loading={isSaving}
-        disabled={disableRemove}
-      >
-        {removeButtonText}
-      </Button>
+      {remove && (
+        remove?.hidden ? null : (
+          <Button
+            bgColor={COLORS.red}
+            textColor={COLORS.white}
+            customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
+            handleClick={remove?.handler ? remove.handler : undefined}
+            loading={remove?.loading}
+            disabled={remove?.disabled}
+          >
+            {remove.label}
+          </Button>
+        )
       )}
     </>
   );
@@ -131,18 +129,10 @@ const useStyles = createUseStyles({
   uploadImg: {
     width: '10rem !important',
     height: '8rem !important',
+    margin: '1rem 0',
   },
-  uploadButton: {
-    position: 'relative',
+  label: {
+    width: 'max-content',
     cursor: 'pointer',
-    '& > input': {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      opacity: 0,
-      width: '100%',
-      height: '100%',
-      cursor: 'pointer',
-    },
   },
 });
