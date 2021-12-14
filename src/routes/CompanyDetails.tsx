@@ -230,7 +230,7 @@ const CompanyDetails = () => {
             showRemoveButton={!isNewCompany}
             costumeButtons={[{
               label: 'Add monthly team activity',
-              handler: () => navigate(`/app-content/new?companyId=${companyDetails['_id']}&companyName=${companyDetails.name}`),
+              handler: () => navigate(`/app-content/monthly-team-activity/new/${companyDetails['_id']}`),
             }]}
           />
         </div>

@@ -41,7 +41,9 @@ ReactDOM.render(
             <Route path="user-management" element={<UserManagement />} />
             <Route path="locations/:id" element={<LocationDetails />} />
             <Route path="app-content" element={<AppContent />} />
-            <Route path="app-content/:id" element={<AppContentDetail />} />
+            <Route path="app-content/:itemName/:mode" element={<AppContentDetail />}>
+              <Route path=":id" element={<AppContentDetail />} />
+            </Route>
             <Route
               path="*"
               element={(

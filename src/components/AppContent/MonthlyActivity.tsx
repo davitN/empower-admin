@@ -1,6 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Title from '../shared/Title';
 import Label from '../shared/Inputs/Label';
 import RadioButtonComponent from '../shared/Inputs/RadioButton';
@@ -21,13 +21,13 @@ const MonthlyActivity = ({
   values, setValues, types, uploadedFile, setUploadedFIle, contentType,
 }: PropTypes) => {
   const classes = useStyles();
-  const [searchParams] = useSearchParams();
+  const { id, mode } = useParams();
 
   useEffect(() => {
-    if (searchParams.get('companyId') && searchParams.get('companyName')) {
-      setValues({ ...values, companyId: searchParams.get('companyId') });
+    if (mode === 'new' && id) {
+      setValues({ ...values, companyId: id });
     }
-  }, [searchParams]);
+  }, [mode]);
 
   return (
     <div className={classes.gridWrapper}>

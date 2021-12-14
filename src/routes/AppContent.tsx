@@ -99,7 +99,7 @@ const AppContent = () => {
             data={initialData.kickOff}
             header={tableHeaders}
             tableTitle="Kickoff Content"
-            handleEdit={({ _id }) => navigate(_id)}
+            handleEdit={({ _id }) => console.log(_id)}
             handlePageChange={(val) => kickOffHandlePageChange(val)}
           />
           <Table
@@ -147,7 +147,7 @@ const AppContent = () => {
             tableTitle="Community Content"
             handleEdit={({ _id }) => navigate(_id)}
             handlePageChange={(val) => communityHandlePageChange(val)}
-            handleAdd={() => navigate('new?type=community-data')}
+            handleAdd={() => navigate('community-article/new')}
             buttonText="+ Add content"
           />
         </div>

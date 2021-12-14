@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import Container from '../components/shared/Container';
 import MonthlyActivity from '../components/AppContent/MonthlyActivity';
 import { MonthlyActivityTypes, MonthlyActivityContentType, CommunityArticleType } from '../types/appContent';
@@ -84,7 +84,7 @@ const communityArticleContentType: { value: string, label: string }[] = [
 const AppContentDetail = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const [searchParams] = useSearchParams();
+  const { itemName, mode, id } = useParams();
   const { pathname } = useLocation();
   const [saving, setSaving] = useState(false);
   const [monthlyActivityValues, setMonthlyActivityValues] = useState<MonthlyActivityValueTypes>({
@@ -115,7 +115,7 @@ const AppContentDetail = () => {
 
   const handleSave = () => {
     setSaving(true);
-    if (searchParams.get('type') === 'community-data') {
+    if (itemName === 'community-article') {
       const reqData = {
         type: communityArticleValues.type,
         isFeatured: communityArticleValues.isFeatured,
@@ -146,7 +146,7 @@ const AppContentDetail = () => {
   };
 
   const validateInputs = () => {
-    if (searchParams.get('type') !== 'community-data') {
+    if (itemName !== 'community-article') {
       return (!monthlyActivityValues.title || !monthlyActivityValues.subTitle || !monthlyActivityValues.description || !uploadedFile);
     }
     if (communityArticleValues.type === 'WRITTEN') {
@@ -161,15 +161,15 @@ const AppContentDetail = () => {
   };
 
   useEffect(() => {
-    if (searchParams.get('type') === 'community-data') {
+    if (itemName === 'community-article') {
       dispatch(getAppContentCategory());
     }
-  }, [searchParams]);
+  }, [itemName]);
 
   return (
     <Container sectionTitle={pathname.includes('new') ? 'NEW CONTENT' : 'EDIT CONTENT'}>
       <div className={classes.wrapper}>
-        {searchParams.get('type') === 'community-data' ? (
+        {itemName === 'community-article' ? (
           <CommunityArticle
             contentType={communityArticleContentType}
             values={communityArticleValues}
