@@ -143,6 +143,7 @@ const CommunityArticle = ({
                     uploadedFile={uploadedFile}
                     handleUpload={(val: any) => setUploadedFIle(val)}
                     fileType="image/png, image/gif, image/jpeg"
+                    disabled={Boolean(isEditing)}
                   />
                 </div>
                 {categories ? (

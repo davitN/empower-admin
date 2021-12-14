@@ -13,6 +13,7 @@ import { saveAppContentItem, getAppContentCategory, saveCommunityData } from '..
 import CommunityArticle from '../components/AppContent/CommunityArticle';
 import { RootState } from '../store/configureStore';
 import FormSharedComponent from '../components/shared/FormsSharedComponent';
+import Title from '../components/shared/Title';
 
 interface MonthlyActivityValueTypes {
   type: MonthlyActivityTypes,
@@ -195,16 +196,24 @@ const AppContentDetail = () => {
         )}
 
         <div className={classes.justifyEnd}>
+          {isEditing && communityDataItem?.image?.imgURL && <Title title="Featured Image" />}
           <FormSharedComponent
             save={{
               handler: handleSave,
               label: 'Save Content',
               disabled: validateInputs(),
+              loading: saving,
             }}
             remove={{
               handler: undefined,
               label: 'Delete Content',
               hidden: !isEditing,
+              disabled: saving,
+            }}
+            image={{
+              url: communityDataItem?.image?.imgURL,
+              hideUpload: true,
+              loading: Boolean(isEditing && !communityDataItem),
             }}
           />
         </div>

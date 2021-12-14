@@ -17,12 +17,13 @@ interface PropsTypes {
   }[],
   image?: {
     url: string | null,
-    handleRemove: () => void,
-    handleUpload: (e : EventTarget) => void,
+    handleRemove?: () => void,
+    handleUpload?: (e : EventTarget) => void,
     description?: string,
     loading?: boolean,
     requiredImg?: boolean,
-    disableUpload?: boolean
+    disableUpload?: boolean,
+    hideUpload?:boolean
   },
   save: {
     label?: string,
@@ -56,12 +57,12 @@ const FormsSharedComponent = ({
       {title && <Label label={title} costumeStyles="text-3xl" required={image?.requiredImg} />}
       {image && (
       <div className="p-d-flex p-ai-end p-flex-column">
-        <UploadButton disabled={image?.disableUpload} handleUpload={image?.handleUpload} fileType="image/png, image/gif, image/jpeg" />
+        {!image?.hideUpload && <UploadButton disabled={image?.disableUpload} handleUpload={image?.handleUpload} fileType="image/png, image/gif, image/jpeg" />}
         { image?.loading ? <Skeleton className={classes.uploadImg} />
           : (
             <ImgPreview
               url={image.url}
-              handleRemove={image.handleRemove}
+              handleRemove={image?.handleRemove || undefined}
               costumeClasses={classes.uploadImg}
             />
           )}

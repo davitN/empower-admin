@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 interface PropTypes {
   url: string | null,
-  handleRemove: () => void,
+  handleRemove?: () => void,
   costumeClasses?: string
 }
 
@@ -15,7 +15,7 @@ const ImgPreview = ({ url, handleRemove, costumeClasses }: PropTypes) => {
       {url ? (
         <>
           <img src={url} alt="" className={classes.img} />
-          <i className={classNames('pi pi-times', classes.removeIcon)} onClick={handleRemove} />
+          {handleRemove && <i className={classNames('pi pi-times', classes.removeIcon)} onClick={handleRemove} />}
         </>
       ) : (
         <i className={classNames('pi pi-image', classes.uploadImg)} />
