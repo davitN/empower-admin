@@ -3,12 +3,24 @@
 import { put, delay } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
 import {
-  setAppContent, setCommunityData, resetCommunityData, setAppContentItem, resetAppContentItem, setAppContentCategory,
+  setAppContent,
+  setCommunityData,
+  resetCommunityData,
+  setAppContentItem,
+  resetAppContentItem,
+  setAppContentCategory,
+  setCommunityDataItem,
 } from '../ducks/appContentDuck';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
 import {
-  AppContentGetData, GetAppContentItemData, GetAppContentItemOptions, GetCommunityData, GetCommunityDataParams, AppContentCategory,
+  AppContentGetData,
+  GetAppContentItemData,
+  GetAppContentItemOptions,
+  GetCommunityData,
+  GetCommunityDataParams,
+  AppContentCategory,
+  GetCommunityDataItem,
 } from '../../types/appContent';
 import notificationService from '../../services/notification.service';
 
@@ -75,7 +87,7 @@ export function* getAppContentItem({ params, callbacks }:{ params: GetAppContent
   }
 }
 
-export function* addAppContentItem({ data, callbacks }:{ data: any, callbacks: CallBacks, type: string }) {
+export function* saveAppContentItem({ data, callbacks }:{ data: any, callbacks: CallBacks, type: string }) {
   try {
     const formData = new FormData();
     data.file && formData.append('content', data.file);
@@ -104,16 +116,37 @@ export function* getAppContentCategory() {
   }
 }
 
-export function* addCommunityData({ data, callbacks }:{ data: any, callbacks: CallBacks, type: string }) {
+export function* saveCommunityData({ data, callbacks }:{ data: any, callbacks: CallBacks, type: string }) {
   try {
     const formData = new FormData();
-    data.image && formData.append('image', data.image);
+    if (data.data.type === 'WRITTEN' && data.image) {
+      formData.append('image', data.image);
+    }
     formData.append('data', JSON.stringify(data.data));
-    yield axiosInstance.post('/content/community_data/add_content', formData);
+    if (data?.id) {
+      yield axiosInstance.put(`/content/community_data/edit/${data.id}`, formData);
+    } else {
+      yield axiosInstance.post('/content/community_data/add_content', formData);
+    }
     callbacks?.success && callbacks.success();
-    notificationService.success('Item has been successfully added', '', 500);
+    notificationService.success(data?.id ? 'Item has been successfully updated' : 'Item has been successfully added', '', 500);
   } catch (error: any) {
     callbacks?.error && callbacks.error();
     notificationService.error(error.response.data.message, '', 500);
+  }
+}
+
+export function* getCommunityDataItem({ id }: { id: string, type: string }) {
+  try {
+    const data: GetCommunityDataItem = yield axiosInstance.get(`/content/community_data/get/${id}`);
+    yield put(setCommunityDataItem(data));
+  } catch (error: any) {
+    yield put(
+      notifyAction({
+        type: 'error',
+        message: error.response?.data.message,
+        showError: false,
+      }),
+    );
   }
 }

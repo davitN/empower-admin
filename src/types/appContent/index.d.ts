@@ -27,13 +27,14 @@ export interface CommunityItemModel {
 }
 
 export interface InitialState {
-  communityData: null,
-  ethos: null,
-  gratitude: null,
-  kickOff: null,
-  powerDown: null,
-  powerUp: null,
-  categories: null
+  communityData: null | CommunityItemModel,
+  ethos: null | ItemModel,
+  gratitude: null | ItemModel,
+  kickOff: null | ItemModel,
+  powerDown: null | ItemModel,
+  powerUp: null | ItemModel,
+  categories: null,
+  communityDataItem: null | GetAppContentItemData
 }
 
 export interface GetCommunityDataParams {
@@ -95,4 +96,27 @@ export interface AppContentCategory {
   updatedAt:string,
   __v: number,
   _id: string,
+}
+
+export interface GetCommunityDataItem {
+  category: string,
+  createdAt:string,
+  creator: string,
+  image: any,
+  isFeatured: boolean,
+  show: boolean,
+  subTitle: string,
+  text: string,
+  title: string,
+  type: CommunityArticleType,
+  updatedAt: string,
+  __v: number,
+  _id: string,
+  description?: string,
+  URL?: string,
+  image?: {
+    width: number,
+    height: number,
+    imgURL: string
+  }
 }

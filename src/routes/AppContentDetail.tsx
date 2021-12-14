@@ -1,14 +1,18 @@
 import { createUseStyles } from 'react-jss';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useParams, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import Container from '../components/shared/Container';
 import MonthlyActivity from '../components/AppContent/MonthlyActivity';
-import { MonthlyActivityTypes, MonthlyActivityContentType, CommunityArticleType } from '../types/appContent';
+import {
+  MonthlyActivityTypes, MonthlyActivityContentType, CommunityArticleType, GetCommunityDataItem,
+} from '../types/appContent';
 import COLORS from '../services/colors.service';
 import Button from '../components/shared/Inputs/Button';
-import { addAppContentItem, getAppContentCategory, addCommunityData } from '../store/ducks/appContentDuck';
+import { saveAppContentItem, getAppContentCategory, saveCommunityData } from '../store/ducks/appContentDuck';
 import CommunityArticle from '../components/AppContent/CommunityArticle';
+import { RootState } from '../store/configureStore';
+import FormSharedComponent from '../components/shared/FormsSharedComponent';
 
 interface MonthlyActivityValueTypes {
   type: MonthlyActivityTypes,
@@ -84,8 +88,8 @@ const communityArticleContentType: { value: string, label: string }[] = [
 const AppContentDetail = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const { communityDataItem } : { communityDataItem: GetCommunityDataItem } = useSelector((state: RootState) => state.appContentReducer);
   const { itemName, mode, id } = useParams();
-  const { pathname } = useLocation();
   const [saving, setSaving] = useState(false);
   const [monthlyActivityValues, setMonthlyActivityValues] = useState<MonthlyActivityValueTypes>({
     type: 'KICK_OFF',
@@ -96,7 +100,7 @@ const AppContentDetail = () => {
     companyId: '',
   });
   const [communityArticleValues, setCommunityArticleValues] = useState<CommunityArticleValuesTypes>({
-    type: 'WRITTEN',
+    type: communityDataItem ? communityDataItem.type : 'WRITTEN',
     isFeatured: true,
     written: {
       title: '',
@@ -111,6 +115,7 @@ const AppContentDetail = () => {
       URL: '',
     },
   });
+  const isEditing = mode === 'edit' && id;
   const [uploadedFile, setUploadedFIle] = useState<any>(null);
 
   const handleSave = () => {
@@ -127,15 +132,16 @@ const AppContentDetail = () => {
           category: communityArticleValues.external.category && communityArticleValues.external.category['_id'],
         },
       };
-      dispatch(addCommunityData(
+      dispatch(saveCommunityData(
         {
           data: reqData,
           image: uploadedFile,
+          id: isEditing && id,
         },
         { success: () => setSaving(false), error: () => setSaving(false) },
       ));
     } else {
-      dispatch(addAppContentItem(
+      dispatch(saveAppContentItem(
         {
           data: monthlyActivityValues,
           file: uploadedFile,
@@ -167,7 +173,7 @@ const AppContentDetail = () => {
   }, [itemName]);
 
   return (
-    <Container sectionTitle={pathname.includes('new') ? 'NEW CONTENT' : 'EDIT CONTENT'}>
+    <Container sectionTitle={isEditing ? 'NEW CONTENT' : 'EDIT CONTENT'}>
       <div className={classes.wrapper}>
         {itemName === 'community-article' ? (
           <CommunityArticle
@@ -189,22 +195,18 @@ const AppContentDetail = () => {
         )}
 
         <div className={classes.justifyEnd}>
-          <Button
-            bgColor={COLORS.lightBlue}
-            textColor={COLORS.white}
-            handleClick={handleSave}
-            disabled={validateInputs()}
-            loading={saving}
-          >
-            Save content
-          </Button>
-          <Button
-            bgColor={COLORS.red}
-            textColor={COLORS.white}
-            handleClick={undefined}
-          >
-            Delete content
-          </Button>
+          <FormSharedComponent
+            save={{
+              handler: handleSave,
+              label: 'Save Content',
+              disabled: validateInputs(),
+            }}
+            remove={{
+              handler: undefined,
+              label: 'Delete Content',
+              hidden: !isEditing,
+            }}
+          />
         </div>
       </div>
     </Container>

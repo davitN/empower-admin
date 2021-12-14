@@ -5,13 +5,13 @@ import COLORS from '../../../services/colors.service';
 import Label from './Label';
 
 const RadioButtonComponent = ({
-  label, checked, onChange, costumeClasses, value,
-}: { label: string, checked: boolean, onChange: Function, costumeClasses?: string, value?: string }) => {
+  label, checked, onChange, costumeClasses, value, disabled,
+}: { label: string, checked: boolean, onChange: Function, costumeClasses?: string, value?: string, disabled?: boolean }) => {
   const classes = useStyles();
 
   return (
     <div className={classNames(classes.root, costumeClasses)}>
-      <RadioButton id={label} onChange={(e) => onChange(e)} checked={checked} value={value} />
+      <RadioButton disabled={disabled} id={label} onChange={(e) => onChange(e)} checked={checked} value={value} />
       <Label htmlFor={label} label={label} costumeStyles="text-sm p-pl-2 p-text-normal" />
     </div>
   );

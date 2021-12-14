@@ -8,6 +8,7 @@ import {
   GetAppContentItemOptions,
   GetAppContentItemData,
   AppContentCategory,
+  GetCommunityDataItem,
 } from '../../types/appContent';
 
 export const GET_APP_CONTENT = 'socialize/content/getAppContent';
@@ -22,12 +23,16 @@ export const GET_APP_CONTENT_ITEM = 'socialize/content/getAppContentItem';
 export const SET_APP_CONTENT_ITEM = 'socialize/content/setAppContentItem';
 export const RESET_APP_CONTENT_ITEM_STATE = 'socialize/content/resetAppContentItemState';
 
-export const ADD_APP_CONTENT_ITEM = 'socialize/content/addAppContentItem';
-export const ADD_COMMUNITY_DATA = 'socialize/content/addCommunityData';
+export const SAVE_APP_CONTENT_ITEM = 'socialize/content/saveAppContentItem';
+export const SAVE_COMMUNITY_DATA = 'socialize/content/saveCommunityData';
 
 export const GET_APP_CONTENT_CATEGORIES = 'socialize/content/getAppContentCategories';
 export const SET_APP_CONTENT_CATEGORIES = 'socialize/content/setAppContentCategories';
 export const RESET_APP_CONTENT_CATEGORIES_STATE = 'socialize/content/resetAppContentCategoriesState';
+
+export const GET_COMMUNITY_DATA_ITEM = 'socialize/content/getCommunityDataItem';
+export const SET_COMMUNITY_DATA_ITEM = 'socialize/content/setCommunityDataItem';
+export const RESET_COMMUNITY_DATA_ITEM_STATE = 'socialize/content/resetCommunityDataItemState';
 
 const initialState: InitialState = {
   communityData: null,
@@ -37,6 +42,7 @@ const initialState: InitialState = {
   powerDown: null,
   powerUp: null,
   categories: null,
+  communityDataItem: null,
 };
 
 export const appContentReducer = (state = initialState, action: AnyAction) => {
@@ -75,6 +81,16 @@ export const appContentReducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         categories: null,
+      };
+    case SET_COMMUNITY_DATA_ITEM:
+      return {
+        ...state,
+        communityDataItem: action.payload as GetCommunityDataItem,
+      };
+    case RESET_COMMUNITY_DATA_ITEM_STATE:
+      return {
+        ...state,
+        communityDataItem: null,
       };
     default:
       return state as InitialState;
@@ -120,8 +136,8 @@ export const resetAppContentItem = (fieldName: string) => ({
   payload: fieldName,
 });
 
-export const addAppContentItem = (data: any, callbacks?: CallBacks) => ({
-  type: ADD_APP_CONTENT_ITEM,
+export const saveAppContentItem = (data: any, callbacks?: CallBacks) => ({
+  type: SAVE_APP_CONTENT_ITEM,
   callbacks,
   data,
 });
@@ -137,8 +153,20 @@ export const resetAppContentCategory = () => ({
   type: RESET_APP_CONTENT_CATEGORIES_STATE,
 });
 
-export const addCommunityData = (data: any, callbacks?: CallBacks) => ({
-  type: ADD_COMMUNITY_DATA,
+export const saveCommunityData = (data: any, callbacks?: CallBacks) => ({
+  type: SAVE_COMMUNITY_DATA,
   callbacks,
   data,
+});
+
+export const getCommunityDataItem = (id: string) => ({
+  type: GET_COMMUNITY_DATA_ITEM,
+  id,
+});
+export const setCommunityDataItem = (data: GetCommunityDataItem) => ({
+  type: SET_COMMUNITY_DATA_ITEM,
+  payload: data,
+});
+export const resetCommunityDataItem = () => ({
+  type: RESET_COMMUNITY_DATA_ITEM_STATE,
 });
