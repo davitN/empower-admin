@@ -9,6 +9,7 @@ import {
   GetAppContentItemData,
   AppContentCategory,
   GetCommunityDataItem,
+  GetAppContentItemInfo,
 } from '../../types/appContent';
 
 export const GET_APP_CONTENT = 'socialize/content/getAppContent';
@@ -34,6 +35,10 @@ export const GET_COMMUNITY_DATA_ITEM = 'socialize/content/getCommunityDataItem';
 export const SET_COMMUNITY_DATA_ITEM = 'socialize/content/setCommunityDataItem';
 export const RESET_COMMUNITY_DATA_ITEM_STATE = 'socialize/content/resetCommunityDataItemState';
 
+export const GET_APP_CONTENT_ITEM_INFO = 'socialize/content/getAppContentItemInfo';
+export const SET_APP_CONTENT_ITEM_INFO = 'socialize/content/setAppContentItemInfo';
+export const RESET_APP_CONTENT_ITEM_INFO_STATE = 'socialize/content/resetAppContentItemInfoState';
+
 const initialState: InitialState = {
   communityData: null,
   ethos: null,
@@ -43,6 +48,7 @@ const initialState: InitialState = {
   powerUp: null,
   categories: null,
   communityDataItem: null,
+  appContentItemInfo: null,
 };
 
 export const appContentReducer = (state = initialState, action: AnyAction) => {
@@ -91,6 +97,16 @@ export const appContentReducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         communityDataItem: null,
+      };
+    case SET_APP_CONTENT_ITEM_INFO:
+      return {
+        ...state,
+        appContentItemInfo: action.payload as GetAppContentItemInfo,
+      };
+    case RESET_APP_CONTENT_ITEM_INFO_STATE:
+      return {
+        ...state,
+        appContentItemInfo: null,
       };
     default:
       return state as InitialState;
@@ -169,4 +185,16 @@ export const setCommunityDataItem = (data: GetCommunityDataItem) => ({
 });
 export const resetCommunityDataItem = () => ({
   type: RESET_COMMUNITY_DATA_ITEM_STATE,
+});
+
+export const getAppContentItemInfo = (params: { companyId: string, fieldName: string }) => ({
+  type: GET_APP_CONTENT_ITEM_INFO,
+  params,
+});
+export const setAppContentItemInfo = (data: GetAppContentItemInfo) => ({
+  type: SET_APP_CONTENT_ITEM_INFO,
+  payload: data,
+});
+export const resetAppContentItemInfo = () => ({
+  type: RESET_APP_CONTENT_ITEM_INFO_STATE,
 });

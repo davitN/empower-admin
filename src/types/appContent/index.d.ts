@@ -34,7 +34,8 @@ export interface InitialState {
   powerDown: null | ItemModel,
   powerUp: null | ItemModel,
   categories: null,
-  communityDataItem: null | GetAppContentItemData
+  communityDataItem: null | GetAppContentItemData,
+  appContentItemInfo: null | GetAppContentItemInfo
 }
 
 export interface GetCommunityDataParams {
@@ -119,4 +120,19 @@ export interface GetCommunityDataItem {
     height: number,
     imgURL: string
   }
+}
+
+interface GetAppContentItemInfo {
+  content: {
+    URL: string,
+    width: number,
+    height: number
+  },
+  creator: string
+  description: string
+  endDate: string,
+  startDate: string,
+  subTitle: string,
+  title: string,
+  type: string
 }

@@ -10,6 +10,7 @@ import {
   resetAppContentItem,
   setAppContentCategory,
   setCommunityDataItem,
+  setAppContentItemInfo,
 } from '../ducks/appContentDuck';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
@@ -21,6 +22,7 @@ import {
   GetCommunityDataParams,
   AppContentCategory,
   GetCommunityDataItem,
+  GetAppContentItemInfo,
 } from '../../types/appContent';
 import notificationService from '../../services/notification.service';
 
@@ -140,6 +142,25 @@ export function* getCommunityDataItem({ id }: { id: string, type: string }) {
   try {
     const data: GetCommunityDataItem = yield axiosInstance.get(`/content/community_data/get/${id}`);
     yield put(setCommunityDataItem(data));
+  } catch (error: any) {
+    yield put(
+      notifyAction({
+        type: 'error',
+        message: error.response?.data.message,
+        showError: false,
+      }),
+    );
+  }
+}
+
+export function* getAppContentItemInfo({ params }: { params: { companyId: string, fieldName: string }, type: string }) {
+  try {
+    const data: GetAppContentItemInfo = yield axiosInstance.get(`/content/my_team_data/get/${params.companyId}`, {
+      params: {
+        fieldName: params.fieldName,
+      },
+    });
+    yield put(setAppContentItemInfo(data));
   } catch (error: any) {
     yield put(
       notifyAction({

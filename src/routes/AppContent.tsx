@@ -99,7 +99,7 @@ const AppContent = () => {
             data={initialData.kickOff}
             header={tableHeaders}
             tableTitle="Kickoff Content"
-            handleEdit={({ _id }) => console.log(_id)}
+            handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=kickOff`)}
             handlePageChange={(val) => kickOffHandlePageChange(val)}
           />
           <Table

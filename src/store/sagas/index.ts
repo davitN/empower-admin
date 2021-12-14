@@ -22,6 +22,7 @@ import {
   GET_APP_CONTENT_CATEGORIES,
   SAVE_COMMUNITY_DATA,
   GET_COMMUNITY_DATA_ITEM,
+  GET_APP_CONTENT_ITEM_INFO,
 } from '../ducks/appContentDuck';
 import {
   getAppContent,
@@ -31,6 +32,7 @@ import {
   getAppContentCategory,
   saveCommunityData,
   getCommunityDataItem,
+  getAppContentItemInfo,
 } from './appContentSaga';
 
 function* actionWatcher() {
@@ -54,6 +56,7 @@ function* actionWatcher() {
   yield takeLatest(GET_APP_CONTENT_CATEGORIES, getAppContentCategory);
   yield takeLatest(SAVE_COMMUNITY_DATA, saveCommunityData);
   yield takeLatest(GET_COMMUNITY_DATA_ITEM, getCommunityDataItem);
+  yield takeLatest(GET_APP_CONTENT_ITEM_INFO, getAppContentItemInfo);
 }
 
 export default function* rootSaga() {

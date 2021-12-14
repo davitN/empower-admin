@@ -1,12 +1,16 @@
 import { createUseStyles } from 'react-jss';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Title from '../shared/Title';
 import Label from '../shared/Inputs/Label';
 import RadioButtonComponent from '../shared/Inputs/RadioButton';
 import UploadButton from '../shared/UploadButton';
 import TextInput from '../shared/Inputs/TextInput';
 import Textarea from '../shared/Inputs/Textarea';
+import { getAppContentItemInfo } from '../../store/ducks/appContentDuck';
+import { RootState } from '../../store/configureStore';
+import { GetAppContentItemInfo } from '../../types/appContent';
 
 interface PropTypes {
   values: any,
@@ -20,14 +24,32 @@ interface PropTypes {
 const MonthlyActivity = ({
   values, setValues, types, uploadedFile, setUploadedFIle, contentType,
 }: PropTypes) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const { id, mode } = useParams();
+  const [searchParams] = useSearchParams();
+  const fieldName = searchParams.get('fieldName');
+  const type = fieldName && fieldName.split(/(?=[A-Z])/).map((el) => el.toUpperCase()).join('_');
+  const isEditing = mode === 'edit' && id;
+  const { appContentItemInfo } : { appContentItemInfo :GetAppContentItemInfo } = useSelector((state: RootState) => state.appContentReducer);
 
   useEffect(() => {
     if (mode === 'new' && id) {
       setValues({ ...values, companyId: id });
     }
+    if (mode === 'edit' && id) {
+      setValues({ ...values, type });
+    }
   }, [mode]);
+
+  useEffect(() => {
+    if (isEditing && id && fieldName) {
+      dispatch(getAppContentItemInfo({
+        companyId: id,
+        fieldName,
+      }));
+    }
+  }, [id, mode, searchParams]);
 
   return (
     <div className={classes.gridWrapper}>

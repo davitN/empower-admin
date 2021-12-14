@@ -210,11 +210,6 @@ const AppContentDetail = () => {
               hidden: !isEditing,
               disabled: saving,
             }}
-            image={{
-              url: communityDataItem?.image?.imgURL,
-              hideUpload: true,
-              loading: Boolean(isEditing && !communityDataItem),
-            }}
           />
         </div>
       </div>
