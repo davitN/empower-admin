@@ -34,6 +34,8 @@ import {
   getCommunityDataItem,
   getAppContentItemInfo,
 } from './appContentSaga';
+import { SET_PASSWORD } from '../ducks/setPasswordDuck';
+import { setPassword } from './setPasswordSaga';
 
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
@@ -57,6 +59,7 @@ function* actionWatcher() {
   yield takeLatest(SAVE_COMMUNITY_DATA, saveCommunityData);
   yield takeLatest(GET_COMMUNITY_DATA_ITEM, getCommunityDataItem);
   yield takeLatest(GET_APP_CONTENT_ITEM_INFO, getAppContentItemInfo);
+  yield takeLatest(SET_PASSWORD, setPassword);
 }
 
 export default function* rootSaga() {
