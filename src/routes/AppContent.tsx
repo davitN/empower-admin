@@ -117,7 +117,7 @@ const AppContent = () => {
             data={initialData.gratitude}
             header={tableHeaders}
             tableTitle="Gratitude Content"
-            handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=gratitudeContent`)}
+            handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=gratitude`)}
             handlePageChange={(val) => gratitudeHandlePageChange(val)}
           />
           <Table
