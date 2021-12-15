@@ -75,6 +75,7 @@ export default SetPassword;
 const useStyles = createUseStyles({
   root: {
     minWidth: '40rem',
+    placeSelf: 'center',
   },
   blue: {
     color: COLORS.lightBlue,
