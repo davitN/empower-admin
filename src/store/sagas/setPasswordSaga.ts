@@ -5,10 +5,10 @@ import axios from 'axios';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
 
-export function* setPassword({ data, callbacks }:{ data: { password: string, token: string }, callbacks: CallBacks, type:string }) {
+export function* setPassword({ data, callbacks }:{ data: { password: string, token: string, apiURL: string }, callbacks: CallBacks, type:string }) {
   try {
     yield axios.put(
-      'https://api-dev.empowerofyou.com/api/authorization/password_recover',
+      data.apiURL,
       { password: data.password },
       { headers: { Authorization: `Bearer ${data.token}` } },
     );

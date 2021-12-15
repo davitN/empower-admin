@@ -58,3 +58,14 @@ export function* saveAppUserDetails({ data, callbacks }:{ data: SaveAppUserDetai
     notificationService.error(error.response.data.message, '', 500);
   }
 }
+
+export function* sendResetPassword({ userId, callbacks }:{ userId: string, callbacks: CallBacks, type: string }) {
+  try {
+    yield axiosInstance.post(`/app_user/reset_password/${userId}`);
+    callbacks?.success && callbacks.success();
+    notificationService.success('Reset password link is sent successfully', '', 700);
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response.data.message, '', 500);
+  }
+}

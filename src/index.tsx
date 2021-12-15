@@ -14,7 +14,6 @@ import Companies from './routes/Companies';
 import CompanyDetails from './routes/CompanyDetails';
 import AppUsers from './routes/AppUsers';
 import UserDetails from './routes/UserDetails';
-import UserManagement from './routes/UserManagement';
 import Payments from './routes/Payments';
 import LocationDetails from './routes/LocationDetails';
 import AppContent from './routes/AppContent';
@@ -38,7 +37,6 @@ ReactDOM.render(
             <Route path="companies/:id" element={<CompanyDetails />} />
             <Route path="app-users" element={<AppUsers />} />
             <Route path="app-users/:id" element={<UserDetails />} />
-            <Route path="user-management" element={<UserManagement />} />
             <Route path="locations/:id" element={<LocationDetails />} />
             <Route path="app-content" element={<AppContent />} />
             <Route path="app-content/:itemName/:mode" element={<AppContentDetail />}>

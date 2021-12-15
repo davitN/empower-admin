@@ -4,13 +4,14 @@ import {
   InitialState, GetAppUsersData, GetAppUsersOptions, GetAppUserDetailsOptions, GetAppUserDetailsData, SaveAppUserDetails,
 } from '../../types/appUsers';
 
-export const GET_APP_USERS = 'socialize/locations/getAppUsers';
-export const SET_APP_USERS = 'socialize/locations/setAppUsers';
-export const RESET_APP_USERS_STATE = 'socialize/locations/resetAppUsers';
-export const GET_APP_USER_DETAILS = 'socialize/locations/getAppUserDetails';
-export const SET_APP_USER_DETAILS = 'socialize/locations/setAppUserDetails';
-export const RESET_APP_USER_DETAILS = 'socialize/locations/resetAppUserDetails';
-export const SAVE_APP_USER_DETAILS = 'socialize/locations/saveAppUserDetails';
+export const GET_APP_USERS = 'socialize/appUsers/getAppUsers';
+export const SET_APP_USERS = 'socialize/appUsers/setAppUsers';
+export const RESET_APP_USERS_STATE = 'socialize/appUsers/resetAppUsers';
+export const GET_APP_USER_DETAILS = 'socialize/appUsers/getAppUserDetails';
+export const SET_APP_USER_DETAILS = 'socialize/appUsers/setAppUserDetails';
+export const RESET_APP_USER_DETAILS = 'socialize/appUsers/resetAppUserDetails';
+export const SAVE_APP_USER_DETAILS = 'socialize/appUsers/saveAppUserDetails';
+export const SEND_RESET_PASSWORD = 'socialize/appUsers/sendResetPassword';
 
 const initialState: InitialState = {
   users: null,
@@ -78,5 +79,11 @@ export const resetAppUserDetails = () => ({
 export const saveAppUserDetails = (data: SaveAppUserDetails, callbacks?: CallBacks) => ({
   type: SAVE_APP_USER_DETAILS,
   data,
+  callbacks,
+});
+
+export const sendResetPassword = (userId: any, callbacks?: CallBacks) => ({
+  type: SEND_RESET_PASSWORD,
+  userId,
   callbacks,
 });

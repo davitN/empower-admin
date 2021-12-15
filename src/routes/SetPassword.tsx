@@ -10,6 +10,7 @@ import { setPassword } from '../store/ducks/setPasswordDuck';
 
 const SetPassword = () => {
   const [searchParams] = useSearchParams();
+  const apiURL = window.location.href.split('?')[0];
   const dispatch = useDispatch();
   const classes = useStyles();
   const [showError, setShowError] = useState<string>('');
@@ -23,7 +24,7 @@ const SetPassword = () => {
 
   const handleSend = () => {
     setSending(true);
-    dispatch(setPassword({ password: values.password, token }, {
+    dispatch(setPassword({ password: values.password, token, apiURL }, {
       error: (message: string) => {
         setSending(false);
         setShowError(message);

@@ -8,7 +8,9 @@ import Container from '../components/shared/Container';
 import TextInput from '../components/shared/Inputs/TextInput';
 import Button from '../components/shared/Inputs/Button';
 import COLORS from '../services/colors.service';
-import { getAppUserDetails, resetAppUserDetails, saveAppUserDetails } from '../store/ducks/appUsersDuck';
+import {
+  getAppUserDetails, resetAppUserDetails, saveAppUserDetails, sendResetPassword,
+} from '../store/ducks/appUsersDuck';
 import { RootState } from '../store/configureStore';
 import { GetAppUserDetailsData } from '../types/appUsers';
 import Select from '../components/shared/Inputs/Select';
@@ -36,6 +38,7 @@ const UserDetails = () => {
   const classes = useStyles();
   const { state: locationState } = useLocation();
   const [loading, setLoading] = useState(false);
+  const [sending, setSending] = useState(false);
   const dispatch = useDispatch();
   const { userDetails }: { userDetails: GetAppUserDetailsData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const [values, setValues] = useState<ValuesTypes>(initialState);
@@ -43,6 +46,11 @@ const UserDetails = () => {
 
   const validateInputs = () => (values.firstName.length < 1 || values.lastName.length < 1
     || values.phone.length < 1 || !values.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/));
+
+  const handleReset = () => {
+    setSending(true);
+    dispatch(sendResetPassword(userId, { error: () => setSending(false), success: () => setSending(false) }));
+  };
 
   const handleSave = () => {
     setLoading(true);
@@ -104,7 +112,7 @@ const UserDetails = () => {
   }, [locationState]);
 
   return (
-    <Container sectionTitle="New User" idText="User ID" itemId={userId}>
+    <Container sectionTitle={isNewUser ? 'New User' : 'Edit User'} idText="User ID" itemId={userId}>
       <div className={classes.wrapper}>
         <div className={classNames(classes.inputs)}>
           {!isNewUser && !userDetails ? (
@@ -164,6 +172,9 @@ const UserDetails = () => {
             bgColor={COLORS.lightBlue}
             textColor={COLORS.white}
             customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
+            handleClick={handleReset}
+            loading={sending}
+            disabled={sending}
           >
             Send reset password link
           </Button>
