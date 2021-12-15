@@ -108,7 +108,7 @@ const AppContent = () => {
             data={initialData.ethos}
             header={tableHeaders}
             tableTitle="Ethos Content"
-            handleEdit={({ _id }) => navigate(_id)}
+            handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=ethos`)}
             handlePageChange={(val) => ethosHandlePageChange(val)}
           />
           <Table
@@ -117,7 +117,7 @@ const AppContent = () => {
             data={initialData.gratitude}
             header={tableHeaders}
             tableTitle="Gratitude Content"
-            handleEdit={({ _id }) => navigate(_id)}
+            handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=gratitudeContent`)}
             handlePageChange={(val) => gratitudeHandlePageChange(val)}
           />
           <Table
@@ -126,7 +126,7 @@ const AppContent = () => {
             data={initialData.powerUp}
             header={tableHeaders}
             tableTitle="Power-Up Content"
-            handleEdit={({ _id }) => navigate(_id)}
+            handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=powerUp`)}
             handlePageChange={(val) => powerUpHandlePageChange(val)}
           />
           <Table
@@ -135,7 +135,7 @@ const AppContent = () => {
             data={initialData.powerDown}
             header={tableHeaders}
             tableTitle="Power-Down Content"
-            handleEdit={({ _id }) => navigate(_id)}
+            handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=powerDown`)}
             handlePageChange={(val) => powerDownHandlePageChange(val)}
           />
           <Title title="COMMUNITY CONTENT" fontSize="text-2xl" costumeStyles="p-mb-6" />

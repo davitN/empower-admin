@@ -94,9 +94,13 @@ export function* saveAppContentItem({ data, callbacks }:{ data: any, callbacks: 
     const formData = new FormData();
     data.file && formData.append('content', data.file);
     formData.append('data', JSON.stringify(data.data));
-    yield axiosInstance.post('/content/my_team_data/add_content', formData);
+    if (data.companyId) {
+      yield axiosInstance.put(`/content/my_team_data/edit/${data.companyId}`, formData);
+    } else {
+      yield axiosInstance.post('/content/my_team_data/add_content', formData);
+    }
     callbacks?.success && callbacks.success();
-    notificationService.success('Item has been successfully added', '', 500);
+    notificationService.success(data?.companyId ? 'Item has been successfully updated' : 'Item has been successfully added', '', 500);
   } catch (error: any) {
     callbacks?.error && callbacks.error();
     notificationService.error(error.response.data.message, '', 500);

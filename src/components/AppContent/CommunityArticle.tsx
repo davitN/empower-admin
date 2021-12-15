@@ -65,7 +65,7 @@ const CommunityArticle = ({
             title: communityDataItem.title,
             category: communityDataItem.category,
             description: communityDataItem.description,
-            URL: communityDataItem.description,
+            URL: communityDataItem.URL,
           },
         });
       }

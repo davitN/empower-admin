@@ -26,30 +26,44 @@ const MonthlyActivity = ({
 }: PropTypes) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { id, mode } = useParams();
+  const { id: companyId, mode } = useParams();
   const [searchParams] = useSearchParams();
   const fieldName = searchParams.get('fieldName');
   const type = fieldName && fieldName.split(/(?=[A-Z])/).map((el) => el.toUpperCase()).join('_');
-  const isEditing = mode === 'edit' && id;
+  const isEditing = mode === 'edit' && companyId;
   const { appContentItemInfo } : { appContentItemInfo :GetAppContentItemInfo } = useSelector((state: RootState) => state.appContentReducer);
 
   useEffect(() => {
-    if (mode === 'new' && id) {
-      setValues({ ...values, companyId: id });
+    if (!isEditing) {
+      setValues({ ...values, companyId });
     }
-    if (mode === 'edit' && id) {
+    if (isEditing) {
       setValues({ ...values, type });
     }
   }, [mode]);
 
   useEffect(() => {
-    if (isEditing && id && fieldName) {
+    if (isEditing && companyId && fieldName) {
       dispatch(getAppContentItemInfo({
-        companyId: id,
+        companyId,
         fieldName,
       }));
     }
-  }, [id, mode, searchParams]);
+  }, [companyId, mode, searchParams]);
+
+  useEffect(() => {
+    if (appContentItemInfo) {
+      setValues({
+        ...values,
+        type,
+        contentType: appContentItemInfo.type,
+        title: appContentItemInfo.title,
+        subTitle: appContentItemInfo.subTitle,
+        description: appContentItemInfo?.description || '',
+        companyId,
+      });
+    }
+  }, [appContentItemInfo]);
 
   return (
     <div className={classes.gridWrapper}>
@@ -67,6 +81,7 @@ const MonthlyActivity = ({
                   onChange={() => setValues({ ...values, type: value, contentType: value === 'KICK_OFF' ? 'AUDIO' : values.contentType })}
                   costumeClasses="p-mr-3"
                   key={label}
+                  disabled={!!isEditing}
                 />
               ))}
             </div>
@@ -83,6 +98,7 @@ const MonthlyActivity = ({
                   onChange={() => setValues({ ...values, contentType: value })}
                   costumeClasses="p-mr-3"
                   key={label}
+                  disabled={!!isEditing}
                 />
               ))}
             </div>

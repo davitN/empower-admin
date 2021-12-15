@@ -23,7 +23,8 @@ interface PropsTypes {
     loading?: boolean,
     requiredImg?: boolean,
     disableUpload?: boolean,
-    hideUpload?:boolean
+    hideUpload?:boolean,
+    hidden?: boolean
   },
   save: {
     label?: string,
@@ -56,18 +57,20 @@ const FormsSharedComponent = ({
     <>
       {title && <Label label={title} costumeStyles="text-3xl" required={image?.requiredImg} />}
       {image && (
-      <div className="p-d-flex p-ai-end p-flex-column">
-        {!image?.hideUpload && <UploadButton disabled={image?.disableUpload} handleUpload={image?.handleUpload} fileType="image/png, image/gif, image/jpeg" />}
-        { image?.loading ? <Skeleton className={classes.uploadImg} />
-          : (
-            <ImgPreview
-              url={image.url}
-              handleRemove={image?.handleRemove || undefined}
-              costumeClasses={classes.uploadImg}
-            />
-          )}
-        {image?.description && <p className={classes.infoText}>{image.description}</p>}
-      </div>
+        !image.hidden && (
+        <div className="p-d-flex p-ai-end p-flex-column">
+          {!image?.hideUpload && <UploadButton disabled={image?.disableUpload} handleUpload={image?.handleUpload} fileType="image/png, image/gif, image/jpeg" />}
+          { image?.loading ? <Skeleton className={classes.uploadImg} />
+            : (
+              <ImgPreview
+                url={image.url}
+                handleRemove={image?.handleRemove || undefined}
+                costumeClasses={classes.uploadImg}
+              />
+            )}
+          {image?.description && <p className={classes.infoText}>{image.description}</p>}
+        </div>
+        )
       )}
 
       {save && (

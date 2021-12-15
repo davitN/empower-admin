@@ -1,14 +1,12 @@
 import { createUseStyles } from 'react-jss';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import Container from '../components/shared/Container';
 import MonthlyActivity from '../components/AppContent/MonthlyActivity';
 import {
   MonthlyActivityTypes, MonthlyActivityContentType, CommunityArticleType, GetCommunityDataItem,
 } from '../types/appContent';
-import COLORS from '../services/colors.service';
-import Button from '../components/shared/Inputs/Button';
 import { saveAppContentItem, getAppContentCategory, saveCommunityData } from '../store/ducks/appContentDuck';
 import CommunityArticle from '../components/AppContent/CommunityArticle';
 import { RootState } from '../store/configureStore';
@@ -91,6 +89,7 @@ const AppContentDetail = () => {
   const classes = useStyles();
   const { communityDataItem } : { communityDataItem: GetCommunityDataItem } = useSelector((state: RootState) => state.appContentReducer);
   const { itemName, mode, id } = useParams();
+  const [searchParams] = useSearchParams();
   const [saving, setSaving] = useState(false);
   const [monthlyActivityValues, setMonthlyActivityValues] = useState<MonthlyActivityValueTypes>({
     type: 'KICK_OFF',
@@ -144,8 +143,12 @@ const AppContentDetail = () => {
     } else {
       dispatch(saveAppContentItem(
         {
-          data: monthlyActivityValues,
+          data: {
+            ...monthlyActivityValues,
+            type: isEditing ? searchParams.get('fieldName') : monthlyActivityValues.type,
+          },
           file: uploadedFile,
+          companyId: id,
         },
         { success: () => setSaving(false), error: () => setSaving(false) },
       ));
@@ -154,7 +157,7 @@ const AppContentDetail = () => {
 
   const validateInputs = () => {
     if (itemName !== 'community-article') {
-      return (!monthlyActivityValues.title || !monthlyActivityValues.subTitle || !monthlyActivityValues.description || !uploadedFile);
+      return (!monthlyActivityValues.title || !monthlyActivityValues.subTitle || !monthlyActivityValues.description || (!isEditing && !uploadedFile));
     }
     if (communityArticleValues.type === 'WRITTEN') {
       return (!communityArticleValues.written.title || !communityArticleValues.written.subTitle
@@ -209,6 +212,12 @@ const AppContentDetail = () => {
               label: 'Delete Content',
               hidden: !isEditing,
               disabled: saving,
+            }}
+            image={{
+              url: communityDataItem?.image?.imgURL,
+              hidden: !isEditing || itemName !== 'community-article',
+              loading: Boolean(isEditing && !communityDataItem),
+              hideUpload: true,
             }}
           />
         </div>
