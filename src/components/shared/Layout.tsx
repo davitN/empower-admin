@@ -12,7 +12,7 @@ function Layout() {
   const classes = useStyles();
   const { isSignedIn } = useSelector((state: RootState) => state.mainReducer);
   const { pathname } = useLocation();
-  const showPasswordSetForm = pathname.includes('set-password') || pathname.includes('reset_password');
+  const showPasswordSetForm = pathname.includes('set_password');
   return (
     <div className={classes.container}>
       {showPasswordSetForm ? <SetPassword /> : (

@@ -4,11 +4,12 @@ import { put } from 'redux-saga/effects';
 import axios from 'axios';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
+import { backendUrl } from '../../services/credentials.service';
 
-export function* setPassword({ data, callbacks }:{ data: { password: string, token: string, apiURL: string }, callbacks: CallBacks, type:string }) {
+export function* setPassword({ data, callbacks }:{ data: { password: string, token: string, type: string }, callbacks: CallBacks, type:string }) {
   try {
     yield axios.put(
-      data.apiURL,
+      data?.type === 'appUser' ? `${backendUrl.replace('admin/', '')}api/authorization/set_password` : `${backendUrl}admin/set_password`,
       { password: data.password },
       { headers: { Authorization: `Bearer ${data.token}` } },
     );
