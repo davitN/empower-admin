@@ -117,7 +117,6 @@ const AppContentDetail = () => {
   });
   const isEditing = mode === 'edit' && id;
   const [uploadedFile, setUploadedFIle] = useState<any>(null);
-
   const handleSave = () => {
     setSaving(true);
     if (itemName === 'community-article') {
@@ -148,7 +147,7 @@ const AppContentDetail = () => {
             type: isEditing ? searchParams.get('fieldName') : monthlyActivityValues.type,
           },
           file: uploadedFile,
-          companyId: id,
+          companyId: isEditing && id,
         },
         { success: () => setSaving(false), error: () => setSaving(false) },
       ));

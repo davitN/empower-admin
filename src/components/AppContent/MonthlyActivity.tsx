@@ -2,6 +2,7 @@ import { createUseStyles } from 'react-jss';
 import { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Skeleton } from 'primereact/skeleton';
 import Title from '../shared/Title';
 import Label from '../shared/Inputs/Label';
 import RadioButtonComponent from '../shared/Inputs/RadioButton';
@@ -70,51 +71,55 @@ const MonthlyActivity = ({
       <div>
         <Title title="Monthly Team Activity Details" fontSize="text-2xl" costumeStyles="p-mb-5" />
         <div className={classes.gridInputsWrapper}>
-          <div className="p-d-flex p-flex-column">
-            <Label label="Monthly Team Activity" costumeStyles="p-mb-3" />
-            <div className="p-d-flex">
-              {types.map(({ label, value }) => (
-                <RadioButtonComponent
-                  label={label}
-                  value={value}
-                  checked={values.type === value}
-                  onChange={() => setValues({ ...values, type: value, contentType: value === 'KICK_OFF' ? 'AUDIO' : values.contentType })}
-                  costumeClasses="p-mr-3"
-                  key={label}
-                  disabled={!!isEditing}
+          {isEditing && !appContentItemInfo ? new Array(10).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" />) : (
+            <>
+              <div className="p-d-flex p-flex-column">
+                <Label label="Monthly Team Activity" costumeStyles="p-mb-3" />
+                <div className="p-d-flex">
+                  {types.map(({ label, value }) => (
+                    <RadioButtonComponent
+                      label={label}
+                      value={value}
+                      checked={values.type === value}
+                      onChange={() => setValues({ ...values, type: value, contentType: value === 'KICK_OFF' ? 'AUDIO' : values.contentType })}
+                      costumeClasses="p-mr-3"
+                      key={label}
+                      disabled={!!isEditing}
+                    />
+                  ))}
+                </div>
+              </div>
+              {values.type !== 'KICK_OFF' && (
+              <div className="p-d-flex p-flex-column">
+                <Label label="Content Type" costumeStyles="p-mb-2" />
+                <div className="p-d-flex">
+                  {contentType.map(({ label, value }) => (
+                    <RadioButtonComponent
+                      label={label}
+                      value={value}
+                      checked={values.contentType === value}
+                      onChange={() => setValues({ ...values, contentType: value })}
+                      costumeClasses="p-mr-3"
+                      key={label}
+                      disabled={!!isEditing}
+                    />
+                  ))}
+                </div>
+              </div>
+              )}
+              <div className={classes.gridInputsWrapper}>
+                <Title title={`${values.contentType === 'VIDEO' ? 'Video' : 'Audio'} Details`} fontSize="text-2xl" costumeStyles="p-mb-0" />
+                <TextInput label="Title" required value={values.title} handleChange={(title) => setValues({ ...values, title })} />
+                <TextInput label="Subtitle" required value={values.subTitle} handleChange={(subTitle) => setValues({ ...values, subTitle })} />
+                <Textarea label="Description" value={values.description} required handleChange={(description) => setValues({ ...values, description })} />
+                <UploadButton
+                  fileType={values.contentType === 'VIDEO' ? '.mp4' : '.mp3'}
+                  uploadedFile={uploadedFile}
+                  handleUpload={(val: any) => setUploadedFIle(val)}
                 />
-              ))}
-            </div>
-          </div>
-          {values.type !== 'KICK_OFF' && (
-          <div className="p-d-flex p-flex-column">
-            <Label label="Content Type" costumeStyles="p-mb-2" />
-            <div className="p-d-flex">
-              {contentType.map(({ label, value }) => (
-                <RadioButtonComponent
-                  label={label}
-                  value={value}
-                  checked={values.contentType === value}
-                  onChange={() => setValues({ ...values, contentType: value })}
-                  costumeClasses="p-mr-3"
-                  key={label}
-                  disabled={!!isEditing}
-                />
-              ))}
-            </div>
-          </div>
+              </div>
+            </>
           )}
-          <div className={classes.gridInputsWrapper}>
-            <Title title={`${values.contentType === 'VIDEO' ? 'Video' : 'Audio'} Details`} fontSize="text-2xl" costumeStyles="p-mb-0" />
-            <TextInput label="Title" required value={values.title} handleChange={(title) => setValues({ ...values, title })} />
-            <TextInput label="Subtitle" required value={values.subTitle} handleChange={(subTitle) => setValues({ ...values, subTitle })} />
-            <Textarea label="Description" value={values.description} required handleChange={(description) => setValues({ ...values, description })} />
-            <UploadButton
-              fileType={values.contentType === 'VIDEO' ? '.mp4' : '.mp3'}
-              uploadedFile={uploadedFile}
-              handleUpload={(val: any) => setUploadedFIle(val)}
-            />
-          </div>
         </div>
 
       </div>
