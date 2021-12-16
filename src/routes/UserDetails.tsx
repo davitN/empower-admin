@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import {
+  useParams, useNavigate, useSearchParams,
+} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'primereact/skeleton';
@@ -35,14 +37,18 @@ interface ValuesTypes {
 const UserDetails = () => {
   const { id: userId } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const classes = useStyles();
-  const { state: locationState } = useLocation();
   const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState(false);
   const dispatch = useDispatch();
   const { userDetails }: { userDetails: GetAppUserDetailsData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const [values, setValues] = useState<ValuesTypes>(initialState);
   const isNewUser = userId === 'new';
+  const newUserCompanyName = searchParams.get('companyName')?.replace('_', ' ');
+  const newUserCompanyId = searchParams.get('companyId');
+  const newUserLocationName = searchParams.get('locationName')?.replace('_', ' ');
+  const newUserLocationId = searchParams.get('locationName');
 
   const validateInputs = () => (values.firstName.length < 1 || values.lastName.length < 1
     || values.phone.length < 1 || !values.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/));
@@ -63,20 +69,20 @@ const UserDetails = () => {
         error: () => setLoading(false),
         success: () => {
           setLoading(false);
-          isNewUser && navigate(`/locations/${locationState?.location['_id']}`);
+          isNewUser && navigate(`/locations/${newUserLocationId}`);
         },
       },
     ));
   };
 
   const selectedCompany = {
-    name: isNewUser ? locationState?.company?.name : userDetails?.companyId?.name,
-    label: isNewUser ? locationState?.company?.name : userDetails?.companyId?.name,
+    name: isNewUser ? newUserCompanyName || '' : userDetails?.companyId?.name,
+    label: isNewUser ? newUserCompanyName || '' : userDetails?.companyId?.name,
   };
 
   const selectedLocation = {
-    name: isNewUser ? locationState?.location?.name : userDetails?.companyId?.name,
-    label: isNewUser ? locationState?.location?.name : userDetails?.location?.name,
+    name: isNewUser ? newUserLocationName || '' : userDetails?.companyId?.name,
+    label: isNewUser ? newUserLocationName || '' : userDetails?.location?.name,
   };
 
   useEffect(() => {
@@ -104,12 +110,12 @@ const UserDetails = () => {
 
   // if user is new check, location and company details exist in router state
   useEffect(() => {
-    if ((!locationState?.company || !locationState?.location) && isNewUser) {
+    if ((!newUserCompanyName || !newUserCompanyId || !newUserLocationName || !newUserLocationId) && isNewUser) {
       navigate('/companies');
     } else {
-      setValues({ ...values, locationId: locationState?.location['_id'] });
+      setValues({ ...values, locationId: newUserLocationId });
     }
-  }, [locationState]);
+  }, [searchParams]);
 
   return (
     <Container sectionTitle={isNewUser ? 'New User' : 'Edit User'} idText="User ID" itemId={userId}>

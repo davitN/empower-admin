@@ -218,10 +218,7 @@ const LocationDetails = () => {
         handleEdit={({ _id }) => navigate(`/app-users/${_id}`)}
         handlePageChange={(val) => handlePageChange(val)}
         handleAdd={() => navigate(
-          '/app-users/new',
-          {
-            state: { location: { name: locationDetails.name, _id: locationDetails['_id'] }, company: locationDetails.company },
-          },
+          `/app-users/new/?companyName=${locationDetails?.company.name.replace(' ', '_')}&companyId=${locationDetails?.company['_id']}&locationName=${locationDetails?.name.replace(' ', '_')}&locationId=${locationDetails['_id']}`,
         )}
         buttonText="+ Add user"
       />
