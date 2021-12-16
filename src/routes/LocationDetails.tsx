@@ -73,6 +73,8 @@ const LocationDetails = () => {
   const [values, setValues] = useState<ValuesTypes>(initialState);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [img, setImg] = useState<ImgTypes>(imgInitialStateImg);
+  const domainName = window.location.href.replace(window.location.pathname, '');
+  const paymentURL = locationDetails && `${domainName}/payments/?companyId=${locationDetails?.company['_id']}&companyName=${values.name}`;
 
   const validateInputs = () : boolean => values.name.length < 1;
 
@@ -162,6 +164,12 @@ const LocationDetails = () => {
                 label="Company"
                 placeholder="Enter company name..."
                 disabled
+              />
+              <TextInput
+                value={paymentURL}
+                label="Individual Location Payment Page "
+                desc="This is the page where individual locations can go to play for access to the app"
+                readOnly
               />
             </>
           )}

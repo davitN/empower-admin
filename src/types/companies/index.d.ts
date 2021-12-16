@@ -43,7 +43,6 @@ export type GetCompanyDetailsTypes = string;
 
 export interface SaveDataTypes {
   data: {
-    individualLocationPaymentPage: string
     price: number | null
     showTeamSection: boolean,
     name: string,

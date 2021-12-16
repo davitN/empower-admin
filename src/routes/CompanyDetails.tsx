@@ -26,7 +26,6 @@ interface InputsTypes {
   name: string,
   paymentType: string,
   price: number | null,
-  individualLocationPaymentPage: string,
   showTeamSection: boolean,
   code: null | string,
   logo?: any,
@@ -72,7 +71,6 @@ const CompanyDetails = () => {
     name: '',
     paymentType: paymentType.all,
     price: null,
-    individualLocationPaymentPage: '',
     showTeamSection: true,
     code: null,
   });
@@ -114,6 +112,9 @@ const CompanyDetails = () => {
 
   const validateInputs = () : boolean => values.name.length < 1 || (values.paymentType === paymentType.all && !values.price) || !img.imgPrev;
 
+  const domainName = window.location.href.replace(window.location.pathname, '');
+  const paymentURL = `${domainName}/payments/?companyId=${companyId}&companyName=${values.name}`;
+
   useEffect(() => {
     if (companyId !== 'new' && typeof companyId === 'string') {
       dispatch(getCompanyDetails(companyId, { error: () => navigate('/companies/new') }));
@@ -126,7 +127,6 @@ const CompanyDetails = () => {
         name: companyDetails.name,
         paymentType: companyDetails.paymentType,
         price: companyDetails.price,
-        individualLocationPaymentPage: companyDetails.individualLocationPaymentPage,
         showTeamSection: companyDetails.showTeamSection,
         code: companyDetails.code,
       });
@@ -184,16 +184,15 @@ const CompanyDetails = () => {
                 required
                 type="number"
               />
-              {!isNewCompany && (
+              {!isNewCompany && values.paymentType === paymentType.all && (
               <TextInput
-                value={values.individualLocationPaymentPage}
+                value={paymentURL}
                 handleClick={(e) => {
                   notificationService.info('Link Copied', '', 1000);
                   navigator.clipboard.writeText(e.target.value);
                 }}
-                label={`${values.paymentType === paymentType.individual ? 'Individual Location' : ''} Payment Page`}
+                label="Payment Page"
                 placeholder="Enter payment page..."
-                desc="This is the page where individual locations can go to play for access to the app"
                 readOnly
               />
               )}
@@ -253,7 +252,7 @@ const CompanyDetails = () => {
         data={locations}
         header={locationsHeader}
         tableTitle="LOCATIONS"
-        handleEdit={({ _id }) => navigate(`/locations/${_id}`, { state: { companyId, companyName: companyDetails.name } })}
+        handleEdit={({ _id }) => navigate(`/locations/${_id}/?companyId=${companyId}&companyName=${companyDetails.name}`, { state: { companyId, companyName: companyDetails.name } })}
         handlePageChange={(val) => locationsHandlePageChange(val)}
         handleAdd={() => navigate('/locations/new', { state: { companyId, companyName: companyDetails.name } })}
         buttonText="+ Add location"
