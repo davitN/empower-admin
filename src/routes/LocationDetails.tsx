@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import {
+  useParams, useNavigate, useSearchParams,
+} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'primereact/skeleton';
 import Container from '../components/shared/Container';
@@ -52,11 +54,13 @@ const imgInitialStateImg = {
 const LocationDetails = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const [searchParams] = useSearchParams();
   const { locationDetails }: { locationDetails: LocationItem } = useSelector((state: RootState) => state.locationsReducer);
   const { users }: { users: GetAppUsersData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { id: locationId } = useParams();
-  const { state } = useLocation();
   const isNewLocation = locationId === 'new';
+  const newLocationCompanyName = isNewLocation && searchParams.get('companyName')?.replace('_', ' ');
+  const newLocationCompanyId = isNewLocation && searchParams.get('companyId');
   const {
     searchValue, handleSearch, handlePageChange,
   } = useGetData({
@@ -64,7 +68,7 @@ const LocationDetails = () => {
     getDataAction: isNewLocation ? undefined : getAppUsers,
     resetState: isNewLocation ? undefined : resetAppUsersState,
     costumeParams: {
-      companyId: state?.companyId,
+      companyId: newLocationCompanyId || locationDetails?.company['_id'],
       locationId,
     },
   });
@@ -107,7 +111,7 @@ const LocationDetails = () => {
     }, {
       success: () => {
         setSaving(false);
-        isNewLocation && navigate(`/companies/${state?.companyId}`);
+        isNewLocation && navigate(`/companies/${newLocationCompanyId}`);
       },
       error: () => {
         setSaving(false);
@@ -118,15 +122,15 @@ const LocationDetails = () => {
   useEffect(() => {
     if (isNewLocation) {
       // if new location, check if exist company name in router state and set company name otherwise redirect to companies page
-      if (!state?.companyName && !state?.companyId) {
+      if (!newLocationCompanyName || !newLocationCompanyId) {
         navigate('/companies');
       } else {
-        setValues({ ...values, company: state?.companyName, companyId: state?.companyId });
+        setValues({ ...values, company: newLocationCompanyName, companyId: newLocationCompanyId });
       }
     } else {
       locationId && dispatch(getLocationDetails(locationId, { error: () => navigate('/companies') }));
     }
-  }, [state, isNewLocation]);
+  }, [searchParams, isNewLocation]);
 
   useEffect(() => {
     if (locationDetails) {

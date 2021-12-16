@@ -252,9 +252,9 @@ const CompanyDetails = () => {
         data={locations}
         header={locationsHeader}
         tableTitle="LOCATIONS"
-        handleEdit={({ _id }) => navigate(`/locations/${_id}/?companyId=${companyId}&companyName=${companyDetails.name}`, { state: { companyId, companyName: companyDetails.name } })}
+        handleEdit={({ _id }) => navigate(`/locations/${_id}`)}
         handlePageChange={(val) => locationsHandlePageChange(val)}
-        handleAdd={() => navigate('/locations/new', { state: { companyId, companyName: companyDetails.name } })}
+        handleAdd={() => navigate(`/locations/new/?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)}
         buttonText="+ Add location"
         costumeClasses={classes.tablePadding}
       />
