@@ -17,6 +17,7 @@ import useGetData from '../helpers/hooks/useGetData';
 import Table from '../components/shared/Table';
 import { getAppUsers, resetAppUsersState } from '../store/ducks/appUsersDuck';
 import { GetAppUsersData } from '../types/appUsers';
+import notificationService from '../services/notification.service';
 
 interface ValuesTypes {
   name: string,
@@ -174,6 +175,10 @@ const LocationDetails = () => {
                 label="Individual Location Payment Page "
                 desc="This is the page where individual locations can go to play for access to the app"
                 readOnly
+                handleClick={(e) => {
+                  notificationService.info('Link Copied', '', 1000);
+                  navigator.clipboard.writeText(e.target.value);
+                }}
               />
             </>
           )}
