@@ -108,7 +108,7 @@ const UserDetails = () => {
   // @ts-ignore
   useEffect(() => () => dispatch(resetAppUserDetails()), []);
 
-  // if user is new check, location and company details exist in router state
+  // if user is new check, location and company details exist in query params
   useEffect(() => {
     if ((!newUserCompanyName || !newUserCompanyId || !newUserLocationName || !newUserLocationId) && isNewUser) {
       navigate('/companies');
