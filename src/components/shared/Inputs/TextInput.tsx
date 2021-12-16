@@ -15,7 +15,7 @@ interface PropsTypes {
   required?: boolean,
   desc?: string,
   disabled?: boolean,
-  handleClick?: () => void,
+  handleClick?: (e : any) => void,
   readOnly?: boolean
 }
 
