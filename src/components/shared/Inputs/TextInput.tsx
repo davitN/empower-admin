@@ -14,11 +14,13 @@ interface PropsTypes {
   icon?: ReactNode
   required?: boolean,
   desc?: string,
-  disabled?: boolean
+  disabled?: boolean,
+  handleClick?: () => void,
+  readOnly?: boolean
 }
 
 const TextInput: FC<PropsTypes> = ({
-  value, handleChange, label, placeholder, type = 'text', customClasses, icon, required, desc, disabled,
+  value, handleChange, label, placeholder, type = 'text', customClasses, icon, required, desc, disabled, handleClick, readOnly,
 }) => {
   const classes = useStyles();
 
@@ -35,11 +37,13 @@ const TextInput: FC<PropsTypes> = ({
       <InputText
         id="label"
         disabled={disabled}
+        readOnly={readOnly}
         value={value || ''}
         placeholder={placeholder}
         onChange={({ target }) => handleChange && handleChange(target.value)}
         type={type}
         className={classes.root}
+        onClick={handleClick || undefined}
       />
     </span>
   );

@@ -20,6 +20,7 @@ import readImgAsync from '../helpers/utils/readImgAsync';
 import Container from '../components/shared/Container';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 import { getLocations, resetLocationsState } from '../store/ducks/locationsDuck';
+import notificationService from '../services/notification.service';
 
 interface InputsTypes {
   name: string,
@@ -186,10 +187,14 @@ const CompanyDetails = () => {
               {!isNewCompany && (
               <TextInput
                 value={values.individualLocationPaymentPage}
+                handleClick={(e) => {
+                  notificationService.info('Link Copied', '', 1000);
+                  navigator.clipboard.writeText(e.target.value);
+                }}
                 label={`${values.paymentType === paymentType.individual ? 'Individual Location' : ''} Payment Page`}
                 placeholder="Enter payment page..."
                 desc="This is the page where individual locations can go to play for access to the app"
-                disabled
+                readOnly
               />
               )}
               <div className="p-d-flex p-flex-column">
