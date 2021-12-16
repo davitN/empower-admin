@@ -60,7 +60,7 @@ const LocationDetails = () => {
   const { users }: { users: GetAppUsersData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { id: locationId } = useParams();
   const isNewLocation = locationId === 'new';
-  const newLocationCompanyName = isNewLocation && searchParams.get('companyName')?.replace('_', ' ');
+  const newLocationCompanyName = isNewLocation && searchParams.get('companyName')?.replace('_', '  ');
   const newLocationCompanyId = isNewLocation && searchParams.get('companyId');
   const {
     searchValue, handleSearch, handlePageChange,
