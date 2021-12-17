@@ -21,3 +21,9 @@ export interface CallBacks {
   success?: Function;
   error?: Function;
 }
+
+export interface GetDataParams {
+  limit: number,
+  offset: number,
+  searchWord?: string
+}

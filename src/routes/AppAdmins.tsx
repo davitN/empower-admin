@@ -1,66 +1,64 @@
-import { createUseStyles } from 'react-jss';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Table from '../components/shared/Table';
-import COLORS from '../services/colors.service';
 import useGetData from '../helpers/hooks/useGetData';
+import { getAppAdmins, resetAppAdminsState } from '../store/ducks/appAdminsDuck';
+import { RootState } from '../store/configureStore';
+import Container from '../components/shared/Container';
 
 const LIMIT = 8;
 
-const AppUsers = () => {
-  const classes = useStyles();
+const AppAdmins = () => {
   const navigate = useNavigate();
+  const { admins } = useSelector((state: RootState) => state.appAdminsReducer);
   const {
     searchValue, handleSearch, handlePageChange,
   } = useGetData({
+    getDataAction: getAppAdmins,
+    resetState: resetAppAdminsState,
     LIMIT,
     resetOnUnmount: true,
   });
 
   return (
-    <div className={classes.root}>
+    <Container sectionTitle="APP ADMINS LIST">
       <Table
         searchValue={searchValue || ''}
         handleSearch={(val) => handleSearch(val)}
-        data={{ data: [], count: 0 }}
+        data={admins}
         header={tableHeaders}
-        tableTitle="USERS"
+        tableTitle="ADMINS"
         handleEdit={({ _id }) => navigate(_id)}
         LIMIT={LIMIT}
         handlePageChange={(val) => handlePageChange(val)}
         handleAdd={() => navigate('new')}
-        buttonText="+ Add user"
+        buttonText="+ Add admin"
       />
-    </div>
+    </Container>
   );
 };
 
-export default AppUsers;
+export default AppAdmins;
 
 const tableHeaders = [
   {
     name: 'FIRST NAME',
-    field: 'name',
+    field: 'firstName',
   },
   {
     name: 'LAST NAME',
-    field: 'code',
+    field: 'lastName',
   },
   {
     name: 'EMAIL',
-    field: 'locationCount',
+    field: 'email',
   },
   {
     name: 'PHONE',
-    field: 'userCount',
+    field: 'phone',
+  },
+  {
+    name: 'ROLE',
+    field: 'role.name',
   },
 ];
-
-const useStyles = createUseStyles({
-  root: {
-    color: COLORS.blueWood,
-    width: '100%',
-    padding: '4rem 5rem 2rem',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-});

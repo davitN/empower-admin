@@ -71,6 +71,10 @@ const routes: Array<{ title: string, path: string }> = [
     path: '/app-users',
   },
   {
+    title: 'App Admins',
+    path: '/app-admins',
+  },
+  {
     title: 'App Content',
     path: '/app-content',
   },

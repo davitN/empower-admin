@@ -18,6 +18,7 @@ import Payments from './routes/Payments';
 import LocationDetails from './routes/LocationDetails';
 import AppContent from './routes/AppContent';
 import AppContentDetail from './routes/AppContentDetail';
+import AppAdmins from './routes/AppAdmins';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -40,6 +41,7 @@ ReactDOM.render(
             <Route path="app-content/:itemName/:mode" element={<AppContentDetail />}>
               <Route path=":id" element={<AppContentDetail />} />
             </Route>
+            <Route path="app-admins" element={<AppAdmins />} />
             <Route
               path="*"
               element={(
