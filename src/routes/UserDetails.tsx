@@ -174,6 +174,7 @@ const UserDetails = () => {
           )}
         </div>
         <div className={classes.justifyEnd}>
+          {!isNewUser && (
           <Button
             bgColor={COLORS.lightBlue}
             textColor={COLORS.white}
@@ -184,6 +185,7 @@ const UserDetails = () => {
           >
             Send reset password link
           </Button>
+          )}
           <Button
             bgColor={COLORS.lightBlue}
             textColor={COLORS.white}
