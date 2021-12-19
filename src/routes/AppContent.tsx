@@ -32,7 +32,7 @@ const AppContent = () => {
     getDataAction: getAppContentItem,
     resetState: () => resetAppContentItem('kickOff'),
     fetchOnMount: false,
-    costumeParams: {
+    customParams: {
       fieldName: 'kickOff',
     },
   });
@@ -43,7 +43,7 @@ const AppContent = () => {
     getDataAction: getAppContentItem,
     resetState: () => resetAppContentItem('ethos'),
     fetchOnMount: false,
-    costumeParams: {
+    customParams: {
       fieldName: 'ethos',
     },
   });
@@ -54,7 +54,7 @@ const AppContent = () => {
     getDataAction: getAppContentItem,
     resetState: () => resetAppContentItem('gratitude'),
     fetchOnMount: false,
-    costumeParams: {
+    customParams: {
       fieldName: 'gratitude',
     },
   });
@@ -65,7 +65,7 @@ const AppContent = () => {
     getDataAction: getAppContentItem,
     resetState: () => resetAppContentItem('powerUp'),
     fetchOnMount: false,
-    costumeParams: {
+    customParams: {
       fieldName: 'powerUp',
     },
   });
@@ -76,7 +76,7 @@ const AppContent = () => {
     getDataAction: getAppContentItem,
     resetState: () => resetAppContentItem('powerDown'),
     fetchOnMount: false,
-    costumeParams: {
+    customParams: {
       fieldName: 'powerDown',
     },
   });

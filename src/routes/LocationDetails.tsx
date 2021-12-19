@@ -68,7 +68,7 @@ const LocationDetails = () => {
     resetOnUnmount: true,
     getDataAction: isNewLocation ? undefined : getAppUsers,
     resetState: isNewLocation ? undefined : resetAppUsersState,
-    costumeParams: {
+    customParams: {
       companyId: newLocationCompanyId || locationDetails?.company['_id'],
       locationId,
     },

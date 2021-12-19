@@ -6,14 +6,15 @@ interface PropTypes {
   resetState?: Function | undefined,
   LIMIT?: number,
   resetOnUnmount?: boolean,
-  costumeParams?: any,
+  customParams?: any,
   fetchOnMount? : boolean
 }
 
 const useGetData = ({
-  getDataAction, resetState, LIMIT = 10, resetOnUnmount, costumeParams = {}, fetchOnMount = true,
+  getDataAction, resetState, LIMIT = 10, resetOnUnmount, customParams = {}, fetchOnMount = true,
 }: PropTypes) => {
   const isFirstRender = useRef(true);
+  const setTimeoutRef = useRef<any>();
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState<string | null>(null);
   const handleSearch = (val: string) => {
@@ -31,23 +32,23 @@ const useGetData = ({
       limit: LIMIT,
       offset: (val - 1) * LIMIT,
       searchWord: searchValue,
-      ...costumeParams,
+      ...customParams,
     }));
   };
 
   // watch search keyword and send api req
   useEffect(() => {
     if (getDataAction && !isFirstRender.current) {
-      const delayDebounceFn = setTimeout(() => {
+      setTimeoutRef.current = setTimeout(() => {
         resetState && dispatch(resetState());
         dispatch(getDataAction({
           limit: LIMIT,
           offset: 0,
           searchWord: searchValue || null,
-          ...costumeParams,
+          ...customParams,
         }));
       }, 500);
-      return () => clearTimeout(delayDebounceFn);
+      return () => clearTimeout(setTimeoutRef.current);
     }
   }, [searchValue, getDataAction, isFirstRender]);
 
@@ -56,7 +57,7 @@ const useGetData = ({
       limit: LIMIT,
       offset: 0,
       searchWord: searchValue,
-      ...costumeParams,
+      ...customParams,
     }));
     isFirstRender.current = false;
     return resetOnUnmount ? () => resetState && dispatch(resetState()) : undefined;

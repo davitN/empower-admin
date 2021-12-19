@@ -61,7 +61,7 @@ const CompanyDetails = () => {
     getDataAction: isNewCompany ? undefined : getLocations,
     resetState: isNewCompany ? undefined : resetLocationsState,
     resetOnUnmount: true,
-    costumeParams: {
+    customParams: {
       companyId,
     },
   });
