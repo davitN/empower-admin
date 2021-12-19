@@ -19,6 +19,7 @@ import LocationDetails from './routes/LocationDetails';
 import AppContent from './routes/AppContent';
 import AppContentDetail from './routes/AppContentDetail';
 import AppAdmins from './routes/AppAdmins';
+import AppAdminDetails from './routes/AppAdminDetails';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -38,10 +39,9 @@ ReactDOM.render(
             <Route path="app-users/:id" element={<UserDetails />} />
             <Route path="locations/:id" element={<LocationDetails />} />
             <Route path="app-content" element={<AppContent />} />
-            <Route path="app-content/:itemName/:mode" element={<AppContentDetail />}>
-              <Route path=":id" element={<AppContentDetail />} />
-            </Route>
+            <Route path="app-content/:itemName/:mode/:id" element={<AppContentDetail />} />
             <Route path="app-admins" element={<AppAdmins />} />
+            <Route path="app-admins/:id" element={<AppAdminDetails />} />
             <Route
               path="*"
               element={(

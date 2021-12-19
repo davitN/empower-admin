@@ -17,7 +17,25 @@ export interface AppAdminsData {
   count: number
 }
 
+interface AppAdminsRoles {
+  name: string,
+  description: string,
+  _id: string
+}
+
+interface SaveAppAdmin {
+  data: {
+    email: string,
+    firstName: string,
+    lastName: string,
+    phone: string,
+    role: string
+  },
+  adminId?: string
+}
+
 export interface InitialState {
   admins: null | AppAdminsData,
-  adminDetails: null
+  adminDetails: null,
+  adminsRoles: null | AppAdminsRoles
 }

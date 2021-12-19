@@ -40,8 +40,12 @@ import {
 } from './appContentSaga';
 import { SET_PASSWORD } from '../ducks/setPasswordDuck';
 import { setPassword } from './setPasswordSaga';
-import { GET_APP_ADMINS } from '../ducks/appAdminsDuck';
-import { getAppAdmins } from './appAdminsSaga';
+import {
+  GET_APP_ADMINS, GET_APP_ADMINS_ROLES, SAVE_APP_ADMIN_DETAILS, GET_APP_ADMIN_DETAILS,
+} from '../ducks/appAdminsDuck';
+import {
+  getAppAdmins, getAppAdminsRoles, saveAppAdminDetails, getAppAdminDetails,
+} from './appAdminsSaga';
 
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
@@ -68,6 +72,9 @@ function* actionWatcher() {
   yield takeLatest(SET_PASSWORD, setPassword);
   yield takeLatest(SEND_RESET_PASSWORD, sendResetPassword);
   yield takeLatest(GET_APP_ADMINS, getAppAdmins);
+  yield takeLatest(GET_APP_ADMINS_ROLES, getAppAdminsRoles);
+  yield takeLatest(SAVE_APP_ADMIN_DETAILS, saveAppAdminDetails);
+  yield takeLatest(GET_APP_ADMIN_DETAILS, getAppAdminDetails);
 }
 
 export default function* rootSaga() {
