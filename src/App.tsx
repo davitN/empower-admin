@@ -6,6 +6,7 @@ import 'primeflex/primeflex.css';
 import './App.css';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { setLoaderRef } from './services/loader.service';
 import GlobalLoader from './components/shared/GlobalLoader';
 import Layout from './components/shared/Layout';
@@ -16,11 +17,19 @@ const { NotificationContainer } = require('react-notifications');
 
 const App = () => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { isLoading } = useSelector((state: RootState) => state.mainReducer);
 
   useEffect(() => {
     dispatch(checkSignedInAction());
   }, []);
+
+  useEffect(() => {
+    if (pathname === '/') {
+      navigate('/companies');
+    }
+  }, [pathname]);
 
   return (
     isLoading ? null : (

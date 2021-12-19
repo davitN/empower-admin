@@ -16,11 +16,12 @@ interface PropsTypes {
   desc?: string,
   disabled?: boolean,
   handleClick?: (e : any) => void,
-  readOnly?: boolean
+  readOnly?: boolean,
+  onKeyPress: (e?: any) => void
 }
 
 const TextInput: FC<PropsTypes> = ({
-  value, handleChange, label, placeholder, type = 'text', customClasses, icon, required, desc, disabled, handleClick, readOnly,
+  value, handleChange, label, placeholder, type = 'text', customClasses, icon, required, desc, disabled, handleClick, readOnly, onKeyPress,
 }) => {
   const classes = useStyles();
 
@@ -44,6 +45,7 @@ const TextInput: FC<PropsTypes> = ({
         type={type}
         className={classes.root}
         onClick={handleClick || undefined}
+        onKeyPress={onKeyPress}
       />
     </span>
   );

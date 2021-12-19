@@ -38,6 +38,7 @@ const Auth = () => {
           value={values.email}
           handleChange={(val) => setValues({ ...values, email: val })}
           placeholder="Email"
+          onKeyPress={(e) => e.key === 'Enter' && handleAuth()}
         />
         <TextInput
           value={values.password}
@@ -45,6 +46,7 @@ const Auth = () => {
           placeholder="Password"
           type="password"
           customClasses="p-mt-4"
+          onKeyPress={(e) => e.key === 'Enter' && handleAuth()}
         />
         <Button customClasses="p-mt-4" handleClick={handleAuth} loading={loading} disabled={disableSubmit()}>Log In </Button>
       </div>
