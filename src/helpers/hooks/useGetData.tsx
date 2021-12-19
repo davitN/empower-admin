@@ -24,21 +24,6 @@ const useGetData = ({
       setSearchValue(null);
     }
   };
-  console.log(isFirstRender, 111);
-  useEffect(() => {
-    if (getDataAction && !isFirstRender.current) {
-      const delayDebounceFn = setTimeout(() => {
-        resetState && dispatch(resetState());
-        dispatch(getDataAction({
-          limit: LIMIT,
-          offset: 0,
-          searchWord: searchValue || null,
-          ...costumeParams,
-        }));
-      }, 500);
-      return () => clearTimeout(delayDebounceFn);
-    }
-  }, [searchValue, getDataAction]);
 
   const handlePageChange = (val: number) => {
     resetState && dispatch(resetState());
@@ -60,6 +45,22 @@ const useGetData = ({
     isFirstRender.current = false;
     return resetOnUnmount ? () => resetState && dispatch(resetState()) : undefined;
   }, []);
+
+  // watch search keyword and send api req
+  useEffect(() => {
+    if (getDataAction && !isFirstRender.current) {
+      const delayDebounceFn = setTimeout(() => {
+        resetState && dispatch(resetState());
+        dispatch(getDataAction({
+          limit: LIMIT,
+          offset: 0,
+          searchWord: searchValue || null,
+          ...costumeParams,
+        }));
+      }, 500);
+      return () => clearTimeout(delayDebounceFn);
+    }
+  }, [searchValue, getDataAction]);
 
   return {
     searchValue,
