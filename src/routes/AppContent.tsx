@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import {
-  getAppContent, resetAppContentState, getCommunityData, getAppContentItem, resetAppContentItem,
+  getAppContent, resetAppContentState, getCommunityData, getAppContentItem, resetAppContentItem, resetCommunityData,
 } from '../store/ducks/appContentDuck';
 import { RootState } from '../store/configureStore';
 import { AppContentGetData } from '../types/appContent';
@@ -24,6 +24,7 @@ const AppContent = () => {
   } = useGetData({
     getDataAction: getCommunityData,
     fetchOnMount: false,
+    resetState: () => resetCommunityData(),
   });
 
   const {
