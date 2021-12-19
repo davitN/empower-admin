@@ -35,17 +35,6 @@ const useGetData = ({
     }));
   };
 
-  useEffect(() => {
-    getDataAction && fetchOnMount && dispatch(getDataAction({
-      limit: LIMIT,
-      offset: 0,
-      searchWord: searchValue,
-      ...costumeParams,
-    }));
-    isFirstRender.current = false;
-    return resetOnUnmount ? () => resetState && dispatch(resetState()) : undefined;
-  }, []);
-
   // watch search keyword and send api req
   useEffect(() => {
     if (getDataAction && !isFirstRender.current) {
@@ -60,7 +49,18 @@ const useGetData = ({
       }, 500);
       return () => clearTimeout(delayDebounceFn);
     }
-  }, [searchValue, getDataAction]);
+  }, [searchValue, getDataAction, isFirstRender]);
+
+  useEffect(() => {
+    getDataAction && fetchOnMount && dispatch(getDataAction({
+      limit: LIMIT,
+      offset: 0,
+      searchWord: searchValue,
+      ...costumeParams,
+    }));
+    isFirstRender.current = false;
+    return resetOnUnmount ? () => resetState && dispatch(resetState()) : undefined;
+  }, []);
 
   return {
     searchValue,
