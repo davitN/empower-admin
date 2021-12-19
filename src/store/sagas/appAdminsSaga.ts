@@ -1,9 +1,9 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { put, delay } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
 import {
-  setAppAdmins, resetAppAdminsState, setAppAdminsRoles, setAppAdminDetails,
+  setAppAdmins, setAppAdminsRoles, setAppAdminDetails,
 } from '../ducks/appAdminsDuck';
 import { CallBacks, GetDataParams } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
@@ -14,10 +14,6 @@ import notificationService from '../../services/notification.service';
 
 export function* getAppAdmins({ params, callbacks }:{ params: GetDataParams, callbacks: CallBacks, type:string }) {
   try {
-    if (params.searchWord) {
-      yield put(resetAppAdminsState());
-      yield delay(300);
-    }
     const res: AppAdminsData = yield axiosInstance.get('/admin/get_admins', {
       params,
     });

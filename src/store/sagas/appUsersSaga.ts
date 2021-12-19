@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { put, delay } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
-import { setAppUsers, resetAppUsersState, setAppUserDetails } from '../ducks/appUsersDuck';
+import { setAppUsers, setAppUserDetails } from '../ducks/appUsersDuck';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
 import {
@@ -12,10 +12,6 @@ import notificationService from '../../services/notification.service';
 
 export function* getAppUsers({ data, callbacks }:{ data: GetAppUsersOptions, callbacks: CallBacks, type:string }) {
   try {
-    if (data.searchWord) {
-      yield put(resetAppUsersState());
-      yield delay(300);
-    }
     const res: GetAppUsersData = yield axiosInstance.get('/app_user/get_app_users', {
       params: data,
     });

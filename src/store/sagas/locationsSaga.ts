@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { put, delay } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
-import { setLocations, resetLocationsState, setLocationDetails } from '../ducks/locationsDuck';
+import { setLocations, setLocationDetails } from '../ducks/locationsDuck';
 import {
   GetLocationsOptions, GetLocationsData, GetLocationDetails, LocationItem,
 } from '../../types/locations';
@@ -12,10 +12,6 @@ import { notifyAction } from '../ducks/mainDuck';
 
 export function* getLocations({ data, callbacks }:{ data: GetLocationsOptions, callbacks: CallBacks, type:string }) {
   try {
-    if (data.searchWord) {
-      yield put(resetLocationsState());
-      yield delay(300);
-    }
     const res: GetLocationsData = yield axiosInstance.get('/location/get_locations', {
       params: data,
     });
