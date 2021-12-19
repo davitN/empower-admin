@@ -30,7 +30,7 @@ const Auth = () => {
     <div className={classes.root}>
       <h1 className="text-3xl p-flex-initial flex-column p-mb-2">LOG IN</h1>
       <p className={classNames('text-sm p-mb-4 p-mt-0', classes.forgotPassword)}>
-        Forget your pasword? Click
+        Forget your password? Click
         <Link to="/">here.</Link>
       </p>
       <div className="p-d-flex p-flex-column">
