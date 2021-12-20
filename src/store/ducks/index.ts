@@ -5,7 +5,8 @@ import { locationsReducer } from './locationsDuck';
 import { appUsersReducer } from './appUsersDuck';
 import { appContentReducer } from './appContentDuck';
 import { appAdminsReducer } from './appAdminsDuck';
+import { appUserAccountReducer } from './appUserAccount';
 
 export {
-  mainReducer, authReducer, companiesReducer, locationsReducer, appUsersReducer, appContentReducer, appAdminsReducer,
+  mainReducer, authReducer, companiesReducer, locationsReducer, appUsersReducer, appContentReducer, appAdminsReducer, appUserAccountReducer,
 };

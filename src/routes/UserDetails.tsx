@@ -123,7 +123,7 @@ const UserDetails = () => {
         <div className={classNames(classes.inputs)}>
           {!isNewUser && !userDetails ? (
             <>
-              {new Array(5).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" />)}
+              {new Array(5).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="3rem" />)}
             </>
           ) : (
             <>

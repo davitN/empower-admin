@@ -32,7 +32,7 @@ interface PropsTypes {
     handler?: () => void,
     loading?: boolean,
   },
-  remove: {
+  remove?: {
     label?: string,
     disabled?: boolean,
     handler?: () => void,

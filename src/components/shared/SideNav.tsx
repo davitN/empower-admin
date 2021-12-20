@@ -82,6 +82,6 @@ const routes: Array<{ title: string, path: string }> = [
   },
   {
     title: 'Account',
-    path: '/account',
+    path: '/user-profile',
   },
 ];

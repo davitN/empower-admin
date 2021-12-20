@@ -17,7 +17,7 @@ interface PropsTypes {
   disabled?: boolean,
   handleClick?: (e : any) => void,
   readOnly?: boolean,
-  onKeyPress: (e?: any) => void
+  onKeyPress?: (e?: any) => void
 }
 
 const TextInput: FC<PropsTypes> = ({

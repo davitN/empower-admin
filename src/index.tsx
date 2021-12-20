@@ -20,6 +20,7 @@ import AppContent from './routes/AppContent';
 import AppContentDetail from './routes/AppContentDetail';
 import AppAdmins from './routes/AppAdmins';
 import AppAdminDetails from './routes/AppAdminDetails';
+import AppUserAccount from './routes/AppUserAccount';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -42,6 +43,7 @@ ReactDOM.render(
             <Route path="app-content/:itemName/:mode/:id" element={<AppContentDetail />} />
             <Route path="app-admins" element={<AppAdmins />} />
             <Route path="app-admins/:id" element={<AppAdminDetails />} />
+            <Route path="user-profile" element={<AppUserAccount />} />
             <Route
               path="*"
               element={(
