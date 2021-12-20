@@ -1,19 +1,27 @@
 import { createUseStyles } from 'react-jss';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Table from '../components/shared/Table';
 import COLORS from '../services/colors.service';
 import useGetData from '../helpers/hooks/useGetData';
+import { GetAppUsersData } from '../types/appUsers';
+import { resetAllAppUsersState, getAllAppUsers } from '../store/ducks/appUsersDuck';
+import { RootState } from '../store/configureStore';
 
 const LIMIT = 8;
 
 const AppUsers = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const { allUsers }: { allUsers: GetAppUsersData | null } = useSelector((state: RootState) => state.appUsersReducer);
+
   const {
     searchValue, handleSearch, handlePageChange,
   } = useGetData({
     LIMIT,
     resetOnUnmount: true,
+    getDataAction: getAllAppUsers,
+    resetState: resetAllAppUsersState,
   });
 
   return (
@@ -21,14 +29,12 @@ const AppUsers = () => {
       <Table
         searchValue={searchValue || ''}
         handleSearch={(val) => handleSearch(val)}
-        data={{ data: [], count: 0 }}
+        data={allUsers}
         header={tableHeaders}
         tableTitle="USERS"
-        handleEdit={({ _id }) => navigate(_id)}
+        handleEdit={({ _id }) => navigate(`/app-users/${_id}`)}
         LIMIT={LIMIT}
         handlePageChange={(val) => handlePageChange(val)}
-        handleAdd={() => navigate('new')}
-        buttonText="+ Add user"
       />
     </div>
   );
@@ -39,19 +45,19 @@ export default AppUsers;
 const tableHeaders = [
   {
     name: 'FIRST NAME',
-    field: 'name',
+    field: 'firstName',
   },
   {
     name: 'LAST NAME',
-    field: 'code',
+    field: 'lastName',
   },
   {
     name: 'EMAIL',
-    field: 'locationCount',
+    field: 'email',
   },
   {
     name: 'PHONE',
-    field: 'userCount',
+    field: 'phone',
   },
 ];
 

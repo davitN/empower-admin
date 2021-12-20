@@ -81,7 +81,7 @@ const UserDetails = () => {
   };
 
   const selectedLocation = {
-    name: isNewUser ? newUserLocationName || '' : userDetails?.companyId?.name,
+    name: isNewUser ? newUserLocationName || '' : userDetails?.location?.name,
     label: isNewUser ? newUserLocationName || '' : userDetails?.location?.name,
   };
 

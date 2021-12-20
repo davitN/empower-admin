@@ -55,5 +55,6 @@ export interface SaveAppUserDetails {
 
 export interface InitialState {
   users: GetAppUsersData | null,
-  userDetails: GetAppUserDetailsData | null
+  userDetails: GetAppUserDetailsData | null,
+  allUsers: GetAppUsersData | null,
 }

@@ -55,7 +55,6 @@ const Table = ({
     setCurrentPage(val.first);
     handlePageChange && handlePageChange(val.page + 1);
   };
-
   return (
     <div className={classNames(classes.tableContainer, costumeClasses)}>
       <div className={classes.header}>

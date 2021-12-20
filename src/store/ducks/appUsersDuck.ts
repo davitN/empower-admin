@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { CallBacks } from '../../types/main';
+import { CallBacks, GetDataParams } from '../../types/main';
 import {
   InitialState, GetAppUsersData, GetAppUsersOptions, GetAppUserDetailsOptions, GetAppUserDetailsData, SaveAppUserDetails,
 } from '../../types/appUsers';
@@ -7,15 +7,22 @@ import {
 export const GET_APP_USERS = 'socialize/appUsers/getAppUsers';
 export const SET_APP_USERS = 'socialize/appUsers/setAppUsers';
 export const RESET_APP_USERS_STATE = 'socialize/appUsers/resetAppUsers';
+
 export const GET_APP_USER_DETAILS = 'socialize/appUsers/getAppUserDetails';
 export const SET_APP_USER_DETAILS = 'socialize/appUsers/setAppUserDetails';
 export const RESET_APP_USER_DETAILS = 'socialize/appUsers/resetAppUserDetails';
+
 export const SAVE_APP_USER_DETAILS = 'socialize/appUsers/saveAppUserDetails';
 export const SEND_RESET_PASSWORD = 'socialize/appUsers/sendResetPassword';
+
+export const GET_ALL_APP_USERS = 'socialize/appUsers/getALlAppUsers';
+export const SET_ALL_APP_USERS = 'socialize/appUsers/setAllAppUsers';
+export const RESET_ALL_APP_USERS_STATE = 'socialize/appUsers/resetAllAppUsers';
 
 const initialState: InitialState = {
   users: null,
   userDetails: null,
+  allUsers: null,
 };
 
 export const appUsersReducer = (state = initialState, action: AnyAction) => {
@@ -40,6 +47,16 @@ export const appUsersReducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         userDetails: null,
+      };
+    case SET_ALL_APP_USERS:
+      return {
+        ...state,
+        allUsers: (payload as GetAppUsersData),
+      };
+    case RESET_ALL_APP_USERS_STATE:
+      return {
+        ...state,
+        allUsers: null,
       };
     default:
       return state;
@@ -86,4 +103,19 @@ export const sendResetPassword = (userId: any, callbacks?: CallBacks) => ({
   type: SEND_RESET_PASSWORD,
   userId,
   callbacks,
+});
+
+export const getAllAppUsers = (data: GetDataParams, callbacks?: CallBacks) => ({
+  type: GET_ALL_APP_USERS,
+  data,
+  callbacks,
+});
+
+export const setAllAppUsers = (data: GetAppUsersData) => ({
+  type: SET_ALL_APP_USERS,
+  payload: data,
+});
+
+export const resetAllAppUsersState = () => ({
+  type: RESET_ALL_APP_USERS_STATE,
 });

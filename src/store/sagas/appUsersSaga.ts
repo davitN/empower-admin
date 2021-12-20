@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
-import { setAppUsers, setAppUserDetails } from '../ducks/appUsersDuck';
-import { CallBacks } from '../../types/main';
+import { setAppUsers, setAppUserDetails, setAllAppUsers } from '../ducks/appUsersDuck';
+import { CallBacks, GetDataParams } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
 import {
   GetAppUsersData, GetAppUsersOptions, GetAppUserDetailsOptions, GetAppUserDetailsData, SaveAppUserDetails,
@@ -16,6 +16,25 @@ export function* getAppUsers({ data, callbacks }:{ data: GetAppUsersOptions, cal
       params: data,
     });
     yield put(setAppUsers(res));
+    callbacks?.success && callbacks.success();
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    yield put(
+      notifyAction({
+        type: 'error',
+        message: error.response?.data.message,
+        showError: false,
+      }),
+    );
+  }
+}
+
+export function* getAllAppUsers({ data, callbacks }:{ data: GetDataParams, callbacks: CallBacks, type:string }) {
+  try {
+    const res: GetAppUsersData = yield axiosInstance.get('/app_user/get_app_users', {
+      params: data,
+    });
+    yield put(setAllAppUsers(res));
     callbacks?.success && callbacks.success();
   } catch (error: any) {
     callbacks?.error && callbacks.error();
