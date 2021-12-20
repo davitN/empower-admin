@@ -8,6 +8,8 @@ export const RESET_APP_USER_ACCOUNT_STATE = 'socialize/appUserAccount/resetAppUs
 
 export const UPDATE_APP_USER_ACCOUNT = 'socialize/appUserAccount/updateAppUserAccount';
 
+export const RESET_APP_USER_ACCOUNT_PASSWORD = 'socialize/appUserAccount/resetAppUserAccountPassword';
+
 const initialState: InitialState = {
   user: null,
 };
@@ -47,5 +49,10 @@ export const resetAppUserAccountState = () => ({
 export const updateAppUserAccount = (data: User, callbacks?: CallBacks) => ({
   type: UPDATE_APP_USER_ACCOUNT,
   data,
+  callbacks,
+});
+
+export const resetAppUserAccountPassword = (callbacks?: CallBacks) => ({
+  type: RESET_APP_USER_ACCOUNT_PASSWORD,
   callbacks,
 });

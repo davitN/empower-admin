@@ -10,10 +10,11 @@ import UploadButton from './UploadButton';
 interface PropsTypes {
   title?: string,
   isNewItem?: boolean,
-  costumeButtons?: {
+  customButtons?: {
     label: string,
     handler: () => void,
-    disabled?: boolean
+    disabled?: boolean,
+    loading?: boolean
   }[],
   image?: {
     url: string | null,
@@ -44,7 +45,7 @@ interface PropsTypes {
 const FormsSharedComponent = ({
   title,
   isNewItem,
-  costumeButtons,
+  customButtons,
   /// /////////////
   image,
   save,
@@ -85,7 +86,9 @@ const FormsSharedComponent = ({
         {save?.label ? save.label : saveButtonLabel}
       </Button>
       )}
-      {costumeButtons && costumeButtons.map(({ label, handler, disabled }) => (
+      {customButtons && customButtons.map(({
+        label, handler, disabled, loading,
+      }) => (
         <Button
           key={label}
           bgColor={COLORS.lightBlue}
@@ -93,6 +96,7 @@ const FormsSharedComponent = ({
           customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
           handleClick={() => handler()}
           disabled={disabled}
+          loading={loading}
         >
           {label}
         </Button>

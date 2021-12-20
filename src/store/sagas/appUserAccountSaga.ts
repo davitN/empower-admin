@@ -35,3 +35,14 @@ export function* updateAppUserAccount({ data, callbacks }:{ data: User, callback
     notificationService.error(error.response.data.message, '', 500);
   }
 }
+
+export function* resetAppUserAccountPassword({ callbacks }:{ callbacks: CallBacks, type: string }) {
+  try {
+    yield axiosInstance.post('/account/reset_password');
+    callbacks?.success && callbacks.success();
+    notificationService.success('Reset password link has been sent successfully', '', 800);
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response.data.message, '', 500);
+  }
+}

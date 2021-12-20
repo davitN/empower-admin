@@ -7,7 +7,9 @@ import Container from '../components/shared/Container';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 import TextInput from '../components/shared/Inputs/TextInput';
 import { RootState } from '../store/configureStore';
-import { getAppUserAccount, resetAppUserAccountState, updateAppUserAccount } from '../store/ducks/appUserAccount';
+import {
+  getAppUserAccount, resetAppUserAccountPassword, resetAppUserAccountState, updateAppUserAccount,
+} from '../store/ducks/appUserAccount';
 import { User } from '../types/appUserAccount';
 
 interface ValuesTypes {
@@ -21,6 +23,7 @@ const AppUserAccount = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [saving, setSaving] = useState(false);
+  const [isSending, setSending] = useState(false);
   const { user }: { user: User | null } = useSelector((state: RootState) => state.appUserAccountReducer);
 
   const [values, setValues] = useState<ValuesTypes>({
@@ -75,6 +78,17 @@ const AppUserAccount = () => {
               disabled: !isInputsValid || saving,
               loading: saving,
             }}
+            customButtons={[
+              {
+                label: 'Reset Password',
+                handler: () => {
+                  setSending(true);
+                  dispatch(resetAppUserAccountPassword({ success: () => setSending(false), error: () => setSending(false) }));
+                },
+                loading: isSending,
+                disabled: isSending,
+              },
+            ]}
           />
         </div>
       </div>

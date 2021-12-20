@@ -238,7 +238,7 @@ const CompanyDetails = () => {
               disabled: false,
               hidden: !isNewCompany && !companyDetails,
             }}
-            costumeButtons={[{
+            customButtons={[{
               label: 'Add monthly team activity',
               handler: () => navigate(`/app-content/monthly-team-activity/new/${companyDetails['_id']}`),
             }]}

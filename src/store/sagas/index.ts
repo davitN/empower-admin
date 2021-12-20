@@ -47,8 +47,8 @@ import {
   getAppAdmins, getAppAdminsRoles, saveAppAdminDetails, getAppAdminDetails,
 } from './appAdminsSaga';
 
-import { GET_APP_USER_ACCOUNT, UPDATE_APP_USER_ACCOUNT } from '../ducks/appUserAccount';
-import { getAppUserAccount, updateAppUserAccount } from './appUserAccountSaga';
+import { GET_APP_USER_ACCOUNT, UPDATE_APP_USER_ACCOUNT, RESET_APP_USER_ACCOUNT_PASSWORD } from '../ducks/appUserAccount';
+import { getAppUserAccount, updateAppUserAccount, resetAppUserAccountPassword } from './appUserAccountSaga';
 
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
@@ -80,6 +80,7 @@ function* actionWatcher() {
   yield takeLatest(GET_APP_ADMIN_DETAILS, getAppAdminDetails);
   yield takeLatest(GET_APP_USER_ACCOUNT, getAppUserAccount);
   yield takeLatest(UPDATE_APP_USER_ACCOUNT, updateAppUserAccount);
+  yield takeLatest(RESET_APP_USER_ACCOUNT_PASSWORD, resetAppUserAccountPassword);
 }
 
 export default function* rootSaga() {
