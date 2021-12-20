@@ -11,6 +11,8 @@ import {
   getAppUserAccount, resetAppUserAccountPassword, resetAppUserAccountState, updateAppUserAccount,
 } from '../store/ducks/appUserAccount';
 import { User } from '../types/appUserAccount';
+import COLORS from '../services/colors.service';
+import { logoutAction } from '../store/ducks/authDuck';
 
 interface ValuesTypes {
   firstName: string,
@@ -78,6 +80,10 @@ const AppUserAccount = () => {
               disabled: !isInputsValid || saving,
               loading: saving,
             }}
+            remove={{
+              handler: () => dispatch(logoutAction()),
+              label: 'Logout',
+            }}
             customButtons={[
               {
                 label: 'Reset Password',
@@ -115,5 +121,8 @@ const useStyles = createUseStyles({
     gridTemplateRows: 'repeat( auto-fit, minmax(0, max-content) )',
     gap: '1rem',
     justifyItems: 'end',
+  },
+  logoutBtn: {
+    background: COLORS.red,
   },
 });

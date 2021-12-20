@@ -14,7 +14,8 @@ interface PropsTypes {
     label: string,
     handler: () => void,
     disabled?: boolean,
-    loading?: boolean
+    loading?: boolean,
+    styles?: any
   }[],
   image?: {
     url: string | null,
@@ -87,13 +88,13 @@ const FormsSharedComponent = ({
       </Button>
       )}
       {customButtons && customButtons.map(({
-        label, handler, disabled, loading,
+        label, handler, disabled, loading, styles,
       }) => (
         <Button
           key={label}
           bgColor={COLORS.lightBlue}
           textColor={COLORS.white}
-          customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
+          customClasses={classNames(classes.button, 'p-py-2 p-px-4', styles)}
           handleClick={() => handler()}
           disabled={disabled}
           loading={loading}

@@ -50,8 +50,7 @@ export function* signUpSaga(payload: { data: ISignUpData; callback: Function; ty
 
 export function* logoutSaga() {
   try {
-    // yield axiosInstance.delete('auth/sign_out');
-    // yield AsyncStorage.removeItem("token");
+    yield localStorage.removeItem('token');
     yield put(resetStoreAction());
   } catch (error) {
     // yield notifyAction("error", "Error", "Something went wrong", true);
