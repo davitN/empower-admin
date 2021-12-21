@@ -139,7 +139,7 @@ const AppContent = () => {
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=powerDown`)}
             handlePageChange={(val) => powerDownHandlePageChange(val)}
           />
-          <Title title="COMMUNITY CONTENT" fontSize="text-2xl" costumeStyles="p-mb-6" />
+          <Title title="COMMUNITY CONTENT" fontSize="text-2xl" costumeStyles="p-mt-6" />
           <Table
             searchValue={communitySearchValue}
             handleSearch={(val) => communityHandleSearch(val)}
