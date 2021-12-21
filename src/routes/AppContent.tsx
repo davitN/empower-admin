@@ -148,7 +148,7 @@ const AppContent = () => {
             tableTitle="Community Content"
             handleEdit={({ _id }) => navigate(`community-article/edit/${_id}`)}
             handlePageChange={(val) => communityHandlePageChange(val)}
-            handleAdd={() => navigate('community-article/new')}
+            handleAdd={() => navigate('community-article/new/new-community-content')}
             buttonText="+ Add content"
           />
         </div>

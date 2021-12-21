@@ -115,7 +115,7 @@ const AppContentDetail = () => {
       URL: '',
     },
   });
-  const isEditing = mode === 'edit' && id;
+  const isEditing = mode === 'edit';
   const [uploadedFile, setUploadedFIle] = useState<any>(null);
   const handleSave = () => {
     setSaving(true);
@@ -176,7 +176,7 @@ const AppContentDetail = () => {
   }, [itemName]);
 
   return (
-    <Container sectionTitle={isEditing ? 'NEW CONTENT' : 'EDIT CONTENT'}>
+    <Container sectionTitle={isEditing ? 'EDIT CONTENT' : 'NEW CONTENT'}>
       <div className={classes.wrapper}>
         {itemName === 'community-article' ? (
           <CommunityArticle
