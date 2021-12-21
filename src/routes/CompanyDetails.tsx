@@ -140,7 +140,7 @@ const CompanyDetails = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   useEffect(() => () => dispatch(resetCompanyDetailsState()), []);
-
+  console.log(companyDetails);
   return (
     <Container sectionTitle="VETERINARY GROWTH PARTNERS" idText="Company ID" itemId={companyId}>
       <Title title="COMPANY INFORMATION" costumeStyles="p-pb-4" />
@@ -246,19 +246,34 @@ const CompanyDetails = () => {
         </div>
       </div>
       {!isNewCompany && (
-      <Table
-        searchValue={locationsSearchValue || ''}
-        handleSearch={(val) => locationsHandleSearch(val)}
-        data={locations}
-        header={locationsHeader}
-        tableTitle="LOCATIONS"
-        handleEdit={({ _id }) => navigate(`/locations/${_id}`)}
-        handlePageChange={(val) => locationsHandlePageChange(val)}
-        handleAdd={() => navigate(`/locations/new/?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)}
-        buttonText="+ Add location"
-        costumeClasses={classes.tablePadding}
-      />
+        <>
+          <Table
+            searchValue={locationsSearchValue || ''}
+            handleSearch={(val) => locationsHandleSearch(val)}
+            data={locations}
+            header={locationsHeader}
+            tableTitle="LOCATIONS"
+            handleEdit={({ _id }) => navigate(`/locations/${_id}`)}
+            handlePageChange={(val) => locationsHandlePageChange(val)}
+            handleAdd={() => navigate(`/locations/new/?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)}
+            buttonText="+ Add location"
+            costumeClasses={classes.tablePadding}
+          />
+          <Table
+            searchValue=""
+            // handleSearch={(val) => locationsHandleSearch(val)}
+            data={companyDetails?.admins}
+            header={adminsHeader}
+            tableTitle="Manage Company Admins"
+            handleEdit={({ _id }) => console.log(_id)}
+            handlePageChange={(val) => locationsHandlePageChange(val)}
+            handleAdd={() => navigate(`/locations/new/?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)}
+            buttonText="+ Add admin"
+            costumeClasses={classes.tablePadding}
+          />
+        </>
       )}
+
     </Container>
   );
 };
@@ -324,5 +339,28 @@ const locationsHeader = [
   {
     name: 'LOCATION ID',
     field: 'company',
+  },
+];
+
+const adminsHeader = [
+  {
+    name: 'FIRST NAME',
+    field: 'firstName',
+  },
+  {
+    name: 'LAST NAME',
+    field: 'lastName',
+  },
+  {
+    name: 'EMAIL',
+    field: 'email',
+  },
+  {
+    name: 'PHONE',
+    field: 'phone',
+  },
+  {
+    name: 'ROLE',
+    field: 'role.name',
   },
 ];

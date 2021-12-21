@@ -209,19 +209,32 @@ const LocationDetails = () => {
         </div>
       </div>
       {!isNewLocation && (
-      <Table
-        searchValue={searchValue || ''}
-        handleSearch={(val) => handleSearch(val)}
-        data={users}
-        header={tableHeaders}
-        tableTitle="LOCATION APP USERS"
-        handleEdit={({ _id }) => navigate(`/app-users/${_id}`)}
-        handlePageChange={(val) => handlePageChange(val)}
-        handleAdd={() => navigate(
-          `/app-users/new/?companyName=${locationDetails?.company.name.replace(' ', '_')}&companyId=${locationDetails?.company['_id']}&locationName=${locationDetails?.name.replace(' ', '_')}&locationId=${locationDetails['_id']}`,
-        )}
-        buttonText="+ Add user"
-      />
+        <>
+          <Table
+            searchValue={searchValue || ''}
+            handleSearch={(val) => handleSearch(val)}
+            data={users}
+            header={tableHeaders}
+            tableTitle="LOCATION APP USERS"
+            handleEdit={({ _id }) => navigate(`/app-users/${_id}`)}
+            handlePageChange={(val) => handlePageChange(val)}
+            handleAdd={() => navigate(
+              `/app-users/new/?companyName=${locationDetails?.company.name.replace(' ', '_')}&companyId=${locationDetails?.company['_id']}&locationName=${locationDetails?.name.replace(' ', '_')}&locationId=${locationDetails['_id']}`,
+            )}
+            buttonText="+ Add user"
+          />
+          <Table
+            searchValue=""
+            // handleSearch={(val) => locationsHandleSearch(val)}
+            data={locationDetails?.admins}
+            header={adminsHeader}
+            tableTitle="Manage Locations Admins"
+            handleEdit={({ _id }) => console.log(_id)}
+            // handlePageChange={(val) => locationsHandlePageChange(val)}
+            handleAdd={() => console.log('1')}
+            buttonText="+ Add admin"
+          />
+        </>
       )}
     </Container>
   );
@@ -266,5 +279,28 @@ const tableHeaders = [
   {
     name: 'PHONE',
     field: 'phone',
+  },
+];
+
+const adminsHeader = [
+  {
+    name: 'FIRST NAME',
+    field: 'firstName',
+  },
+  {
+    name: 'LAST NAME',
+    field: 'lastName',
+  },
+  {
+    name: 'EMAIL',
+    field: 'email',
+  },
+  {
+    name: 'PHONE',
+    field: 'phone',
+  },
+  {
+    name: 'ROLE',
+    field: 'role.name',
   },
 ];

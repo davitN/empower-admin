@@ -1,3 +1,5 @@
+import { AppAdmin } from '../appAdmin';
+
 export interface LocationItem {
   company: {
     logo?: {
@@ -8,6 +10,10 @@ export interface LocationItem {
     name: string,
     _id: string
   },
+  admins: {
+    data: AppAdmin[],
+    count: number
+  }
   createdAt: string,
   name: string,
   updatedAt: string,

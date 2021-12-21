@@ -1,3 +1,5 @@
+import { AppAdmin } from '../appAdmin';
+
 export interface InitialStateCompanies {
   companies: {
     data: CompanyItem[] | null,
@@ -31,7 +33,11 @@ export interface CompanyItem {
   updatedAt: string
   userCount: number
   __v: number
-  _id: string
+  _id: string,
+  admins: {
+    data: AppAdmin[],
+    count: number
+  }
 }
 
 export interface CompaniesTypes {
