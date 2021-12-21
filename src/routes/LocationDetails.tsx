@@ -10,7 +10,9 @@ import Title from '../components/shared/Title';
 import TextInput from '../components/shared/Inputs/TextInput';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 import readImgAsync from '../helpers/utils/readImgAsync';
-import { saveLocation, getLocationDetails } from '../store/ducks/locationsDuck';
+import {
+  saveLocation, getLocationDetails, getLocationAdmins, resetLocationAdminsState,
+} from '../store/ducks/locationsDuck';
 import { RootState } from '../store/configureStore';
 import { LocationItem } from '../types/locations';
 import useGetData from '../helpers/hooks/useGetData';
@@ -18,6 +20,7 @@ import Table from '../components/shared/Table';
 import { getAppUsers, resetAppUsersState } from '../store/ducks/appUsersDuck';
 import { GetAppUsersData } from '../types/appUsers';
 import notificationService from '../services/notification.service';
+import { AppAdminsData } from '../types/appAdmin';
 
 interface ValuesTypes {
   name: string,
@@ -56,7 +59,8 @@ const LocationDetails = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [searchParams] = useSearchParams();
-  const { locationDetails }: { locationDetails: LocationItem } = useSelector((state: RootState) => state.locationsReducer);
+  const [showFilteredAdmins, setShowFilteredAdmins] = useState(false);
+  const { locationDetails, admins }: { locationDetails: LocationItem, admins: AppAdminsData } = useSelector((state: RootState) => state.locationsReducer);
   const { users }: { users: GetAppUsersData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { id: locationId } = useParams();
   const isNewLocation = locationId === 'new';
@@ -70,6 +74,17 @@ const LocationDetails = () => {
     resetState: isNewLocation ? undefined : resetAppUsersState,
     customParams: {
       companyId: newLocationCompanyId || locationDetails?.company['_id'],
+      locationId,
+    },
+  });
+  const {
+    searchValue: locationAdminSearchValue, handleSearch: locationAdminHandleSearch, handlePageChange: locationAdminHandlePageChange,
+  } = useGetData({
+    resetOnUnmount: true,
+    getDataAction: isNewLocation ? undefined : getLocationAdmins,
+    resetState: isNewLocation ? undefined : resetLocationAdminsState,
+    fetchOnMount: false,
+    customParams: {
       locationId,
     },
   });
@@ -224,15 +239,22 @@ const LocationDetails = () => {
             buttonText="+ Add user"
           />
           <Table
-            searchValue=""
-            // handleSearch={(val) => locationsHandleSearch(val)}
-            data={locationDetails?.admins}
+            searchValue={locationAdminSearchValue || ''}
+            handleSearch={(val) => {
+              locationAdminHandleSearch(val);
+              !showFilteredAdmins && setShowFilteredAdmins(true);
+            }}
+            data={showFilteredAdmins ? admins : locationDetails?.admins}
             header={adminsHeader}
             tableTitle="Manage Locations Admins"
             handleEdit={({ _id }) => console.log(_id)}
-            // handlePageChange={(val) => locationsHandlePageChange(val)}
+            handlePageChange={(val) => {
+              locationAdminHandlePageChange(val);
+              !showFilteredAdmins && setShowFilteredAdmins(true);
+            }}
             handleAdd={() => console.log('1')}
             buttonText="+ Add admin"
+            costumeClasses="p-mt-6"
           />
         </>
       )}

@@ -1,4 +1,5 @@
-import { AppAdmin } from '../appAdmin';
+import { AppAdminsData } from '../appAdmin';
+import { GetDataParams } from '../main';
 
 export interface LocationItem {
   company: {
@@ -10,10 +11,7 @@ export interface LocationItem {
     name: string,
     _id: string
   },
-  admins: {
-    data: AppAdmin[],
-    count: number
-  }
+  admins: AppAdminsData,
   createdAt: string,
   name: string,
   updatedAt: string,
@@ -23,7 +21,6 @@ export interface LocationItem {
     height: number,
     imgURL: string
   },
-  __v: number,
   _id: string,
 }
 
@@ -46,7 +43,8 @@ export interface InitialStateLocations {
     data: LocationItem[],
     count: number
   } | null;
-  locationDetails: LocationItem | null
+  locationDetails: LocationItem | null,
+  admins: AppAdminsData | null
 }
 
 export interface SaveDataOptions {
@@ -63,4 +61,8 @@ export interface SaveDataOptions {
     name: string,
   },
   locationId?: string | null,
+}
+
+export interface GetLocationAdminsParams extends GetDataParams {
+  locationId: string
 }

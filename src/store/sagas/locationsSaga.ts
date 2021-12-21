@@ -2,13 +2,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
-import { setLocations, setLocationDetails } from '../ducks/locationsDuck';
+import { setLocations, setLocationDetails, setLocationAdmins } from '../ducks/locationsDuck';
 import {
-  GetLocationsOptions, GetLocationsData, GetLocationDetails, LocationItem,
+  GetLocationsOptions, GetLocationsData, GetLocationDetails, LocationItem, GetLocationAdminsParams,
 } from '../../types/locations';
 import notificationService from '../../services/notification.service';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
+import { AppAdminsData } from '../../types/appAdmin';
 
 export function* getLocations({ data, callbacks }:{ data: GetLocationsOptions, callbacks: CallBacks, type:string }) {
   try {
@@ -56,5 +57,22 @@ export function* saveLocationData({ data, callbacks }:{ data: any, callbacks: Ca
   } catch (error: any) {
     callbacks?.error && callbacks.error();
     notificationService.error(error.response.data.message, '', 500);
+  }
+}
+
+export function* getLocationAdmins({ params, callbacks }:{ params: GetLocationAdminsParams, callbacks: CallBacks, type: string }) {
+  try {
+    const res: AppAdminsData = yield axiosInstance.get('/admin/get_admins', { params });
+    yield put(setLocationAdmins(res));
+    callbacks?.success && callbacks.success();
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    yield put(
+      notifyAction({
+        type: 'error',
+        message: error.response?.data.message,
+        showError: false,
+      }),
+    );
   }
 }
