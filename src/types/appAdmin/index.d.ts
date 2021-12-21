@@ -13,7 +13,7 @@ export interface AppAdmin {
 }
 
 export interface AppAdminsData {
-  data: AppUser[],
+  data: AppAdmin[],
   count: number
 }
 

@@ -1,11 +1,13 @@
-import { AppAdmin } from '../appAdmin';
+import { AppAdminsData } from '../appAdmin';
+import { GetDataParams } from '../main';
 
 export interface InitialStateCompanies {
   companies: {
     data: CompanyItem[] | null,
     count: number
   } | null;
-  companyDetails: CompanyItem | null
+  companyDetails: CompanyItem | null,
+  admins: null | AppAdminsData
 }
 export interface GetCompaniesOptions {
   offset: number,
@@ -34,10 +36,7 @@ export interface CompanyItem {
   userCount: number
   __v: number
   _id: string,
-  admins: {
-    data: AppAdmin[],
-    count: number
-  }
+  admins: AppAdminsData
 }
 
 export interface CompaniesTypes {
@@ -58,4 +57,8 @@ export interface SaveDataTypes {
   logo: any,
   thumbnail: any,
   companyId?: string | null
+}
+
+export interface GetCompanyAdminsParams extends GetDataParams {
+  companyId: string
 }

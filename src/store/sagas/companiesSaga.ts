@@ -2,10 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
-import { setCompanies, setCompanyDetails } from '../ducks/companiesDuck';
+import { setCompanies, setCompanyDetails, setCompanyAdmins } from '../ducks/companiesDuck';
 import {
-  CompaniesTypes, GetCompaniesOptions, GetCompanyDetailsTypes, CompanyItem, SaveDataTypes,
+  CompaniesTypes, GetCompaniesOptions, GetCompanyDetailsTypes, CompanyItem, SaveDataTypes, GetCompanyAdminsParams,
 } from '../../types/companies';
+import {
+  AppAdminsData,
+} from '../../types/appAdmin';
 import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
 import notificationService from '../../services/notification.service';
@@ -62,5 +65,22 @@ export function* saveCompanyData({ data, callbacks }:{ data: SaveDataTypes, call
   } catch (error: any) {
     callbacks?.error && callbacks.error();
     notificationService.error(error.response.data.message, '', 500);
+  }
+}
+
+export function* getCompanyAdmins({ params, callbacks }:{ params: GetCompanyAdminsParams, callbacks: CallBacks, type: string }) {
+  try {
+    const res: AppAdminsData = yield axiosInstance.get('/admin/get_admins', { params });
+    yield put(setCompanyAdmins(res));
+    callbacks?.success && callbacks.success();
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    yield put(
+      notifyAction({
+        type: 'error',
+        message: error.response?.data.message,
+        showError: false,
+      }),
+    );
   }
 }

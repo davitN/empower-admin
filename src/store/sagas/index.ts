@@ -5,10 +5,10 @@ import {
   CHECK_SIGNED_IN, LOGOUT, REQUEST_SIGN_IN_SG, REQUEST_SIGN_UP_SG,
 } from '../ducks/authDuck';
 import {
-  GET_COMPANIES, GET_COMPANY_DETAILS, SAVE_COMPANY_DATA,
+  GET_COMPANIES, GET_COMPANY_DETAILS, SAVE_COMPANY_DATA, GET_COMPANY_ADMINS,
 } from '../ducks/companiesDuck';
 import {
-  getCompanies, getCompanyDetails, saveCompanyData,
+  getCompanies, getCompanyDetails, saveCompanyData, getCompanyAdmins,
 } from './companiesSaga';
 import { GET_LOCATIONS, SAVE_LOCATION, GET_LOCATION_DETAILS } from '../ducks/locationsDuck';
 import { getLocations, saveLocationData, getLocationDetails } from './locationsSaga';
@@ -82,6 +82,7 @@ function* actionWatcher() {
   yield takeLatest(UPDATE_APP_USER_ACCOUNT, updateAppUserAccount);
   yield takeLatest(RESET_APP_USER_ACCOUNT_PASSWORD, resetAppUserAccountPassword);
   yield takeLatest(GET_ALL_APP_USERS, getAllAppUsers);
+  yield takeLatest(GET_COMPANY_ADMINS, getCompanyAdmins);
 }
 
 export default function* rootSaga() {

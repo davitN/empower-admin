@@ -10,7 +10,8 @@ import TextInput from '../components/shared/Inputs/TextInput';
 import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 import Label from '../components/shared/Inputs/Label';
 import {
-  getCompanyDetails, resetCompanyDetailsState, saveCompanyData,
+  getCompanyAdmins,
+  getCompanyDetails, resetCompanyAdminsState, resetCompanyDetailsState, saveCompanyData,
 } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
 import { CompanyItem } from '../types/companies';
@@ -21,6 +22,7 @@ import Container from '../components/shared/Container';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 import { getLocations, resetLocationsState } from '../store/ducks/locationsDuck';
 import notificationService from '../services/notification.service';
+import { AppAdminsData } from '../types/appAdmin';
 
 interface InputsTypes {
   name: string,
@@ -55,6 +57,7 @@ const CompanyDetails = () => {
   const { id: companyId } = useParams();
   const isNewCompany = companyId === 'new';
   const { locations } = useSelector((state: RootState) => state.locationsReducer);
+  const [showFilteredAdmins, setShowFilteredAdmins] = useState(false);
   const {
     searchValue: locationsSearchValue, handleSearch: locationsHandleSearch, handlePageChange: locationsHandlePageChange,
   } = useGetData({
@@ -65,7 +68,19 @@ const CompanyDetails = () => {
       companyId,
     },
   });
-  const { companyDetails } : { companyDetails: CompanyItem } = useSelector((state: RootState) => state.companiesReducer);
+
+  const {
+    searchValue: adminsSearchValue, handleSearch: adminsHandleSearch, handlePageChange: adminsHandlePageChange,
+  } = useGetData({
+    getDataAction: isNewCompany ? undefined : getCompanyAdmins,
+    resetState: isNewCompany ? undefined : resetCompanyAdminsState,
+    resetOnUnmount: true,
+    fetchOnMount: false,
+    customParams: {
+      companyId,
+    },
+  });
+  const { companyDetails, admins } : { companyDetails: CompanyItem, admins: AppAdminsData } = useSelector((state: RootState) => state.companiesReducer);
   const [img, setImg] = useState<ImgTypes>(imgInitialState);
   const [values, setValues] = useState<InputsTypes>({
     name: '',
@@ -140,7 +155,7 @@ const CompanyDetails = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   useEffect(() => () => dispatch(resetCompanyDetailsState()), []);
-  console.log(companyDetails);
+
   return (
     <Container sectionTitle="VETERINARY GROWTH PARTNERS" idText="Company ID" itemId={companyId}>
       <Title title="COMPANY INFORMATION" costumeStyles="p-pb-4" />
@@ -260,13 +275,19 @@ const CompanyDetails = () => {
             costumeClasses={classes.tablePadding}
           />
           <Table
-            searchValue=""
-            // handleSearch={(val) => locationsHandleSearch(val)}
-            data={companyDetails?.admins}
+            searchValue={adminsSearchValue || ''}
+            handleSearch={(val) => {
+              adminsHandleSearch(val);
+              !showFilteredAdmins && setShowFilteredAdmins(true);
+            }}
+            data={showFilteredAdmins ? admins : companyDetails?.admins}
             header={adminsHeader}
             tableTitle="Manage Company Admins"
             handleEdit={({ _id }) => console.log(_id)}
-            handlePageChange={(val) => locationsHandlePageChange(val)}
+            handlePageChange={(val) => {
+              adminsHandlePageChange(val);
+              !showFilteredAdmins && setShowFilteredAdmins(true);
+            }}
             handleAdd={() => navigate(`/locations/new/?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)}
             buttonText="+ Add admin"
             costumeClasses={classes.tablePadding}
