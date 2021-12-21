@@ -97,11 +97,10 @@ const Table = ({
       </DataTable>
       {data && data.data.length > 0 && LIMIT < data.count && (
         <Paginator
-          template="PrevPageLink PageLinks NextPageLink"
+          template={(template as any) || undefined}
           first={currentPage}
           className={classes.paginator}
           rows={LIMIT}
-          // wait for api to add total record num
           totalRecords={data.count}
           onPageChange={handleChange}
         />
@@ -122,6 +121,12 @@ const useStyles = createUseStyles({
     },
   },
   table: {
+    '& > thead > tr': {
+      background: 'transparent !important',
+    },
+    '& > tbody > tr': {
+      background: 'transparent !important',
+    },
     '& > thead > tr > th': {
       background: 'transparent !important',
       color: `${COLORS.blueWood} !important`,
@@ -170,6 +175,9 @@ const useStyles = createUseStyles({
     },
   },
   paginator: {
+    width: 'max-content',
+    padding: '0.5rem 3rem !important',
+    margin: 'auto',
     marginTop: '1rem',
     '& > button': {
       background: 'transparent !important',
@@ -185,17 +193,32 @@ const useStyles = createUseStyles({
     },
     '& > .p-paginator-pages': {
       border: '0 !important',
+      display: 'grid',
+      gridAutoFlow: 'column',
+      gridColumnGap: '0.5rem',
+      margin: '0 1rem',
       '& > button': {
         background: 'transparent !important',
         color: `${COLORS.blueWood} !important`,
         width: 'max-content !important',
         height: 'max-content !important',
+        boxShadow: 'none',
+        opacity: 0.7,
+        fontWeight: 400,
+        padding: '0.5rem 0.1rem !important',
+        borderRadius: '20% !important',
+        minWidth: '2rem !important',
+        margin: '0 !important',
+        '&:hover:not(.p-highlight)': {
+          backgroundColor: 'rgba(119, 200, 204, 0.2) !important',
+        },
       },
       '& > button:focus': {
         boxShadow: 'none !important',
       },
       '& > .p-highlight': {
-        fontWeight: '700 !important',
+        fontWeight: '500 !important',
+        backgroundColor: 'rgba(119, 200, 204, 0.6) !important',
       },
     },
   },
@@ -233,3 +256,13 @@ const useStyles = createUseStyles({
     padding: '0.5rem 2rem !important',
   },
 });
+
+const template = {
+  layout: 'PrevPageLink PageLinks NextPageLink',
+  PrevPageLink: ({ onClick, disabled }: { onClick: () => void, disabled: boolean }) => {
+    return <i className="pi pi-angle-double-left" onClick={onClick} style={{ opacity: (disabled && 0.5) || 1, cursor: 'pointer' }} />;
+  },
+  NextPageLink: ({ onClick, disabled }: { onClick: () => void, disabled: boolean }) => {
+    return <i className={classNames('pi pi-angle-double-right')} style={{ opacity: (disabled && 0.5) || 1, cursor: 'pointer' }} onClick={onClick} />;
+  },
+};

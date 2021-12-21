@@ -65,5 +65,6 @@ const useStyles = createUseStyles({
     maxHeight: '100vh',
     overflow: 'auto',
     display: 'flex',
+    background: 'linear-gradient(180deg, rgba(255,255,255,1) 24%, rgba(246,246,246,1) 50%, rgba(246,246,246,1) 100%)',
   },
 });
