@@ -91,6 +91,8 @@ const AppContentDetail = () => {
   const { itemName, mode, id } = useParams();
   const [searchParams] = useSearchParams();
   const [saving, setSaving] = useState(false);
+  const [uploadedFile, setUploadedFIle] = useState<any>(null);
+  const [uploadedFileProgress, setUploadedFIleProgress] = useState<null | number>(null);
   const [monthlyActivityValues, setMonthlyActivityValues] = useState<MonthlyActivityValueTypes>({
     type: 'KICK_OFF',
     contentType: 'AUDIO',
@@ -116,7 +118,6 @@ const AppContentDetail = () => {
     },
   });
   const isEditing = mode === 'edit';
-  const [uploadedFile, setUploadedFIle] = useState<any>(null);
   const handleSave = () => {
     setSaving(true);
     if (itemName === 'community-article') {
@@ -150,6 +151,7 @@ const AppContentDetail = () => {
           companyId: isEditing && id,
         },
         { success: () => setSaving(false), error: () => setSaving(false) },
+        (val) => setUploadedFIleProgress(val),
       ));
     }
   };
@@ -194,6 +196,7 @@ const AppContentDetail = () => {
             uploadedFile={uploadedFile}
             setUploadedFIle={setUploadedFIle}
             contentType={monthlyActivityContentType}
+            uploadedFileProgress={uploadedFileProgress}
           />
         )}
 

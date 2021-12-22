@@ -23,6 +23,7 @@ import {
   GetAppContentItemInfo,
 } from '../../types/appContent';
 import notificationService from '../../services/notification.service';
+import { fileUploadConfig } from '../../helpers/utils';
 
 export function* getAppContent({ callbacks }:{ data: any, callbacks: CallBacks, type:string }) {
   try {
@@ -79,17 +80,18 @@ export function* getAppContentItem({ params, callbacks }:{ params: GetAppContent
   }
 }
 
-export function* saveAppContentItem({ data, callbacks }:{ data: any, callbacks: CallBacks, type: string }) {
+export function* saveAppContentItem({ data, callbacks, uploadWatcher }:{ data: any, callbacks: CallBacks, uploadWatcher: (val: number) => void, type: string }) {
   try {
     const formData = new FormData();
     data.file && formData.append('content', data.file);
     formData.append('data', JSON.stringify(data.data));
     if (data.companyId) {
-      yield axiosInstance.put(`/content/my_team_data/edit/${data.companyId}`, formData);
+      yield axiosInstance.put(`/content/my_team_data/edit/${data.companyId}`, formData, fileUploadConfig(uploadWatcher));
     } else {
       yield axiosInstance.post('/content/my_team_data/add_content', formData);
     }
     callbacks?.success && callbacks.success();
+    uploadWatcher && uploadWatcher(100);
     notificationService.success(data?.companyId ? 'Item has been successfully updated' : 'Item has been successfully added', '', 500);
   } catch (error: any) {
     callbacks?.error && callbacks.error();

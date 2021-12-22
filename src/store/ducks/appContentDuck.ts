@@ -152,10 +152,11 @@ export const resetAppContentItem = (fieldName: string) => ({
   payload: fieldName,
 });
 
-export const saveAppContentItem = (data: any, callbacks?: CallBacks) => ({
+export const saveAppContentItem = (data: any, callbacks?: CallBacks, uploadWatcher?: (val: number) => void) => ({
   type: SAVE_APP_CONTENT_ITEM,
   callbacks,
   data,
+  uploadWatcher,
 });
 
 export const getAppContentCategory = () => ({

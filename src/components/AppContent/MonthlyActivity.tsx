@@ -19,11 +19,12 @@ interface PropTypes {
   types: { value: string, label: string }[],
   uploadedFile: EventTarget,
   setUploadedFIle: Function,
-  contentType: { value: string, label: string }[]
+  contentType: { value: string, label: string }[],
+  uploadedFileProgress: number | null
 }
 
 const MonthlyActivity = ({
-  values, setValues, types, uploadedFile, setUploadedFIle, contentType,
+  values, setValues, types, uploadedFile, setUploadedFIle, contentType, uploadedFileProgress,
 }: PropTypes) => {
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -116,6 +117,7 @@ const MonthlyActivity = ({
                   fileType={values.contentType === 'VIDEO' ? '.mp4' : '.mp3'}
                   uploadedFile={uploadedFile}
                   handleUpload={(val: any) => setUploadedFIle(val)}
+                  uploadedFileProgress={uploadedFileProgress}
                 />
               </div>
             </>
