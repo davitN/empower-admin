@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Skeleton } from 'primereact/skeleton';
 import Container from '../components/shared/Container';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
@@ -24,11 +24,9 @@ interface ValuesTypes {
 
 const AppAdminDetails = () => {
   const classes = useStyles();
+  const [searchParams] = useSearchParams();
   const [isSaving, setSaving] = useState(false);
   const dispatch = useDispatch();
-  const { adminsRoles, adminDetails } :
-  { adminsRoles: AppAdminsRoles[], adminDetails: AppAdmin } = useSelector((state: RootState) => state.appAdminsReducer);
-
   const [values, setValues] = useState<ValuesTypes>({
     firstName: '',
     lastName: '',
@@ -36,16 +34,29 @@ const AppAdminDetails = () => {
     phone: '',
     role: null,
   });
-  const { id: adminId } = useParams();
+  const { id: adminId, type: adminType } = useParams();
+  const { adminsRoles, adminDetails } :
+  { adminsRoles: AppAdminsRoles[], adminDetails: AppAdmin } = useSelector((state: RootState) => state.appAdminsReducer);
   const isNewAdmin = adminId === 'new';
   const isInputsValid = !!(values.firstName && values.lastName && values.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/) && values.phone && values.role);
+  const filteredRoles = adminsRoles && adminsRoles.filter((el) => el.name.toLocaleLowerCase() === adminType?.toLocaleLowerCase());
+  const companyName = searchParams.get('companyName')?.replace('_', '  ');
+  const companyId = searchParams.get('companyId');
+  const locationName = searchParams.get('locationName')?.replace('_', '  ');
+  const locationId = searchParams.get('locationId');
 
   const handleSave = () => {
     setSaving(true);
     dispatch(saveAppAdminDetails(
       {
-        data: { ...values, role: values.role?.['_id'] || '' },
-        adminId,
+        data: {
+          ...values,
+          role: values.role?.['_id'] || '',
+          ...(locationId && { locationId }),
+          ...(companyId && { companyId }),
+
+        },
+        ...(adminId !== 'new' && { adminId }),
       },
       {
         success: () => setSaving(false),
@@ -79,6 +90,12 @@ const AppAdminDetails = () => {
     }
   }, [adminDetails]);
 
+  // set default admin role
+  useEffect(() => {
+    if (adminsRoles && filteredRoles) {
+      setValues({ ...values, role: filteredRoles[0] });
+    }
+  }, [adminsRoles]);
   return (
     <Container sectionTitle="Add New Admin">
       <div className={classes.wrapper}>
@@ -93,13 +110,16 @@ const AppAdminDetails = () => {
               <TextInput label="Last Name" value={values.lastName} handleChange={(lastName) => setValues({ ...values, lastName })} required />
               <TextInput label="Email" value={values.email} handleChange={(email) => setValues({ ...values, email })} required />
               <TextInput label="Phone" value={values.phone} handleChange={(phone) => setValues({ ...values, phone })} required />
+              {locationName && locationId && <TextInput label="Location" value={locationName} disabled />}
+              {companyName && companyId && <TextInput label="Company" value={companyName} disabled />}
               {!adminsRoles ? <Skeleton width="100%" height="3rem" /> : (
                 <Select
                   selectedValue={values.role}
-                  data={adminsRoles}
+                  data={filteredRoles}
                   label="Admin Role"
                   required
                   handleChange={(role) => setValues({ ...values, role })}
+                  disabled
                 />
               )}
             </>
@@ -113,7 +133,7 @@ const AppAdminDetails = () => {
               loading: isSaving,
             }}
             remove={{
-              handler: () => console.log('save'),
+              handler: () => console.log('rm'),
               label: 'Remove Admin',
               disabled: isSaving,
             }}

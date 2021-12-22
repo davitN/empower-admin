@@ -28,10 +28,10 @@ const AppAdmins = () => {
         data={admins}
         header={tableHeaders}
         tableTitle="ADMINS"
-        handleEdit={({ _id }) => navigate(_id)}
+        handleEdit={({ _id, role }) => navigate(`${role.name}/${_id}`)}
         LIMIT={LIMIT}
         handlePageChange={(val) => handlePageChange(val)}
-        handleAdd={() => navigate('new')}
+        handleAdd={() => navigate('SuperAdmin/new')}
         buttonText="+ Add admin"
       />
     </Container>

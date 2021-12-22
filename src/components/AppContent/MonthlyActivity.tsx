@@ -102,7 +102,6 @@ const MonthlyActivity = ({
                       onChange={() => setValues({ ...values, contentType: value })}
                       costumeClasses="p-mr-3"
                       key={label}
-                      disabled={!!isEditing}
                     />
                   ))}
                 </div>

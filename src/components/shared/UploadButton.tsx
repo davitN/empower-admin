@@ -15,7 +15,6 @@ const UploadButton = ({
   uploadedFile, handleUpload, fileType, disabled, uploadedFileProgress,
 } : PropsTypes) => {
   const classes = useStyles();
-  console.log(uploadedFileProgress);
   return (
     <div>
       <div className={classes.inputsWrapper}>
@@ -43,7 +42,7 @@ const UploadButton = ({
             </label>
           </div>
           {uploadedFile && <Label label={uploadedFile.name} costumeStyles="p-ml-3" />}
-          {uploadedFileProgress && (
+          {uploadedFile && uploadedFileProgress && (
           <Label label={`(${uploadedFileProgress}%)`} costumeStyles="p-ml-10 text-sm" />
           )}
         </div>

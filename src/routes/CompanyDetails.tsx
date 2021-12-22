@@ -283,12 +283,12 @@ const CompanyDetails = () => {
             data={showFilteredAdmins ? admins : companyDetails?.admins}
             header={adminsHeader}
             tableTitle="Manage Company Admins"
-            handleEdit={({ _id }) => console.log(_id)}
+            handleEdit={({ _id, role }) => navigate(`/app-admins/${role.name}/${_id}?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)}
             handlePageChange={(val) => {
               adminsHandlePageChange(val);
               !showFilteredAdmins && setShowFilteredAdmins(true);
             }}
-            handleAdd={() => navigate(`/locations/new/?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)}
+            handleAdd={() => navigate(`/app-admins/CompanyAdmin/new?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)}
             buttonText="+ Add admin"
             costumeClasses={classes.tablePadding}
           />

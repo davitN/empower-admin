@@ -247,12 +247,12 @@ const LocationDetails = () => {
             data={showFilteredAdmins ? admins : locationDetails?.admins}
             header={adminsHeader}
             tableTitle="Manage Locations Admins"
-            handleEdit={({ _id }) => console.log(_id)}
+            handleEdit={({ _id, role }) => navigate(`/app-admins/${role.name}/${_id}?locationId=${locationId}&locationName=${locationDetails.name.replace(' ', '_')}`)}
             handlePageChange={(val) => {
               locationAdminHandlePageChange(val);
               !showFilteredAdmins && setShowFilteredAdmins(true);
             }}
-            handleAdd={() => console.log('1')}
+            handleAdd={() => navigate(`/app-admins/LocationManager/new?locationId=${locationId}&locationName=${locationDetails.name.replace(' ', '_')}`)}
             buttonText="+ Add admin"
             costumeClasses="p-mt-6"
           />

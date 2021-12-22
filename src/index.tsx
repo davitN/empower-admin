@@ -42,7 +42,7 @@ ReactDOM.render(
             <Route path="app-content" element={<AppContent />} />
             <Route path="app-content/:itemName/:mode/:id" element={<AppContentDetail />} />
             <Route path="app-admins" element={<AppAdmins />} />
-            <Route path="app-admins/:id" element={<AppAdminDetails />} />
+            <Route path="app-admins/:type/:id" element={<AppAdminDetails />} />
             <Route path="user-profile" element={<AppUserAccount />} />
             <Route
               path="*"

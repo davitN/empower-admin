@@ -145,7 +145,7 @@ const AppContentDetail = () => {
         {
           data: {
             ...monthlyActivityValues,
-            type: isEditing ? searchParams.get('fieldName') : monthlyActivityValues.type,
+            type: isEditing ? searchParams.get('fieldName') : monthlyActivityValues.contentType,
           },
           file: uploadedFile,
           companyId: isEditing && id,
