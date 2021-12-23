@@ -19,7 +19,8 @@ interface MonthlyActivityValueTypes {
   title: string,
   subTitle: string,
   description: string,
-  companyId?: string | null
+  companyId?: string | null,
+  duration: number
 }
 
 interface CommunityArticleValuesTypes {
@@ -100,6 +101,7 @@ const AppContentDetail = () => {
     subTitle: '',
     description: '',
     companyId: '',
+    duration: 0,
   });
   const [communityArticleValues, setCommunityArticleValues] = useState<CommunityArticleValuesTypes>({
     type: communityDataItem ? communityDataItem.type : 'WRITTEN',

@@ -67,6 +67,17 @@ const MonthlyActivity = ({
     }
   }, [appContentItemInfo]);
 
+  function setFileDuration(file: any) {
+    const video = document.createElement(file.type.includes('video') ? 'video' : 'audio');
+    video.preload = 'metadata';
+    video.onloadedmetadata = () => {
+      window.URL.revokeObjectURL(video.src);
+      const { duration } = video;
+      setValues({ ...values, duration });
+    };
+    video.src = URL.createObjectURL(file);
+  }
+
   return (
     <div className={classes.gridWrapper}>
       <div>
@@ -115,7 +126,10 @@ const MonthlyActivity = ({
                 <UploadButton
                   fileType={values.contentType === 'VIDEO' ? '.mp4' : '.mp3'}
                   uploadedFile={uploadedFile}
-                  handleUpload={(val: any) => setUploadedFIle(val)}
+                  handleUpload={(val: any) => {
+                    setUploadedFIle(val);
+                    setFileDuration(val);
+                  }}
                   uploadedFileProgress={uploadedFileProgress}
                 />
               </div>
