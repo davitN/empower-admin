@@ -7,7 +7,7 @@ export interface AppAdmin {
   createdAt: string,
   role: {
     description: string,
-    name: string,
+    name: RoleType,
     _id: string,
   }
 }
@@ -17,8 +17,10 @@ export interface AppAdminsData {
   count: number
 }
 
+export type RoleType = 'SuperAdmin' | 'LocationManager' | 'CompanyManager';
+
 interface AppAdminsRoles {
-  name: string,
+  name: RoleType,
   description: string,
   _id: string
 }

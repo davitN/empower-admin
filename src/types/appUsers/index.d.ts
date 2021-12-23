@@ -3,7 +3,17 @@ export interface AppUser {
   firstName: string,
   lastName: string,
   phone: string,
-  _id: string
+  _id: string,
+  location: {
+    _id: string,
+    name: string,
+    imgURL: string
+  },
+  company: {
+    _id: string,
+    name: string,
+    imgURL: string
+  }
 }
 
 export interface GetAppUsersData {
