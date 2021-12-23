@@ -73,7 +73,7 @@ const MonthlyActivity = ({
     video.onloadedmetadata = () => {
       window.URL.revokeObjectURL(video.src);
       const { duration } = video;
-      setValues({ ...values, duration });
+      setValues({ ...values, duration: Math.floor(duration) });
     };
     video.src = URL.createObjectURL(file);
   }
