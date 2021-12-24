@@ -166,33 +166,33 @@
 //   },
 // });
 
-import React, { useState, useEffect } from 'react';
+import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
 import axios from 'axios';
-import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
-import { Elements } from '@stripe/react-stripe-js';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { createUseStyles } from 'react-jss';
 import CheckoutForm from '../components/Payments/CheckoutForm';
-import '../styles/payments.css';
-import { backendUrl } from '../services/credentials.service';
 import useQuery from '../helpers/hooks/useQuery';
+import { backendUrl } from '../services/credentials.service';
+import '../styles/payments.css';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // loadStripe is initialized with a fake API key.
 
-const stripePromise = loadStripe('pk_test_51Hqt0jEPVI7wKwnS67prIlDm75i5woaRf9ER3MKXZz9EjtzjI8ZvzSXewSg5kZZKlri5SLHcmjpTx9PxXPWv0sgY006pMc4Qd8');
+const stripePromise = loadStripe(
+  'pk_test_51Hqt0jEPVI7wKwnS67prIlDm75i5woaRf9ER3MKXZz9EjtzjI8ZvzSXewSg5kZZKlri5SLHcmjpTx9PxXPWv0sgY006pMc4Qd8',
+);
 
 export default function App() {
   const classes = useStyles();
   const query = useQuery();
-  const navigate = useNavigate();
-  const loc = useLocation();
-  console.log(loc);
 
   const [clientSecret, setClientSecret] = useState('');
   const redirectStatus = query.get('redirect_status');
+  const companyId = query.get('companyId');
+  const companyName = query.get('companyName');
   useEffect(() => {
     if (redirectStatus === 'succeeded') {
       setTimeout(() => {
@@ -205,7 +205,7 @@ export default function App() {
     (async () => {
       const { data } = await axios.post(
         `${backendUrl}payment/create-payment-intent`,
-        { body: JSON.stringify({ items: [{ id: 'xl-tshirt' }] }) },
+        { body: JSON.stringify({ items: [{ id: 'xl-tshirt' }], companyName, companyId }) },
 
         { headers: { 'Content-Type': 'application/json' } },
       );
