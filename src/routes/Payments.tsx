@@ -205,7 +205,7 @@ export default function App() {
     (async () => {
       const { data } = await axios.post(
         `${backendUrl}payment/create-payment-intent`,
-        { body: JSON.stringify({ items: [{ id: 'xl-tshirt' }], companyName, companyId }) },
+        { items: [{ id: 'xl-tshirt' }], companyName, companyId },
 
         { headers: { 'Content-Type': 'application/json' } },
       );
