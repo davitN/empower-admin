@@ -65,6 +65,10 @@ const useStyles = createUseStyles({
 
 const routes: Array<{ title: string, path: string }> = [
   {
+    title: 'Analytics',
+    path: '/analytics',
+  },
+  {
     title: 'Companies',
     path: '/companies',
   },
@@ -83,9 +87,5 @@ const routes: Array<{ title: string, path: string }> = [
   {
     title: 'Account',
     path: '/user-profile',
-  },
-  {
-    title: 'Analytics',
-    path: '/analytics',
   },
 ];

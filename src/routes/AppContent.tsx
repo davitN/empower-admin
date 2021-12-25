@@ -92,7 +92,7 @@ const AppContent = () => {
   return (
     <Container sectionTitle="EMPOWER APP CONTENT">
       <div className="p-px-3">
-        <Title title="MONTHLY COMPANY CONTENT" fontSize="text-2xl" costumeStyles="p-mb-6" />
+        <Title title="MONTHLY COMPANY CONTENT" fontSize="text-2xl" costumeStyles="p-mt-6" />
         <div className={classNames(classes.wrapper, 'p-px-3')}>
           <Table
             searchValue={kickOffSearchValue}
@@ -139,18 +139,20 @@ const AppContent = () => {
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=powerDown`)}
             handlePageChange={(val) => powerDownHandlePageChange(val)}
           />
-          <Title title="COMMUNITY CONTENT" fontSize="text-2xl" costumeStyles="p-mt-6" />
-          <Table
-            searchValue={communitySearchValue}
-            handleSearch={(val) => communityHandleSearch(val)}
-            data={initialData.communityData}
-            header={communityDataHeader}
-            tableTitle="Community Content"
-            handleEdit={({ _id }) => navigate(`community-article/edit/${_id}`)}
-            handlePageChange={(val) => communityHandlePageChange(val)}
-            handleAdd={() => navigate('community-article/new/new-community-content')}
-            buttonText="+ Add content"
-          />
+          <div>
+            <Title title="COMMUNITY CONTENT" fontSize="text-2xl" costumeStyles="p-mt-6 p-mb-3" />
+            <Table
+              searchValue={communitySearchValue}
+              handleSearch={(val) => communityHandleSearch(val)}
+              data={initialData.communityData}
+              header={communityDataHeader}
+              tableTitle="Community Content"
+              handleEdit={({ _id }) => navigate(`community-article/edit/${_id}`)}
+              handlePageChange={(val) => communityHandlePageChange(val)}
+              handleAdd={() => navigate('community-article/new/new-community-content')}
+              buttonText="+ Add content"
+            />
+          </div>
         </div>
       </div>
     </Container>

@@ -1,17 +1,15 @@
 /* eslint-disable no-return-assign */
 import { useSelector } from 'react-redux';
-import { createUseStyles } from 'react-jss';
 import { useNavigate } from 'react-router-dom';
 import Table from '../components/shared/Table';
 import { getCompanies, resetCompaniesState } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
-import COLORS from '../services/colors.service';
 import useGetData from '../helpers/hooks/useGetData';
+import Container from '../components/shared/Container';
 
 const LIMIT = 8;
 
 const Companies = () => {
-  const classes = useStyles();
   const navigate = useNavigate();
   const { companies } = useSelector((state: RootState) => state.companiesReducer);
   const {
@@ -24,7 +22,7 @@ const Companies = () => {
   });
 
   return (
-    <div className={classes.root}>
+    <Container sectionTitle="COMPANIES">
       <Table
         searchValue={searchValue || ''}
         handleSearch={(val) => handleSearch(val)}
@@ -37,7 +35,7 @@ const Companies = () => {
         handleAdd={() => navigate('new')}
         buttonText="+ Add company"
       />
-    </div>
+    </Container>
   );
 };
 
@@ -61,13 +59,3 @@ const tableHeaders = [
     field: 'userCount',
   },
 ];
-
-const useStyles = createUseStyles({
-  root: {
-    color: COLORS.blueWood,
-    width: '100%',
-    padding: '4rem 5rem 2rem',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-});
