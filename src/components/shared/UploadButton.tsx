@@ -8,7 +8,7 @@ interface PropsTypes {
   handleUpload?: (val: any) => void,
   fileType?: string,
   disabled?: boolean,
-  uploadedFileProgress: number | null
+  uploadedFileProgress?: number | null
 }
 
 const UploadButton = ({
