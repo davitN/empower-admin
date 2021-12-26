@@ -27,7 +27,7 @@ const App = () => {
 
   useEffect(() => {
     if (pathname === '/') {
-      navigate('/companies');
+      navigate('/analytics');
     }
   }, [pathname]);
 
