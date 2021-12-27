@@ -5,23 +5,24 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 import { createUseStyles } from 'react-jss';
+import { useSearchParams } from 'react-router-dom';
 
 const CheckoutForm = () => {
   const classes = useStyles();
   const stripe = useStripe();
   const elements = useElements();
-
+  const [searchParams] = useSearchParams();
   const [message, setMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const paidTill = searchParams.get('paidTill') || new Date();
+  const clientSecret = new URLSearchParams(window.location.search).get(
+    'payment_intent_client_secret',
+  );
 
   useEffect(() => {
     if (!stripe) {
       return;
     }
-
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      'payment_intent_client_secret',
-    );
 
     if (!clientSecret) {
       return;
@@ -78,18 +79,27 @@ const CheckoutForm = () => {
 
     setIsLoading(false);
   };
-
   return (
-    <form id="payment-form" onSubmit={handleSubmit} className={classes.form}>
-      <PaymentElement id="payment-element" />
-      <button type="submit" disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner" /> : 'Pay now'}
+    <div className="p-d-flex p-flex-column p-ai-center">
+      {new Date(paidTill).valueOf() > new Date().valueOf() && (
+      <p className={classes.paidTill}>
+        Paid until:
+        <span className="p-ml-1">
+          {dateFormat.format(new Date(new Date(paidTill)))}
         </span>
-      </button>
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
-    </form>
+      </p>
+      )}
+      <form id="payment-form" onSubmit={handleSubmit} className={classes.form}>
+        <PaymentElement id="payment-element" />
+        <button type="submit" disabled={isLoading || !stripe || !elements} id="submit">
+          <span id="button-text">
+            {isLoading ? <div className="spinner" id="spinner" /> : 'Pay now'}
+          </span>
+        </button>
+        {/* Show any error or success messages */}
+        {message && <div id="payment-message">{message}</div>}
+      </form>
+    </div>
   );
 };
 
@@ -104,4 +114,17 @@ const useStyles = createUseStyles({
     borderRadius: '7px',
     padding: '40px',
   },
+  paidTill: {
+    fontSize: '1.5rem',
+    opacity: 0.7,
+    fontWeight: '500',
+    letterSpacing: '0.7px',
+    marginBottom: '0.5rem',
+  },
+});
+
+const dateFormat = Intl.DateTimeFormat(undefined, {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
 });

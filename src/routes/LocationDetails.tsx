@@ -94,8 +94,8 @@ const LocationDetails = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [img, setImg] = useState<ImgTypes>(imgInitialStateImg);
   const domainName = window.location.href.replace(window.location.pathname, '');
-  const paymentURL = locationDetails && `${domainName}/payments/?companyId=${locationDetails?.company['_id']}&companyName=${values.name}`;
-
+  const paidTill = locationDetails && locationDetails?.paidTill;
+  const paymentURL = locationDetails && `${domainName}/payments/?companyId=${locationDetails?.company['_id']}&companyName=${values.name}&paidTill=${paidTill}`;
   const validateInputs = () : boolean => values.name.length < 1;
 
   const handleImgUpload = async (e: any) => {

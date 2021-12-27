@@ -20,6 +20,7 @@ export interface CompanyItem {
   individualLocationPaymentPage: string
   price: number
   locationCount: number,
+  paidTill: Date,
   location?: {
     data: any[],
     count: number

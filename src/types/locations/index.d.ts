@@ -11,6 +11,7 @@ export interface LocationItem {
     name: string,
     _id: string
   },
+  paidTill: Date,
   admins: AppAdminsData,
   createdAt: string,
   name: string,

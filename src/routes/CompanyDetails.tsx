@@ -90,7 +90,7 @@ const CompanyDetails = () => {
     code: null,
   });
   const [saving, setSaving] = useState<boolean>(false);
-
+  const paidTill = companyDetails && companyDetails?.paidTill;
   const handleImgUpload = async (e: any) => {
     const {
       img: newImg,
@@ -128,7 +128,7 @@ const CompanyDetails = () => {
   const validateInputs = () : boolean => values.name.length < 1 || (values.paymentType === paymentType.all && !values.price) || !img.imgPrev;
 
   const domainName = window.location.href.replace(window.location.pathname, '');
-  const paymentURL = `${domainName}/payments/?companyId=${companyId}&companyName=${values.name}`;
+  const paymentURL = `${domainName}/payments/?companyId=${companyId}&companyName=${values.name}&paidTill=${paidTill}`;
 
   useEffect(() => {
     if (companyId !== 'new' && typeof companyId === 'string') {

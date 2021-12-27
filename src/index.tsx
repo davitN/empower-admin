@@ -22,6 +22,7 @@ import AppAdmins from './routes/AppAdmins';
 import AppAdminDetails from './routes/AppAdminDetails';
 import AppUserAccount from './routes/AppUserAccount';
 import Analytics from './routes/Analitycs';
+import PaymentsFinished from './routes/PaymentsFinished';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -34,6 +35,7 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="payments" element={<Payments />} />
+          <Route path="payments/finished" element={<PaymentsFinished />} />
           <Route path="/" element={<App />}>
             <Route path="companies" element={<Companies />} />
             <Route path="companies/:id" element={<CompanyDetails />} />
