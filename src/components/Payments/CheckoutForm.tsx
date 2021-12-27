@@ -62,7 +62,7 @@ const CheckoutForm = () => {
       confirmParams: {
         // Make sure to change this to your payment completion page
         // ToDo ახალი გვერდი უნდა
-        return_url: 'http://localhost:3000/payments_done',
+        return_url: `http://localhost:3000/payments/finished?clientSecret=${clientSecret}`,
       },
     });
 
