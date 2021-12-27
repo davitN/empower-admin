@@ -54,6 +54,9 @@ import {
 import { GET_APP_USER_ACCOUNT, UPDATE_APP_USER_ACCOUNT, RESET_APP_USER_ACCOUNT_PASSWORD } from '../ducks/appUserAccount';
 import { getAppUserAccount, updateAppUserAccount, resetAppUserAccountPassword } from './appUserAccountSaga';
 
+import { GET_PAYMENT_DATA } from '../ducks/paymentsDuck';
+import { getPaymentData } from './paymentsSaga';
+
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
   yield takeLatest(REQUEST_SIGN_IN_SG, signInSaga);
@@ -88,6 +91,7 @@ function* actionWatcher() {
   yield takeLatest(GET_ALL_APP_USERS, getAllAppUsers);
   yield takeLatest(GET_COMPANY_ADMINS, getCompanyAdmins);
   yield takeLatest(GET_LOCATION_ADMINS, getLocationAdmins);
+  yield takeLatest(GET_PAYMENT_DATA, getPaymentData);
 }
 
 export default function* rootSaga() {
