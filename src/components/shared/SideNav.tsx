@@ -15,7 +15,7 @@ const SideNav = () => {
 
   return (
     <div className={classes.container}>
-      <img className={classNames('p-col', classes.logo)} src={Logo} alt="Ups." onClick={() => navigate('/companies')} />
+      <img className={classNames('p-col', classes.logo)} src={Logo} alt="Ups." onClick={() => navigate('/analytics')} />
       {isSignedIn ? (
         <ul className={classNames('p-pt-6 p-pl-0', classes.ul)}>
           {routes.map(({ title, path }) => (
@@ -64,6 +64,10 @@ const useStyles = createUseStyles({
 });
 
 const routes: Array<{ title: string, path: string }> = [
+  {
+    title: 'Analytics',
+    path: '/analytics',
+  },
   {
     title: 'Companies',
     path: '/companies',

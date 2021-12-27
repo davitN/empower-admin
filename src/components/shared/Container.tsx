@@ -17,7 +17,8 @@ const Container = ({
   const classes = useStyles();
   return (
     <div className={classNames('p-p-6', classes.root)}>
-      <div className="p-d-flex p-jc-between p-ai-center p-mb-6">
+      {(sectionTitle || itemId) && (
+      <div className={classNames('p-d-flex p-jc-between p-ai-center p-mb-3', classes.textColor)}>
         {sectionTitle && <Title title={sectionTitle} fontSize="text-4xl" costumeStyles="p-mr-6" />}
         {itemId !== 'new' && itemId && idText && (
         <p className={classNames('p-d-flex p-ai-center p-flex-column text-lg p-text-bold', classes.textColor)}>
@@ -26,6 +27,7 @@ const Container = ({
         </p>
         )}
       </div>
+      )}
       {children}
     </div>
   );
