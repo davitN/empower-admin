@@ -7,8 +7,6 @@ import { RootState } from '../store/configureStore';
 import useGetData from '../helpers/hooks/useGetData';
 import Container from '../components/shared/Container';
 
-const LIMIT = 8;
-
 const Companies = () => {
   const navigate = useNavigate();
   const { companies } = useSelector((state: RootState) => state.companiesReducer);
@@ -17,7 +15,6 @@ const Companies = () => {
   } = useGetData({
     getDataAction: getCompanies,
     resetState: resetCompaniesState,
-    LIMIT,
     resetOnUnmount: true,
   });
 
@@ -30,7 +27,6 @@ const Companies = () => {
         header={tableHeaders}
         tableTitle="COMPANIES"
         handleEdit={({ _id }) => navigate(_id)}
-        LIMIT={LIMIT}
         handlePageChange={(val) => handlePageChange(val)}
         handleAdd={() => navigate('new')}
         buttonText="+ Add company"

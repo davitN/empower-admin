@@ -25,6 +25,7 @@ const AppContent = () => {
     getDataAction: getCommunityData,
     fetchOnMount: false,
     resetState: () => resetCommunityData(),
+    LIMIT: 5,
   });
 
   const {
@@ -36,6 +37,7 @@ const AppContent = () => {
     customParams: {
       fieldName: 'kickOff',
     },
+    LIMIT: 5,
   });
 
   const {
@@ -47,6 +49,7 @@ const AppContent = () => {
     customParams: {
       fieldName: 'ethos',
     },
+    LIMIT: 5,
   });
 
   const {
@@ -58,6 +61,7 @@ const AppContent = () => {
     customParams: {
       fieldName: 'gratitude',
     },
+    LIMIT: 5,
   });
 
   const {
@@ -69,6 +73,7 @@ const AppContent = () => {
     customParams: {
       fieldName: 'powerUp',
     },
+    LIMIT: 5,
   });
 
   const {
@@ -80,6 +85,7 @@ const AppContent = () => {
     customParams: {
       fieldName: 'powerDown',
     },
+    LIMIT: 5,
   });
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -101,6 +107,7 @@ const AppContent = () => {
             header={tableHeaders}
             tableTitle="Kickoff Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=kickOff`)}
+            LIMIT={5}
             handlePageChange={(val) => kickOffHandlePageChange(val)}
           />
           <Table
@@ -110,6 +117,7 @@ const AppContent = () => {
             header={tableHeaders}
             tableTitle="Ethos Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=ethos`)}
+            LIMIT={5}
             handlePageChange={(val) => ethosHandlePageChange(val)}
           />
           <Table
@@ -119,6 +127,7 @@ const AppContent = () => {
             header={tableHeaders}
             tableTitle="Gratitude Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=gratitude`)}
+            LIMIT={5}
             handlePageChange={(val) => gratitudeHandlePageChange(val)}
           />
           <Table
@@ -128,6 +137,7 @@ const AppContent = () => {
             header={tableHeaders}
             tableTitle="Power-Up Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=powerUp`)}
+            LIMIT={5}
             handlePageChange={(val) => powerUpHandlePageChange(val)}
           />
           <Table
@@ -137,6 +147,7 @@ const AppContent = () => {
             header={tableHeaders}
             tableTitle="Power-Down Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=powerDown`)}
+            LIMIT={5}
             handlePageChange={(val) => powerDownHandlePageChange(val)}
           />
           <div>
@@ -151,6 +162,7 @@ const AppContent = () => {
               handlePageChange={(val) => communityHandlePageChange(val)}
               handleAdd={() => navigate('community-article/new/new-community-content')}
               buttonText="+ Add content"
+              LIMIT={5}
             />
           </div>
         </div>
