@@ -48,7 +48,7 @@ const UserDetails = () => {
   const newUserCompanyName = searchParams.get('companyName')?.replace('_', ' ');
   const newUserCompanyId = searchParams.get('companyId');
   const newUserLocationName = searchParams.get('locationName')?.replace('_', ' ');
-  const newUserLocationId = searchParams.get('locationName');
+  const newUserLocationId = searchParams.get('locationId');
 
   const validateInputs = () => (values.firstName.length < 1 || values.lastName.length < 1
     || values.phone.length < 1 || !values.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/));
