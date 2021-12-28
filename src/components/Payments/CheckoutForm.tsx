@@ -15,7 +15,7 @@ const CheckoutForm = () => {
   const [message, setMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const paidTill = searchParams.get('paidTill') || new Date();
-  const clientSecret = new URLSearchParams(window.location.search).get(
+  const clientSecret = searchParams.get(
     'payment_intent_client_secret',
   );
 
@@ -57,12 +57,14 @@ const CheckoutForm = () => {
 
     setIsLoading(true);
 
+    const domain = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}`;
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
         // ToDo ახალი გვერდი უნდა
-        return_url: `http://localhost:3000/payments/finished?clientSecret=${clientSecret}`,
+        return_url: `${domain}/payments/finished`,
       },
     });
 
@@ -79,6 +81,7 @@ const CheckoutForm = () => {
 
     setIsLoading(false);
   };
+
   return (
     <div className="p-d-flex p-flex-column p-ai-center">
       {new Date(paidTill).valueOf() > new Date().valueOf() && (

@@ -16,7 +16,7 @@ const PaymentsFinished = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const { paymentData }: { paymentData: PaymentDataType | null } = useSelector((state: RootState) => state.paymentsReducer);
   const intervalRef = useRef<any>();
-  const clientSecret = searchParams.get('clientSecret');
+  const clientSecret = searchParams.get('payment_intent_client_secret');
 
   useEffect(() => {
     if (clientSecret) {
@@ -27,7 +27,7 @@ const PaymentsFinished = () => {
   }, [clientSecret]);
 
   useEffect(() => {
-    if (!paymentData?.status && !loading && clientSecret) {
+    if (!(paymentData?.status === 'SUCCESS' || paymentData?.status === 'DECLINED') && !loading && clientSecret) {
       intervalRef.current = setInterval(() => {
         dispatch(getPaymentStatus({
           clientSecret,
@@ -41,7 +41,7 @@ const PaymentsFinished = () => {
     <div className={classes.root}>
       <div className={classNames(classes.container, 'p-p-4 p-shadow-3 p-w-28')}>
         <h1 className={classNames('p-text-center', classes.title)}>Payment Status</h1>
-        {!paymentData?.status && (
+        {!(paymentData?.status === 'SUCCESS' || paymentData?.status === 'DECLINED') && (
         <div className="p-d-flex p-ai-center p-mt-4">
           <ProgressSpinner />
         </div>
