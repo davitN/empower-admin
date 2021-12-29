@@ -215,7 +215,7 @@ const LocationDetails = () => {
               disabled: validateInputs(),
             }}
             remove={{
-              handler: () => console.log('remove item'),
+              handler: () => console.log('remove'),
               label: 'Remove Location',
               disabled: false,
               hidden: !isNewLocation && !locationDetails,
