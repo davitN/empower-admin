@@ -1,6 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import { useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'primereact/skeleton';
 import Title from '../shared/Title';
@@ -18,6 +18,7 @@ const MonthlyActivity = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { id: companyId, mode } = useParams();
   const isEditing = mode === 'edit';
   const [saving, setSaving] = useState(false);
@@ -46,6 +47,7 @@ const MonthlyActivity = () => {
         success: () => {
           setSaving(false);
           resetUploadedFilesData();
+          !isEditing && navigate(`/companies/${companyId}`);
         },
         error: () => {
           setSaving(false);
