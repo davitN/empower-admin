@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'primereact/skeleton';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Title from '../shared/Title';
 import Label from '../shared/Inputs/Label';
@@ -20,6 +20,7 @@ import FormSharedComponent from '../shared/FormsSharedComponent';
 const CommunityArticle = () => {
   const dispatch = useDispatch();
   const { id, mode, itemName } = useParams();
+  const navigate = useNavigate();
   const classes = useStyles();
   const isEditing = mode === 'edit' && id;
   const { categories, communityDataItem } : ReducerTypes = useSelector((state: RootState) => state.appContentReducer);
@@ -74,7 +75,13 @@ const CommunityArticle = () => {
         image: uploadedFile,
         id: isEditing && id,
       },
-      { success: () => setSaving(false), error: () => setSaving(false) },
+      {
+        success: (newId: string) => {
+          setSaving(false);
+          navigate(`/app-content/community-article/edit/${newId}`);
+        },
+        error: () => setSaving(false),
+      },
     ));
   };
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
