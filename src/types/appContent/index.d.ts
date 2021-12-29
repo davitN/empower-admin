@@ -84,7 +84,7 @@ export interface GetAppContentItemData extends ItemModel {
   count: number
 }
 
-export type MonthlyActivityTypes = 'KICK_OFF' | 'ETHOS' | 'GRATITUDE' | 'POWER_UP' | 'POWER_DOWN';
+export type MonthlyActivityTypes = 'kickOff' | 'ethos' | 'gratitude' | 'powerUp' | 'powerDown';
 
 export type MonthlyActivityContentType = 'VIDEO' | 'AUDIO';
 

@@ -31,7 +31,7 @@ const MonthlyActivity = ({
   const { id: companyId, mode } = useParams();
   const [searchParams] = useSearchParams();
   const fieldName = searchParams.get('fieldName');
-  const type = fieldName && fieldName.split(/(?=[A-Z])/).map((el) => el.toUpperCase()).join('_');
+  const type = fieldName && fieldName;
   const isEditing = mode === 'edit' && companyId;
   const { appContentItemInfo } : { appContentItemInfo :GetAppContentItemInfo } = useSelector((state: RootState) => state.appContentReducer);
 
@@ -93,7 +93,7 @@ const MonthlyActivity = ({
                       label={label}
                       value={value}
                       checked={values.type === value}
-                      onChange={() => setValues({ ...values, type: value, contentType: value === 'KICK_OFF' ? 'AUDIO' : values.contentType })}
+                      onChange={() => setValues({ ...values, type: value, contentType: value === 'kickOff' ? 'AUDIO' : values.contentType })}
                       costumeClasses="p-mr-3"
                       key={label}
                       disabled={!!isEditing}
@@ -101,7 +101,7 @@ const MonthlyActivity = ({
                   ))}
                 </div>
               </div>
-              {values.type !== 'KICK_OFF' && (
+              {values.type !== 'kickOff' && (
               <div className="p-d-flex p-flex-column">
                 <Label label="Content Type" costumeStyles="p-mb-2" />
                 <div className="p-d-flex">

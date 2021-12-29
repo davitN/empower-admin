@@ -43,23 +43,23 @@ interface CommunityArticleValuesTypes {
 const monthlyActivityTypes: { label: string, value: MonthlyActivityTypes }[] = [
   {
     label: 'KickOff',
-    value: 'KICK_OFF',
+    value: 'kickOff',
   },
   {
     label: 'Ethos',
-    value: 'ETHOS',
+    value: 'ethos',
   },
   {
     label: 'Power up',
-    value: 'POWER_UP',
+    value: 'powerUp',
   },
   {
     label: 'Gratitude',
-    value: 'GRATITUDE',
+    value: 'gratitude',
   },
   {
     label: 'Power down',
-    value: 'POWER_DOWN',
+    value: 'powerDown',
   },
 ];
 
@@ -95,7 +95,7 @@ const AppContentDetail = () => {
   const [uploadedFile, setUploadedFIle] = useState<any>(null);
   const [uploadedFileProgress, setUploadedFIleProgress] = useState<null | number>(null);
   const [monthlyActivityValues, setMonthlyActivityValues] = useState<MonthlyActivityValueTypes>({
-    type: 'KICK_OFF',
+    type: 'kickOff',
     contentType: 'AUDIO',
     title: '',
     subTitle: '',
@@ -147,7 +147,7 @@ const AppContentDetail = () => {
         {
           data: {
             ...monthlyActivityValues,
-            type: isEditing ? searchParams.get('fieldName') : monthlyActivityValues.contentType,
+            type: isEditing ? searchParams.get('fieldName') : monthlyActivityValues.type,
           },
           file: uploadedFile,
           companyId: isEditing && id,

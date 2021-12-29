@@ -15,7 +15,8 @@ interface PropsTypes {
     handler: () => void,
     disabled?: boolean,
     loading?: boolean,
-    styles?: any
+    styles?: any,
+    hidden?: boolean
   }[],
   image?: {
     url: string | null,
@@ -88,8 +89,8 @@ const FormsSharedComponent = ({
       </Button>
       )}
       {customButtons && customButtons.map(({
-        label, handler, disabled, loading, styles,
-      }) => (
+        label, handler, disabled, loading, styles, hidden,
+      }) => !hidden && (
         <Button
           key={label}
           bgColor={COLORS.lightBlue}
