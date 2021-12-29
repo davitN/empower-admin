@@ -78,7 +78,7 @@ const CommunityArticle = () => {
       {
         success: (newId: string) => {
           setSaving(false);
-          navigate(`/app-content/community-article/edit/${newId}`);
+          !isEditing && navigate(`/app-content/community-article/edit/${newId}`);
         },
         error: () => setSaving(false),
       },
