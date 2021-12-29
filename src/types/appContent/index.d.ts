@@ -134,5 +134,5 @@ interface GetAppContentItemInfo {
   startDate: string,
   subTitle: string,
   title: string,
-  type: string
+  type: MonthlyActivityContentType
 }

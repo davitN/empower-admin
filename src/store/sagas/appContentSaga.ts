@@ -88,11 +88,11 @@ export function* saveAppContentItem({ data, callbacks, uploadWatcher }:{ data: a
     if (data.companyId) {
       yield axiosInstance.put(`/content/my_team_data/edit/${data.companyId}`, formData, fileUploadConfig(uploadWatcher));
     } else {
-      yield axiosInstance.post('/content/my_team_data/add_content', formData);
+      yield axiosInstance.post('/content/my_team_data/add_content', formData, fileUploadConfig(uploadWatcher));
     }
     callbacks?.success && callbacks.success();
     uploadWatcher && uploadWatcher(100);
-    notificationService.success(data?.companyId ? 'Item has been successfully updated' : 'Item has been successfully added', '', 500);
+    notificationService.success(data?.companyId ? 'Item has been successfully updated' : 'Item has been successfully added', '', 1000);
   } catch (error: any) {
     callbacks?.error && callbacks.error();
     notificationService.error(error.response.data.message, '', 500);
@@ -127,7 +127,7 @@ export function* saveCommunityData({ data, callbacks }:{ data: any, callbacks: C
       yield axiosInstance.post('/content/community_data/add_content', formData);
     }
     callbacks?.success && callbacks.success();
-    notificationService.success(data?.id ? 'Item has been successfully updated' : 'Item has been successfully added', '', 500);
+    notificationService.success(data?.id ? 'Item has been successfully updated' : 'Item has been successfully added', '', 1000);
   } catch (error: any) {
     callbacks?.error && callbacks.error();
     notificationService.error(error.response.data.message, '', 500);

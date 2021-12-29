@@ -40,40 +40,6 @@ interface CommunityArticleValuesTypes {
   }
 }
 
-const monthlyActivityTypes: { label: string, value: MonthlyActivityTypes }[] = [
-  {
-    label: 'KickOff',
-    value: 'kickOff',
-  },
-  {
-    label: 'Ethos',
-    value: 'ethos',
-  },
-  {
-    label: 'Power up',
-    value: 'powerUp',
-  },
-  {
-    label: 'Gratitude',
-    value: 'gratitude',
-  },
-  {
-    label: 'Power down',
-    value: 'powerDown',
-  },
-];
-
-const monthlyActivityContentType : { label: string, value: MonthlyActivityContentType }[] = [
-  {
-    label: 'Audio',
-    value: 'AUDIO',
-  },
-  {
-    label: 'Video',
-    value: 'VIDEO',
-  },
-];
-
 const communityArticleContentType: { value: string, label: string }[] = [
   {
     label: 'Written Content',
@@ -87,7 +53,6 @@ const communityArticleContentType: { value: string, label: string }[] = [
 
 const AppContentDetail = () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const { communityDataItem } : { communityDataItem: GetCommunityDataItem } = useSelector((state: RootState) => state.appContentReducer);
   const { itemName, mode, id } = useParams();
   const [searchParams] = useSearchParams();
@@ -181,28 +146,9 @@ const AppContentDetail = () => {
 
   return (
     <Container sectionTitle={isEditing ? 'EDIT CONTENT' : 'NEW CONTENT'}>
-      <div className={classes.wrapper}>
-        {itemName === 'community-article' ? (
-          <CommunityArticle
-            contentType={communityArticleContentType}
-            values={communityArticleValues}
-            setValues={setCommunityArticleValues}
-            uploadedFile={uploadedFile}
-            setUploadedFIle={setUploadedFIle}
-          />
-        ) : (
-          <MonthlyActivity
-            values={monthlyActivityValues}
-            setValues={setMonthlyActivityValues}
-            types={monthlyActivityTypes}
-            uploadedFile={uploadedFile}
-            setUploadedFIle={setUploadedFIle}
-            contentType={monthlyActivityContentType}
-            uploadedFileProgress={uploadedFileProgress}
-          />
-        )}
+      {itemName === 'community-article' ? <CommunityArticle /> : <MonthlyActivity /> }
 
-        <div className={classes.justifyEnd}>
+      {/* <div className={classes.justifyEnd}>
           {isEditing && communityDataItem?.image?.imgURL && <Title title="Featured Image" />}
           <FormSharedComponent
             save={{
@@ -224,33 +170,9 @@ const AppContentDetail = () => {
               hideUpload: true,
             }}
           />
-        </div>
-      </div>
+        </div> */}
     </Container>
   );
 };
 
 export default AppContentDetail;
-
-const useStyles = createUseStyles({
-  wrapper: {
-    display: 'grid',
-    gridTemplateColumns: '1.5fr 1fr',
-    gap: '5rem',
-  },
-  gridWrapper: {
-    display: 'grid',
-    gridRowGap: '3rem',
-  },
-  gridInputsWrapper: {
-    display: 'grid',
-    gridRowGap: '1.5rem',
-  },
-  justifyEnd: {
-    justifySelf: 'end',
-    display: 'grid',
-    gridTemplateRows: 'repeat( auto-fit, minmax(0, max-content) )',
-    gap: '1rem',
-    justifyItems: 'end',
-  },
-});
