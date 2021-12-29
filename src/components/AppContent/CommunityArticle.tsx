@@ -260,7 +260,7 @@ const CommunityArticle = () => {
         <FormSharedComponent
           save={{
             handler: handleSave,
-            label: 'Save Content',
+            label: isEditing ? 'Save Content' : 'Add Content',
             disabled: validateInputs(),
             loading: saving,
           }}
