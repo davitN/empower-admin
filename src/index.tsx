@@ -21,7 +21,7 @@ import AppContentDetail from './routes/AppContentDetail';
 import AppAdmins from './routes/AppAdmins';
 import AppAdminDetails from './routes/AppAdminDetails';
 import AppUserAccount from './routes/AppUserAccount';
-import Analytics from './routes/Analitycs';
+import Analytics from './routes/Analytics';
 import PaymentsFinished from './routes/PaymentsFinished';
 
 export const store = configureStore();
