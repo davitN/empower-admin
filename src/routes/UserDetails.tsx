@@ -194,7 +194,7 @@ const UserDetails = () => {
             handleClick={handleSave}
             loading={loading}
           >
-            Save user information
+            {isNewUser ? 'Add User' : ' Save user information'}
           </Button>
         </div>
       </div>
