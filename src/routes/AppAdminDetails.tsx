@@ -38,7 +38,7 @@ const AppAdminDetails = () => {
   const { adminsRoles, adminDetails } :
   { adminsRoles: AppAdminsRoles[], adminDetails: AppAdmin } = useSelector((state: RootState) => state.appAdminsReducer);
   const isNewAdmin = adminId === 'new';
-  const isInputsValid = !!(values.firstName && values.lastName && values.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/) && values.phone && values.role);
+  const isInputsValid = !!(values.firstName && values.lastName && values.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/) && values.role);
   const filteredRoles = adminsRoles && adminsRoles.filter((el) => el.name.toLocaleLowerCase() === adminType?.toLocaleLowerCase());
   const companyName = searchParams.get('companyName')?.replace('_', '  ');
   const companyId = searchParams.get('companyId');
@@ -109,7 +109,7 @@ const AppAdminDetails = () => {
               <TextInput label="First Name" value={values.firstName} handleChange={(firstName) => setValues({ ...values, firstName })} required />
               <TextInput label="Last Name" value={values.lastName} handleChange={(lastName) => setValues({ ...values, lastName })} required />
               <TextInput label="Email" value={values.email} handleChange={(email) => setValues({ ...values, email })} required />
-              <TextInput label="Phone" value={values.phone} handleChange={(phone) => setValues({ ...values, phone })} required />
+              <TextInput label="Phone" value={values.phone} handleChange={(phone) => setValues({ ...values, phone })} />
               {locationName && locationId && <TextInput label="Location" value={locationName} disabled />}
               {companyName && companyId && <TextInput label="Company" value={companyName} disabled />}
               {!adminsRoles ? <Skeleton width="100%" height="3rem" /> : (
