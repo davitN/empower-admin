@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import {
-  GetCompaniesOptions, CompaniesTypes, InitialStateCompanies, CompanyItem, GetCompanyDetailsTypes, SaveDataTypes, GetCompanyAdminsParams,
+  GetCompaniesOptions, CompaniesTypes, InitialStateCompanies, CompanyItem, GetCompanyDetailsTypes, SaveDataTypes, GetCompanyAdminsParams, AllCompaniesItem,
 } from '../../types/companies';
 import { CallBacks } from '../../types/main';
 import { AppAdminsData } from '../../types/appAdmin';
@@ -8,6 +8,10 @@ import { AppAdminsData } from '../../types/appAdmin';
 export const GET_COMPANIES = 'socialize/companies/getCompanies';
 export const SET_COMPANIES = 'socialize/companies/setCompanies';
 export const RESET_COMPANIES_STATE = 'socialize/companies/resetCompaniesState';
+
+export const GET_ALL_COMPANIES = 'socialize/companies/getAllCompanies';
+export const SET_ALL_COMPANIES = 'socialize/companies/setAllCompanies';
+export const RESET_ALL_COMPANIES_STATE = 'socialize/companies/resetAllCompaniesState';
 
 export const GET_COMPANY_DETAILS = 'socialize/companies/getCompanyDetails';
 export const SET_COMPANY_DETAILS = 'socialize/companies/setCompanyDetails';
@@ -23,6 +27,7 @@ const initialState: InitialStateCompanies = {
   companies: null,
   companyDetails: null,
   admins: null,
+  allCompanies: null,
 };
 
 export const companiesReducer = (state = initialState, action: AnyAction) => {
@@ -36,6 +41,10 @@ export const companiesReducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         companyDetails: (payload as CompanyItem),
+      };
+    case SET_ALL_COMPANIES:
+      return {
+        allCompanies: (payload as AllCompaniesItem),
       };
     case RESET_COMPANIES_STATE:
       return {
@@ -56,6 +65,11 @@ export const companiesReducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         admins: null,
+      };
+    case RESET_ALL_COMPANIES_STATE:
+      return {
+        ...state,
+        allCompanies: null,
       };
     default:
       return state;
@@ -105,4 +119,16 @@ export const setCompanyAdmins = (admins: AppAdminsData) => ({
 });
 export const resetCompanyAdminsState = () => ({
   type: RESET_COMPANY_ADMINS_STATE,
+});
+
+export const setAllCompanies = (companies: AllCompaniesItem[]) => ({
+  type: SET_ALL_COMPANIES,
+  payload: companies,
+});
+export const getAllCompanies = (callbacks?: CallBacks) => ({
+  type: GET_ALL_COMPANIES,
+  callbacks,
+});
+export const resetAllCompaniesState = () => ({
+  type: RESET_COMPANIES_STATE,
 });

@@ -73,6 +73,10 @@ const routes: Array<{ title: string, path: string }> = [
     path: '/companies',
   },
   {
+    title: 'Reports',
+    path: '/reports',
+  },
+  {
     title: 'App users',
     path: '/app-users',
   },

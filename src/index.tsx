@@ -23,6 +23,7 @@ import AppAdminDetails from './routes/AppAdminDetails';
 import AppUserAccount from './routes/AppUserAccount';
 import Analytics from './routes/Analytics';
 import PaymentsFinished from './routes/PaymentsFinished';
+import Reports from './routes/Reports';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -48,6 +49,7 @@ ReactDOM.render(
             <Route path="app-admins/:type/:id" element={<AppAdminDetails />} />
             <Route path="user-profile" element={<AppUserAccount />} />
             <Route path="analytics" element={<Analytics />} />
+            <Route path="reports" element={<Reports />} />
             <Route
               path="*"
               element={(
