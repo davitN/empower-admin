@@ -25,6 +25,7 @@ import Analytics from './routes/Analytics';
 import PaymentsFinished from './routes/PaymentsFinished';
 import Reports from './routes/Reports';
 import EthosCards from './routes/EthosCards';
+import EthosCardsDetails from './routes/EthosCardsDetails';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -51,7 +52,11 @@ ReactDOM.render(
             <Route path="user-profile" element={<AppUserAccount />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="reports" element={<Reports />} />
-            <Route path="ethos-cards" element={<EthosCards />} />
+            <Route path="ethos-cards">
+              <Route index element={<EthosCards />} />
+              <Route path=":mode" element={<EthosCardsDetails />} />
+              <Route path=":mode/:id" element={<EthosCardsDetails />} />
+            </Route>
             <Route
               path="*"
               element={(

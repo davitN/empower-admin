@@ -26,7 +26,7 @@ const EthosCards = () => {
         data={ethosCards}
         header={tableHeaders}
         tableTitle="ETHOS CARDS"
-        handleEdit={({ _id }) => navigate(_id)}
+        handleEdit={({ _id }) => navigate(`edit/${_id}`)}
         handlePageChange={(val) => handlePageChange(val)}
         handleAdd={() => navigate('new')}
         buttonText="+ Add ethos card"
