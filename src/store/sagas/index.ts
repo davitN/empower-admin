@@ -60,6 +60,9 @@ import { getPaymentData } from './paymentsSaga';
 import { GET_REPORTS_COMPANY } from '../ducks/reportsDuck';
 import { getReportsCompany } from './reportsSaga';
 
+import { GET_ETHOS_CARDS } from '../ducks/ethosCardsDuck';
+import { getEthosCards } from './ethosCardsSaga';
+
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
   yield takeLatest(REQUEST_SIGN_IN_SG, signInSaga);
@@ -97,6 +100,7 @@ function* actionWatcher() {
   yield takeLatest(GET_PAYMENT_DATA, getPaymentData);
   yield takeLatest(GET_ALL_COMPANIES, getAllCompanies);
   yield takeLatest(GET_REPORTS_COMPANY, getReportsCompany);
+  yield takeLatest(GET_ETHOS_CARDS, getEthosCards);
 }
 
 export default function* rootSaga() {

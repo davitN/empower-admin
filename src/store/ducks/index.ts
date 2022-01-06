@@ -8,6 +8,7 @@ import { appAdminsReducer } from './appAdminsDuck';
 import { appUserAccountReducer } from './appUserAccount';
 import { paymentsReducer } from './paymentsDuck';
 import { reportsReducer } from './reportsDuck';
+import { ethosCardsReducer } from './ethosCardsDuck';
 
 export {
   mainReducer,
@@ -20,4 +21,5 @@ export {
   appUserAccountReducer,
   paymentsReducer,
   reportsReducer,
+  ethosCardsReducer,
 };
