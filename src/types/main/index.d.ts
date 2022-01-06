@@ -27,3 +27,13 @@ export interface GetDataParams {
   offset: number,
   searchWord?: string
 }
+
+export interface Image {
+  URL: string,
+  height: number,
+  width: number
+}
+export interface Audio {
+  URL: string,
+  duration: number,
+}

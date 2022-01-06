@@ -21,5 +21,27 @@ export interface EthosCardsData {
 }
 
 export interface InitialState {
-  ethosCards: EthosCard | null
+  ethosCards: EthosCardsData | null,
+  ethosCardDetails: EthosCard | null
+}
+
+export interface SaveParamsTypes {
+  data: {
+    title: string
+    description: string,
+    duration?: number,
+    image?: {
+      width: number,
+      height: number,
+      URL?: string
+    } | null,
+    thumbnail?: {
+      width: number,
+      height: number
+    }
+  },
+  image: EvenTarget,
+  thumbnail: EvenTarget,
+  audio: EvenTarget,
+  ethosCardId?: string | null
 }
