@@ -10,11 +10,12 @@ interface PropsTypes {
   disabled?: boolean,
   uploadedFileProgress?: number | null,
   desc?: string,
-  name? : string
+  name? : string,
+  preview?: string | null
 }
 
 const UploadButton = ({
-  uploadedFile, handleUpload, fileType, disabled, uploadedFileProgress, desc, name,
+  uploadedFile, handleUpload, fileType, disabled, uploadedFileProgress, desc, name, preview,
 } : PropsTypes) => {
   const classes = useStyles();
   return (
@@ -47,6 +48,7 @@ const UploadButton = ({
           {uploadedFile && uploadedFileProgress && (
           <Label label={`(${uploadedFileProgress}%)`} costumeStyles="p-ml-10 text-sm" />
           )}
+          {preview && <a className={classes.preview} href={preview} target="_blank" rel="noreferrer">Click here to see content</a>}
         </div>
       </div>
       {desc && <p className={classes.desc}>{desc}</p>}
@@ -73,5 +75,10 @@ const useStyles = createUseStyles({
     fontSize: '0.8rem',
     opacity: 0.6,
     marginTop: '0.5rem',
+  },
+  preview: {
+    textDecoration: 'none',
+    marginLeft: '1rem',
+    color: COLORS.blueWood,
   },
 });

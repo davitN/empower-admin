@@ -51,6 +51,8 @@ const EthosCardsDetails = () => {
         ...values,
         title: ethosCardDetails.title,
         description: ethosCardDetails.description,
+        image: ethosCardDetails?.image || null,
+        audio: ethosCardDetails?.audio || null,
       });
     }
   }, [isNewItem, ethosCardDetails]);
@@ -69,6 +71,7 @@ const EthosCardsDetails = () => {
                   desc=".mp3 files only"
                   fileType=".mp3"
                   uploadedFile={uploadedAudio}
+                  preview={(!isNewItem && !uploadedAudio) ? values.audio?.URL : null}
                   handleUpload={(val: any) => {
                     setUploadedAudio(val);
                     setFileDuration(val, setValues, values);
@@ -80,6 +83,7 @@ const EthosCardsDetails = () => {
                 desc="Update an image that will be used as a thumbnail for the audio .jpg files only"
                 fileType="image/png, image/gif, image/jpeg"
                 uploadedFile={uploadedImg}
+                preview={(!isNewItem && !uploadedImg) ? values.image?.URL : null}
                 handleUpload={(val: any) => {
                   handleImgUpload(val, setUploadedImg, setValues, values);
                 }}
