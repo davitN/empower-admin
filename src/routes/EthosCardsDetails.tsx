@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Skeleton } from 'primereact/skeleton';
 import Container from '../components/shared/Container';
 import Label from '../components/shared/Inputs/Label';
 import TextInput from '../components/shared/Inputs/TextInput';
@@ -57,29 +58,36 @@ const EthosCardsDetails = () => {
     <Container sectionTitle={isNewItem ? 'ADD ETHOS CARD' : 'EDIT ETHOS CARD'}>
       <div className={classes.wrapper}>
         <div className={classes.inputs}>
-          <TextInput label="Ethos" required value={values.title} handleChange={(title) => setValues({ ...values, title })} />
-          <div className="p-d-flex p-flex-column">
-            <Label label="Audio file upload" costumeStyles="p-mb-3" />
-            <UploadButton
-              desc=".mp3 files only"
-              fileType=".mp3"
-              uploadedFile={uploadedAudio}
-              handleUpload={(val: any) => {
-                setUploadedAudio(val);
-                setFileDuration(val, setValues, values);
-              }}
-            />
-          </div>
-          <UploadButton
-            name="image"
-            desc="Update an image that will be used as a thumbnail for the audio .jpg files only"
-            fileType="image/png, image/gif, image/jpeg"
-            uploadedFile={uploadedImg}
-            handleUpload={(val: any) => {
-              handleImgUpload(val, setUploadedImg, setValues, values);
-            }}
-          />
-          <Textarea label="Description" required value={values.description} handleChange={(description) => setValues({ ...values, description })} />
+          {!isNewItem && !ethosCardDetails ? (
+            new Array(8).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" />)
+          ) : (
+            <>
+              <TextInput label="Ethos" required value={values.title} handleChange={(title) => setValues({ ...values, title })} />
+              <div className="p-d-flex p-flex-column">
+                <Label label="Audio file upload" costumeStyles="p-mb-3" />
+                <UploadButton
+                  desc=".mp3 files only"
+                  fileType=".mp3"
+                  uploadedFile={uploadedAudio}
+                  handleUpload={(val: any) => {
+                    setUploadedAudio(val);
+                    setFileDuration(val, setValues, values);
+                  }}
+                />
+              </div>
+              <UploadButton
+                name="image"
+                desc="Update an image that will be used as a thumbnail for the audio .jpg files only"
+                fileType="image/png, image/gif, image/jpeg"
+                uploadedFile={uploadedImg}
+                handleUpload={(val: any) => {
+                  handleImgUpload(val, setUploadedImg, setValues, values);
+                }}
+              />
+              <Textarea label="Description" required value={values.description} handleChange={(description) => setValues({ ...values, description })} />
+            </>
+          )}
+
         </div>
         <div className={classes.justifyEnd}>
           <FormsSharedComponent
