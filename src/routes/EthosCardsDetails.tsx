@@ -62,7 +62,7 @@ const EthosCardsDetails = () => {
             new Array(8).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" />)
           ) : (
             <>
-              <TextInput label="Ethos" required value={values.title} handleChange={(title) => setValues({ ...values, title })} />
+              <TextInput label="Ethos" required value={values.title} handleChange={(title) => setValues({ ...values, title })} disabled={!isNewItem} />
               <div className="p-d-flex p-flex-column">
                 <Label label="Audio file upload" costumeStyles="p-mb-3" />
                 <UploadButton
