@@ -63,10 +63,10 @@ import { getReportsCompany } from './reportsSaga';
 import { GET_ETHOS_CARDS, GET_ETHOS_CARD_DETAILS, SAVE_ETHOS_CARD_DETAILS } from '../ducks/ethosCardsDuck';
 import { getEthosCardDetails, getEthosCards, saveEthosCardDetails } from './ethosCardsSaga';
 import {
-  GET_CONTENTS, GET_CONTENT_ITEM, GET_CONTENT_ITEM_DETAILS, SAVE_CONTENT_ITEM_DETAILS,
+  GET_CONTENTS, GET_CONTENT_ITEM, GET_CONTENT_ITEM_DETAILS, REMOVE_CONTENT_ITEM, SAVE_CONTENT_ITEM_DETAILS,
 } from '../ducks/generalContentLibraryDuck';
 import {
-  getContentItem, getContentItemDetails, getContentsData, saveContentItemDetails,
+  getContentItem, getContentItemDetails, getContentsData, removeContentItem, saveContentItemDetails,
 } from './generalContentLibrarySaga';
 
 function* actionWatcher() {
@@ -113,6 +113,7 @@ function* actionWatcher() {
   yield takeLatest(GET_CONTENT_ITEM, getContentItem);
   yield takeLatest(GET_CONTENT_ITEM_DETAILS, getContentItemDetails);
   yield takeLatest(SAVE_CONTENT_ITEM_DETAILS, saveContentItemDetails);
+  yield takeLatest(REMOVE_CONTENT_ITEM, removeContentItem);
 }
 
 export default function* rootSaga() {

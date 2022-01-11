@@ -17,6 +17,7 @@ export const SET_CONTENT_ITEM_DETAILS = 'socialize/generalContentLibrary/setCont
 export const RESET_CONTENT_ITEM_DETAILS = 'socialize/generalContentLibrary/resetContentItemDetails';
 
 export const SAVE_CONTENT_ITEM_DETAILS = 'socialize/generalContentLibrary/saveContentItemDetails';
+export const REMOVE_CONTENT_ITEM = 'socialize/generalContentLibrary/removeContentItem';
 
 const initialState: InitialState = {
   ethosGeneralContent: null,
@@ -115,4 +116,10 @@ export const saveContentItemDetails = (data: any, callbacks?: CallBacks) => ({
   type: SAVE_CONTENT_ITEM_DETAILS,
   callbacks,
   data,
+});
+
+export const removeContentItem = (id: string, callbacks?: CallBacks) => ({
+  type: REMOVE_CONTENT_ITEM,
+  callbacks,
+  id,
 });

@@ -14,8 +14,9 @@ import { handleFileUpload, handleImgUpload } from '../../helpers/utils';
 import { Image } from '../../types/main';
 import FormsSharedComponent from '../shared/FormsSharedComponent';
 import Textarea from '../shared/Inputs/Textarea';
-import { getContentItemDetails, saveContentItemDetails } from '../../store/ducks/generalContentLibraryDuck';
+import { getContentItemDetails, removeContentItem, saveContentItemDetails } from '../../store/ducks/generalContentLibraryDuck';
 import { RootState } from '../../store/configureStore';
+import ConfirmDialog from '../shared/ConfirmDialog';
 
 const GeneralContentItemDetails = ({ selectedType, isNewItem, setSelectedType }: PropsTypes) => {
   const classes = useStyles();
@@ -23,7 +24,7 @@ const GeneralContentItemDetails = ({ selectedType, isNewItem, setSelectedType }:
   const navigate = useNavigate();
   const { itemDetails } : { itemDetails: ContentItem } = useSelector((state: RootState) => state.generalContentLibraryReducer);
   const dispatch = useDispatch();
-  const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [values, setValues] = useState<ValuesTypes>({
     contentType: 'VIDEO',
     title: '',
@@ -31,6 +32,7 @@ const GeneralContentItemDetails = ({ selectedType, isNewItem, setSelectedType }:
   });
   const [uploadedFile, setUploadedFile] = useState<any>(null);
   const [uploadedImg, setUploadedImg] = useState<UploadedImgTypes | null>(null);
+  const [visible, setVisible] = useState(false);
 
   const isInputsValid = () => {
     if (!isNewItem) {
@@ -39,7 +41,7 @@ const GeneralContentItemDetails = ({ selectedType, isNewItem, setSelectedType }:
     return values.title.length >= 3 && values.description.length >= 3 && uploadedFile && uploadedImg;
   };
   const handleSave = () => {
-    setSaving(true);
+    setLoading(true);
     const filesData = {
       ...(uploadedImg && { imageWidth: uploadedImg.imgDimension.width, imageHeight: uploadedImg.imgDimension.height }),
       ...(uploadedFile && { contentDuration: uploadedFile.duration, contentWidth: 1, contentHeight: 1 }),
@@ -56,9 +58,9 @@ const GeneralContentItemDetails = ({ selectedType, isNewItem, setSelectedType }:
       image: uploadedImg?.newImg,
       imageThumbnail: uploadedImg?.thumbnail,
     }, {
-      error: () => setSaving(false),
+      error: () => setLoading(false),
       success: () => {
-        setSaving(false);
+        setLoading(false);
         navigate('/general-content-library');
       },
     }));
@@ -85,6 +87,23 @@ const GeneralContentItemDetails = ({ selectedType, isNewItem, setSelectedType }:
 
   return (
     <Container sectionTitle={`${isNewItem ? 'ADD' : 'EDIT'} ${selectedType.replace('_', ' ')} CONTENT`}>
+      <ConfirmDialog
+        visible={visible}
+        handleClose={() => setVisible(false)}
+        title="Remove content"
+        description="Do you really want remove content?"
+        handleSuccess={() => {
+          setLoading(true);
+          id && dispatch(removeContentItem(
+            id,
+            {
+              success: () => { setLoading(false); navigate('/general-content-library'); },
+              error: () => setLoading(false),
+            },
+          ));
+        }}
+        loading={loading}
+      />
       <div className={classes.root}>
         <div className={classes.gridWrapper}>
           {!isNewItem && !itemDetails ? (
@@ -160,12 +179,12 @@ const GeneralContentItemDetails = ({ selectedType, isNewItem, setSelectedType }:
             isNewItem={isNewItem}
             save={{
               label: isNewItem ? 'Add content' : 'Save Content',
-              loading: saving,
+              loading,
               handler: handleSave,
               disabled: !isInputsValid() || (!isNewItem && !itemDetails),
             }}
             remove={{
-              handler: () => console.log('remove item'),
+              handler: () => setVisible(true),
               label: 'Remove content',
               disabled: false,
               hidden: !isNewItem && !itemDetails,

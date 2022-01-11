@@ -82,3 +82,20 @@ export function* saveContentItemDetails({ data, callbacks }:{ data: any, callbac
     notificationService.error(error.response.data.message, '', 500);
   }
 }
+
+export function* removeContentItem({ id, callbacks }:{ id: string, callbacks: CallBacks, type:string }) {
+  try {
+    yield axiosInstance.delete(`/content/general_content/delete/${id}`);
+    notificationService.success('Content successfully removed', '', 1000);
+    callbacks?.success && callbacks.success();
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    yield put(
+      notifyAction({
+        type: 'error',
+        message: error.response?.data.message,
+        showError: false,
+      }),
+    );
+  }
+}
