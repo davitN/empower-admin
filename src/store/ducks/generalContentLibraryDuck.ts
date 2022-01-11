@@ -1,16 +1,29 @@
 import { AnyAction } from 'redux';
-import { InitialState, FetchedInitialStates } from '../../types/generalContentLibrary';
+import {
+  InitialState, FetchedInitialStates, GetContentItemOptions, FetchedItem, GeneralContentLibraryType,
+} from '../../types/generalContentLibrary';
 import { CallBacks } from '../../types/main';
 
 export const GET_CONTENTS = 'socialize/generalContentLibrary/getContents';
 export const SET_CONTENTS = 'socialize/generalContentLibrary/setContents';
 export const RESET_CONTENTS = 'socialize/generalContentLibrary/resetContents';
 
+export const GET_CONTENT_ITEM = 'socialize/generalContentLibrary/getContentItem';
+export const SET_CONTENT_ITEM = 'socialize/generalContentLibrary/setContentItem';
+export const RESET_CONTENT_ITEM = 'socialize/generalContentLibrary/resetContentItem';
+
 const initialState: InitialState = {
   ethosGeneralContent: null,
   powerDownGeneralContent: null,
   powerUpGeneralContent: null,
   welnessGeneralContent: null,
+};
+
+const storeKeyByType = {
+  POWER_UP: 'powerUpGeneralContent',
+  POWER_DOWN: 'powerDownGeneralContent',
+  ETHOS: 'ethosGeneralContent',
+  WELNESS: 'welnessGeneralContent',
 };
 
 export const generalContentLibraryReducer = (state = initialState, action: AnyAction) => {
@@ -21,6 +34,16 @@ export const generalContentLibraryReducer = (state = initialState, action: AnyAc
     case RESET_CONTENTS:
       return {
         ...initialState,
+      };
+    case SET_CONTENT_ITEM:
+      return {
+        ...state,
+        [storeKeyByType[action.fieldName as GeneralContentLibraryType]]: action.payload,
+      };
+    case RESET_CONTENT_ITEM:
+      return {
+        ...state,
+        [storeKeyByType[action.fieldName as GeneralContentLibraryType]]: null,
       };
     default:
       return state;
@@ -37,4 +60,23 @@ export const setContentsData = (data: FetchedInitialStates) => ({
 });
 export const resetContentsData = () => ({
   type: RESET_CONTENTS,
+});
+
+export const getContentItem = (params: GetContentItemOptions, callbacks?: CallBacks) => ({
+  type: GET_CONTENT_ITEM,
+  callbacks,
+  params,
+});
+
+export const setContentItem = (data: FetchedItem, type: string, callbacks?: CallBacks) => ({
+  type: SET_CONTENT_ITEM,
+  callbacks,
+  payload: data,
+  fieldName: type,
+});
+
+export const resetContentItem = (fieldName: GeneralContentLibraryType, callbacks?: CallBacks) => ({
+  type: RESET_CONTENT_ITEM,
+  callbacks,
+  fieldName,
 });

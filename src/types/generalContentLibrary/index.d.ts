@@ -1,3 +1,5 @@
+import { GetDataParams } from '../main';
+
 export type GeneralContentLibraryType = 'ETHOS' | 'WELNESS' | 'POWER_UP' | 'POWER_DOWN';
 
 export interface ContentItem {
@@ -24,4 +26,8 @@ export interface FetchedInitialStates {
   powerDownGeneralContent: FetchedItem,
   powerUpGeneralContent: FetchedItem,
   welnessGeneralContent: FetchedItem,
+}
+
+export interface GetContentItemOptions extends GetDataParams {
+  type: string
 }
