@@ -26,6 +26,7 @@ import PaymentsFinished from './routes/PaymentsFinished';
 import Reports from './routes/Reports';
 import EthosCards from './routes/EthosCards';
 import EthosCardsDetails from './routes/EthosCardsDetails';
+import GeneralContentLibrary from './routes/GeneralContentLibrary';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -56,6 +57,11 @@ ReactDOM.render(
               <Route index element={<EthosCards />} />
               <Route path=":mode" element={<EthosCardsDetails />} />
               <Route path=":mode/:id" element={<EthosCardsDetails />} />
+            </Route>
+            <Route path="general-content-library">
+              <Route index element={<GeneralContentLibrary />} />
+              {/* <Route path=":mode" element={<EthosCardsDetails />} /> */}
+              {/* <Route path=":mode/:id" element={<EthosCardsDetails />} /> */}
             </Route>
             <Route
               path="*"

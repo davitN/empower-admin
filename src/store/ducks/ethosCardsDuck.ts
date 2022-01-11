@@ -4,15 +4,15 @@ import {
 } from '../../types/ethosCards';
 import { CallBacks, GetDataParams } from '../../types/main';
 
-export const GET_ETHOS_CARDS = 'socialize/reports/getEthosCards';
-export const SET_ETHOS_CARDS = 'socialize/reports/setEthosCards';
-export const RESET_ETHOS_CARDS_STATE = 'socialize/reports/resetEthosCardsState';
+export const GET_ETHOS_CARDS = 'socialize/ethosCards/getEthosCards';
+export const SET_ETHOS_CARDS = 'socialize/ethosCards/setEthosCards';
+export const RESET_ETHOS_CARDS_STATE = 'socialize/ethosCards/resetEthosCardsState';
 
-export const GET_ETHOS_CARD_DETAILS = 'socialize/reports/getEthosCardDetails';
-export const SET_ETHOS_CARD_DETAILS = 'socialize/reports/setEthosCardDetails';
-export const RESET_ETHOS_CARD_DETAILS_STATE = 'socialize/reports/resetEthosCardDetailsState';
+export const GET_ETHOS_CARD_DETAILS = 'socialize/ethosCards/getEthosCardDetails';
+export const SET_ETHOS_CARD_DETAILS = 'socialize/ethosCards/setEthosCardDetails';
+export const RESET_ETHOS_CARD_DETAILS_STATE = 'socialize/ethosCards/resetEthosCardDetailsState';
 
-export const SAVE_ETHOS_CARD_DETAILS = 'socialize/reports/saveEthosCardDetails';
+export const SAVE_ETHOS_CARD_DETAILS = 'socialize/ethosCards/saveEthosCardDetails';
 
 const initialState: InitialState = {
   ethosCards: null,

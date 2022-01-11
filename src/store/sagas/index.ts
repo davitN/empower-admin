@@ -62,6 +62,8 @@ import { getReportsCompany } from './reportsSaga';
 
 import { GET_ETHOS_CARDS, GET_ETHOS_CARD_DETAILS, SAVE_ETHOS_CARD_DETAILS } from '../ducks/ethosCardsDuck';
 import { getEthosCardDetails, getEthosCards, saveEthosCardDetails } from './ethosCardsSaga';
+import { GET_CONTENTS } from '../ducks/generalContentLibraryDuck';
+import { getContentsData } from './generalContentLibrarySaga';
 
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
@@ -103,6 +105,7 @@ function* actionWatcher() {
   yield takeLatest(GET_ETHOS_CARDS, getEthosCards);
   yield takeLatest(GET_ETHOS_CARD_DETAILS, getEthosCardDetails);
   yield takeLatest(SAVE_ETHOS_CARD_DETAILS, saveEthosCardDetails);
+  yield takeLatest(GET_CONTENTS, getContentsData);
 }
 
 export default function* rootSaga() {

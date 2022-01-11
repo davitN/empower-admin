@@ -93,6 +93,10 @@ const routes: Array<{ title: string, path: string }> = [
     path: '/app-content',
   },
   {
+    title: 'General Content Library',
+    path: '/general-content-library',
+  },
+  {
     title: 'Account',
     path: '/user-profile',
   },
