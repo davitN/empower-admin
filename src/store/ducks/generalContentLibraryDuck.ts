@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import {
-  InitialState, FetchedInitialStates, GetContentItemOptions, FetchedItem, GeneralContentLibraryType, ContentItem,
+  InitialState, FetchedInitialStates, GetContentItemOptions, FetchedItem, GeneralContentLibraryType, ContentItem, SaveItem,
 } from '../../types/generalContentLibrary';
 import { CallBacks } from '../../types/main';
 
@@ -112,7 +112,7 @@ export const resetContentItemDetails = () => ({
   type: RESET_CONTENT_ITEM_DETAILS,
 });
 
-export const saveContentItemDetails = (data: any, callbacks?: CallBacks) => ({
+export const saveContentItemDetails = (data: SaveItem, callbacks?: CallBacks) => ({
   type: SAVE_CONTENT_ITEM_DETAILS,
   callbacks,
   data,

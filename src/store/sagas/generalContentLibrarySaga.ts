@@ -3,7 +3,7 @@
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
 import {
-  FetchedInitialStates, GetContentItemOptions, FetchedItem, ContentItem,
+  FetchedInitialStates, GetContentItemOptions, FetchedItem, ContentItem, SaveItem,
 } from '../../types/generalContentLibrary';
 import { CallBacks } from '../../types/main';
 import { setContentItem, setContentItemDetails, setContentsData } from '../ducks/generalContentLibraryDuck';
@@ -63,7 +63,7 @@ export function* getContentItemDetails({ id, callbacks }:{ id: string, callbacks
   }
 }
 
-export function* saveContentItemDetails({ data, callbacks }:{ data: any, callbacks: CallBacks, type: string }) {
+export function* saveContentItemDetails({ data, callbacks }:{ data: SaveItem, callbacks: CallBacks, type: string }) {
   try {
     const formData = new FormData();
     data.content && formData.append('content', data.content);
@@ -76,7 +76,7 @@ export function* saveContentItemDetails({ data, callbacks }:{ data: any, callbac
       yield axiosInstance.post('/content/general_content/create_general_content', formData);
     }
     callbacks?.success && callbacks.success();
-    notificationService.success(data?.companyId ? 'Item has been successfully updated' : 'Item has been successfully added', '', 1000);
+    notificationService.success(data?.contentId ? 'Item has been successfully updated' : 'Item has been successfully added', '', 1000);
   } catch (error: any) {
     callbacks?.error && callbacks.error();
     notificationService.error(error.response.data.message, '', 500);

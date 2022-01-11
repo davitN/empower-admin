@@ -39,3 +39,21 @@ export interface FetchedInitialStates {
 export interface GetContentItemOptions extends GetDataParams {
   type: string
 }
+
+export interface SaveItem {
+  data: {
+    contentType: 'VIDEO' | 'AUDIO',
+    title: string,
+    description: string,
+    imageWidth?: number,
+    imageHeight?: number,
+    duration?: number,
+    contentWidth?: number,
+    contentHeight?: number,
+    type: GeneralContentLibraryType,
+  },
+  contentId?: string | null,
+  content?: File | null,
+  image?: File | null,
+  imageThumbnail?: File | null,
+}
