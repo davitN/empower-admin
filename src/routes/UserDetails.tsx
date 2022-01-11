@@ -196,6 +196,15 @@ const UserDetails = () => {
           >
             {isNewUser ? 'Add User' : ' Save user information'}
           </Button>
+          <Button
+            bgColor={COLORS.red}
+            textColor={COLORS.white}
+            customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
+            // handleClick={handleSave}
+            loading={loading}
+          >
+            Delete user
+          </Button>
         </div>
       </div>
     </Container>
