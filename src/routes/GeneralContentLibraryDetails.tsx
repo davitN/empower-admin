@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'primereact/skeleton';
 import { ContentItem, GeneralContentLibraryType } from '../types/generalContentLibrary';
@@ -18,15 +18,20 @@ import { getContentItemDetails, removeContentItem, saveContentItemDetails } from
 import { RootState } from '../store/configureStore';
 import ConfirmDialog from '../components/shared/ConfirmDialog';
 
-const GeneralContentLibraryDetails = ({ selectedType, isNewItem, setSelectedType }: PropsTypes) => {
+const GeneralContentLibraryDetails = () => {
   const classes = useStyles();
   const { id } = useParams();
   const navigate = useNavigate();
+  const params = useParams();
+  const [searchParams] = useSearchParams();
+  const isNewItem = params?.mode === 'new';
+  const isEthosContent = searchParams.get('type') === 'ETHOS';
+  const [selectedType, setSelectedType] = useState<GeneralContentLibraryType>((searchParams.get('type') as GeneralContentLibraryType) || 'POWER_UP');
   const { itemDetails } : { itemDetails: ContentItem } = useSelector((state: RootState) => state.generalContentLibraryReducer);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [values, setValues] = useState<ValuesTypes>({
-    contentType: 'VIDEO',
+    contentType: 'AUDIO',
     title: '',
     description: '',
   });
@@ -112,6 +117,7 @@ const GeneralContentLibraryDetails = ({ selectedType, isNewItem, setSelectedType
             </div>
           ) : (
             <>
+              {!isEthosContent && (
               <div className="p-d-flex p-flex-column">
                 <Label label="Content Type" costumeStyles="p-mb-3" />
                 <div className="p-d-flex">
@@ -141,9 +147,10 @@ const GeneralContentLibraryDetails = ({ selectedType, isNewItem, setSelectedType
                   />
                 </div>
               </div>
+              )}
               <div className={classes.gridInputsWrapper}>
                 <Title title={values.contentType === 'VIDEO' ? 'Video Details' : 'Audio Details'} fontSize="text-2xl" />
-                <TextInput value={values.title} handleChange={(title) => setValues({ ...values, title })} label="Title" required placeholder="Enter title..." />
+                <TextInput value={values.title} handleChange={(title) => setValues({ ...values, title })} label={isEthosContent ? 'Ethos' : 'Title'} required placeholder="Enter title..." />
                 <div className="p-d-flex p-flex-column">
                   <Label label={`${values.contentType === 'VIDEO' ? 'Video' : 'Audio'} file upload`} required costumeStyles="p-mb-2" />
                   <UploadButton
@@ -169,7 +176,7 @@ const GeneralContentLibraryDetails = ({ selectedType, isNewItem, setSelectedType
                     }}
                   />
                 </div>
-                <Textarea label="Description" required value={values.description} handleChange={(description) => setValues({ ...values, description })} />
+                <Textarea label={isEthosContent ? 'Ethos Definition' : 'Description'} required value={values.description} handleChange={(description) => setValues({ ...values, description })} />
               </div>
             </>
           )}
@@ -221,20 +228,12 @@ const useStyles = createUseStyles({
     gridRowGap: '1.5rem',
   },
 });
-
-interface PropsTypes {
-  selectedType: GeneralContentLibraryType,
-  isNewItem: boolean,
-  setSelectedType: Function
-}
-
 interface UploadedImgTypes {
   newImg: any,
   imgPrev: string | null,
   thumbnail?: any,
   imgDimension: any
 }
-
 interface ValuesTypes {
   contentType: 'AUDIO' | 'VIDEO',
   title: string,
