@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import {
-  InitialState, FetchedInitialStates, GetContentItemOptions, FetchedItem, GeneralContentLibraryType,
+  InitialState, FetchedInitialStates, GetContentItemOptions, FetchedItem, GeneralContentLibraryType, ContentItem,
 } from '../../types/generalContentLibrary';
 import { CallBacks } from '../../types/main';
 
@@ -12,11 +12,16 @@ export const GET_CONTENT_ITEM = 'socialize/generalContentLibrary/getContentItem'
 export const SET_CONTENT_ITEM = 'socialize/generalContentLibrary/setContentItem';
 export const RESET_CONTENT_ITEM = 'socialize/generalContentLibrary/resetContentItem';
 
+export const GET_CONTENT_ITEM_DETAILS = 'socialize/generalContentLibrary/getContentItemDetails';
+export const SET_CONTENT_ITEM_DETAILS = 'socialize/generalContentLibrary/setContentItemDetails';
+export const RESET_CONTENT_ITEM_DETAILS = 'socialize/generalContentLibrary/resetContentItemDetails';
+
 const initialState: InitialState = {
   ethosGeneralContent: null,
   powerDownGeneralContent: null,
   powerUpGeneralContent: null,
   welnessGeneralContent: null,
+  itemDetails: null,
 };
 
 const storeKeyByType = {
@@ -44,6 +49,16 @@ export const generalContentLibraryReducer = (state = initialState, action: AnyAc
       return {
         ...state,
         [storeKeyByType[action.fieldName as GeneralContentLibraryType]]: null,
+      };
+    case SET_CONTENT_ITEM_DETAILS:
+      return {
+        ...state,
+        itemDetails: action.payload,
+      };
+    case RESET_CONTENT_ITEM_DETAILS:
+      return {
+        ...state,
+        itemDetails: null,
       };
     default:
       return state;
@@ -79,4 +94,17 @@ export const resetContentItem = (fieldName: GeneralContentLibraryType, callbacks
   type: RESET_CONTENT_ITEM,
   callbacks,
   fieldName,
+});
+
+export const getContentItemDetails = (id: string, callbacks?: CallBacks) => ({
+  type: GET_CONTENT_ITEM_DETAILS,
+  callbacks,
+  id,
+});
+export const setContentItemDetails = (data: ContentItem) => ({
+  type: SET_CONTENT_ITEM_DETAILS,
+  payload: data,
+});
+export const resetContentItemDetails = () => ({
+  type: RESET_CONTENT_ITEM_DETAILS,
 });

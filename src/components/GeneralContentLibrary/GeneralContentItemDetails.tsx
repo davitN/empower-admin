@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { GeneralContentLibraryType } from '../../types/generalContentLibrary';
 import Container from '../shared/Container';
 import Label from '../shared/Inputs/Label';
@@ -11,9 +13,12 @@ import { setFileDuration, handleImgUpload } from '../../helpers/utils';
 import { Image } from '../../types/main';
 import FormsSharedComponent from '../shared/FormsSharedComponent';
 import Textarea from '../shared/Inputs/Textarea';
+import { getContentItemDetails } from '../../store/ducks/generalContentLibraryDuck';
 
 const GeneralContentItemDetails = ({ selectedType, isNewItem }: PropsTypes) => {
   const classes = useStyles();
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const [values, setValues] = useState<ValuesTypes>({
     contentType: 'VIDEO',
     title: '',
@@ -21,6 +26,12 @@ const GeneralContentItemDetails = ({ selectedType, isNewItem }: PropsTypes) => {
   });
   const [uploadedFile, setUploadedFile] = useState<EventTarget | null>(null);
   const [uploadedImg, setUploadedImg] = useState<UploadedImgTypes | null>(null);
+
+  useEffect(() => {
+    if (!isNewItem && id) {
+      dispatch(getContentItemDetails(id));
+    }
+  }, [isNewItem, id]);
 
   return (
     <Container sectionTitle={`${isNewItem ? 'ADD' : 'EDIT'} ${selectedType.replace('_', ' ')} CONTENT`}>

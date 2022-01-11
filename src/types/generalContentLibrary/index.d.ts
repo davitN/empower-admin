@@ -1,12 +1,19 @@
-import { GetDataParams } from '../main';
+import { GetDataParams, Image } from '../main';
 
 export type GeneralContentLibraryType = 'ETHOS' | 'WELNESS' | 'POWER_UP' | 'POWER_DOWN';
 
 export interface ContentItem {
-  _id: string,
-  title: string,
-  type: GeneralContentLibraryType,
-  description: string
+  content: {
+    URL: string,
+    duration: number
+  },
+  contentType: 'VIDEO' | 'AUDIO',
+  createdAt: Date
+  description: 'description'
+  image: Image
+  title: string
+  type: GeneralContentLibraryType
+  _id: string
 }
 
 export interface FetchedItem {
@@ -19,6 +26,7 @@ export interface InitialState {
   powerDownGeneralContent: null | FetchedItem,
   powerUpGeneralContent: null | FetchedItem,
   welnessGeneralContent: null | FetchedItem,
+  itemDetails: null | ContentItem
 }
 
 export interface FetchedInitialStates {
