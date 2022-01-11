@@ -31,8 +31,13 @@ const GeneralContentItemDetails = ({ selectedType, isNewItem, setSelectedType }:
   });
   const [uploadedFile, setUploadedFile] = useState<any>(null);
   const [uploadedImg, setUploadedImg] = useState<UploadedImgTypes | null>(null);
-  const isInputsValid = values.title.length >= 3 && values.description.length >= 3;
 
+  const isInputsValid = () => {
+    if (!isNewItem) {
+      return values.title.length >= 3 && values.description.length >= 3;
+    }
+    return values.title.length >= 3 && values.description.length >= 3 && uploadedFile && uploadedImg;
+  };
   const handleSave = () => {
     setSaving(true);
     const filesData = {
@@ -157,7 +162,7 @@ const GeneralContentItemDetails = ({ selectedType, isNewItem, setSelectedType }:
               label: isNewItem ? 'Add content' : 'Save Content',
               loading: saving,
               handler: handleSave,
-              disabled: !isInputsValid || (!isNewItem && !itemDetails),
+              disabled: !isInputsValid() || (!isNewItem && !itemDetails),
             }}
             remove={{
               handler: () => console.log('remove item'),
