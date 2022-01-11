@@ -30,14 +30,16 @@ const EthosCardsDetails = () => {
   const handleSave = () => {
     setSaving(true);
     dispatch(saveEthosCardDetails({
-      data: values,
+      data: {
+        ...values,
+        ...uploadedImg && ({ image: uploadedImg.imgDimension, thumbnail: uploadedImg.thumbnailDimension }),
+      },
       audio: uploadedAudio,
       image: uploadedImg?.newImg,
       thumbnail: uploadedImg?.thumbnail,
       ethosCardId,
     }, { success: () => setSaving(false), error: () => setSaving(false) }));
   };
-
   // get data if ethos card is editing
   useEffect(() => {
     if (!isNewItem && ethosCardId) {
@@ -85,7 +87,7 @@ const EthosCardsDetails = () => {
                 uploadedFile={uploadedImg}
                 preview={(!isNewItem && !uploadedImg) ? values.image?.URL : null}
                 handleUpload={(val: any) => {
-                  handleImgUpload(val, setUploadedImg, setValues, values);
+                  handleImgUpload(val, setUploadedImg);
                 }}
               />
               <Textarea label="Description" required value={values.description} handleChange={(description) => setValues({ ...values, description })} />
@@ -156,5 +158,13 @@ interface ValuesTypes {
 interface UploadedImgTypes {
   newImg: any,
   imgPrev: string | null,
-  thumbnail?: any
+  thumbnail?: any,
+  imgDimension: {
+    width: number,
+    height: number
+  },
+  thumbnailDimension: {
+    width: number,
+    height: number
+  }
 }

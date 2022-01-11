@@ -8,6 +8,7 @@ import {
 import { CallBacks } from '../../types/main';
 import { setContentItem, setContentItemDetails, setContentsData } from '../ducks/generalContentLibraryDuck';
 import { notifyAction } from '../ducks/mainDuck';
+import notificationService from '../../services/notification.service';
 
 export function* getContentsData({ callbacks }:{ callbacks: CallBacks, type:string }) {
   try {
@@ -59,5 +60,25 @@ export function* getContentItemDetails({ id, callbacks }:{ id: string, callbacks
         showError: false,
       }),
     );
+  }
+}
+
+export function* saveContentItemDetails({ data, callbacks }:{ data: any, callbacks: CallBacks, type: string }) {
+  try {
+    const formData = new FormData();
+    data.content && formData.append('content', data.content);
+    data.image && formData.append('image', data.image);
+    data.imageThumbnail && formData.append('imageThumbnail', data.imageThumbnail);
+    formData.append('data', JSON.stringify(data.data));
+    if (data.contentId) {
+      yield axiosInstance.put(`/content/general_content/edit/${data.contentId}`, formData);
+    } else {
+      yield axiosInstance.post('/content/general_content/create_general_content', formData);
+    }
+    callbacks?.success && callbacks.success();
+    notificationService.success(data?.companyId ? 'Item has been successfully updated' : 'Item has been successfully added', '', 1000);
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response.data.message, '', 500);
   }
 }

@@ -96,6 +96,8 @@ const GeneralContentLibrary = () => {
           tableTitle="Power&#9679;Down Content"
           handleEdit={({ _id, type }) => navigate(`edit/${_id}?type=${type}`)}
           LIMIT={5}
+          buttonText="+ Add content"
+          handleAdd={() => navigate('new/?type=POWER_DOWN')}
           handlePageChange={(val) => powerDownHandlePageChange(val)}
         />
         <Table
@@ -106,6 +108,8 @@ const GeneralContentLibrary = () => {
           tableTitle="Wellness Content"
           handleEdit={({ _id, type }) => navigate(`edit/${_id}?type=${type}`)}
           LIMIT={5}
+          buttonText="+ Add content"
+          handleAdd={() => navigate('new/?type=WELNESS')}
           handlePageChange={(val) => wellnessHandlePageChange(val)}
         />
         <Table
@@ -119,7 +123,9 @@ const GeneralContentLibrary = () => {
           tableTitle="Ethos Definition"
           handleEdit={({ _id, type }) => navigate(`edit/${_id}?type=${type}`)}
           LIMIT={5}
+          buttonText="+ Add content"
           handlePageChange={(val) => ethosHandlePageChange(val)}
+          handleAdd={() => navigate('new/?type=ETHOS')}
         />
       </div>
     </Container>

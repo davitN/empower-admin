@@ -16,6 +16,8 @@ export const GET_CONTENT_ITEM_DETAILS = 'socialize/generalContentLibrary/getCont
 export const SET_CONTENT_ITEM_DETAILS = 'socialize/generalContentLibrary/setContentItemDetails';
 export const RESET_CONTENT_ITEM_DETAILS = 'socialize/generalContentLibrary/resetContentItemDetails';
 
+export const SAVE_CONTENT_ITEM_DETAILS = 'socialize/generalContentLibrary/saveContentItemDetails';
+
 const initialState: InitialState = {
   ethosGeneralContent: null,
   powerDownGeneralContent: null,
@@ -107,4 +109,10 @@ export const setContentItemDetails = (data: ContentItem) => ({
 });
 export const resetContentItemDetails = () => ({
   type: RESET_CONTENT_ITEM_DETAILS,
+});
+
+export const saveContentItemDetails = (data: any, callbacks?: CallBacks) => ({
+  type: SAVE_CONTENT_ITEM_DETAILS,
+  callbacks,
+  data,
 });
