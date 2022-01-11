@@ -36,7 +36,7 @@ const SetPassword = () => {
     }));
   };
   return (
-    <div className={classNames('p-d-flex p-flex-column p-shadow-1 p-p-6', classes.root)}>
+    <div className={classNames('p-d-flex p-flex-column p-shadow-1 p-p-4 sm:p-p-6', classes.root)}>
       {!showError && !succeed && (
         <>
           <TextInput
@@ -74,8 +74,10 @@ export default SetPassword;
 
 const useStyles = createUseStyles({
   root: {
-    minWidth: '40rem',
+    maxWidth: '40rem',
+    width: '100%',
     placeSelf: 'center',
+    margin: '0 2rem !important',
   },
   blue: {
     color: COLORS.lightBlue,
