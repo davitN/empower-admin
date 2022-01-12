@@ -96,7 +96,7 @@ const GeneralContentLibraryDetails = () => {
         visible={visible}
         handleClose={() => setVisible(false)}
         title="Remove content"
-        description="Do you really want remove content?"
+        description="Do you really want to remove content?"
         handleSuccess={() => {
           setLoading(true);
           id && dispatch(removeContentItem(
@@ -194,7 +194,7 @@ const GeneralContentLibraryDetails = () => {
               handler: () => setVisible(true),
               label: 'Remove content',
               disabled: false,
-              hidden: !isNewItem && !itemDetails,
+              hidden: isNewItem,
             }}
           />
         </div>
