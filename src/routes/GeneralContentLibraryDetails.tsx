@@ -47,16 +47,21 @@ const GeneralContentLibraryDetails = () => {
   };
   const handleSave = () => {
     setLoading(true);
-    const filesData = {
-      ...(uploadedImg && { imageWidth: uploadedImg.imgDimension.width, imageHeight: uploadedImg.imgDimension.height }),
-      ...(uploadedFile && { contentDuration: uploadedFile.duration, contentWidth: 1, contentHeight: 1 }),
-      ...(uploadedFile && values.contentType === 'VIDEO' && { contentWidth: uploadedFile.width, contentHeight: uploadedFile.height }),
-    };
+    const imageWidth = uploadedImg?.imgDimension.width || values?.image?.width;
+    const imageHeight = uploadedImg?.imgDimension.height || values?.image?.height;
+    const contentWidth = uploadedFile?.width || values?.content?.width || 1;
+    const contentHeight = uploadedFile?.height || values?.content?.height || 1;
     dispatch(saveContentItemDetails({
       data: {
-        ...values,
         type: selectedType,
-        ...filesData,
+        title: values.title,
+        description: values.description,
+        contentType: values.contentType,
+        imageWidth,
+        imageHeight,
+        contentHeight,
+        contentWidth,
+        contentDuration: uploadedFile?.duration || values?.content?.duration || 1,
       },
       contentId: id,
       content: uploadedFile?.file,
@@ -241,5 +246,8 @@ interface ValuesTypes {
   image?: Image,
   content?: {
     URL: string,
+    width?: number,
+    height?: number,
+    duration?: number
   }
 }

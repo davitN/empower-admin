@@ -47,7 +47,7 @@ export interface SaveItem {
     description: string,
     imageWidth?: number,
     imageHeight?: number,
-    duration?: number,
+    contentDuration?: number,
     contentWidth?: number,
     contentHeight?: number,
     type: GeneralContentLibraryType,
