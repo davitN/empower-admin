@@ -256,6 +256,7 @@ const CompanyDetails = () => {
             customButtons={[{
               label: 'Add monthly team activity',
               handler: () => navigate(`/app-content/monthly-team-activity/new/${companyDetails['_id']}`),
+              hidden: isNewCompany,
             }]}
           />
         </div>

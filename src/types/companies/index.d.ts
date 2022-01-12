@@ -7,7 +7,8 @@ export interface InitialStateCompanies {
     count: number
   } | null;
   companyDetails: CompanyItem | null,
-  admins: null | AppAdminsData
+  admins: null | AppAdminsData,
+  allCompanies: CompanyItem[] | null
 }
 export interface GetCompaniesOptions {
   offset: number,
@@ -62,4 +63,14 @@ export interface SaveDataTypes {
 
 export interface GetCompanyAdminsParams extends GetDataParams {
   companyId: string
+}
+
+export interface AllCompaniesItem {
+  logo: {
+    width: number,
+    height: number,
+    imgURL: string
+  },
+  _id: string,
+  name: string
 }

@@ -5,10 +5,10 @@ import {
   CHECK_SIGNED_IN, LOGOUT, REQUEST_SIGN_IN_SG, REQUEST_SIGN_UP_SG,
 } from '../ducks/authDuck';
 import {
-  GET_COMPANIES, GET_COMPANY_DETAILS, SAVE_COMPANY_DATA, GET_COMPANY_ADMINS,
+  GET_COMPANIES, GET_COMPANY_DETAILS, SAVE_COMPANY_DATA, GET_COMPANY_ADMINS, GET_ALL_COMPANIES,
 } from '../ducks/companiesDuck';
 import {
-  getCompanies, getCompanyDetails, saveCompanyData, getCompanyAdmins,
+  getCompanies, getCompanyDetails, saveCompanyData, getCompanyAdmins, getAllCompanies,
 } from './companiesSaga';
 import {
   GET_LOCATIONS, SAVE_LOCATION, GET_LOCATION_DETAILS, GET_LOCATION_ADMINS,
@@ -57,6 +57,18 @@ import { getAppUserAccount, updateAppUserAccount, resetAppUserAccountPassword } 
 import { GET_PAYMENT_DATA } from '../ducks/paymentsDuck';
 import { getPaymentData } from './paymentsSaga';
 
+import { GET_REPORTS_COMPANY } from '../ducks/reportsDuck';
+import { getReportsCompany } from './reportsSaga';
+
+import { GET_ETHOS_CARDS, GET_ETHOS_CARD_DETAILS, SAVE_ETHOS_CARD_DETAILS } from '../ducks/ethosCardsDuck';
+import { getEthosCardDetails, getEthosCards, saveEthosCardDetails } from './ethosCardsSaga';
+import {
+  GET_CONTENTS, GET_CONTENT_ITEM, GET_CONTENT_ITEM_DETAILS, REMOVE_CONTENT_ITEM, SAVE_CONTENT_ITEM_DETAILS,
+} from '../ducks/generalContentLibraryDuck';
+import {
+  getContentItem, getContentItemDetails, getContentsData, removeContentItem, saveContentItemDetails,
+} from './generalContentLibrarySaga';
+
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
   yield takeLatest(REQUEST_SIGN_IN_SG, signInSaga);
@@ -92,6 +104,16 @@ function* actionWatcher() {
   yield takeLatest(GET_COMPANY_ADMINS, getCompanyAdmins);
   yield takeLatest(GET_LOCATION_ADMINS, getLocationAdmins);
   yield takeLatest(GET_PAYMENT_DATA, getPaymentData);
+  yield takeLatest(GET_ALL_COMPANIES, getAllCompanies);
+  yield takeLatest(GET_REPORTS_COMPANY, getReportsCompany);
+  yield takeLatest(GET_ETHOS_CARDS, getEthosCards);
+  yield takeLatest(GET_ETHOS_CARD_DETAILS, getEthosCardDetails);
+  yield takeLatest(SAVE_ETHOS_CARD_DETAILS, saveEthosCardDetails);
+  yield takeLatest(GET_CONTENTS, getContentsData);
+  yield takeLatest(GET_CONTENT_ITEM, getContentItem);
+  yield takeLatest(GET_CONTENT_ITEM_DETAILS, getContentItemDetails);
+  yield takeLatest(SAVE_CONTENT_ITEM_DETAILS, saveContentItemDetails);
+  yield takeLatest(REMOVE_CONTENT_ITEM, removeContentItem);
 }
 
 export default function* rootSaga() {

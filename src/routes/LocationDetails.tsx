@@ -185,6 +185,7 @@ const LocationDetails = () => {
                 placeholder="Enter company name..."
                 disabled
               />
+              {!isNewLocation && (
               <TextInput
                 value={paymentURL}
                 label="Individual Location Payment Page "
@@ -195,6 +196,7 @@ const LocationDetails = () => {
                   navigator.clipboard.writeText(e.target.value);
                 }}
               />
+              )}
             </>
           )}
         </div>
@@ -215,7 +217,7 @@ const LocationDetails = () => {
               disabled: validateInputs(),
             }}
             remove={{
-              handler: () => console.log('remove item'),
+              handler: () => console.log('remove'),
               label: 'Remove Location',
               disabled: false,
               hidden: !isNewLocation && !locationDetails,

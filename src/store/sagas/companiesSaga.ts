@@ -2,9 +2,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
-import { setCompanies, setCompanyDetails, setCompanyAdmins } from '../ducks/companiesDuck';
 import {
-  CompaniesTypes, GetCompaniesOptions, GetCompanyDetailsTypes, CompanyItem, SaveDataTypes, GetCompanyAdminsParams,
+  setCompanies, setCompanyDetails, setCompanyAdmins, setAllCompanies,
+} from '../ducks/companiesDuck';
+import {
+  CompaniesTypes, GetCompaniesOptions, GetCompanyDetailsTypes, CompanyItem, SaveDataTypes, GetCompanyAdminsParams, AllCompaniesItem,
 } from '../../types/companies';
 import {
   AppAdminsData,
@@ -72,6 +74,23 @@ export function* getCompanyAdmins({ params, callbacks }:{ params: GetCompanyAdmi
   try {
     const res: AppAdminsData = yield axiosInstance.get('/admin/get_admins', { params });
     yield put(setCompanyAdmins(res));
+    callbacks?.success && callbacks.success();
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    yield put(
+      notifyAction({
+        type: 'error',
+        message: error.response?.data.message,
+        showError: false,
+      }),
+    );
+  }
+}
+
+export function* getAllCompanies({ callbacks }:{ callbacks: CallBacks, type: string }) {
+  try {
+    const res: AllCompaniesItem[] = yield axiosInstance.get('/company/get_all_companies');
+    yield put(setAllCompanies(res));
     callbacks?.success && callbacks.success();
   } catch (error: any) {
     callbacks?.error && callbacks.error();

@@ -7,6 +7,9 @@ import { appContentReducer } from './appContentDuck';
 import { appAdminsReducer } from './appAdminsDuck';
 import { appUserAccountReducer } from './appUserAccount';
 import { paymentsReducer } from './paymentsDuck';
+import { reportsReducer } from './reportsDuck';
+import { ethosCardsReducer } from './ethosCardsDuck';
+import { generalContentLibraryReducer } from './generalContentLibraryDuck';
 
 export {
   mainReducer,
@@ -18,4 +21,7 @@ export {
   appAdminsReducer,
   appUserAccountReducer,
   paymentsReducer,
+  reportsReducer,
+  ethosCardsReducer,
+  generalContentLibraryReducer,
 };

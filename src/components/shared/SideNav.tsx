@@ -72,6 +72,14 @@ const routes: Array<{ title: string, path: string }> = [
     title: 'Companies',
     path: '/companies',
   },
+  // {
+  //   title: 'Reports',
+  //   path: '/reports',
+  // },
+  {
+    title: 'Ethos Cards',
+    path: '/ethos-cards',
+  },
   {
     title: 'App users',
     path: '/app-users',
@@ -83,6 +91,10 @@ const routes: Array<{ title: string, path: string }> = [
   {
     title: 'App Content',
     path: '/app-content',
+  },
+  {
+    title: 'General Content Library',
+    path: '/general-content-library',
   },
   {
     title: 'Account',

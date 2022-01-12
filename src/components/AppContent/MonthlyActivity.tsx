@@ -1,6 +1,6 @@
 import { createUseStyles } from 'react-jss';
-import { useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'primereact/skeleton';
 import Title from '../shared/Title';
@@ -9,63 +9,54 @@ import RadioButtonComponent from '../shared/Inputs/RadioButton';
 import UploadButton from '../shared/UploadButton';
 import TextInput from '../shared/Inputs/TextInput';
 import Textarea from '../shared/Inputs/Textarea';
-import { getAppContentItemInfo } from '../../store/ducks/appContentDuck';
+import { getAppContentItemInfo, resetAppContentItemInfo, saveAppContentItem } from '../../store/ducks/appContentDuck';
 import { RootState } from '../../store/configureStore';
-import { GetAppContentItemInfo } from '../../types/appContent';
+import { GetAppContentItemInfo, MonthlyActivityContentType, MonthlyActivityTypes } from '../../types/appContent';
+import FormSharedComponent from '../shared/FormsSharedComponent';
 
-interface PropTypes {
-  values: any,
-  setValues: Function,
-  types: { value: string, label: string }[],
-  uploadedFile: EventTarget,
-  setUploadedFIle: Function,
-  contentType: { value: string, label: string }[],
-  uploadedFileProgress: number | null
-}
-
-const MonthlyActivity = ({
-  values, setValues, types, uploadedFile, setUploadedFIle, contentType, uploadedFileProgress,
-}: PropTypes) => {
+const MonthlyActivity = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { id: companyId, mode } = useParams();
   const [searchParams] = useSearchParams();
-  const fieldName = searchParams.get('fieldName');
-  const type = fieldName && fieldName.split(/(?=[A-Z])/).map((el) => el.toUpperCase()).join('_');
-  const isEditing = mode === 'edit' && companyId;
+  const navigate = useNavigate();
+  const { id: companyId, mode } = useParams();
+  const isEditing = mode === 'edit';
+  const [saving, setSaving] = useState(false);
+  const [uploadedFile, setUploadedFIle] = useState<any>(null);
+  const [uploadedFileProgress, setUploadedFIleProgress] = useState<null | number>(null);
+  const [values, setValues] = useState<ValuesTypes>(ValuesInitialState);
+  const fieldName: MonthlyActivityTypes = searchParams.get('fieldName') as MonthlyActivityTypes || 'kickOff';
   const { appContentItemInfo } : { appContentItemInfo :GetAppContentItemInfo } = useSelector((state: RootState) => state.appContentReducer);
 
-  useEffect(() => {
-    if (!isEditing) {
-      setValues({ ...values, companyId });
-    }
-    if (isEditing) {
-      setValues({ ...values, type });
-    }
-  }, [mode]);
+  const validateInputs = () => (!values.title || !values.subTitle || !values.description || (!isEditing && !uploadedFile));
 
-  useEffect(() => {
-    if (isEditing && companyId && fieldName) {
-      dispatch(getAppContentItemInfo({
-        companyId,
-        fieldName,
-      }));
-    }
-  }, [companyId, mode, searchParams]);
+  const resetUploadedFilesData = () => {
+    setUploadedFIle(null);
+    setUploadedFIleProgress(null);
+  };
 
-  useEffect(() => {
-    if (appContentItemInfo) {
-      setValues({
-        ...values,
-        type,
-        contentType: appContentItemInfo.type,
-        title: appContentItemInfo.title,
-        subTitle: appContentItemInfo.subTitle,
-        description: appContentItemInfo?.description || '',
-        companyId,
-      });
-    }
-  }, [appContentItemInfo]);
+  const handleSave = () => {
+    setSaving(true);
+    dispatch(saveAppContentItem(
+      {
+        data: values,
+        file: uploadedFile,
+        ...(isEditing && { companyId }),
+      },
+      {
+        success: () => {
+          setSaving(false);
+          resetUploadedFilesData();
+          !isEditing && navigate(`/companies/${companyId}`);
+        },
+        error: () => {
+          setSaving(false);
+          setUploadedFIleProgress(null);
+        },
+      },
+      (val: number) => setUploadedFIleProgress(val),
+    ));
+  };
 
   function setFileDuration(file: any) {
     const video = document.createElement(file.type.includes('video') ? 'video' : 'audio');
@@ -77,6 +68,47 @@ const MonthlyActivity = ({
     };
     video.src = URL.createObjectURL(file);
   }
+  // if editing set companyId and type else set type
+  useEffect(() => {
+    if (!isEditing) {
+      setValues({ ...values, companyId, type: fieldName });
+    }
+    if (isEditing) {
+      setValues({ ...values, type: fieldName });
+    }
+  }, [mode, fieldName]);
+
+  // if editing get item data
+  useEffect(() => {
+    if (isEditing && companyId && fieldName) {
+      dispatch(getAppContentItemInfo({
+        companyId,
+        fieldName,
+      }));
+    }
+  }, [companyId, mode, searchParams]);
+
+  // if item data fetched, set values
+  useEffect(() => {
+    if (appContentItemInfo) {
+      setValues({
+        ...values,
+        type: fieldName,
+        contentType: appContentItemInfo.type,
+        title: appContentItemInfo.title,
+        subTitle: appContentItemInfo.subTitle,
+        description: appContentItemInfo?.description || '',
+        companyId,
+      });
+    }
+  }, [appContentItemInfo]);
+
+  // reset values on unmount
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  useEffect(() => {
+    return () => dispatch(resetAppContentItemInfo());
+  }, []);
 
   return (
     <div className={classes.gridWrapper}>
@@ -88,12 +120,14 @@ const MonthlyActivity = ({
               <div className="p-d-flex p-flex-column">
                 <Label label="Monthly Team Activity" costumeStyles="p-mb-3" />
                 <div className="p-d-flex">
-                  {types.map(({ label, value }) => (
+                  {activityTypes.map(({ label, value }) => (
                     <RadioButtonComponent
                       label={label}
                       value={value}
                       checked={values.type === value}
-                      onChange={() => setValues({ ...values, type: value, contentType: value === 'KICK_OFF' ? 'AUDIO' : values.contentType })}
+                      onChange={() => {
+                        setValues({ ...values, type: value, contentType: value === 'kickOff' ? 'AUDIO' : values.contentType });
+                      }}
                       costumeClasses="p-mr-3"
                       key={label}
                       disabled={!!isEditing}
@@ -101,16 +135,18 @@ const MonthlyActivity = ({
                   ))}
                 </div>
               </div>
-              {values.type !== 'KICK_OFF' && (
+              {values.type !== 'kickOff' && (
               <div className="p-d-flex p-flex-column">
                 <Label label="Content Type" costumeStyles="p-mb-2" />
                 <div className="p-d-flex">
-                  {contentType.map(({ label, value }) => (
+                  {contentTypes.map(({ label, value }) => (
                     <RadioButtonComponent
                       label={label}
                       value={value}
                       checked={values.contentType === value}
-                      onChange={() => setValues({ ...values, contentType: value })}
+                      onChange={() => {
+                        setValues({ ...values, contentType: value });
+                      }}
                       costumeClasses="p-mr-3"
                       key={label}
                     />
@@ -138,7 +174,22 @@ const MonthlyActivity = ({
         </div>
 
       </div>
-
+      <div className={classes.justifyEnd}>
+        <FormSharedComponent
+          save={{
+            handler: handleSave,
+            label: isEditing ? 'Save Content' : 'Add Content',
+            disabled: validateInputs(),
+            loading: saving,
+          }}
+          remove={{
+            handler: undefined,
+            label: 'Delete Content',
+            hidden: !isEditing,
+            disabled: saving,
+          }}
+        />
+      </div>
     </div>
   );
 };
@@ -148,10 +199,72 @@ export default MonthlyActivity;
 const useStyles = createUseStyles({
   gridWrapper: {
     display: 'grid',
-    gridRowGap: '3rem',
+    gridTemplateColumns: '1.5fr 1fr',
+    gap: '5rem',
   },
   gridInputsWrapper: {
     display: 'grid',
     gridRowGap: '1.5rem',
   },
+  justifyEnd: {
+    justifySelf: 'end',
+    display: 'grid',
+    gridTemplateRows: 'repeat( auto-fit, minmax(0, max-content) )',
+    gap: '1rem',
+    justifyItems: 'end',
+  },
 });
+
+const activityTypes: { label: string, value: MonthlyActivityTypes }[] = [
+  {
+    label: 'KickOff',
+    value: 'kickOff',
+  },
+  {
+    label: 'Ethos',
+    value: 'ethos',
+  },
+  {
+    label: 'Power up',
+    value: 'powerUp',
+  },
+  {
+    label: 'Gratitude',
+    value: 'gratitude',
+  },
+  {
+    label: 'Power down',
+    value: 'powerDown',
+  },
+];
+
+const contentTypes : { label: string, value: MonthlyActivityContentType }[] = [
+  {
+    label: 'Audio',
+    value: 'AUDIO',
+  },
+  {
+    label: 'Video',
+    value: 'VIDEO',
+  },
+];
+
+const ValuesInitialState: ValuesTypes = {
+  type: 'kickOff',
+  contentType: 'AUDIO',
+  title: '',
+  subTitle: '',
+  description: '',
+  companyId: '',
+  duration: 0,
+};
+
+interface ValuesTypes {
+  type: MonthlyActivityTypes,
+  contentType: MonthlyActivityContentType,
+  title: string,
+  subTitle: string,
+  description: string,
+  companyId?: string | null,
+  duration: number
+}

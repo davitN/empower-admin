@@ -21,8 +21,13 @@ import AppContentDetail from './routes/AppContentDetail';
 import AppAdmins from './routes/AppAdmins';
 import AppAdminDetails from './routes/AppAdminDetails';
 import AppUserAccount from './routes/AppUserAccount';
-import Analytics from './routes/Analitycs';
+import Analytics from './routes/Analytics';
 import PaymentsFinished from './routes/PaymentsFinished';
+import Reports from './routes/Reports';
+import EthosCards from './routes/EthosCards';
+import EthosCardsDetails from './routes/EthosCardsDetails';
+import GeneralContentLibrary from './routes/GeneralContentLibrary';
+import GeneralContentLibraryDetails from './routes/GeneralContentLibraryDetails';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -48,6 +53,17 @@ ReactDOM.render(
             <Route path="app-admins/:type/:id" element={<AppAdminDetails />} />
             <Route path="user-profile" element={<AppUserAccount />} />
             <Route path="analytics" element={<Analytics />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="ethos-cards">
+              <Route index element={<EthosCards />} />
+              <Route path=":mode" element={<EthosCardsDetails />} />
+              <Route path=":mode/:id" element={<EthosCardsDetails />} />
+            </Route>
+            <Route path="general-content-library">
+              <Route index element={<GeneralContentLibrary />} />
+              <Route path=":mode" element={<GeneralContentLibraryDetails />} />
+              <Route path=":mode/:id" element={<GeneralContentLibraryDetails />} />
+            </Route>
             <Route
               path="*"
               element={(

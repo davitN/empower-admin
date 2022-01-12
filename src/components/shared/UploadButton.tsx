@@ -8,11 +8,14 @@ interface PropsTypes {
   handleUpload?: (val: any) => void,
   fileType?: string,
   disabled?: boolean,
-  uploadedFileProgress?: number | null
+  uploadedFileProgress?: number | null,
+  desc?: string,
+  name? : string,
+  preview?: string | null
 }
 
 const UploadButton = ({
-  uploadedFile, handleUpload, fileType, disabled, uploadedFileProgress,
+  uploadedFile, handleUpload, fileType, disabled, uploadedFileProgress, desc, name, preview,
 } : PropsTypes) => {
   const classes = useStyles();
   return (
@@ -22,7 +25,7 @@ const UploadButton = ({
           <div>
             <input
               type="file"
-              id="upload"
+              id={`upload${name}`}
               accept={fileType}
               hidden
               onChange={(e) => {
@@ -30,7 +33,7 @@ const UploadButton = ({
                 e.target.value = '';
               }}
             />
-            <label htmlFor="upload" className={classes.label}>
+            <label htmlFor={`upload${name}`} className={classes.label}>
               <ButtonComponent
                 customClasses={classes.uploadBtn}
                 bgColor={COLORS.lightBlue}
@@ -45,8 +48,10 @@ const UploadButton = ({
           {uploadedFile && uploadedFileProgress && (
           <Label label={`(${uploadedFileProgress}%)`} costumeStyles="p-ml-10 text-sm" />
           )}
+          {preview && <a className={classes.preview} href={preview} target="_blank" rel="noreferrer">Click here to see content</a>}
         </div>
       </div>
+      {desc && <p className={classes.desc}>{desc}</p>}
     </div>
   );
 };
@@ -65,5 +70,15 @@ const useStyles = createUseStyles({
   label: {
     width: 'max-content',
     cursor: 'pointer',
+  },
+  desc: {
+    fontSize: '0.8rem',
+    opacity: 0.6,
+    marginTop: '0.5rem',
+  },
+  preview: {
+    textDecoration: 'none',
+    marginLeft: '1rem',
+    color: COLORS.blueWood,
   },
 });

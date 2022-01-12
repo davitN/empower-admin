@@ -46,7 +46,7 @@ const Table = ({
   const [currentPage, setCurrentPage] = useState<number>(0);
 
   const editAction = (rowData: any) => (
-    <ButtonComponent customClasses={classes.actionButton} handleClick={handleEdit ? () => handleEdit(rowData) : undefined}>
+    <ButtonComponent customClasses={classNames(classes.actionButton, 'p-ml-auto')} handleClick={handleEdit ? () => handleEdit(rowData) : undefined}>
       <i className="pi pi-cog" style={{ color: COLORS.white }} />
     </ButtonComponent>
   );
@@ -93,7 +93,7 @@ const Table = ({
       >
         {data && header.map(({ name, field, body }) => <Column field={field} header={name} key={name} body={body} />)}
         {!data && header.map(({ name, field }) => <Column field={field} header={name} key={name} body={<Skeleton />} />)}
-        <Column body={data ? editAction : <Skeleton />} header="Settings" />
+        <Column body={data ? editAction : <Skeleton />} header="Settings" className={classes.setting} />
       </DataTable>
       {data && data.data.length > 0 && LIMIT < data.count && (
         <Paginator
@@ -254,6 +254,11 @@ const useStyles = createUseStyles({
   button: {
     maxWidth: 'max-content',
     padding: '0.5rem 2rem !important',
+  },
+  setting: {
+    '& > div': {
+      justifyContent: 'end',
+    },
   },
 });
 
