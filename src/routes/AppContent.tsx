@@ -108,6 +108,8 @@ const AppContent = () => {
             tableTitle="Kickoff Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=kickOff`)}
             LIMIT={5}
+            handleAdd={() => navigate('/companies')}
+            buttonText="+ Add content"
             handlePageChange={(val) => kickOffHandlePageChange(val)}
           />
           <Table
@@ -118,6 +120,8 @@ const AppContent = () => {
             tableTitle="Ethos Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=ethos`)}
             LIMIT={5}
+            handleAdd={() => navigate('/companies')}
+            buttonText="+ Add content"
             handlePageChange={(val) => ethosHandlePageChange(val)}
           />
           <Table
@@ -128,6 +132,8 @@ const AppContent = () => {
             tableTitle="Gratitude Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=gratitude`)}
             LIMIT={5}
+            handleAdd={() => navigate('/companies')}
+            buttonText="+ Add content"
             handlePageChange={(val) => gratitudeHandlePageChange(val)}
           />
           <Table
@@ -138,6 +144,8 @@ const AppContent = () => {
             tableTitle="Power-Up Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=powerUp`)}
             LIMIT={5}
+            handleAdd={() => navigate('/companies')}
+            buttonText="+ Add content"
             handlePageChange={(val) => powerUpHandlePageChange(val)}
           />
           <Table
@@ -148,6 +156,8 @@ const AppContent = () => {
             tableTitle="Power-Down Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=powerDown`)}
             LIMIT={5}
+            handleAdd={() => navigate('/companies')}
+            buttonText="+ Add content"
             handlePageChange={(val) => powerDownHandlePageChange(val)}
           />
           <div>
