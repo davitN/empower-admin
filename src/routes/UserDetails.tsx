@@ -35,7 +35,7 @@ interface ValuesTypes {
 }
 
 const UserDetails = () => {
-  const { id: userId } = useParams();
+  const { userId } = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const classes = useStyles();
