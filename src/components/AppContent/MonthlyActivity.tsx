@@ -23,6 +23,7 @@ const MonthlyActivity = () => {
   const isEditing = mode === 'edit';
   const [saving, setSaving] = useState(false);
   const [uploadedFile, setUploadedFIle] = useState<any>(null);
+  const [contentType, setContentType] = useState<'VIDEO' | 'AUDIO'>('VIDEO');
   const [uploadedFileProgress, setUploadedFIleProgress] = useState<null | number>(null);
   const [values, setValues] = useState<ValuesTypes>(ValuesInitialState);
   const fieldName: MonthlyActivityTypes = searchParams.get('fieldName') as MonthlyActivityTypes || 'kickOff';
@@ -94,7 +95,6 @@ const MonthlyActivity = () => {
       setValues({
         ...values,
         type: fieldName,
-        contentType: appContentItemInfo.type,
         title: appContentItemInfo.title,
         subTitle: appContentItemInfo.subTitle,
         description: appContentItemInfo?.description || '',
@@ -126,7 +126,8 @@ const MonthlyActivity = () => {
                       value={value}
                       checked={values.type === value}
                       onChange={() => {
-                        setValues({ ...values, type: value, contentType: value === 'kickOff' ? 'VIDEO' : values.contentType });
+                        setValues({ ...values, type: value });
+                        value === 'kickOff' && setContentType('VIDEO');
                       }}
                       costumeClasses="p-mr-3"
                       key={label}
@@ -143,9 +144,9 @@ const MonthlyActivity = () => {
                     <RadioButtonComponent
                       label={label}
                       value={value}
-                      checked={values.contentType === value}
+                      checked={contentType === value}
                       onChange={() => {
-                        setValues({ ...values, contentType: value });
+                        setContentType(value);
                       }}
                       costumeClasses="p-mr-3"
                       key={label}
@@ -155,13 +156,14 @@ const MonthlyActivity = () => {
               </div>
               )}
               <div className={classes.gridInputsWrapper}>
-                <Title title={`${values.contentType === 'VIDEO' ? 'Video' : 'Audio'} Details`} fontSize="text-2xl" costumeStyles="p-mb-0" />
+                <Title title={`${contentType === 'VIDEO' ? 'Video' : 'Audio'} Details`} fontSize="text-2xl" costumeStyles="p-mb-0" />
                 <TextInput label="Title" required value={values.title} handleChange={(title) => setValues({ ...values, title })} />
                 <TextInput label="Subtitle" required value={values.subTitle} handleChange={(subTitle) => setValues({ ...values, subTitle })} />
                 <Textarea label="Description" value={values.description} required handleChange={(description) => setValues({ ...values, description })} />
                 <UploadButton
-                  fileType={values.contentType === 'VIDEO' ? '.mp4' : '.mp3'}
+                  fileType={contentType === 'VIDEO' ? '.mp4' : '.mp3'}
                   uploadedFile={uploadedFile}
+                  desc={`${contentType === 'VIDEO' ? '.mp4' : '.mp3'} files only `}
                   handleUpload={(val: any) => {
                     setUploadedFIle(val);
                     setFileDuration(val);
@@ -251,7 +253,6 @@ const contentTypes : { label: string, value: MonthlyActivityContentType }[] = [
 
 const ValuesInitialState: ValuesTypes = {
   type: 'kickOff',
-  contentType: 'VIDEO',
   title: '',
   subTitle: '',
   description: '',
@@ -261,7 +262,6 @@ const ValuesInitialState: ValuesTypes = {
 
 interface ValuesTypes {
   type: MonthlyActivityTypes,
-  contentType: MonthlyActivityContentType,
   title: string,
   subTitle: string,
   description: string,
