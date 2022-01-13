@@ -34,7 +34,7 @@ export interface RouteType {
 export const routes: RouteType[] = [
   {
     type: 'nested',
-    name: 'Company',
+    name: 'Companies',
     path: 'companies',
     pathName: 'companies',
     nestedRoutes: [

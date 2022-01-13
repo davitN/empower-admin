@@ -26,7 +26,7 @@ const Companies = () => {
         data={companies}
         header={tableHeaders}
         tableTitle="COMPANIES"
-        handleEdit={({ _id }) => navigate(_id)}
+        handleEdit={({ _id }) => navigate(`${_id}`)}
         handlePageChange={(val) => handlePageChange(val)}
         handleAdd={() => navigate('new')}
         buttonText="+ Add company"

@@ -64,6 +64,7 @@ const LocationDetails = () => {
   const { users }: { users: GetAppUsersData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { id: locationId } = useParams();
   const isNewLocation = locationId === 'new';
+  const prevLocation = `/companies/${isNewLocation ? searchParams.get('companyId') : locationDetails?.company['_id'] || ''}`;
   const newLocationCompanyName = isNewLocation && searchParams.get('companyName')?.replace('_', '  ');
   const newLocationCompanyId = isNewLocation && searchParams.get('companyId');
   const {
@@ -161,7 +162,7 @@ const LocationDetails = () => {
   }, [locationDetails]);
 
   return (
-    <Container itemId={locationId} idText="Location ID" sectionTitle="STAR OF TEXAS VETERINARY HOSPITAL">
+    <Container itemId={locationId} idText="Location ID" sectionTitle="STAR OF TEXAS VETERINARY HOSPITAL" goBack={() => navigate(prevLocation)}>
       <div className={classes.wrapper}>
         <div className={classes.inputs}>
           <Title title="LOCATION INFORMATION" costumeStyles="p-pb-4" />

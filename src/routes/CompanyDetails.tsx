@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
@@ -56,6 +56,8 @@ const CompanyDetails = () => {
   const dispatch = useDispatch();
   const { companyId } = useParams();
   const isNewCompany = companyId === 'new';
+  const { pathname } = useLocation();
+  const prevLocation = `/${pathname.split('/')[1]}`;
   const { locations } = useSelector((state: RootState) => state.locationsReducer);
   const [showFilteredAdmins, setShowFilteredAdmins] = useState(false);
   const {
@@ -157,7 +159,7 @@ const CompanyDetails = () => {
   useEffect(() => () => dispatch(resetCompanyDetailsState()), []);
 
   return (
-    <Container sectionTitle="VETERINARY GROWTH PARTNERS" idText="Company ID" itemId={companyId} goBack={() => navigate('/companies')}>
+    <Container sectionTitle="VETERINARY GROWTH PARTNERS" idText="Company ID" itemId={companyId} goBack={() => navigate(prevLocation)}>
       <Title title="COMPANY INFORMATION" costumeStyles="p-pb-4" />
       <div className={classes.wrapper}>
         <div className={classNames(classes.inputs)}>
@@ -284,7 +286,7 @@ const CompanyDetails = () => {
             data={showFilteredAdmins ? admins : companyDetails?.admins}
             header={adminsHeader}
             tableTitle="Manage Company Admins"
-            handleEdit={({ _id, role }) => navigate(`/app-admins/${role.name}/${_id}?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)}
+            handleEdit={({ _id, role }) => navigate(`/app-admins/${role.name}/${_id}`)}
             handlePageChange={(val) => {
               adminsHandlePageChange(val);
               !showFilteredAdmins && setShowFilteredAdmins(true);
