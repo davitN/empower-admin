@@ -6,6 +6,7 @@ import COLORS from '../../services/colors.service';
 import Login from '../LogIn/LogIn';
 import Logo from '../../assets/images/logo.png';
 import { RootState } from '../../store/configureStore';
+import { routes } from '../../helpers/routes';
 
 const SideNav = () => {
   const classes = useStyles();
@@ -18,12 +19,16 @@ const SideNav = () => {
       <img className={classNames('p-col', classes.logo)} src={Logo} alt="Ups." onClick={() => navigate('/analytics')} />
       {isSignedIn ? (
         <ul className={classNames('p-pt-6 p-pl-0', classes.ul)}>
-          {routes.map(({ title, path }) => (
+          {routes.map(({
+            hiddenInNav, disabled, name, path,
+          }) => (
+            !hiddenInNav && !disabled && (
             <li className={classNames(classes.li, pathname.includes(path) && 'p-text-bold')} key={path}>
               <Link to={path} className={classes.link}>
-                {title}
+                {name}
               </Link>
             </li>
+            )
           ))}
         </ul>
       ) : (
@@ -62,42 +67,3 @@ const useStyles = createUseStyles({
   },
   ul: { listStyleType: 'none' },
 });
-
-const routes: Array<{ title: string, path: string }> = [
-  {
-    title: 'Analytics',
-    path: '/analytics',
-  },
-  {
-    title: 'Companies',
-    path: '/companies',
-  },
-  // {
-  //   title: 'Reports',
-  //   path: '/reports',
-  // },
-  {
-    title: 'Ethos Cards',
-    path: '/ethos-cards',
-  },
-  {
-    title: 'App users',
-    path: '/app-users',
-  },
-  {
-    title: 'App Admins',
-    path: '/app-admins',
-  },
-  {
-    title: 'App Content',
-    path: '/app-content',
-  },
-  {
-    title: 'General Content Library',
-    path: '/general-content-library',
-  },
-  {
-    title: 'Account',
-    path: '/user-profile',
-  },
-];

@@ -19,7 +19,7 @@ export interface RouteType {
   type: 'nested' | 'default',
   name: string,
   path: string,
-  Component?: Function,
+  Component?: any,
   disabled?: boolean,
   hiddenInNav?: boolean,
   nestedRoutes?: {
@@ -115,6 +115,7 @@ export const routes: RouteType[] = [
     name: 'Locations',
     path: 'locations/:id',
     Component: LocationDetails,
+    hiddenInNav: true,
   },
   {
     type: 'nested',
