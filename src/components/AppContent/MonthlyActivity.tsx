@@ -126,7 +126,7 @@ const MonthlyActivity = () => {
                       value={value}
                       checked={values.type === value}
                       onChange={() => {
-                        setValues({ ...values, type: value, contentType: value === 'kickOff' ? 'AUDIO' : values.contentType });
+                        setValues({ ...values, type: value, contentType: value === 'kickOff' ? 'VIDEO' : values.contentType });
                       }}
                       costumeClasses="p-mr-3"
                       key={label}
@@ -251,7 +251,7 @@ const contentTypes : { label: string, value: MonthlyActivityContentType }[] = [
 
 const ValuesInitialState: ValuesTypes = {
   type: 'kickOff',
-  contentType: 'AUDIO',
+  contentType: 'VIDEO',
   title: '',
   subTitle: '',
   description: '',
