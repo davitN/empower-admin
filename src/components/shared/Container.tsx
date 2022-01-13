@@ -8,18 +8,22 @@ interface PropTypes {
   children: ReactNode,
   itemId?: string,
   sectionTitle?: string,
-  idText?: string
+  idText?: string,
+  goBack?: () => void
 }
 
 const Container = ({
-  children, itemId, sectionTitle, idText,
+  children, itemId, sectionTitle, idText, goBack,
 }: PropTypes) => {
   const classes = useStyles();
   return (
     <div className={classNames('p-p-6', classes.root)}>
       {(sectionTitle || itemId) && (
       <div className={classNames('p-d-flex p-jc-between p-ai-center p-mb-3', classes.textColor)}>
-        {sectionTitle && <Title title={sectionTitle} fontSize="text-4xl" costumeStyles="p-mr-6" />}
+        <div className="p-d-flex p-ai-center">
+          {goBack && <i className="pi pi-arrow-left p-mr-2" style={{ cursor: 'pointer' }} onClick={goBack} />}
+          {sectionTitle && <Title title={sectionTitle} fontSize="text-4xl" costumeStyles="p-mr-6" />}
+        </div>
         {itemId !== 'new' && itemId && idText && (
         <p className={classNames('p-d-flex p-ai-center p-flex-column text-lg p-text-bold', classes.textColor)}>
           {idText}
