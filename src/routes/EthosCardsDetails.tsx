@@ -51,8 +51,8 @@ const EthosCardsDetails = () => {
     if (!isNewItem && ethosCardDetails) {
       setValues({
         ...values,
-        title: ethosCardDetails.title,
-        description: ethosCardDetails.description,
+        title: ethosCardDetails?.title || '',
+        description: ethosCardDetails?.description || '',
         image: ethosCardDetails?.image || null,
         audio: ethosCardDetails?.audio || null,
       });
