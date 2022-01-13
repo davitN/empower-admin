@@ -54,7 +54,7 @@ const CompanyDetails = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id: companyId } = useParams();
+  const { companyId } = useParams();
   const isNewCompany = companyId === 'new';
   const { locations } = useSelector((state: RootState) => state.locationsReducer);
   const [showFilteredAdmins, setShowFilteredAdmins] = useState(false);
@@ -251,7 +251,7 @@ const CompanyDetails = () => {
               handler: () => console.log('remove item'),
               label: 'Remove Company',
               disabled: false,
-              hidden: !isNewCompany && !companyDetails,
+              hidden: isNewCompany || (!isNewCompany && !companyDetails),
             }}
             customButtons={[{
               label: 'Add monthly team activity',

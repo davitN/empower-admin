@@ -136,6 +136,7 @@ const AppAdminDetails = () => {
               handler: () => console.log('rm'),
               label: 'Remove Admin',
               disabled: isSaving,
+              hidden: isNewAdmin || (!isNewAdmin && !adminDetails),
             }}
             isNewItem={isNewAdmin}
           />

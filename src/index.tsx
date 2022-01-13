@@ -42,15 +42,23 @@ ReactDOM.render(
           <Route path="payments" element={<Payments />} />
           <Route path="payments/finished" element={<PaymentsFinished />} />
           <Route path="/" element={<App />}>
-            <Route path="companies" element={<Companies />} />
-            <Route path="companies/:id" element={<CompanyDetails />} />
-            <Route path="app-users" element={<AppUsers />} />
-            <Route path="app-users/:id" element={<UserDetails />} />
+            <Route path="companies">
+              <Route index element={<Companies />} />
+              <Route path=":companyId" element={<CompanyDetails />} />
+            </Route>
             <Route path="locations/:id" element={<LocationDetails />} />
-            <Route path="app-content" element={<AppContent />} />
-            <Route path="app-content/:itemName/:mode/:id" element={<AppContentDetail />} />
-            <Route path="app-admins" element={<AppAdmins />} />
-            <Route path="app-admins/:type/:id" element={<AppAdminDetails />} />
+            <Route path="app-users">
+              <Route index element={<AppUsers />} />
+              <Route path=":id" element={<UserDetails />} />
+            </Route>
+            <Route path="app-content">
+              <Route index element={<AppContent />} />
+              <Route path=":itemName/:mode/:id" element={<AppContentDetail />} />
+            </Route>
+            <Route path="app-admins">
+              <Route index element={<AppAdmins />} />
+              <Route path=":type/:id" element={<AppAdminDetails />} />
+            </Route>
             <Route path="user-profile" element={<AppUserAccount />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="reports" element={<Reports />} />
