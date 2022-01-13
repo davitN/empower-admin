@@ -22,6 +22,7 @@ export interface RouteType {
   Component?: any,
   disabled?: boolean,
   hiddenInNav?: boolean,
+  pathName: string,
   nestedRoutes?: {
     index?: boolean,
     Component: Function,
@@ -35,6 +36,7 @@ export const routes: RouteType[] = [
     type: 'nested',
     name: 'Company',
     path: 'companies',
+    pathName: 'companies',
     nestedRoutes: [
       {
         index: true,
@@ -50,6 +52,7 @@ export const routes: RouteType[] = [
     type: 'nested',
     name: 'App Users',
     path: 'app-users',
+    pathName: 'appUsers',
     nestedRoutes: [
       {
         index: true,
@@ -65,6 +68,7 @@ export const routes: RouteType[] = [
     type: 'nested',
     name: 'App Content',
     path: 'app-content',
+    pathName: 'appContent',
     nestedRoutes: [
       {
         index: true,
@@ -80,6 +84,7 @@ export const routes: RouteType[] = [
     type: 'nested',
     name: 'App Admins',
     path: 'app-admins',
+    pathName: 'appAdmins',
     nestedRoutes: [
       {
         index: true,
@@ -95,6 +100,7 @@ export const routes: RouteType[] = [
     type: 'default',
     name: 'Account',
     path: 'user-profile',
+    pathName: 'userProfile',
     Component: AppUserAccount,
   },
   {
@@ -102,11 +108,13 @@ export const routes: RouteType[] = [
     name: 'Analytics',
     path: 'analytics',
     Component: Analytics,
+    pathName: 'analytics',
   },
   {
     type: 'default',
     name: 'Reports',
     path: 'reports',
+    pathName: 'reports',
     Component: Reports,
     disabled: true,
   },
@@ -114,6 +122,7 @@ export const routes: RouteType[] = [
     type: 'default',
     name: 'Locations',
     path: 'locations/:id',
+    pathName: 'locations',
     Component: LocationDetails,
     hiddenInNav: true,
   },
@@ -121,6 +130,7 @@ export const routes: RouteType[] = [
     type: 'nested',
     name: 'Ethos Cards',
     path: 'ethos-cards',
+    pathName: 'ethosCards',
     nestedRoutes: [
       {
         index: true,
@@ -140,6 +150,7 @@ export const routes: RouteType[] = [
     type: 'nested',
     name: 'General Content Library',
     path: 'general-content-library',
+    pathName: 'generalContentLibrary',
     nestedRoutes: [
       {
         index: true,
