@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import {
+  useLocation, useNavigate, useParams, useSearchParams,
+} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'primereact/skeleton';
 import { ContentItem, GeneralContentLibraryType } from '../types/generalContentLibrary';
@@ -22,6 +24,8 @@ const GeneralContentLibraryDetails = () => {
   const classes = useStyles();
   const { id } = useParams();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const prevLocation = `/${pathname.split('/')[1]}`;
   const params = useParams();
   const [searchParams] = useSearchParams();
   const isNewItem = params?.mode === 'new';
@@ -96,7 +100,7 @@ const GeneralContentLibraryDetails = () => {
   }, [isNewItem, itemDetails]);
 
   return (
-    <Container sectionTitle={`${isNewItem ? 'ADD' : 'EDIT'} ${selectedType.replace('_', ' ')} CONTENT`}>
+    <Container sectionTitle={`${isNewItem ? 'ADD' : 'EDIT'} ${selectedType.replace('_', ' ')} CONTENT`} goBack={() => navigate(prevLocation)}>
       <ConfirmDialog
         visible={visible}
         handleClose={() => setVisible(false)}

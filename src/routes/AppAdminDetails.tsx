@@ -2,7 +2,9 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import {
+  useLocation, useNavigate, useParams, useSearchParams,
+} from 'react-router-dom';
 import { Skeleton } from 'primereact/skeleton';
 import Container from '../components/shared/Container';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
@@ -34,6 +36,9 @@ const AppAdminDetails = () => {
     phone: '',
     role: null,
   });
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const prevLocation = `/${pathname.split('/')[1]}`;
   const { id: adminId, type: adminType } = useParams();
   const { adminsRoles, adminDetails } :
   { adminsRoles: AppAdminsRoles[], adminDetails: AppAdmin } = useSelector((state: RootState) => state.appAdminsReducer);
@@ -97,7 +102,7 @@ const AppAdminDetails = () => {
     }
   }, [adminsRoles]);
   return (
-    <Container sectionTitle="Add New Admin">
+    <Container sectionTitle="Add New Admin" goBack={() => navigate(prevLocation)}>
       <div className={classes.wrapper}>
         <div className={classNames(classes.inputs)}>
           {!isNewAdmin && !adminDetails ? (

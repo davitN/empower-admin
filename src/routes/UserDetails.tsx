@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 import {
-  useParams, useNavigate, useSearchParams,
+  useParams, useNavigate, useSearchParams, useLocation,
 } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,6 +37,8 @@ interface ValuesTypes {
 const UserDetails = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const prevLocation = `/${pathname.split('/')[1]}`;
   const [searchParams] = useSearchParams();
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
@@ -118,7 +120,7 @@ const UserDetails = () => {
   }, [searchParams]);
 
   return (
-    <Container sectionTitle={isNewUser ? 'New User' : 'Edit User'} idText="User ID" itemId={userId}>
+    <Container sectionTitle={isNewUser ? 'New User' : 'Edit User'} idText="User ID" itemId={userId} goBack={() => navigate(prevLocation)}>
       <div className={classes.wrapper}>
         <div className={classNames(classes.inputs)}>
           {!isNewUser && !userDetails ? (

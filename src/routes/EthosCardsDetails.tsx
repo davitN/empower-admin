@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Skeleton } from 'primereact/skeleton';
 import Container from '../components/shared/Container';
 import Label from '../components/shared/Inputs/Label';
@@ -18,6 +18,9 @@ import { EthosCard } from '../types/ethosCards';
 const EthosCardsDetails = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const prevLocation = `/${pathname.split('/')[1]}`;
   const { ethosCardDetails } : { ethosCardDetails: EthosCard } = useSelector((state: RootState) => state.ethosCardsReducer);
   const { mode, id: ethosCardId } = useParams();
   const [values, setValues] = useState<ValuesTypes>(InitialState);
@@ -59,7 +62,7 @@ const EthosCardsDetails = () => {
     }
   }, [isNewItem, ethosCardDetails]);
   return (
-    <Container sectionTitle={isNewItem ? 'ADD ETHOS CARD' : 'EDIT ETHOS CARD'}>
+    <Container sectionTitle={isNewItem ? 'ADD ETHOS CARD' : 'EDIT ETHOS CARD'} goBack={() => navigate(prevLocation)}>
       <div className={classes.wrapper}>
         <div className={classes.inputs}>
           {!isNewItem && !ethosCardDetails ? (
