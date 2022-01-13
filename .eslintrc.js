@@ -33,6 +33,7 @@ module.exports = {
     "jsx-a11y/no-static-element-interactions": "off",
     "@typescript-eslint/dot-notation": "off",
     "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "import/no-cycle": "off",
     '@typescript-eslint/ban-types': [
       'error',
       {
