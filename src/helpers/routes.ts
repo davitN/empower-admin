@@ -1,3 +1,4 @@
+import { ElementType } from 'react';
 import Companies from '../routes/Companies';
 import CompanyDetails from '../routes/CompanyDetails';
 import AppUsers from '../routes/AppUsers';
@@ -19,7 +20,7 @@ export interface RouteType {
   type: 'nested' | 'default',
   name: string,
   path: string,
-  Component?: any,
+  Component?: ElementType,
   disabled?: boolean,
   hiddenInNav?: boolean,
   pathName: string,
