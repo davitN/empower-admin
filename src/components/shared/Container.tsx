@@ -21,7 +21,7 @@ const Container = ({
       {(sectionTitle || itemId) && (
       <div className={classNames('p-d-flex p-jc-between p-ai-center p-mb-3', classes.textColor)}>
         <div className="p-d-flex p-ai-center">
-          {goBack && <i className="pi pi-arrow-left p-mr-2" style={{ cursor: 'pointer' }} onClick={goBack} />}
+          {goBack && <i className={classNames('pi pi-arrow-left p-mr-2', classes.back)} onClick={goBack} />}
           {sectionTitle && <Title title={sectionTitle} fontSize="text-4xl" costumeStyles="p-mr-6" />}
         </div>
         {itemId !== 'new' && itemId && idText && (
@@ -46,5 +46,13 @@ const useStyles = createUseStyles({
     height: '100vh',
     overflow: 'auto',
   },
-  textColor: COLORS.blueWood,
+  textColor: {
+    colors: COLORS.blueWood,
+  },
+  back: {
+    cursor: 'pointer',
+    color: COLORS.blueWood,
+    fontWeight: 'bolder',
+    fontSize: '1.5rem',
+  },
 });
