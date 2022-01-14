@@ -33,6 +33,13 @@ export interface RouteType {
 
 export const routes: RouteType[] = [
   {
+    type: 'default',
+    name: 'Analytics',
+    path: 'analytics',
+    Component: Analytics,
+    pathName: 'analytics',
+  },
+  {
     type: 'nested',
     name: 'Companies',
     path: 'companies',
@@ -97,36 +104,6 @@ export const routes: RouteType[] = [
     ],
   },
   {
-    type: 'default',
-    name: 'Account',
-    path: 'user-profile',
-    pathName: 'userProfile',
-    Component: AppUserAccount,
-  },
-  {
-    type: 'default',
-    name: 'Analytics',
-    path: 'analytics',
-    Component: Analytics,
-    pathName: 'analytics',
-  },
-  {
-    type: 'default',
-    name: 'Reports',
-    path: 'reports',
-    pathName: 'reports',
-    Component: Reports,
-    disabled: true,
-  },
-  {
-    type: 'default',
-    name: 'Locations',
-    path: 'locations/:id',
-    pathName: 'locations',
-    Component: LocationDetails,
-    hiddenInNav: true,
-  },
-  {
     type: 'nested',
     name: 'Ethos Cards',
     path: 'ethos-cards',
@@ -166,4 +143,29 @@ export const routes: RouteType[] = [
       },
     ],
   },
+  {
+    type: 'default',
+    name: 'Account',
+    path: 'user-profile',
+    pathName: 'userProfile',
+    Component: AppUserAccount,
+  },
+
+  {
+    type: 'default',
+    name: 'Reports',
+    path: 'reports',
+    pathName: 'reports',
+    Component: Reports,
+    disabled: true,
+  },
+  {
+    type: 'default',
+    name: 'Locations',
+    path: 'locations/:id',
+    pathName: 'locations',
+    Component: LocationDetails,
+    hiddenInNav: true,
+  },
+
 ];
