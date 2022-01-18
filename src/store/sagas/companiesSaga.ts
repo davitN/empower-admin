@@ -21,7 +21,7 @@ export function* getCompanies({ data, callbacks }:{ data: GetCompaniesOptions, c
       params: data,
     });
     yield put(setCompanies(res));
-    callbacks?.success && callbacks.success();
+    callbacks?.success && callbacks.success(res);
   } catch (error: any) {
     callbacks?.error && callbacks.error();
     yield put(

@@ -5,7 +5,7 @@ import { Paginator } from 'primereact/paginator';
 import { Column } from 'primereact/column';
 import { Skeleton } from 'primereact/skeleton';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import COLORS from '../../services/colors.service';
 import ButtonComponent from './Inputs/Button';
 import Input from './Inputs/TextInput';
@@ -27,6 +27,7 @@ interface PropTypes {
   LIMIT?: number,
   buttonText?: string,
   costumeClasses?: string,
+  customFilters?: ReactNode
 }
 
 const Table = ({
@@ -41,6 +42,7 @@ const Table = ({
   LIMIT = 10,
   buttonText,
   costumeClasses,
+  customFilters,
 }: PropTypes) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -72,6 +74,7 @@ const Table = ({
             }}
             customClasses={classes.input}
           />
+          {customFilters}
           {(handleAdd && buttonText) && (
           <ButtonComponent
             bgColor={COLORS.lightBlue}

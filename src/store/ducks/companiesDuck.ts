@@ -130,5 +130,5 @@ export const getAllCompanies = (callbacks?: CallBacks) => ({
   callbacks,
 });
 export const resetAllCompaniesState = () => ({
-  type: RESET_COMPANIES_STATE,
+  type: RESET_ALL_COMPANIES_STATE,
 });
