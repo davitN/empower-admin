@@ -17,6 +17,7 @@ const useGetData = ({
   const setTimeoutRef = useRef<any>();
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState<string | null>(null);
+  const [dynamicParams, setDynamicParams] = useState({});
   const handleSearch = (val: string) => {
     if (val?.length > 0) {
       setSearchValue(val);
@@ -46,11 +47,12 @@ const useGetData = ({
           offset: 0,
           searchWord: searchValue || null,
           ...customParams,
+          ...dynamicParams,
         }));
       }, 500);
       return () => clearTimeout(setTimeoutRef.current);
     }
-  }, [searchValue, getDataAction, isFirstRender]);
+  }, [searchValue, getDataAction, isFirstRender, dynamicParams]);
 
   useEffect(() => {
     getDataAction && fetchOnMount && dispatch(getDataAction({
@@ -67,6 +69,7 @@ const useGetData = ({
     searchValue,
     handleSearch,
     handlePageChange,
+    setDynamicParams,
   };
 };
 

@@ -2,13 +2,13 @@ import { useState } from 'react';
 import Select from 'react-select';
 
 const AutoComplete = ({
-  data, getOptionLabel, getOptionValue, selectedValue, setSelectedValue, handleSearch,
+  data, getOptionLabel, getOptionValue, selectedValue, setSelectedValue, handleSearch, disabled, placeholder,
 }: Props) => {
   const [inputVal, setInputVal] = useState<string>('');
 
   const handleInputChange = (value: string, action: any) => {
     if (value) {
-      handleSearch(value);
+      handleSearch && handleSearch(value);
       setInputVal(value);
     }
     if (!value && action?.action !== 'input-blur' && action?.action !== 'menu-close') {
@@ -23,6 +23,7 @@ const AutoComplete = ({
   return (
     <Select
       inputValue={inputVal}
+      placeholder={placeholder}
       value={selectedValue}
       options={data}
       getOptionLabel={getOptionLabel as any}
@@ -30,7 +31,8 @@ const AutoComplete = ({
       onInputChange={(value, action) => handleInputChange(value, action)}
       onChange={handleChange}
       filterOption={(items) => items !== undefined}
-      isLoading={!data}
+      isLoading={!data && !disabled}
+      isDisabled={disabled}
     />
   );
 };
@@ -43,5 +45,7 @@ interface Props {
   getOptionValue: Function
   selectedValue: {} | null,
   setSelectedValue: Function,
-  handleSearch: (val: string) => void
+  handleSearch?: (val: string) => void,
+  disabled?: boolean,
+  placeholder?: string
 }

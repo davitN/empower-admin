@@ -11,6 +11,8 @@ import { RootState } from '../store/configureStore';
 import Autocomplete from '../components/shared/Inputs/Autocomplete';
 import { CompaniesTypes, CompanyItem } from '../types/companies';
 import { getCompanies, resetCompaniesState } from '../store/ducks/companiesDuck';
+import { resetLocationsState, getLocations } from '../store/ducks/locationsDuck';
+import { GetLocationsData, LocationItem } from '../types/locations';
 
 const LIMIT = 8;
 
@@ -26,11 +28,13 @@ const AppUsers = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState<null | CompanyItem>(null);
+  const [selectedLocation, setSelectedLocation] = useState<null | LocationItem>(null);
   const { allUsers }: { allUsers: GetAppUsersData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { companies }: { companies: CompaniesTypes | null } = useSelector((state: RootState) => state.companiesReducer);
+  const { locations }: { locations: GetLocationsData | null } = useSelector((state: RootState) => state.locationsReducer);
 
   const {
-    searchValue, handleSearch, handlePageChange,
+    searchValue, handleSearch, handlePageChange, setDynamicParams,
   } = useGetData({
     LIMIT,
     resetOnUnmount: true,
@@ -48,6 +52,16 @@ const AppUsers = () => {
     resetState: resetCompaniesState,
   });
 
+  const {
+    handleSearch: locationsHandleSearch, setDynamicParams: setLocationsParams,
+  } = useGetData({
+    LIMIT: 20,
+    resetOnUnmount: true,
+    getDataAction: getLocations,
+    resetState: resetLocationsState,
+    fetchOnMount: false,
+  });
+
   return (
     <div className={classes.root}>
       <Table
@@ -60,15 +74,37 @@ const AppUsers = () => {
         LIMIT={LIMIT}
         handlePageChange={(val) => handlePageChange(val)}
         customFilters={(
-          <div style={{ width: '15rem' }}>
-            <Autocomplete
-              data={companies?.data}
-              getOptionLabel={(option: CompanyItem) => option.name}
-              getOptionValue={(option: CompanyItem) => option.name}
-              selectedValue={selectedCompany}
-              setSelectedValue={setSelectedCompany}
-              handleSearch={companiesHandleSearch}
-            />
+          <div className="p-d-flex">
+            <div style={{ width: '15rem' }} className="p-mx-4">
+              <Autocomplete
+                data={companies?.data}
+                placeholder="Select company"
+                getOptionLabel={(option: CompanyItem) => option.name}
+                getOptionValue={(option: CompanyItem) => option.name}
+                selectedValue={selectedCompany}
+                setSelectedValue={(item: CompanyItem) => {
+                  setSelectedCompany(item);
+                  setDynamicParams({ companyId: item['_id'] });
+                  setLocationsParams({ companyId: item['_id'] });
+                }}
+                handleSearch={companiesHandleSearch}
+              />
+            </div>
+            <div style={{ width: '15rem' }}>
+              <Autocomplete
+                data={locations?.data}
+                placeholder="Select location"
+                getOptionLabel={(option: CompanyItem) => option.name}
+                getOptionValue={(option: CompanyItem) => option.name}
+                selectedValue={selectedLocation}
+                setSelectedValue={(item: LocationItem) => {
+                  setSelectedLocation(item as LocationItem);
+                  setDynamicParams({ locationId: item['_id'] });
+                }}
+                handleSearch={locationsHandleSearch}
+                disabled={!selectedCompany}
+              />
+            </div>
           </div>
         )}
       />

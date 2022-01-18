@@ -239,6 +239,7 @@ const useStyles = createUseStyles({
   },
   input: {
     maxWidth: '16rem',
+    minWidth: '15rem',
     '& > input': {
       borderRadius: '1rem',
       paddingTop: '0.5rem !important',
