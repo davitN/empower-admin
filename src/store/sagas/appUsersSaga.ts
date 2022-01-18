@@ -2,11 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { put } from 'redux-saga/effects';
 import axiosInstance from '../../services/interceptor.service';
-import { setAppUsers, setAppUserDetails, setAllAppUsers } from '../ducks/appUsersDuck';
+import {
+  setAppUsers, setAppUserDetails, setAllAppUsers, setAppUserLastMonthProgress,
+} from '../ducks/appUsersDuck';
 import { CallBacks, GetDataParams } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
 import {
-  GetAppUsersData, GetAppUsersOptions, GetAppUserDetailsOptions, GetAppUserDetailsData, SaveAppUserDetails,
+  GetAppUsersData, GetAppUsersOptions, GetAppUserDetailsOptions, GetAppUserDetailsData, SaveAppUserDetails, LastMonthProgressItems,
 } from '../../types/appUsers';
 import notificationService from '../../services/notification.service';
 
@@ -79,6 +81,17 @@ export function* sendResetPassword({ userId, callbacks }:{ userId: string, callb
     yield axiosInstance.post(`/app_user/reset_password/${userId}`);
     callbacks?.success && callbacks.success();
     notificationService.success('Reset password link is sent successfully', '', 700);
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response.data.message, '', 500);
+  }
+}
+
+export function* getAppUserLastMonthProgress({ userId, callbacks }:{ userId: string, callbacks: CallBacks, type: string }) {
+  try {
+    const res: LastMonthProgressItems = yield axiosInstance.get(`/app_user/get_user_last_month_progress/${userId}`);
+    yield put(setAppUserLastMonthProgress(res));
+    callbacks?.success && callbacks.success();
   } catch (error: any) {
     callbacks?.error && callbacks.error();
     notificationService.error(error.response.data.message, '', 500);

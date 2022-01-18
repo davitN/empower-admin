@@ -102,7 +102,7 @@ const UserDetails = () => {
 
   useEffect(() => {
     if (!isNewUser) {
-      userId && dispatch(getAppUserDetails(userId, { error: () => navigate('/companies') }));
+      userId && dispatch(getAppUserDetails(userId, { error: () => navigate('/users') }));
     }
   }, [isNewUser, userId]);
 

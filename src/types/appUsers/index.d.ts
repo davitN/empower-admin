@@ -63,8 +63,47 @@ export interface SaveAppUserDetails {
   userId?: string | null
 }
 
+export interface CheckIn {
+  createdAt:string,
+  emotional: number,
+  environmental: number,
+  mental: number,
+  note: string,
+  occupational: number,
+  physical: number,
+  social: number,
+  spiritual: number,
+  userId: string,
+  _id: string
+}
+
+export interface Goals {
+  createdAt: string,
+  isCompleted: boolean,
+  text: string,
+  title: string,
+  userId: string
+}
+
+export interface Gratitudes {
+  createdAt: string,
+  text: string,
+  title: string,
+  updatedAt: string,
+  userId: string,
+  _id: string
+}
+
+export interface LastMonthProgressItems {
+  checkIns: CheckIn[],
+  completedGoals: Goals[],
+  gratitudes: Gratitudes[],
+  unCompletedGoals: Goals[]
+}
+
 export interface InitialState {
   users: GetAppUsersData | null,
   userDetails: GetAppUserDetailsData | null,
   allUsers: GetAppUsersData | null,
+  lastMonthProgress: LastMonthProgressItems | null
 }

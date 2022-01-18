@@ -15,6 +15,7 @@ import EthosCards from '../routes/EthosCards';
 import EthosCardsDetails from '../routes/EthosCardsDetails';
 import GeneralContentLibrary from '../routes/GeneralContentLibrary';
 import GeneralContentLibraryDetails from '../routes/GeneralContentLibraryDetails';
+import UserLastMonthProgress from '../routes/UserLastMonthProgress';
 
 export interface RouteType {
   type: 'nested' | 'default',
@@ -69,6 +70,10 @@ export const routes: RouteType[] = [
       {
         path: ':userId',
         Component: UserDetails,
+      },
+      {
+        path: 'user-progress/:userId',
+        Component: UserLastMonthProgress,
       },
     ],
   },

@@ -149,6 +149,12 @@ const tableHeaders = (navigate: any) => [
       </div>
     ),
   },
+  {
+    name: 'View Progress',
+    body: ({ _id }: { _id: string }) => (
+      <i className="pi pi-eye" style={{ margin: 'auto', fontSize: '1.5rem' }} onClick={() => navigate(`/app-users/user-progress/${_id}`)} />
+    ),
+  },
 ];
 
 const useStyles = createUseStyles({

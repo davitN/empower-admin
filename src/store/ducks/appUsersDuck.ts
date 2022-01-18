@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import { CallBacks, GetDataParams } from '../../types/main';
 import {
-  InitialState, GetAppUsersData, GetAppUsersOptions, GetAppUserDetailsOptions, GetAppUserDetailsData, SaveAppUserDetails,
+  InitialState, GetAppUsersData, GetAppUsersOptions, GetAppUserDetailsOptions, GetAppUserDetailsData, SaveAppUserDetails, LastMonthProgressItems,
 } from '../../types/appUsers';
 
 export const GET_APP_USERS = 'socialize/appUsers/getAppUsers';
@@ -19,10 +19,15 @@ export const GET_ALL_APP_USERS = 'socialize/appUsers/getALlAppUsers';
 export const SET_ALL_APP_USERS = 'socialize/appUsers/setAllAppUsers';
 export const RESET_ALL_APP_USERS_STATE = 'socialize/appUsers/resetAllAppUsers';
 
+export const GET_APP_USER_LAST_MONTH_PROGRESS = 'socialize/appUsers/getAppUsersLastMonthProgress';
+export const SET_APP_USER_LAST_MONTH_PROGRESS = 'socialize/appUsers/setAppUsersLastMonthProgress';
+export const RESET_APP_USER_LAST_MONTH_PROGRESS_STATE = 'socialize/appUsers/resetAppUsersLastMonthProgress';
+
 const initialState: InitialState = {
   users: null,
   userDetails: null,
   allUsers: null,
+  lastMonthProgress: null,
 };
 
 export const appUsersReducer = (state = initialState, action: AnyAction) => {
@@ -57,6 +62,16 @@ export const appUsersReducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         allUsers: null,
+      };
+    case SET_APP_USER_LAST_MONTH_PROGRESS:
+      return {
+        ...state,
+        lastMonthProgress: (payload as LastMonthProgressItems),
+      };
+    case RESET_APP_USER_LAST_MONTH_PROGRESS_STATE:
+      return {
+        ...state,
+        lastMonthProgress: null,
       };
     default:
       return state;
@@ -118,4 +133,19 @@ export const setAllAppUsers = (data: GetAppUsersData) => ({
 
 export const resetAllAppUsersState = () => ({
   type: RESET_ALL_APP_USERS_STATE,
+});
+
+export const getAppUserLastMonthProgress = (userId: string, callbacks?: CallBacks) => ({
+  type: GET_APP_USER_LAST_MONTH_PROGRESS,
+  userId,
+  callbacks,
+});
+
+export const setAppUserLastMonthProgress = (data: LastMonthProgressItems) => ({
+  type: SET_APP_USER_LAST_MONTH_PROGRESS,
+  payload: data,
+});
+
+export const resetAppUserLastMonthProgressState = () => ({
+  type: RESET_APP_USER_LAST_MONTH_PROGRESS_STATE,
 });

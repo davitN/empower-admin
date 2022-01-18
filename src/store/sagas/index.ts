@@ -17,10 +17,10 @@ import {
   getLocations, saveLocationData, getLocationDetails, getLocationAdmins,
 } from './locationsSaga';
 import {
-  getAppUsers, getAppUserDetails, saveAppUserDetails, sendResetPassword, getAllAppUsers,
+  getAppUsers, getAppUserDetails, saveAppUserDetails, sendResetPassword, getAllAppUsers, getAppUserLastMonthProgress,
 } from './appUsersSaga';
 import {
-  GET_APP_USERS, GET_APP_USER_DETAILS, SAVE_APP_USER_DETAILS, SEND_RESET_PASSWORD, GET_ALL_APP_USERS,
+  GET_APP_USERS, GET_APP_USER_DETAILS, SAVE_APP_USER_DETAILS, SEND_RESET_PASSWORD, GET_ALL_APP_USERS, GET_APP_USER_LAST_MONTH_PROGRESS,
 } from '../ducks/appUsersDuck';
 import {
   GET_APP_CONTENT,
@@ -114,6 +114,7 @@ function* actionWatcher() {
   yield takeLatest(GET_CONTENT_ITEM_DETAILS, getContentItemDetails);
   yield takeLatest(SAVE_CONTENT_ITEM_DETAILS, saveContentItemDetails);
   yield takeLatest(REMOVE_CONTENT_ITEM, removeContentItem);
+  yield takeLatest(GET_APP_USER_LAST_MONTH_PROGRESS, getAppUserLastMonthProgress);
 }
 
 export default function* rootSaga() {
