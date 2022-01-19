@@ -1,18 +1,19 @@
-/* eslint-disable react/destructuring-assignment */
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Carousel } from 'primereact/carousel';
 import { createUseStyles } from 'react-jss';
+import Carousel from 'react-multi-carousel';
+import { Skeleton } from 'primereact/skeleton';
 import Container from '../components/shared/Container';
 import { getAppUserLastMonthProgress, getAppUserDetails } from '../store/ducks/appUsersDuck';
 import { RootState } from '../store/configureStore';
 import {
-  CheckIn, GetAppUserDetailsData, Goals, LastMonthProgressItems,
+  GetAppUserDetailsData, LastMonthProgressItems,
 } from '../types/appUsers';
 import Title from '../components/shared/Title';
-import COLORS from '../services/colors.service';
 import TextInput from '../components/shared/Inputs/TextInput';
+import 'react-multi-carousel/lib/styles.css';
+import Items from '../components/UserLastMonthProgress/Items';
 
 const UserLastMonthProgress = () => {
   const classes = useStyles();
@@ -20,7 +21,6 @@ const UserLastMonthProgress = () => {
   const dispatch = useDispatch();
   const { lastMonthProgress }: { lastMonthProgress: LastMonthProgressItems | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { userDetails }: { userDetails: GetAppUserDetailsData | null } = useSelector((state: RootState) => state.appUsersReducer);
-  console.log(userDetails);
 
   useEffect(() => {
     if (userId) {
@@ -31,143 +31,90 @@ const UserLastMonthProgress = () => {
   return (
     <Container sectionTitle="Last Month Progress">
       <div className={classes.wrapper}>
-        <TextInput
-          value={userDetails?.firstName || ''}
-          label="First Name"
-          required
-          customClasses="p-mr-3"
-          disabled
-        />
-        <TextInput
-          value={userDetails?.lastName || ''}
-          label="Last Name"
-          required
-          customClasses="p-mr-3"
-          disabled
-        />
-        <TextInput
-          value={userDetails?.email || ''}
-          label="Email"
-          required
-          customClasses="p-mr-3"
-          disabled
-        />
+        {userDetails ? (
+          <>
+            <TextInput
+              value={userDetails?.firstName || ''}
+              label="First Name"
+              required
+              customClasses="p-mr-3"
+              disabled
+            />
+            <TextInput
+              value={userDetails?.lastName || ''}
+              label="Last Name"
+              required
+              customClasses="p-mr-3"
+              disabled
+            />
+            <TextInput
+              value={userDetails?.email || ''}
+              label="Email"
+              required
+              customClasses="p-mr-3"
+              disabled
+            />
+          </>
+        ) : new Array(3).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="3rem" />)}
+
       </div>
-      <Carousel
-        contentClassName={classes.item}
-        value={lastMonthProgress?.checkIns}
-        numVisible={4}
-        numScroll={4}
-        itemTemplate={(data) => CheckInTemplate(data, classes)}
-        header={<Title title="Checkins" fontSize="text-2xl" costumeStyles="p-mb-4" />}
-        className="p-mb-6"
-      />
-      <Carousel
-        contentClassName={classes.item}
-        value={lastMonthProgress?.completedGoals}
-        numVisible={4}
-        numScroll={4}
-        itemTemplate={(data) => GoalsTemplate(data, classes)}
-        header={<Title title="Completed Goals" fontSize="text-2xl" costumeStyles="p-mb-4" />}
-        className="p-mb-6"
-      />
-      <Carousel
-        contentClassName={classes.item}
-        value={lastMonthProgress?.unCompletedGoals}
-        numVisible={4}
-        numScroll={4}
-        itemTemplate={(data) => GoalsTemplate(data, classes)}
-        header={<Title title="Unfinished Goals" fontSize="text-2xl" costumeStyles="p-mb-4" />}
-      />
+      <div className="p-mt-6">
+        <Title title="Checkins" costumeStyles="p-mb-2" />
+        <Carousel responsive={responsive} className={classes.carousel}>
+          { lastMonthProgress?.checkIns ? lastMonthProgress.checkIns.map((el) => <Items type="CHECKIN" data={el} />) : new Array(10).fill(0).map(() => <Skeleton height="250px" />) }
+        </Carousel>
+      </div>
+
+      <div className="p-mt-6">
+        <Title title="Completed Goals" costumeStyles="p-mb-2" />
+        <Carousel responsive={responsive} className={classes.carousel}>
+          { lastMonthProgress?.completedGoals ? lastMonthProgress.completedGoals.map((el) => <Items type="GOALS" data={el} />) : new Array(10).fill(0).map(() => <Skeleton height="250px" />) }
+        </Carousel>
+      </div>
+
+      <div className="p-mt-6">
+        <Title title="Unfinished Goals" costumeStyles="p-mb-2" />
+        <Carousel responsive={responsive} className={classes.carousel}>
+          { lastMonthProgress?.unCompletedGoals ? lastMonthProgress.unCompletedGoals.map((el) => <Items type="GOALS" data={el} />) : new Array(10).fill(0).map(() => <Skeleton height="250px" />) }
+        </Carousel>
+      </div>
     </Container>
   );
 };
 
 export default UserLastMonthProgress;
 
+const responsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 4,
+    paritialVisibilityGutter: 60,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 3,
+    paritialVisibilityGutter: 50,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+    paritialVisibilityGutter: 30,
+  },
+};
+
 const useStyles = createUseStyles({
-  item: {
-    '& .p-carousel-items-container > div ': {
-      padding: '5px',
+  carousel: {
+    '& .react-multiple-carousel__arrow': {
+      width: 'max-content',
     },
-    '& .p-carousel-indicators': {
-      display: 'none',
-    },
-  },
-  listItem: {
-    marginBottom: '0.5rem',
-    cursor: 'pointer',
-    listStyleType: 'none',
-    color: COLORS.blueWood,
-    '& :hover': {
-      background: 'rgba(119, 200, 204, 0.3)',
-    },
-    borderBottom: '1px solid rgba(119, 200, 204, 0.5)',
-  },
-  listItemWrapper: {
-    display: 'flex',
-    padding: '0.5rem',
-    '& p:nth-child(2)': {
-    },
-    '& :hover': {
-      background: 'none',
+    '& li': {
+      margin: '10px',
     },
   },
   wrapper: {
     display: 'grid',
     gap: '2rem',
-    marginBottom: '2rem',
+    marginBottom: '4rem',
     maxWidth: '30rem',
   },
 });
-
-const CheckInTemplate = (data : CheckIn, classes: any) => {
-  const values = Object.keys(data).filter((el) => !excludeKeysCheckIn.includes(el))
-    .map((el: string) => ({ label: el.toUpperCase(), value: data[el as keyof CheckIn] }));
-  return (
-    <div className="p-shadow-3 p-p-4">
-      <h3 className="p-text-center p-mb-3">{data.note}</h3>
-      <ul className="p-p-0">
-        {values.map((el) => (
-          <li className={classes.listItem}>
-            <div className={classes.listItemWrapper}>
-              <p>
-                {el.label}
-                :
-              </p>
-              <p className="p-pl-1">{el.value}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-const GoalsTemplate = (data : Goals, classes: any) => {
-  const values = Object.keys(data).filter((el) => !excludeKeysGoals.includes(el))
-    .map((el: string) => ({ label: el.toUpperCase(), value: data[el as keyof Goals] }));
-  const booleanValue = (val: boolean) => (val ? 'YES' : 'NO');
-  return (
-    <div className="p-shadow-3 p-p-4">
-      <h3 className="p-text-center p-mb-3">{data.title}</h3>
-      <ul className="p-p-0">
-        {values.map((el) => (
-          <li className={classes.listItem}>
-            <div className={classes.listItemWrapper}>
-              <p>
-                {el.label}
-                :
-              </p>
-              <p className="p-pl-1">{el.label === 'ISCOMPLETED' ? booleanValue(Boolean(el.value)) : el.value}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-const excludeKeysCheckIn = ['_id', 'userId', 'createdAt', 'updatedAt', '__v', 'note'];
-
-const excludeKeysGoals = ['_id', 'userId', 'createdAt', 'updatedAt', '__v', 'title'];
