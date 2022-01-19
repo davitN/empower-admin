@@ -50,7 +50,7 @@ export function* getAllAppUsers({ data, callbacks }:{ data: GetDataParams, callb
   }
 }
 
-export function* getAppUserDetails({ userId, callbacks }:{ userId: GetAppUserDetailsOptions, callbacks: CallBacks, type: string }) {
+export function* getAppUserDetails({ userId, callbacks }:{ userId: GetAppUserDetailsOptions, callbacks?: CallBacks, type: string }) {
   try {
     const res: GetAppUserDetailsData = yield axiosInstance.get(`/app_user/get/${userId}`);
     yield put(setAppUserDetails(res));

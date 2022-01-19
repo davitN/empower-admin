@@ -5,27 +5,54 @@ import { useParams } from 'react-router-dom';
 import { Carousel } from 'primereact/carousel';
 import { createUseStyles } from 'react-jss';
 import Container from '../components/shared/Container';
-import { getAppUserLastMonthProgress } from '../store/ducks/appUsersDuck';
+import { getAppUserLastMonthProgress, getAppUserDetails } from '../store/ducks/appUsersDuck';
 import { RootState } from '../store/configureStore';
 import {
-  CheckIn, Goals, LastMonthProgressItems,
+  CheckIn, GetAppUserDetailsData, Goals, LastMonthProgressItems,
 } from '../types/appUsers';
 import Title from '../components/shared/Title';
 import COLORS from '../services/colors.service';
+import TextInput from '../components/shared/Inputs/TextInput';
 
 const UserLastMonthProgress = () => {
   const classes = useStyles();
   const { userId } = useParams();
   const dispatch = useDispatch();
   const { lastMonthProgress }: { lastMonthProgress: LastMonthProgressItems | null } = useSelector((state: RootState) => state.appUsersReducer);
+  const { userDetails }: { userDetails: GetAppUserDetailsData | null } = useSelector((state: RootState) => state.appUsersReducer);
+  console.log(userDetails);
 
   useEffect(() => {
     if (userId) {
       dispatch(getAppUserLastMonthProgress(userId));
+      dispatch(getAppUserDetails(userId));
     }
   }, [userId]);
   return (
     <Container sectionTitle="Last Month Progress">
+      <div className={classes.wrapper}>
+        <TextInput
+          value={userDetails?.firstName || ''}
+          label="First Name"
+          required
+          customClasses="p-mr-3"
+          disabled
+        />
+        <TextInput
+          value={userDetails?.lastName || ''}
+          label="Last Name"
+          required
+          customClasses="p-mr-3"
+          disabled
+        />
+        <TextInput
+          value={userDetails?.email || ''}
+          label="Email"
+          required
+          customClasses="p-mr-3"
+          disabled
+        />
+      </div>
       <Carousel
         contentClassName={classes.item}
         value={lastMonthProgress?.checkIns}
@@ -85,6 +112,12 @@ const useStyles = createUseStyles({
     '& :hover': {
       background: 'none',
     },
+  },
+  wrapper: {
+    display: 'grid',
+    gap: '2rem',
+    marginBottom: '2rem',
+    maxWidth: '30rem',
   },
 });
 
