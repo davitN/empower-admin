@@ -34,7 +34,7 @@ const AppContent = () => {
     getDataAction: getAppContentItem,
     resetState: () => resetAppContentItem('kickOff'),
     fetchOnMount: false,
-    customParams: {
+    queryParams: {
       fieldName: 'kickOff',
     },
     LIMIT: 5,
@@ -46,7 +46,7 @@ const AppContent = () => {
     getDataAction: getAppContentItem,
     resetState: () => resetAppContentItem('ethos'),
     fetchOnMount: false,
-    customParams: {
+    queryParams: {
       fieldName: 'ethos',
     },
     LIMIT: 5,
@@ -58,7 +58,7 @@ const AppContent = () => {
     getDataAction: getAppContentItem,
     resetState: () => resetAppContentItem('gratitude'),
     fetchOnMount: false,
-    customParams: {
+    queryParams: {
       fieldName: 'gratitude',
     },
     LIMIT: 5,
@@ -70,7 +70,7 @@ const AppContent = () => {
     getDataAction: getAppContentItem,
     resetState: () => resetAppContentItem('powerUp'),
     fetchOnMount: false,
-    customParams: {
+    queryParams: {
       fieldName: 'powerUp',
     },
     LIMIT: 5,
@@ -82,7 +82,7 @@ const AppContent = () => {
     getDataAction: getAppContentItem,
     resetState: () => resetAppContentItem('powerDown'),
     fetchOnMount: false,
-    customParams: {
+    queryParams: {
       fieldName: 'powerDown',
     },
     LIMIT: 5,

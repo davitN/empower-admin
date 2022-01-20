@@ -73,7 +73,7 @@ const LocationDetails = () => {
     resetOnUnmount: true,
     getDataAction: isNewLocation ? undefined : getAppUsers,
     resetState: isNewLocation ? undefined : resetAppUsersState,
-    customParams: {
+    queryParams: {
       companyId: newLocationCompanyId || locationDetails?.company['_id'],
       locationId,
     },
@@ -85,7 +85,7 @@ const LocationDetails = () => {
     getDataAction: isNewLocation ? undefined : getLocationAdmins,
     resetState: isNewLocation ? undefined : resetLocationAdminsState,
     fetchOnMount: false,
-    customParams: {
+    queryParams: {
       locationId,
     },
   });

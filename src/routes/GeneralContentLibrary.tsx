@@ -24,7 +24,7 @@ const GeneralContentLibrary = () => {
     getDataAction: getContentItem,
     resetState: () => resetContentItem('POWER_UP'),
     fetchOnMount: false,
-    customParams: {
+    queryParams: {
       type: 'POWER_UP',
     } as { type: GeneralContentLibraryType },
     LIMIT: 5,
@@ -36,7 +36,7 @@ const GeneralContentLibrary = () => {
     getDataAction: getContentItem,
     resetState: () => resetContentItem('POWER_DOWN'),
     fetchOnMount: false,
-    customParams: {
+    queryParams: {
       type: 'POWER_DOWN',
     } as { type: GeneralContentLibraryType },
     LIMIT: 5,
@@ -48,7 +48,7 @@ const GeneralContentLibrary = () => {
     getDataAction: getContentItem,
     resetState: () => resetContentItem('WELNESS'),
     fetchOnMount: false,
-    customParams: {
+    queryParams: {
       type: 'WELNESS',
     } as { type: GeneralContentLibraryType },
     LIMIT: 5,
@@ -60,7 +60,7 @@ const GeneralContentLibrary = () => {
     getDataAction: getContentItem,
     resetState: () => resetContentItem('ETHOS'),
     fetchOnMount: false,
-    customParams: {
+    queryParams: {
       type: 'ETHOS',
     } as { type: GeneralContentLibraryType },
     LIMIT: 5,

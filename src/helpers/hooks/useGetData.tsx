@@ -6,12 +6,12 @@ interface PropTypes {
   resetState?: Function | undefined,
   LIMIT?: number,
   resetOnUnmount?: boolean,
-  customParams?: any,
+  queryParams?: any,
   fetchOnMount? : boolean
 }
 
 const useGetData = ({
-  getDataAction, resetState, LIMIT = 10, resetOnUnmount, customParams = {}, fetchOnMount = true,
+  getDataAction, resetState, LIMIT = 10, resetOnUnmount, queryParams = {}, fetchOnMount = true,
 }: PropTypes) => {
   const isFirstRender = useRef(true);
   const setTimeoutRef = useRef<any>();
@@ -33,7 +33,7 @@ const useGetData = ({
       limit: LIMIT,
       offset: (val - 1) * LIMIT,
       searchWord: searchValue,
-      ...customParams,
+      ...queryParams,
     }));
   };
 
@@ -46,7 +46,7 @@ const useGetData = ({
           limit: LIMIT,
           offset: 0,
           searchWord: searchValue || null,
-          ...customParams,
+          ...queryParams,
           ...dynamicParams,
         }));
       }, 500);
@@ -59,7 +59,7 @@ const useGetData = ({
       limit: LIMIT,
       offset: 0,
       searchWord: searchValue,
-      ...customParams,
+      ...queryParams,
     }));
     isFirstRender.current = false;
     return resetOnUnmount ? () => resetState && dispatch(resetState()) : undefined;

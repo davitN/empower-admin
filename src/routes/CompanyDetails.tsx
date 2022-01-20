@@ -66,7 +66,7 @@ const CompanyDetails = () => {
     getDataAction: isNewCompany ? undefined : getLocations,
     resetState: isNewCompany ? undefined : resetLocationsState,
     resetOnUnmount: true,
-    customParams: {
+    queryParams: {
       companyId,
     },
   });
@@ -78,7 +78,7 @@ const CompanyDetails = () => {
     resetState: isNewCompany ? undefined : resetCompanyAdminsState,
     resetOnUnmount: true,
     fetchOnMount: false,
-    customParams: {
+    queryParams: {
       companyId,
     },
   });

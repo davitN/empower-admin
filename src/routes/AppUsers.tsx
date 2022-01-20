@@ -40,7 +40,7 @@ const AppUsers = () => {
     resetOnUnmount: true,
     getDataAction: getAllAppUsers,
     resetState: resetAllAppUsersState,
-    customParams: { companyId: selectedCompany ? selectedCompany['_id'] : null },
+    queryParams: { companyId: selectedCompany ? selectedCompany['_id'] : null },
   });
 
   const {
