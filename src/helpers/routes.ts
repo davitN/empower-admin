@@ -173,5 +173,4 @@ export const routes: RouteType[] = [
     Component: LocationDetails,
     hiddenInNav: true,
   },
-
 ];

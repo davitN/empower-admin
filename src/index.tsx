@@ -13,6 +13,7 @@ import storeRegistry from './store/storeRegistry';
 import Payments from './routes/Payments';
 import PaymentsFinished from './routes/PaymentsFinished';
 import { routes } from './helpers/routes';
+import SetPassword from './routes/SetPassword';
 
 export const store = configureStore();
 storeRegistry.register(store);
@@ -26,6 +27,7 @@ ReactDOM.render(
         <Routes>
           <Route path="payments" element={<Payments />} />
           <Route path="payments/finished" element={<PaymentsFinished />} />
+          <Route path="set_password" element={<SetPassword />} />
           <Route path="/" element={<App />}>
             {routes.map(({
               Component, type, disabled, path, nestedRoutes,
