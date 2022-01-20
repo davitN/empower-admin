@@ -8,14 +8,13 @@ const CheckInTemplate = ({ data, type }: { data : any, type: string }) => {
     case 'CHECKIN':
       return (
         <div className="p-shadow-3 p-p-3">
-          <h2 className="p-text-center p-py-3">{data.note}</h2>
+          {data?.note && <h2 className="p-text-center p-py-3">{data.note}</h2>}
           <table className={classes.table}>
             <tbody>
               {data && checkInKeys.map(({ key, label }) => (
                 <tr key={key}>
-                  <th className="p-p-2">
+                  <th className="p-p-2" align="left">
                     {label}
-                    :
                   </th>
                   <th align="left" className={classes.truncate}>{data[key]}</th>
                 </tr>
@@ -50,7 +49,7 @@ const CheckInTemplate = ({ data, type }: { data : any, type: string }) => {
 
 export default CheckInTemplate;
 
-const checkInKeys: { key: keyof CheckIn, label: string }[] = [
+export const checkInKeys: { key: keyof CheckIn, label: string }[] = [
   {
     key: 'physical',
     label: 'PHYSICAL',

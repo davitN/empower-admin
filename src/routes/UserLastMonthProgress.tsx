@@ -14,7 +14,7 @@ import {
 import Title from '../components/shared/Title';
 import TextInput from '../components/shared/Inputs/TextInput';
 import 'react-multi-carousel/lib/styles.css';
-import Items from '../components/UserLastMonthProgress/Items';
+import Items, { checkInKeys } from '../components/UserLastMonthProgress/Items';
 
 const UserLastMonthProgress = () => {
   const classes = useStyles();
@@ -22,10 +22,23 @@ const UserLastMonthProgress = () => {
   const dispatch = useDispatch();
   const { lastMonthProgress }: { lastMonthProgress: LastMonthProgressItems | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { userDetails }: { userDetails: GetAppUserDetailsData | null } = useSelector((state: RootState) => state.appUsersReducer);
-  // const totalCheckInPerKey = lastMonthProgress?.checkIns.reduce((acc, cur) => ({
-  //   ...cur,
 
-  // }), {});
+  const averageCheckInPerKeys = () => {
+    const total = lastMonthProgress?.checkIns && lastMonthProgress.checkIns.reduce((totalSum: any, curCheckIn) => {
+      const data = checkInKeys.reduce((acc, { key }) => ({
+        ...acc,
+        [key]: totalSum[key] ? totalSum[key] + curCheckIn[key] : curCheckIn[key],
+      }), {});
+      return data;
+    }, {});
+    const average = total && Object.keys(total).reduce((acc, cur) => ({
+      ...acc,
+      [cur]: Math.trunc(total[cur] / (lastMonthProgress?.checkIns.length || 1)),
+    }), {});
+    return average;
+  };
+
+  console.log(averageCheckInPerKeys());
 
   useEffect(() => {
     if (userId) {
@@ -36,31 +49,36 @@ const UserLastMonthProgress = () => {
   return (
     <Container sectionTitle="Last Month Progress">
       <div className={classes.wrapper}>
-        {userDetails ? (
-          <>
-            <TextInput
-              value={userDetails?.firstName || ''}
-              label="First Name"
-              required
-              customClasses="p-mr-3"
-              disabled
-            />
-            <TextInput
-              value={userDetails?.lastName || ''}
-              label="Last Name"
-              required
-              customClasses="p-mr-3"
-              disabled
-            />
-            <TextInput
-              value={userDetails?.email || ''}
-              label="Email"
-              required
-              customClasses="p-mr-3"
-              disabled
-            />
-          </>
-        ) : new Array(3).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="3rem" />)}
+        <div className={classes.inputsWrapper}>
+          {userDetails ? (
+            <>
+              <TextInput
+                value={userDetails?.firstName || ''}
+                label="First Name"
+                required
+                customClasses="p-mr-3"
+                disabled
+              />
+              <TextInput
+                value={userDetails?.lastName || ''}
+                label="Last Name"
+                required
+                customClasses="p-mr-3"
+                disabled
+              />
+              <TextInput
+                value={userDetails?.email || ''}
+                label="Email"
+                required
+                customClasses="p-mr-3"
+                disabled
+              />
+            </>
+          ) : new Array(3).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="3rem" />)}
+        </div>
+        <div className="p-mt-0">
+          {averageCheckInPerKeys() ? <Items type="CHECKIN" data={{ ...averageCheckInPerKeys(), note: 'Average CheckIn' }} /> : <Skeleton height="250px" />}
+        </div>
       </div>
       <Splitter>
         <SplitterPanel className="p-px-4 p-py-3 p-d-flex p-ai-center">
@@ -127,10 +145,14 @@ const useStyles = createUseStyles({
       margin: '10px',
     },
   },
-  wrapper: {
+  inputsWrapper: {
     display: 'grid',
     gap: '2rem',
-    marginBottom: '4rem',
     maxWidth: '30rem',
+  },
+  wrapper: {
+    display: 'grid',
+    gridTemplateColumns: '3fr 1fr',
+    marginBottom: '4rem',
   },
 });
