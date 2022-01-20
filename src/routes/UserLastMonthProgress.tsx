@@ -22,6 +22,10 @@ const UserLastMonthProgress = () => {
   const dispatch = useDispatch();
   const { lastMonthProgress }: { lastMonthProgress: LastMonthProgressItems | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { userDetails }: { userDetails: GetAppUserDetailsData | null } = useSelector((state: RootState) => state.appUsersReducer);
+  // const totalCheckInPerKey = lastMonthProgress?.checkIns.reduce((acc, cur) => ({
+  //   ...cur,
+
+  // }), {});
 
   useEffect(() => {
     if (userId) {

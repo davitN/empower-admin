@@ -10,20 +10,17 @@ const CheckInTemplate = ({ data, type }: { data : any, type: string }) => {
         <div className="p-shadow-3 p-p-3">
           <h2 className="p-text-center p-py-3">{data.note}</h2>
           <table className={classes.table}>
-            {data && checkInKeys.map(({ key, label }) => (
-            // <div className={classNames(classes.listItem, classes.checkIn)} key={key}>
-            //   {label}
-            //   :
-            //   <span>{data[key]}</span>
-            // </div>
-              <tr>
-                <th className="p-p-2">
-                  {label}
-                  :
-                </th>
-                <th align="left" className={classes.truncate}>{data[key]}</th>
-              </tr>
-            ))}
+            <tbody>
+              {data && checkInKeys.map(({ key, label }) => (
+                <tr key={key}>
+                  <th className="p-p-2">
+                    {label}
+                    :
+                  </th>
+                  <th align="left" className={classes.truncate}>{data[key]}</th>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       );
@@ -32,15 +29,17 @@ const CheckInTemplate = ({ data, type }: { data : any, type: string }) => {
         <div className="p-shadow-3 p-p-3">
           <h2 className="p-text-center p-py-3">{data.title}</h2>
           <table className={classes.table}>
-            {data && goalsKeys.map(({ key, label }) => (
-              <tr>
-                <th className="p-p-2">
-                  {label}
-                  :
-                </th>
-                <th align="left" className={classes.truncate}>{data[key]}</th>
-              </tr>
-            ))}
+            <tbody>
+              {data && goalsKeys.map(({ key, label }) => (
+                <tr key={key}>
+                  <th className="p-p-2">
+                    {label}
+                    :
+                  </th>
+                  <th align="left" className={classes.truncate}>{data[key]}</th>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       );
