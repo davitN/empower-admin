@@ -4,32 +4,44 @@ import { CheckIn, Goals } from '../../types/appUsers';
 
 const CheckInTemplate = ({ data, type }: { data : any, type: string }) => {
   const classes = useStyles();
-  const returnBooleanVal = (val: boolean) => (val ? 'YES' : 'NO');
   switch (type) {
     case 'CHECKIN':
       return (
         <div className="p-shadow-3 p-p-3">
           <h2 className="p-text-center p-py-3">{data.note}</h2>
-          {data && checkInKeys.map(({ key, label }) => (
-            <div className={classes.listItem}>
-              {label}
-              :
-              <span>{data[key]}</span>
-            </div>
-          ))}
+          <table className={classes.table}>
+            {data && checkInKeys.map(({ key, label }) => (
+            // <div className={classNames(classes.listItem, classes.checkIn)} key={key}>
+            //   {label}
+            //   :
+            //   <span>{data[key]}</span>
+            // </div>
+              <tr>
+                <th className="p-p-2">
+                  {label}
+                  :
+                </th>
+                <th align="left" className={classes.truncate}>{data[key]}</th>
+              </tr>
+            ))}
+          </table>
         </div>
       );
     case 'GOALS':
       return (
         <div className="p-shadow-3 p-p-3">
-          <h2 className="p-text-center p-py-3">{data.note}</h2>
-          {data && goalsKeys.map(({ key, label }) => (
-            <div className={classes.listItem}>
-              {label}
-              :
-              <span className="p-ml-2">{key === 'isCompleted' ? returnBooleanVal(data[key]) : data[key]}</span>
-            </div>
-          ))}
+          <h2 className="p-text-center p-py-3">{data.title}</h2>
+          <table className={classes.table}>
+            {data && goalsKeys.map(({ key, label }) => (
+              <tr>
+                <th className="p-p-2">
+                  {label}
+                  :
+                </th>
+                <th align="left" className={classes.truncate}>{data[key]}</th>
+              </tr>
+            ))}
+          </table>
         </div>
       );
     default:
@@ -72,10 +84,6 @@ const checkInKeys: { key: keyof CheckIn, label: string }[] = [
 
 const goalsKeys: { key: keyof Goals, label: string }[] = [
   {
-    key: 'isCompleted',
-    label: 'COMPLETED',
-  },
-  {
     key: 'text',
     label: 'TEXT',
   },
@@ -86,12 +94,28 @@ const useStyles = createUseStyles({
     padding: '0.5rem',
     cursor: 'pointer',
     color: COLORS.blueWood,
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
     '&:hover': {
       background: 'rgba(119, 200, 204, 0.3)',
     },
     borderBottom: '1px solid rgba(119, 200, 204, 0.5)',
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+    '& tr': {
+      cursor: 'pointer',
+      '&:hover': {
+        background: 'rgba(119, 200, 204, 0.3)',
+      },
+    },
+    '& th': {
+      fontWeight: 500,
+    },
+  },
+  truncate: {
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    maxWidth: '10rem',
   },
 });
