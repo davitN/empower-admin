@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import classNames from 'classnames';
@@ -11,6 +11,8 @@ import { setPassword } from '../store/ducks/setPasswordDuck';
 const SetPassword = () => {
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+
   const classes = useStyles();
   const [showError, setShowError] = useState<string>('');
   const [succeed, setSucceed] = useState(false);
@@ -64,7 +66,12 @@ const SetPassword = () => {
           </ButtonComponent>
         </>
       )}
-      {succeed && <p className={classes.blue}>You&apos;ve successfully registered, please use your email and password to sign in the app.</p>}
+      {succeed && (
+      <p className={classes.blue}>
+        {pathname === '/set_password'
+          ? 'You&apos;ve successfully registered, please use your email and password to sign in the app.' : 'Password was changed successfully'}
+      </p>
+      )}
       {showError && <p className={classes.red}>{showError}</p>}
     </div>
   );

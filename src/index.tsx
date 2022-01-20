@@ -28,6 +28,7 @@ ReactDOM.render(
           <Route path="payments" element={<Payments />} />
           <Route path="payments/finished" element={<PaymentsFinished />} />
           <Route path="set_password" element={<SetPassword />} />
+          <Route path="reset_password" element={<SetPassword />} />
           <Route path="/" element={<App />}>
             {routes.map(({
               Component, type, disabled, path, nestedRoutes,
