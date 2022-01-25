@@ -54,17 +54,17 @@ const GeneralContentLibrary = () => {
     LIMIT: 5,
   });
 
-  const {
-    searchValue: ethosSearchValue, handleSearch: ethosHandleSearch, handlePageChange: ethosHandlePageChange,
-  } = useGetData({
-    getDataAction: getContentItem,
-    resetState: () => resetContentItem('ETHOS'),
-    fetchOnMount: false,
-    queryParams: {
-      type: 'ETHOS',
-    } as { type: GeneralContentLibraryType },
-    LIMIT: 5,
-  });
+  // const {
+  //   searchValue: ethosSearchValue, handleSearch: ethosHandleSearch, handlePageChange: ethosHandlePageChange,
+  // } = useGetData({
+  //   getDataAction: getContentItem,
+  //   resetState: () => resetContentItem('ETHOS'),
+  //   fetchOnMount: false,
+  //   queryParams: {
+  //     type: 'ETHOS',
+  //   } as { type: GeneralContentLibraryType },
+  //   LIMIT: 5,
+  // });
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -112,7 +112,7 @@ const GeneralContentLibrary = () => {
           handleAdd={() => navigate('new/?type=WELNESS')}
           handlePageChange={(val) => wellnessHandlePageChange(val)}
         />
-        <Table
+        {/* <Table
           searchValue={ethosSearchValue}
           handleSearch={(val: string) => ethosHandleSearch(val)}
           data={initialData.ethosGeneralContent}
@@ -126,7 +126,7 @@ const GeneralContentLibrary = () => {
           buttonText="+ Add content"
           handlePageChange={(val) => ethosHandlePageChange(val)}
           handleAdd={() => navigate('new/?type=ETHOS')}
-        />
+        /> */}
       </div>
     </Container>
   );
