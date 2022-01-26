@@ -34,7 +34,7 @@ ReactDOM.render(
               Component, type, disabled, path, nestedRoutes,
             }) => (type === 'default' ? !disabled && (
             <Route
-              element={Component}
+              element={<Component />}
               path={path}
               key={path}
             />

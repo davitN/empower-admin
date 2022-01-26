@@ -155,7 +155,6 @@ export const routes: RouteType[] = [
     pathName: 'userProfile',
     Component: AppUserAccount,
   },
-
   {
     type: 'default',
     name: 'Reports',
