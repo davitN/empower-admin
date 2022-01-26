@@ -177,7 +177,7 @@ const GeneralContentLibraryDetails = () => {
                   <UploadButton
                     name="image"
                     desc={`Update an image that will be used as a thumbnail for the ${values.contentType === 'VIDEO' ? 'video' : 'audio'} .jpg files only`}
-                    fileType="image/jpg"
+                    fileType=".jpg"
                     uploadedFile={uploadedImg}
                     preview={values?.image?.URL || uploadedImg?.imgPrev || null}
                     handleUpload={(val: any) => {
