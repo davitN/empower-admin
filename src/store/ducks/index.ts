@@ -10,6 +10,7 @@ import { paymentsReducer } from './paymentsDuck';
 import { reportsReducer } from './reportsDuck';
 import { ethosCardsReducer } from './ethosCardsDuck';
 import { generalContentLibraryReducer } from './generalContentLibraryDuck';
+import { categoriesReducer } from './categoriesDuck';
 
 export {
   mainReducer,
@@ -24,4 +25,5 @@ export {
   reportsReducer,
   ethosCardsReducer,
   generalContentLibraryReducer,
+  categoriesReducer,
 };

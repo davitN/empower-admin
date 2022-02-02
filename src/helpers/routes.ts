@@ -15,21 +15,22 @@ import EthosCardsDetails from '../routes/EthosCardsDetails';
 import GeneralContentLibrary from '../routes/GeneralContentLibrary';
 import GeneralContentLibraryDetails from '../routes/GeneralContentLibraryDetails';
 import UserLastMonthProgress from '../routes/UserLastMonthProgress';
+import Categories from '../routes/Categories';
 
 export interface RouteType {
-  type: 'nested' | 'default',
-  name: string,
-  path: string,
-  Component?: any,
-  disabled?: boolean,
-  hiddenInNav?: boolean,
-  pathName: string,
+  type: 'nested' | 'default';
+  name: string;
+  path: string;
+  Component?: any;
+  disabled?: boolean;
+  hiddenInNav?: boolean;
+  pathName: string;
   nestedRoutes?: {
-    index?: boolean,
-    Component: Function,
-    path?: string,
-    disabled?: boolean
-  }[]
+    index?: boolean;
+    Component: Function;
+    path?: string;
+    disabled?: boolean;
+  }[];
 }
 
 export const routes: RouteType[] = [
@@ -107,6 +108,13 @@ export const routes: RouteType[] = [
         Component: AppAdminDetails,
       },
     ],
+  },
+  {
+    type: 'default',
+    name: 'Categories',
+    path: 'categories',
+    pathName: 'categories',
+    Component: Categories,
   },
   {
     type: 'nested',

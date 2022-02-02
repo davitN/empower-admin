@@ -61,6 +61,7 @@ const Table = ({
     <div className={classNames(classes.tableContainer, costumeClasses)}>
       <div className={classes.header}>
         {tableTitle && <Title title={tableTitle} fontSize="text-xl" />}
+        {handleSearch && (
         <div className={classNames(classes.wrapper, 'p-ml-4')}>
           <Input
             icon={<i className="pi pi-search" />}
@@ -86,6 +87,7 @@ const Table = ({
           </ButtonComponent>
           )}
         </div>
+        )}
       </div>
       <DataTable
         value={(data?.data || new Array(10).fill(0))}
@@ -98,7 +100,7 @@ const Table = ({
         {!data && header.map(({ name, field }) => <Column field={field} header={name} key={name} body={<Skeleton />} />)}
         <Column body={data ? editAction : <Skeleton />} header="Settings" className={classes.setting} />
       </DataTable>
-      {data && data.data.length > 0 && LIMIT < data.count && (
+      {handlePageChange && data && data?.data?.length > 0 && LIMIT < data.count && (
         <Paginator
           template={(template as any) || undefined}
           first={currentPage}
