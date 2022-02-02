@@ -61,8 +61,8 @@ const Table = ({
     <div className={classNames(classes.tableContainer, costumeClasses)}>
       <div className={classes.header}>
         {tableTitle && <Title title={tableTitle} fontSize="text-xl" />}
-        {handleSearch && (
         <div className={classNames(classes.wrapper, 'p-ml-4')}>
+          {handleSearch && (
           <Input
             icon={<i className="pi pi-search" />}
             placeholder="Search..."
@@ -75,6 +75,7 @@ const Table = ({
             }}
             customClasses={classes.input}
           />
+          )}
           {customFilters}
           {(handleAdd && buttonText) && (
           <ButtonComponent
@@ -87,7 +88,6 @@ const Table = ({
           </ButtonComponent>
           )}
         </div>
-        )}
       </div>
       <DataTable
         value={(data?.data || new Array(10).fill(0))}

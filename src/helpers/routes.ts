@@ -16,6 +16,7 @@ import GeneralContentLibrary from '../routes/GeneralContentLibrary';
 import GeneralContentLibraryDetails from '../routes/GeneralContentLibraryDetails';
 import UserLastMonthProgress from '../routes/UserLastMonthProgress';
 import Categories from '../routes/Categories';
+import CategoryDetails from '../routes/CategoryDetails';
 
 export interface RouteType {
   type: 'nested' | 'default';
@@ -110,11 +111,24 @@ export const routes: RouteType[] = [
     ],
   },
   {
-    type: 'default',
+    type: 'nested',
     name: 'Categories',
     path: 'categories',
     pathName: 'categories',
-    Component: Categories,
+    nestedRoutes: [
+      {
+        index: true,
+        Component: Categories,
+      },
+      {
+        path: ':mode',
+        Component: CategoryDetails,
+      },
+      {
+        path: ':mode/:id',
+        Component: CategoryDetails,
+      },
+    ],
   },
   {
     type: 'nested',

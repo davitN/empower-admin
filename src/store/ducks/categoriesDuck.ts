@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { CategoryItem, InitialState } from '../../types/categories';
+import { CategoryItem, InitialState, SaveCategoryParams } from '../../types/categories';
 
 import { CallBacks } from '../../types/main';
 
@@ -33,7 +33,7 @@ export const categoriesReducer = (state = initialState, action: AnyAction) => {
     case SET_CATEGORY_DETAILS:
       return {
         ...state,
-        categoryDetails: payload as any,
+        categoryDetails: payload as CategoryItem,
       };
     case RESET_CATEGORY_DETAILS_STATE:
       return {
@@ -59,13 +59,13 @@ export const resetCategoriesState = () => ({
   type: RESET_CATEGORIES_STATE,
 });
 
-export const getCategoryDetails = (categoryId: any, callbacks?: CallBacks) => ({
+export const getCategoryDetails = (categoryId: string, callbacks?: CallBacks) => ({
   type: GET_CATEGORY_DETAILS,
   categoryId,
   callbacks,
 });
 
-export const setCategoryDetails = (data: any, callbacks?: CallBacks) => ({
+export const setCategoryDetails = (data: CategoryItem, callbacks?: CallBacks) => ({
   type: SET_CATEGORY_DETAILS,
   payload: data,
   callbacks,
@@ -75,7 +75,7 @@ export const resetCategoryDetails = () => ({
   type: RESET_CATEGORY_DETAILS_STATE,
 });
 
-export const saveCategory = (data: any, callbacks?: CallBacks) => ({
+export const saveCategory = (data: SaveCategoryParams, callbacks?: CallBacks) => ({
   type: SAVE_CATEGORY,
   data,
   callbacks,

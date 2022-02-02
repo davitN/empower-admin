@@ -68,8 +68,8 @@ import {
 import {
   getContentItem, getContentItemDetails, getContentsData, removeContentItem, saveContentItemDetails,
 } from './generalContentLibrarySaga';
-import { GET_CATEGORIES } from '../ducks/categoriesDuck';
-import { getCategories } from './categoriesSaga';
+import { GET_CATEGORIES, GET_CATEGORY_DETAILS, SAVE_CATEGORY } from '../ducks/categoriesDuck';
+import { getCategories, getCategoryDetails, saveCategory } from './categoriesSaga';
 
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
@@ -118,6 +118,8 @@ function* actionWatcher() {
   yield takeLatest(REMOVE_CONTENT_ITEM, removeContentItem);
   yield takeLatest(GET_APP_USER_LAST_MONTH_PROGRESS, getAppUserLastMonthProgress);
   yield takeLatest(GET_CATEGORIES, getCategories);
+  yield takeLatest(GET_CATEGORY_DETAILS, getCategoryDetails);
+  yield takeLatest(SAVE_CATEGORY, saveCategory);
 }
 
 export default function* rootSaga() {
