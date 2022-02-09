@@ -159,7 +159,7 @@ const CompanyDetails = () => {
   useEffect(() => () => dispatch(resetCompanyDetailsState()), []);
 
   return (
-    <Container sectionTitle="VETERINARY GROWTH PARTNERS" idText="Company ID" itemId={companyId} goBack={() => navigate(prevLocation)}>
+    <Container sectionTitle={isNewCompany ? 'NEW COMPANY' : values.name} idText="Company ID" itemId={companyId} goBack={() => navigate(prevLocation)}>
       <Title title="COMPANY INFORMATION" costumeStyles="p-pb-4" />
       <div className={classes.wrapper}>
         <div className={classNames(classes.inputs)}>
