@@ -11,7 +11,7 @@ import { reportsReducer } from './reportsDuck';
 import { ethosCardsReducer } from './ethosCardsDuck';
 import { generalContentLibraryReducer } from './generalContentLibraryDuck';
 import { categoriesReducer } from './categoriesDuck';
-import { paginationReducer } from './paginationDuck';
+import { filtersReducer } from './filtersDuck';
 
 export {
   mainReducer,
@@ -27,5 +27,5 @@ export {
   ethosCardsReducer,
   generalContentLibraryReducer,
   categoriesReducer,
-  paginationReducer,
+  filtersReducer,
 };

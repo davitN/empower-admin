@@ -50,7 +50,7 @@ const Table = ({
   savePagination,
   tableId,
 }: PropTypes) => {
-  const pagination = useSelector((state: RootState) => state.paginationReducer);
+  const filters = useSelector((state: RootState) => state.filtersReducer);
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(0);
   const editAction = (rowData: any) => (
@@ -65,10 +65,10 @@ const Table = ({
   };
 
   useEffect(() => {
-    if (savePagination && tableId && pagination[tableId]) {
-      setCurrentPage((pagination[tableId] - 1) * LIMIT);
+    if (savePagination && tableId && filters[tableId]) {
+      setCurrentPage(filters[tableId]?.offset || 0);
     }
-  }, [savePagination, pagination[tableId]]);
+  }, [savePagination, filters[tableId]]);
   return (
     <div className={classNames(classes.tableContainer, costumeClasses)}>
       <div className={classes.header}>
