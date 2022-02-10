@@ -31,7 +31,7 @@ interface PropTypes {
   costumeClasses?: string,
   customFilters?: ReactNode,
   saveFilters?: boolean,
-  tableId: string
+  tableId?: string
 }
 
 const Table = ({
@@ -48,7 +48,7 @@ const Table = ({
   costumeClasses,
   customFilters,
   saveFilters,
-  tableId,
+  tableId = '',
 }: PropTypes) => {
   const filters = useSelector((state: RootState) => state.filtersReducer);
   const classes = useStyles();
