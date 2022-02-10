@@ -4,25 +4,24 @@ import { useNavigate } from 'react-router-dom';
 import Table from '../components/shared/Table';
 import { getCompanies, resetCompaniesState } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
-import useGetData from '../helpers/hooks/useGetData';
+import useGetData from '../helpers/hooks/useGetDataV2';
 import Container from '../components/shared/Container';
 
 const Companies = () => {
   const navigate = useNavigate();
   const { companies } = useSelector((state: RootState) => state.companiesReducer);
   const {
-    searchValue, handleSearch, handlePageChange,
+    params, handleParamsChange, handlePageChange,
   } = useGetData({
     getDataAction: getCompanies,
     resetState: resetCompaniesState,
-    resetOnUnmount: true,
   });
 
   return (
     <Container sectionTitle="COMPANIES">
       <Table
-        searchValue={searchValue || ''}
-        handleSearch={(val) => handleSearch(val)}
+        searchValue={params?.filter || ''}
+        handleSearch={(val) => handleParamsChange({ filter: val })}
         data={companies}
         header={tableHeaders}
         tableTitle="COMPANIES"
