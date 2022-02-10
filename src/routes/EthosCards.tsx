@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Container from '../components/shared/Container';
-import useGetData from '../helpers/hooks/useGetData';
+import useGetData from '../helpers/hooks/useGetDataV2';
 import { RootState } from '../store/configureStore';
 import Table from '../components/shared/Table';
 import { getEthosCards, resetEthosCardsState } from '../store/ducks/ethosCardsDuck';
@@ -11,18 +11,21 @@ const EthosCards = () => {
   const navigate = useNavigate();
   const { ethosCards }: { ethosCards: EthosCardsData } = useSelector((state: RootState) => state.ethosCardsReducer);
   const {
-    searchValue, handleSearch, handlePageChange,
+    params, handleParamsChange, handlePageChange,
   } = useGetData({
     getDataAction: getEthosCards,
     resetState: resetEthosCardsState,
     resetOnUnmount: true,
+    tableId: 'ethosCards',
   });
 
   return (
     <Container sectionTitle="ETHOS CARDS">
       <Table
-        searchValue={searchValue || ''}
-        handleSearch={(val) => handleSearch(val)}
+        tableId="ethosCards"
+        saveFilters
+        searchValue={params?.filter || ''}
+        handleSearch={(val) => handleParamsChange({ filter: val })}
         data={ethosCards}
         header={tableHeaders}
         tableTitle="ETHOS CARDS"
