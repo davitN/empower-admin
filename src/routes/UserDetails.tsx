@@ -42,6 +42,8 @@ const UserDetails = () => {
   const [searchParams] = useSearchParams();
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [removing, setRemoving] = useState(false);
   const [sending, setSending] = useState(false);
   const dispatch = useDispatch();
   const { userDetails }: { userDetails: GetAppUserDetailsData | null } = useSelector((state: RootState) => state.appUsersReducer);
@@ -203,7 +205,7 @@ const UserDetails = () => {
             textColor={COLORS.white}
             customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
             // handleClick={handleSave}
-            loading={loading}
+            loading={removing}
           >
             Delete user
           </Button>

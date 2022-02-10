@@ -77,3 +77,10 @@ export const handleFileUpload = (file: File, setUploadedFile: Function, keys?: {
     video.src = URL.createObjectURL(file);
   }
 };
+
+export const urlValidator = (str: string) => {
+  // eslint-disable-next-line no-useless-escape
+  const expression = /https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
+  const regex = new RegExp(expression);
+  return !!str.match(regex);
+};

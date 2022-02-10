@@ -16,6 +16,7 @@ import {
   getAppContentCategory, getCommunityDataItem, resetCommunityDataItem, saveCommunityData,
 } from '../../store/ducks/appContentDuck';
 import FormSharedComponent from '../shared/FormsSharedComponent';
+import { urlValidator } from '../../helpers/utils';
 
 const CommunityArticle = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const CommunityArticle = () => {
         || !values.written.category || !values.written.text);
     }
     if (values.type === 'EXTERNAL') {
-      return (!values.external.title || !values.external.URL
+      return (!values.external.title || !urlValidator(values.external.URL)
         || !values.external.category || !values.external.description);
     }
     return false;
