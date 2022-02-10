@@ -25,7 +25,6 @@ export const set = (data: any) => ({
   payload: data,
 });
 
-export const reset = (data: any) => ({
+export const reset = () => ({
   type: RESET_ALL_FILTERS,
-  payload: data,
 });
