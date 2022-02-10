@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Table from '../components/shared/Table';
 import COLORS from '../services/colors.service';
 import useGetData from '../helpers/hooks/useGetDataV2';
@@ -66,6 +66,12 @@ const AppUsers = () => {
     fetchOnMount: false,
   });
 
+  useEffect(() => {
+    if (selectedCompany) {
+      handleLocationsParamsChange({ companyId: selectedCompany });
+    }
+  }, [selectedCompany]);
+
   return (
     <div className={classes.root}>
       <Table
@@ -91,7 +97,6 @@ const AppUsers = () => {
                 setSelectedValue={(item: CompanyItem) => {
                   setSelectedCompany(item['_id']);
                   handleParamsChange({ companyId: item['_id'] });
-                  handleLocationsParamsChange({ companyId: item['_id'] });
                 }}
                 handleSearch={(val) => companiesHandleSearch({ filter: val })}
               />
