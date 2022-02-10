@@ -35,13 +35,19 @@ const EthosCardsDetails = () => {
     dispatch(saveEthosCardDetails({
       data: {
         ...values,
-        ...uploadedImg && ({ image: uploadedImg.imgDimension, thumbnail: uploadedImg.thumbnailDimension }),
+        ...uploadedImg && ({ width: uploadedImg.imgDimension.width, height: uploadedImg.imgDimension.height }),
       },
       audio: uploadedAudio,
       image: uploadedImg?.newImg,
       thumbnail: uploadedImg?.thumbnail,
       ethosCardId,
-    }, { success: () => setSaving(false), error: () => setSaving(false) }));
+    }, {
+      success: () => {
+        setSaving(false);
+        navigate('/ethos-cards');
+      },
+      error: () => setSaving(false),
+    }));
   };
   // get data if ethos card is editing
   useEffect(() => {

@@ -60,6 +60,8 @@ export interface SaveDataOptions {
   data: {
     companyId: string | null,
     name: string,
+    width?: number,
+    height?: number
   },
   locationId?: string | null,
 }

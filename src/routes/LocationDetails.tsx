@@ -26,16 +26,8 @@ interface ValuesTypes {
   name: string,
   company: string,
   companyId: string | null,
-  logo?: {
-    width: number,
-    height: number,
-    imgUrl: string
-  },
-  thumbnail?: {
-    width: number,
-    height: number,
-    imgUrl: string
-  },
+  width?: number,
+  height?: number,
 }
 
 interface ImgTypes {
@@ -105,14 +97,13 @@ const LocationDetails = () => {
       imgPrev,
       imgDimension,
       thumbnail,
-      thumbnailDimension,
     } = await readImgAsync(e);
     setImg({
       newImg,
       imgPrev,
       thumbnail,
     });
-    setValues({ ...values, logo: { ...imgDimension }, thumbnail: { ...thumbnailDimension } });
+    setValues({ ...values, width: imgDimension.width, height: imgDimension.height });
   };
 
   const handleSave = () => {
@@ -121,6 +112,8 @@ const LocationDetails = () => {
       logo: img.newImg,
       thumbnail: img.thumbnail,
       data: {
+        width: values?.width,
+        height: values?.height,
         companyId: values.companyId,
         name: values.name,
       },
@@ -221,7 +214,7 @@ const LocationDetails = () => {
               handler: () => console.log('remove'),
               label: 'Remove Location',
               disabled: false,
-              hidden: !isNewLocation && !locationDetails,
+              hidden: isNewLocation,
             }}
           />
         </div>
