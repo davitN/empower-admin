@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import Table from '../components/shared/Table';
 import COLORS from '../services/colors.service';
-import useGetData from '../helpers/hooks/useGetData';
+import useGetData from '../helpers/hooks/useGetDataV2';
 import { GetAppUsersData } from '../types/appUsers';
 import { resetAllAppUsersState, getAllAppUsers } from '../store/ducks/appUsersDuck';
 import { RootState } from '../store/configureStore';
@@ -25,26 +25,30 @@ interface AdditionalData {
 }
 
 const AppUsers = () => {
+  const filters = useSelector((state: RootState) => state.filtersReducer);
+
   const classes = useStyles();
   const navigate = useNavigate();
-  const [selectedCompany, setSelectedCompany] = useState<null | CompanyItem>(null);
-  const [selectedLocation, setSelectedLocation] = useState<null | LocationItem>(null);
+  const [selectedCompany, setSelectedCompany] = useState<null | string>(filters?.users?.companyId || null);
+  const [selectedLocation, setSelectedLocation] = useState<null | string>(filters?.users?.locationId || null);
   const { allUsers }: { allUsers: GetAppUsersData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { companies }: { companies: CompaniesTypes | null } = useSelector((state: RootState) => state.companiesReducer);
   const { locations }: { locations: GetLocationsData | null } = useSelector((state: RootState) => state.locationsReducer);
 
   const {
-    searchValue, handleSearch, handlePageChange, setDynamicParams,
+    params, handleParamsChange, handlePageChange,
   } = useGetData({
     LIMIT,
     resetOnUnmount: true,
     getDataAction: getAllAppUsers,
     resetState: resetAllAppUsersState,
-    queryParams: { companyId: selectedCompany ? selectedCompany['_id'] : null },
+    initialParams: { companyId: selectedCompany || null },
+    tableId: 'users',
+    saveFIlters: true,
   });
 
   const {
-    handleSearch: companiesHandleSearch,
+    handleParamsChange: companiesHandleSearch,
   } = useGetData({
     LIMIT: 20,
     resetOnUnmount: true,
@@ -53,7 +57,7 @@ const AppUsers = () => {
   });
 
   const {
-    handleSearch: locationsHandleSearch, setDynamicParams: setLocationsParams,
+    handleParamsChange: handleLocationsParamsChange,
   } = useGetData({
     LIMIT: 20,
     resetOnUnmount: true,
@@ -65,8 +69,10 @@ const AppUsers = () => {
   return (
     <div className={classes.root}>
       <Table
-        searchValue={searchValue || ''}
-        handleSearch={(val) => handleSearch(val)}
+        searchValue={params.filter || ''}
+        handleSearch={(val) => handleParamsChange({ filter: val })}
+        tableId="users"
+        saveFilters
         data={allUsers}
         header={tableHeaders(navigate)}
         tableTitle="USERS"
@@ -81,13 +87,13 @@ const AppUsers = () => {
                 placeholder="Select company"
                 getOptionLabel={(option: CompanyItem) => option.name}
                 getOptionValue={(option: CompanyItem) => option.name}
-                selectedValue={selectedCompany}
+                selectedValue={(Array.isArray(companies?.data) && companies?.data?.find((el) => el['_id'] === selectedCompany)) || null}
                 setSelectedValue={(item: CompanyItem) => {
-                  setSelectedCompany(item);
-                  setDynamicParams({ companyId: item['_id'] });
-                  setLocationsParams({ companyId: item['_id'] });
+                  setSelectedCompany(item['_id']);
+                  handleParamsChange({ companyId: item['_id'] });
+                  handleLocationsParamsChange({ companyId: item['_id'] });
                 }}
-                handleSearch={companiesHandleSearch}
+                handleSearch={(val) => companiesHandleSearch({ filter: val })}
               />
             </div>
             <div style={{ width: '15rem' }}>
@@ -96,12 +102,12 @@ const AppUsers = () => {
                 placeholder="Select location"
                 getOptionLabel={(option: CompanyItem) => option.name}
                 getOptionValue={(option: CompanyItem) => option.name}
-                selectedValue={selectedLocation}
+                selectedValue={(Array.isArray(locations?.data) && locations?.data?.find((el) => el['_id'] === selectedLocation)) || null}
                 setSelectedValue={(item: LocationItem) => {
-                  setSelectedLocation(item as LocationItem);
-                  setDynamicParams({ locationId: item['_id'] });
+                  setSelectedLocation(item['_id']);
+                  handleParamsChange({ locationId: item['_id'] });
                 }}
-                handleSearch={locationsHandleSearch}
+                handleSearch={(val) => handleLocationsParamsChange({ filter: val })}
                 disabled={!selectedCompany}
               />
             </div>
