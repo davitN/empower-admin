@@ -15,6 +15,7 @@ const Companies = () => {
   } = useGetData({
     getDataAction: getCompanies,
     resetState: resetCompaniesState,
+    tableId: 'company',
   });
 
   return (
@@ -29,6 +30,8 @@ const Companies = () => {
         handlePageChange={(val) => handlePageChange(val)}
         handleAdd={() => navigate('new')}
         buttonText="+ Add company"
+        savePagination
+        tableId="company"
       />
     </Container>
   );

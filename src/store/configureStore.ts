@@ -19,6 +19,7 @@ import {
   ethosCardsReducer,
   generalContentLibraryReducer,
   categoriesReducer,
+  paginationReducer,
 } from './ducks';
 import { RESET_STORE } from './ducks/mainDuck';
 
@@ -38,6 +39,7 @@ const appReducer = combineReducers({
   ethosCardsReducer,
   generalContentLibraryReducer,
   categoriesReducer,
+  paginationReducer,
 });
 
 export type RootState = ReturnType<typeof appReducer>;

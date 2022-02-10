@@ -5,11 +5,13 @@ import { Paginator } from 'primereact/paginator';
 import { Column } from 'primereact/column';
 import { Skeleton } from 'primereact/skeleton';
 import classNames from 'classnames';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import COLORS from '../../services/colors.service';
 import ButtonComponent from './Inputs/Button';
 import Input from './Inputs/TextInput';
 import Title from './Title';
+import { RootState } from '../../store/configureStore';
 
 interface PropTypes {
   data: any,
@@ -27,7 +29,9 @@ interface PropTypes {
   LIMIT?: number,
   buttonText?: string,
   costumeClasses?: string,
-  customFilters?: ReactNode
+  customFilters?: ReactNode,
+  savePagination?: boolean,
+  tableId: string
 }
 
 const Table = ({
@@ -43,10 +47,12 @@ const Table = ({
   buttonText,
   costumeClasses,
   customFilters,
+  savePagination,
+  tableId,
 }: PropTypes) => {
+  const pagination = useSelector((state: RootState) => state.paginationReducer);
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(0);
-
   const editAction = (rowData: any) => (
     <ButtonComponent customClasses={classNames(classes.actionButton, 'p-ml-auto')} handleClick={handleEdit ? () => handleEdit(rowData) : undefined}>
       <i className="pi pi-cog" style={{ color: COLORS.white }} />
@@ -57,6 +63,12 @@ const Table = ({
     setCurrentPage(val.first);
     handlePageChange && handlePageChange(val.page + 1);
   };
+
+  useEffect(() => {
+    if (savePagination && tableId && pagination[tableId]) {
+      setCurrentPage((pagination[tableId] - 1) * LIMIT);
+    }
+  }, [savePagination, pagination[tableId]]);
   return (
     <div className={classNames(classes.tableContainer, costumeClasses)}>
       <div className={classes.header}>
