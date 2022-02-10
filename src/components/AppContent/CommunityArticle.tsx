@@ -104,20 +104,25 @@ const CommunityArticle = () => {
           ...values,
           type: communityDataItem.type,
           isFeatured: communityDataItem.isFeatured,
-          ...communityDataItem.type === 'WRITTEN' ? {
-            written: {
-              ...values.written,
-              title: communityDataItem.title,
-              subTitle: communityDataItem.subTitle,
-              category: communityDataItem.category,
-              text: communityDataItem.text,
-            },
-          } : {
+          written: {
+            ...values.written,
+            title: communityDataItem.title,
+            subTitle: communityDataItem.subTitle,
+            category: communityDataItem.category,
+            text: communityDataItem.text,
+          },
+        });
+      } else {
+        setValues({
+          ...values,
+          type: communityDataItem.type,
+          isFeatured: communityDataItem.isFeatured,
+          external: {
             ...values.external,
             title: communityDataItem.title,
-            category: communityDataItem.category,
-            description: communityDataItem.description,
-            URL: communityDataItem.URL,
+            category: communityDataItem?.category || null,
+            description: communityDataItem.description || '',
+            URL: communityDataItem.URL || '',
           },
         });
       }
@@ -334,7 +339,7 @@ interface CommunityArticleValuesTypes {
   },
   external: {
     title: string,
-    category: null,
+    category: any,
     description: string,
     URL: string,
   }

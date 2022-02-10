@@ -1,3 +1,5 @@
+import { CategoryItem } from '../categories';
+
 export interface ItemModel {
   company: {
     name: string,
@@ -100,7 +102,7 @@ export interface AppContentCategory {
 }
 
 export interface GetCommunityDataItem {
-  category: string,
+  category: CategoryItem,
   createdAt:string,
   creator: string,
   image: any,
