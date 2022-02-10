@@ -111,7 +111,6 @@ const CompanyDetails = () => {
 
     setValues({ ...values, width: imgDimension.width, height: imgDimension.height });
   };
-  console.log(values);
 
   const handleSave = () => {
     setSaving(true);
