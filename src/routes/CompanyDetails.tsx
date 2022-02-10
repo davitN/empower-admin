@@ -30,8 +30,8 @@ interface InputsTypes {
   price: number | null,
   showTeamSection: boolean,
   code: null | string,
-  logo?: any,
-  thumbnail?: any
+  width?: number,
+  height?: number
 }
 
 interface ImgTypes {
@@ -90,6 +90,8 @@ const CompanyDetails = () => {
     price: null,
     showTeamSection: true,
     code: null,
+    width: 0,
+    height: 0,
   });
   const [saving, setSaving] = useState<boolean>(false);
   const paidTill = companyDetails && companyDetails?.paidTill;
@@ -99,7 +101,6 @@ const CompanyDetails = () => {
       imgPrev,
       imgDimension,
       thumbnail,
-      thumbnailDimension,
     } = await readImgAsync(e);
 
     setImg({
@@ -108,8 +109,9 @@ const CompanyDetails = () => {
       thumbnail,
     });
 
-    setValues({ ...values, logo: { ...imgDimension }, thumbnail: { ...thumbnailDimension } });
+    setValues({ ...values, width: imgDimension.width, height: imgDimension.height });
   };
+  console.log(values);
 
   const handleSave = () => {
     setSaving(true);
