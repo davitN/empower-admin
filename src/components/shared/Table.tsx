@@ -30,7 +30,7 @@ interface PropTypes {
   buttonText?: string,
   costumeClasses?: string,
   customFilters?: ReactNode,
-  savePagination?: boolean,
+  saveFilters?: boolean,
   tableId: string
 }
 
@@ -47,7 +47,7 @@ const Table = ({
   buttonText,
   costumeClasses,
   customFilters,
-  savePagination,
+  saveFilters,
   tableId,
 }: PropTypes) => {
   const filters = useSelector((state: RootState) => state.filtersReducer);
@@ -65,10 +65,10 @@ const Table = ({
   };
 
   useEffect(() => {
-    if (savePagination && tableId && filters[tableId]) {
+    if (saveFilters && tableId && filters[tableId]) {
       setCurrentPage(filters[tableId]?.offset || 0);
     }
-  }, [savePagination, filters[tableId]]);
+  }, [saveFilters, filters[tableId]]);
   return (
     <div className={classNames(classes.tableContainer, costumeClasses)}>
       <div className={classes.header}>

@@ -18,8 +18,7 @@ const useGetData = ({
   getDataAction, resetState, LIMIT = 10, resetOnUnmount = true, initialParams, saveFIlters = true, tableId, fetchOnMount = true,
 }: PropTypes) => {
   const dispatch = useDispatch();
-  const pagination = useSelector((state: RootState) => state.filtersReducer);
-  console.log(pagination);
+  const filters = useSelector((state: RootState) => state.filtersReducer);
   const [searchValue, setSearchValue] = useState<string | null>(null);
   const setTimeoutRef = useRef<any>();
   const params = useRef<any>({
@@ -27,24 +26,24 @@ const useGetData = ({
     limit: LIMIT,
     filter: null,
     ...(initialParams && { ...initialParams }),
-    ...(saveFIlters && tableId && pagination[tableId] && { ...pagination[tableId] }),
+    ...(saveFIlters && tableId && filters[tableId] && { ...filters[tableId] }),
   });
 
   const handlePageChange = (val: number) => {
-    saveFIlters && tableId && dispatch(set({ [tableId]: { ...pagination[tableId], offset: (val - 1) * LIMIT } }));
+    saveFIlters && tableId && dispatch(set({ [tableId]: { ...filters[tableId], offset: (val - 1) * LIMIT } }));
     resetState && dispatch(resetState());
     getDataAction && dispatch(getDataAction({ ...params.current, offset: (val - 1) * LIMIT }));
   };
 
   const handleParamsChange = (data: any) => {
     params.current = { ...params.current, ...data, offset: 0 };
-    Object.keys(data)[0] !== 'filter' && saveFIlters && tableId && dispatch(set({ [tableId]: { ...pagination[tableId], offset: 0, ...data } }));
+    Object.keys(data)[0] !== 'filter' && saveFIlters && tableId && dispatch(set({ [tableId]: { ...filters[tableId], offset: 0, ...data } }));
     resetState && dispatch(resetState());
     if (Object.keys(data)[0] === 'filter') {
       setSearchValue(data.filter);
       if (!data.filter) {
         params.current.filter = null;
-        saveFIlters && tableId && dispatch(set({ [tableId]: { ...pagination[tableId], filter: null, offset: 0 } }));
+        saveFIlters && tableId && dispatch(set({ [tableId]: { ...filters[tableId], filter: null, offset: 0 } }));
         getDataAction && dispatch(getDataAction({ ...params.current }));
       }
     } else {
@@ -61,7 +60,7 @@ const useGetData = ({
     if (searchValue) {
       setTimeoutRef.current = setTimeout(() => {
         getDataAction && dispatch(getDataAction({ ...params.current }));
-        saveFIlters && tableId && dispatch(set({ [tableId]: { ...pagination[tableId], offset: 0, filter: params.current.filter } }));
+        saveFIlters && tableId && dispatch(set({ [tableId]: { ...filters[tableId], offset: 0, filter: params.current.filter } }));
       }, 500);
     }
     return () => clearTimeout(setTimeoutRef.current);

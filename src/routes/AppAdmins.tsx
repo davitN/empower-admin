@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Table from '../components/shared/Table';
-import useGetData from '../helpers/hooks/useGetData';
+import useGetData from '../helpers/hooks/useGetDataV2';
 import { getAppAdmins, resetAppAdminsState, getAppAdminsRoles } from '../store/ducks/appAdminsDuck';
 import { RootState } from '../store/configureStore';
 import Container from '../components/shared/Container';
@@ -12,29 +12,32 @@ import { AppAdminsRoles } from '../types/appAdmin';
 const LIMIT = 8;
 
 const AppAdmins = () => {
+  const filters = useSelector((state: RootState) => state.filtersReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [selectedRole, setSelectedRole] = useState<AppAdminsRoles | null>(null);
+  const [selectedRole, setSelectedRole] = useState<string | null>(filters?.admins?.roleId || null);
   const { admins } = useSelector((state: RootState) => state.appAdminsReducer);
-  const { adminsRoles } = useSelector((state: RootState) => state.appAdminsReducer);
+  const { adminsRoles }: { adminsRoles: AppAdminsRoles[] } = useSelector((state: RootState) => state.appAdminsReducer);
   const {
-    searchValue, handleSearch, handlePageChange, setDynamicParams,
+    params, handleParamsChange, handlePageChange,
   } = useGetData({
     getDataAction: getAppAdmins,
     resetState: resetAppAdminsState,
     LIMIT,
     resetOnUnmount: true,
+    tableId: 'admins',
   });
 
   useEffect(() => {
     dispatch(getAppAdminsRoles());
   }, []);
-
   return (
     <Container sectionTitle="APP ADMINS LIST">
       <Table
-        searchValue={searchValue || ''}
-        handleSearch={(val) => handleSearch(val)}
+        searchValue={params?.filter || ''}
+        tableId="admins"
+        saveFilters
+        handleSearch={(val) => handleParamsChange({ filter: val })}
         data={admins}
         header={tableHeaders}
         tableTitle="ADMINS"
@@ -50,10 +53,10 @@ const AppAdmins = () => {
               placeholder="Select role"
               getOptionLabel={(option: AppAdminsRoles) => option.name}
               getOptionValue={(option: AppAdminsRoles) => option.name}
-              selectedValue={selectedRole}
+              selectedValue={(Array.isArray(adminsRoles) && adminsRoles.find((el) => el['_id'] === selectedRole)) || null}
               setSelectedValue={(item: AppAdminsRoles) => {
-                setSelectedRole(item);
-                setDynamicParams({ roleId: item['_id'] });
+                setSelectedRole(item['_id']);
+                handleParamsChange({ roleId: item['_id'] });
               }}
             />
           </div>

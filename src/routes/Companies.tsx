@@ -30,7 +30,7 @@ const Companies = () => {
         handlePageChange={(val) => handlePageChange(val)}
         handleAdd={() => navigate('new')}
         buttonText="+ Add company"
-        savePagination
+        saveFilters
         tableId="company"
       />
     </Container>
