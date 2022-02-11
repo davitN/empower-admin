@@ -11,7 +11,7 @@ import TextInput from '../components/shared/Inputs/TextInput';
 import Button from '../components/shared/Inputs/Button';
 import COLORS from '../services/colors.service';
 import {
-  getAppUserDetails, resetAppUserDetails, saveAppUserDetails, sendResetPassword,
+  getAppUserDetails, removeAppUser, resetAppUserDetails, saveAppUserDetails, sendResetPassword,
 } from '../store/ducks/appUsersDuck';
 import { RootState } from '../store/configureStore';
 import { GetAppUserDetailsData } from '../types/appUsers';
@@ -204,7 +204,16 @@ const UserDetails = () => {
             bgColor={COLORS.red}
             textColor={COLORS.white}
             customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
-            // handleClick={handleSave}
+            handleClick={() => {
+              setRemoving(true);
+              userId && dispatch(removeAppUser(userId, {
+                error: () => setRemoving(false),
+                success: () => {
+                  setRemoving(false);
+                  navigate('/app-users');
+                },
+              }));
+            }}
             loading={removing}
           >
             Delete user

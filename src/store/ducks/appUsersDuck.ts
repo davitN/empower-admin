@@ -13,6 +13,7 @@ export const SET_APP_USER_DETAILS = 'socialize/appUsers/setAppUserDetails';
 export const RESET_APP_USER_DETAILS = 'socialize/appUsers/resetAppUserDetails';
 
 export const SAVE_APP_USER_DETAILS = 'socialize/appUsers/saveAppUserDetails';
+export const REMOVE_APP_USER_DETAILS = 'socialize/appUsers/removeAppUserDetails';
 export const SEND_RESET_PASSWORD = 'socialize/appUsers/sendResetPassword';
 
 export const GET_ALL_APP_USERS = 'socialize/appUsers/getALlAppUsers';
@@ -149,3 +150,11 @@ export const setAppUserLastMonthProgress = (data: LastMonthProgressItems) => ({
 export const resetAppUserLastMonthProgressState = () => ({
   type: RESET_APP_USER_LAST_MONTH_PROGRESS_STATE,
 });
+
+export const removeAppUser = (id: string, callbacks?: CallBacks) => {
+  return {
+    type: REMOVE_APP_USER_DETAILS,
+    id,
+    callbacks,
+  };
+};

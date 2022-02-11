@@ -97,3 +97,14 @@ export function* getAppUserLastMonthProgress({ userId, callbacks }:{ userId: str
     notificationService.error(error.response.data.message, '', 500);
   }
 }
+
+export function* removeAppUser({ id, callbacks }:{ id: string, callbacks: CallBacks, type: string }) {
+  try {
+    yield axiosInstance.delete(`/app_user/delete/${id}`);
+    callbacks?.success && callbacks.success();
+    notificationService.success('User has been successfully removed', '', 1000);
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response.data.message, '', 500);
+  }
+}
