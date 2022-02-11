@@ -62,6 +62,8 @@ const CommunityArticle = () => {
     const reqData = {
       type: values.type,
       isFeatured: values.isFeatured,
+      width: communityDataItem?.image?.width || 0,
+      height: communityDataItem?.image?.height || 0,
       ...uploadedFile && ({ width: uploadedFile.imgDimension.width, height: uploadedFile.imgDimension.height }),
       ...values.type === 'WRITTEN' ? {
         ...values.written,

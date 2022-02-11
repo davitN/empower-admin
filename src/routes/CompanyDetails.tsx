@@ -147,6 +147,8 @@ const CompanyDetails = () => {
         price: companyDetails.price,
         showTeamSection: companyDetails.showTeamSection,
         code: companyDetails.code,
+        width: companyDetails?.logo?.width || 0,
+        height: companyDetails?.logo?.height || 0,
       });
       setImg({
         ...img,
