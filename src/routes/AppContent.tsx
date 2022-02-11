@@ -104,7 +104,7 @@ const AppContent = () => {
             searchValue={kickOffSearchValue}
             handleSearch={(val) => kickOffHandleSearch(val)}
             data={initialData.kickOff}
-            header={tableHeaders}
+            header={tableHeaders(navigate)}
             tableTitle="Kickoff Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=kickOff`)}
             LIMIT={5}
@@ -116,7 +116,7 @@ const AppContent = () => {
             searchValue={ethosSearchValue}
             handleSearch={(val) => ethosHandleSearch(val)}
             data={initialData.ethos}
-            header={tableHeaders}
+            header={tableHeaders(navigate)}
             tableTitle="Ethos Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=ethos`)}
             LIMIT={5}
@@ -128,7 +128,7 @@ const AppContent = () => {
             searchValue={gratitudeSearchValue}
             handleSearch={(val) => gratitudeHandleSearch(val)}
             data={initialData.gratitude}
-            header={tableHeaders}
+            header={tableHeaders(navigate)}
             tableTitle="Gratitude Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=gratitude`)}
             LIMIT={5}
@@ -140,7 +140,7 @@ const AppContent = () => {
             searchValue={powerUpSearchValue}
             handleSearch={(val) => powerUpHandleSearch(val)}
             data={initialData.powerUp}
-            header={tableHeaders}
+            header={tableHeaders(navigate)}
             tableTitle="Power-Up Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=powerUp`)}
             LIMIT={5}
@@ -152,7 +152,7 @@ const AppContent = () => {
             searchValue={powerDownSearchValue}
             handleSearch={(val) => powerDownHandleSearch(val)}
             data={initialData.powerDown}
-            header={tableHeaders}
+            header={tableHeaders(navigate)}
             tableTitle="Power-Down Content"
             handleEdit={({ company }) => navigate(`monthly-team-activity/edit/${company['_id']}?fieldName=powerDown`)}
             LIMIT={5}
@@ -190,7 +190,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const tableHeaders = [
+const tableHeaders = (navigate: any) => [
   {
     name: 'CONTENT TITLE',
     field: 'title',
@@ -209,7 +209,8 @@ const tableHeaders = [
   },
   {
     name: 'COMPANY',
-    field: 'company.name',
+    body: ({ company }: { company: any }) => <div style={{ cursor: 'pointer' }} onClick={() => navigate(`/companies/${company['_id']}`)}>{company.name}</div>,
+
   },
 ];
 
