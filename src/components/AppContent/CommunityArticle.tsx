@@ -16,7 +16,7 @@ import {
   getAppContentCategory, getCommunityDataItem, resetCommunityDataItem, saveCommunityData,
 } from '../../store/ducks/appContentDuck';
 import FormSharedComponent from '../shared/FormsSharedComponent';
-import { urlValidator } from '../../helpers/utils';
+import { urlValidator, handleImgUpload } from '../../helpers/utils';
 
 const CommunityArticle = () => {
   const dispatch = useDispatch();
@@ -62,6 +62,7 @@ const CommunityArticle = () => {
     const reqData = {
       type: values.type,
       isFeatured: values.isFeatured,
+      ...uploadedFile && ({ width: uploadedFile.imgDimension.width, height: uploadedFile.imgDimension.height }),
       ...values.type === 'WRITTEN' ? {
         ...values.written,
         category: values.written.category['_id'],
@@ -73,7 +74,7 @@ const CommunityArticle = () => {
     dispatch(saveCommunityData(
       {
         data: reqData,
-        image: uploadedFile,
+        image: uploadedFile?.newImg,
         id: isEditing && id,
       },
       {
@@ -129,6 +130,7 @@ const CommunityArticle = () => {
       }
     }
   }, [id, communityDataItem]);
+
   return (
     <div className={classes.root}>
       <div className={classes.gridWrapper}>
@@ -199,8 +201,8 @@ const CommunityArticle = () => {
                   <div>
                     <Title title="Featured Image" fontSize="text-base" costumeStyles="p-mb-2" />
                     <UploadButton
-                      uploadedFile={uploadedFile}
-                      handleUpload={(val: any) => setUploadedFIle(val)}
+                      uploadedFile={uploadedFile?.newImg}
+                      handleUpload={(val: any) => handleImgUpload(val, setUploadedFIle)}
                       fileType="image/png, image/gif, image/jpeg"
                       disabled={Boolean(isEditing)}
                     />

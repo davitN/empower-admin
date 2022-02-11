@@ -13,6 +13,7 @@ import { getAppContentItemInfo, resetAppContentItemInfo, saveAppContentItem } fr
 import { RootState } from '../../store/configureStore';
 import { GetAppContentItemInfo, MonthlyActivityContentType, MonthlyActivityTypes } from '../../types/appContent';
 import FormSharedComponent from '../shared/FormsSharedComponent';
+import { handleFileUpload } from '../../helpers/utils';
 
 const MonthlyActivity = () => {
   const dispatch = useDispatch();
@@ -40,8 +41,12 @@ const MonthlyActivity = () => {
     setSaving(true);
     dispatch(saveAppContentItem(
       {
-        data: values,
-        file: uploadedFile,
+        data: {
+          ...values,
+          ...uploadedFile && ({ width: uploadedFile?.width || 0, height: uploadedFile?.height || 0, duration: uploadedFile?.duration }),
+          companyId,
+        },
+        file: uploadedFile?.file,
         ...(isEditing && { companyId }),
       },
       {
@@ -58,26 +63,6 @@ const MonthlyActivity = () => {
       (val: number) => setUploadedFIleProgress(val),
     ));
   };
-
-  function setFileDuration(file: any) {
-    const video = document.createElement(file.type.includes('video') ? 'video' : 'audio');
-    video.preload = 'metadata';
-    video.onloadedmetadata = () => {
-      window.URL.revokeObjectURL(video.src);
-      const { duration } = video;
-      setValues({ ...values, duration: Math.floor(duration) });
-    };
-    video.src = URL.createObjectURL(file);
-  }
-  // if editing set companyId and type else set type
-  useEffect(() => {
-    if (!isEditing) {
-      setValues({ ...values, companyId, type: fieldName });
-    }
-    if (isEditing) {
-      setValues({ ...values, type: fieldName });
-    }
-  }, [mode, fieldName]);
 
   // if editing get item data
   useEffect(() => {
@@ -109,6 +94,10 @@ const MonthlyActivity = () => {
   useEffect(() => {
     return () => dispatch(resetAppContentItemInfo());
   }, []);
+
+  useEffect(() => {
+    setUploadedFIle(null);
+  }, [contentType]);
 
   return (
     <div className={classes.gridWrapper}>
@@ -162,11 +151,11 @@ const MonthlyActivity = () => {
                 <Textarea label="Description" value={values.description} required handleChange={(description) => setValues({ ...values, description })} />
                 <UploadButton
                   fileType={contentType === 'VIDEO' ? '.mp4' : '.mp3'}
-                  uploadedFile={uploadedFile}
+                  uploadedFile={uploadedFile?.file}
                   desc={`${contentType === 'VIDEO' ? '.mp4' : '.mp3'} files only `}
                   handleUpload={(val: any) => {
-                    setUploadedFIle(val);
-                    setFileDuration(val);
+                    handleFileUpload(val, setUploadedFIle);
+                    // setFileDuration(val);
                   }}
                   uploadedFileProgress={uploadedFileProgress}
                 />
@@ -258,6 +247,8 @@ const ValuesInitialState: ValuesTypes = {
   description: '',
   companyId: '',
   duration: 0,
+  width: 0,
+  height: 0,
 };
 
 interface ValuesTypes {
@@ -266,5 +257,7 @@ interface ValuesTypes {
   subTitle: string,
   description: string,
   companyId?: string | null,
-  duration: number
+  duration: number,
+  width: number,
+  height: number
 }
