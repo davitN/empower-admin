@@ -28,7 +28,7 @@ interface InputsTypes {
   name: string,
   paymentType: string,
   price: number | null,
-  showTeamSection: boolean,
+  showCommunitySection: boolean,
   code: null | string,
   width?: number,
   height?: number
@@ -88,7 +88,7 @@ const CompanyDetails = () => {
     name: '',
     paymentType: paymentType.all,
     price: null,
-    showTeamSection: true,
+    showCommunitySection: true,
     code: null,
     width: 0,
     height: 0,
@@ -145,7 +145,7 @@ const CompanyDetails = () => {
         name: companyDetails.name,
         paymentType: companyDetails.paymentType,
         price: companyDetails.price,
-        showTeamSection: companyDetails.showTeamSection,
+        showCommunitySection: companyDetails.showCommunitySection,
         code: companyDetails.code,
         width: companyDetails?.logo?.width || 0,
         height: companyDetails?.logo?.height || 0,
@@ -217,18 +217,18 @@ const CompanyDetails = () => {
               />
               )}
               <div className="p-d-flex p-flex-column">
-                <Label label="Team Section" required costumeStyles="p-mb-3" />
+                <Label label="Community Section" required costumeStyles="p-mb-3" />
                 <div className="p-d-flex">
                   <RadioButtonComponent
                     label="Show"
-                    checked={values.showTeamSection}
-                    onChange={() => setValues({ ...values, showTeamSection: true })}
+                    checked={values.showCommunitySection}
+                    onChange={() => setValues({ ...values, showCommunitySection: true })}
                     costumeClasses="p-mr-6"
                   />
                   <RadioButtonComponent
                     label="Hide"
-                    checked={!values.showTeamSection}
-                    onChange={() => setValues({ ...values, showTeamSection: false })}
+                    checked={!values.showCommunitySection}
+                    onChange={() => setValues({ ...values, showCommunitySection: false })}
                   />
                 </div>
               </div>

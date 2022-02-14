@@ -33,7 +33,7 @@ export interface CompanyItem {
   }
   name: string
   paymentType: string
-  showTeamSection: boolean
+  showCommunitySection: boolean
   updatedAt: string
   userCount: number
   __v: number
@@ -51,7 +51,7 @@ export type GetCompanyDetailsTypes = string;
 export interface SaveDataTypes {
   data: {
     price: number | null
-    showTeamSection: boolean,
+    showCommunitySection: boolean,
     name: string,
     code?: string | null,
     paymentType: string
