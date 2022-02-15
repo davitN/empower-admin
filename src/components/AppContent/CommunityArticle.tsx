@@ -36,14 +36,12 @@ const CommunityArticle = () => {
     type: communityDataItem ? communityDataItem.type : 'WRITTEN',
     isFeatured: true,
     written: {
-      company: '',
       title: '',
       subTitle: '',
       category: null,
       text: '',
     },
     external: {
-      company: '',
       title: '',
       category: null,
       description: '',
@@ -54,11 +52,11 @@ const CommunityArticle = () => {
   const validateInputs = () => {
     if (values.type === 'WRITTEN') {
       return (!values.written.title || !values.written.subTitle
-        || !values.written.category || !values.written.text || !values.written.company);
+        || !values.written.category || !values.written.text);
     }
     if (values.type === 'EXTERNAL') {
       return (!values.external.title || !urlValidator(values.external.URL)
-        || !values.external.category || !values.external.description || !values.external.company);
+        || !values.external.category || !values.external.description);
     }
     return false;
   };
@@ -235,7 +233,6 @@ const CommunityArticle = () => {
                       data={allCompanies}
                       selectedValue={allCompanies?.find((el) => el['_id'] === values.written.company) || null}
                       label="Company"
-                      required
                       handleChange={(company) => setValues({ ...values, written: { ...values.written, company: company['_id'] } })}
                     />
                   ) : <Skeleton height="40px" />}
@@ -377,13 +374,13 @@ interface CommunityArticleValuesTypes {
     subTitle: string,
     category: any,
     text: string,
-    company: string
+    company?: string
   },
   external: {
     title: string,
     category: any,
     description: string,
     URL: string,
-    company: string
+    company?: string
   }
 }
