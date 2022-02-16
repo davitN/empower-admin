@@ -125,7 +125,7 @@ export function* saveCommunityData({ data, callbacks }:{ data: any, callbacks: C
       yield axiosInstance.put(`/content/community_data/edit/${data.id}`, formData);
       callbacks?.success && callbacks.success();
     } else {
-      const res: GetCommunityDataItem = yield axiosInstance.post('/content/community_data/add_content', formData);
+      const res: GetCommunityDataItem = yield axiosInstance.post(`/content/community_data/add_content/${data.companyId}`, formData);
       callbacks?.success && callbacks.success(res['_id']);
     }
     notificationService.success(data?.id ? 'Item has been successfully updated' : 'Item has been successfully added', '', 1000);

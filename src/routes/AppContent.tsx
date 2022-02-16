@@ -170,7 +170,8 @@ const AppContent = () => {
               tableTitle="Community Content"
               handleEdit={({ _id }) => navigate(`community-article/edit/${_id}`)}
               handlePageChange={(val) => communityHandlePageChange(val)}
-              handleAdd={() => navigate('community-article/new/new-community-content')}
+              // handleAdd={() => navigate('community-article/new/new-community-content')}
+              handleAdd={() => navigate('/companies')}
               buttonText="+ Add content"
               LIMIT={5}
             />
@@ -210,7 +211,6 @@ const tableHeaders = (navigate: any) => [
   {
     name: 'COMPANY',
     body: ({ company }: { company: any }) => <div style={{ cursor: 'pointer' }} onClick={() => navigate(`/companies/${company['_id']}`)}>{company.name}</div>,
-
   },
 ];
 

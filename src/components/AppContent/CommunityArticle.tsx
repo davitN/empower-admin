@@ -17,8 +17,6 @@ import {
 } from '../../store/ducks/appContentDuck';
 import FormSharedComponent from '../shared/FormsSharedComponent';
 import { urlValidator, handleImgUpload } from '../../helpers/utils';
-import { getAllCompanies } from '../../store/ducks/companiesDuck';
-import { CompanyItem } from '../../types/companies';
 
 const CommunityArticle = () => {
   const dispatch = useDispatch();
@@ -27,7 +25,6 @@ const CommunityArticle = () => {
   const classes = useStyles();
   const isEditing = mode === 'edit' && id;
   const { categories, communityDataItem } : ReducerTypes = useSelector((state: RootState) => state.appContentReducer);
-  const { allCompanies } : { allCompanies: CompanyItem [] } = useSelector((state: RootState) => state.companiesReducer);
 
   const modifiedCategories = categories && categories.map(({ _id, name }) => ({ _id, name }));
   const [saving, setSaving] = useState(false);
@@ -82,6 +79,7 @@ const CommunityArticle = () => {
         data: reqData,
         image: uploadedFile?.newImg,
         id: isEditing && id,
+        companyId: !isEditing && id,
       },
       {
         success: (newId: string) => {
@@ -136,10 +134,6 @@ const CommunityArticle = () => {
       }
     }
   }, [id, communityDataItem]);
-
-  useEffect(() => {
-    dispatch(getAllCompanies());
-  }, []);
 
   return (
     <div className={classes.root}>
@@ -227,15 +221,12 @@ const CommunityArticle = () => {
                       handleChange={(category) => setValues({ ...values, written: { ...values.written, category } })}
                     />
                   ) : <Skeleton height="40px" />}
-                  {allCompanies ? (
-                    <Select
-                      placeholder="Select Company"
-                      data={allCompanies}
-                      selectedValue={allCompanies?.find((el) => el['_id'] === values.written.company) || null}
-                      label="Company"
-                      handleChange={(company) => setValues({ ...values, written: { ...values.written, company: company['_id'] } })}
-                    />
-                  ) : <Skeleton height="40px" />}
+                  {/* <Select
+                    placeholder="Select Company"
+                    data={[]}
+                    selectedValue={null}
+                    label="Company"
+                  /> */}
                   <Textarea
                     value={values.written.text}
                     label="Article Content"
@@ -270,16 +261,12 @@ const CommunityArticle = () => {
                       handleChange={(category) => setValues({ ...values, external: { ...values.external, category } })}
                     />
                   ) : <Skeleton height="40px" />}
-                  {allCompanies ? (
-                    <Select
-                      placeholder="Select Company"
-                      data={allCompanies}
-                      selectedValue={allCompanies?.find((el) => el['_id'] === values.external.company) || null}
-                      label="Company"
-                      required
-                      handleChange={(company) => setValues({ ...values, external: { ...values.external, company: company['_id'] } })}
-                    />
-                  ) : <Skeleton height="40px" />}
+                  {/* <Select
+                    placeholder="Select Company"
+                    data={[]}
+                    selectedValue={null}
+                    label="Company"
+                  /> */}
                   <Textarea
                     value={values.written.text}
                     label="Article Content"

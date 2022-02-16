@@ -258,11 +258,18 @@ const CompanyDetails = () => {
               disabled: false,
               hidden: isNewCompany || (!isNewCompany && !companyDetails),
             }}
-            customButtons={[{
-              label: 'Add monthly team activity',
-              handler: () => navigate(`/app-content/monthly-team-activity/new/${companyDetails['_id']}`),
-              hidden: isNewCompany,
-            }]}
+            customButtons={[
+              {
+                label: 'Add monthly team activity',
+                handler: () => navigate(`/app-content/monthly-team-activity/new/${companyDetails['_id']}`),
+                hidden: isNewCompany,
+              },
+              {
+                label: 'Add Community Content',
+                handler: () => navigate(`/app-content/community-article/new/${companyDetails['_id']}`),
+                hidden: isNewCompany,
+              },
+            ]}
           />
         </div>
       </div>
