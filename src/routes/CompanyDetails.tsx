@@ -10,7 +10,7 @@ import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 import Label from '../components/shared/Inputs/Label';
 import {
   getCompanyAdmins,
-  getCompanyDetails, resetCompanyAdminsState, resetCompanyDetailsState, saveCompanyData,
+  getCompanyDetails, removeCompanyData, resetCompanyAdminsState, resetCompanyDetailsState, saveCompanyData,
 } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
 import { CompanyItem } from '../types/companies';
@@ -22,6 +22,7 @@ import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 import { getLocations, resetLocationsState } from '../store/ducks/locationsDuck';
 import notificationService from '../services/notification.service';
 import { AppAdminsData } from '../types/appAdmin';
+import Dialog from '../components/shared/Dialog';
 
 interface InputsTypes {
   name: string,
@@ -54,6 +55,8 @@ const CompanyDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { companyId } = useParams();
+  const [dialogStep, setDialogStep] = useState(0);
+  const [removing, setRemoving] = useState<boolean>(false);
   const isNewCompany = companyId === 'new';
   const { pathname } = useLocation();
   const prevLocation = `/${pathname.split('/')[1]}`;
@@ -132,6 +135,17 @@ const CompanyDetails = () => {
   const domainName = window.location.href.replace(window.location.pathname, '');
   const paymentURL = `${domainName}/payments/?companyId=${companyId}&companyName=${values.name}&paidTill=${paidTill}`;
 
+  const handleRemove = () => {
+    setRemoving(true);
+    dispatch(removeCompanyData(companyId || '', {
+      success: () => {
+        setRemoving(false);
+        navigate('/companies');
+      },
+      error: () => setRemoving(false),
+    }));
+  };
+
   useEffect(() => {
     if (companyId !== 'new' && typeof companyId === 'string') {
       dispatch(getCompanyDetails(companyId, { error: () => navigate('/companies/new') }));
@@ -162,6 +176,20 @@ const CompanyDetails = () => {
 
   return (
     <Container sectionTitle={isNewCompany ? 'NEW COMPANY' : 'COMPANY INFORMATION'} idText="Company ID" itemId={companyId} goBack={() => navigate(prevLocation)}>
+      <Dialog
+        visible={dialogStep === 1}
+        setVisible={() => setDialogStep(0)}
+        accept={() => setTimeout(() => setDialogStep(2), 300)}
+        reject={() => setDialogStep(0)}
+        msg="Are you sure you want to delete the company?"
+      />
+      <Dialog
+        visible={dialogStep === 2}
+        setVisible={() => setDialogStep(0)}
+        accept={() => handleRemove()}
+        reject={() => setDialogStep(0)}
+        msg="Deleting this, will also delete all associated data, locations and application users."
+      />
       <div className={classes.wrapper}>
         <div className={classNames(classes.inputs)}>
           {!isNewCompany && !companyDetails ? (
@@ -251,10 +279,11 @@ const CompanyDetails = () => {
               disabled: validateInputs(),
             }}
             remove={{
-              handler: () => console.log('remove item'),
+              handler: () => setDialogStep(1),
               label: 'Remove Company',
               disabled: false,
               hidden: isNewCompany || (!isNewCompany && !companyDetails),
+              loading: removing,
             }}
             customButtons={[
               {

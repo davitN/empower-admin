@@ -103,3 +103,14 @@ export function* getAllCompanies({ callbacks }:{ callbacks: CallBacks, type: str
     );
   }
 }
+
+export function* removeCompany({ companyId, callbacks }:{ companyId: string, callbacks: CallBacks, type: string }) {
+  try {
+    yield axiosInstance.delete(`/company/delete/${companyId}`);
+    notificationService.success('Company was successfully removed', '', 1000);
+    callbacks?.success && callbacks.success();
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response?.data?.message, '', 500);
+  }
+}

@@ -4,14 +4,14 @@ import { createUseStyles } from 'react-jss';
 import COLORS from '../../services/colors.service';
 
 const Dialog = ({
-  visible, setVisible, accept, reject,
-}: { visible: boolean, setVisible: Function, accept: () => void, reject: () => void }) => {
+  visible, setVisible, accept, reject, msg,
+}: { visible: boolean, setVisible: () => void, msg: string, accept: () => void, reject: () => void }) => {
   const classes = useStyles();
   return (
     <ConfirmDialog
       visible={visible}
-      onHide={() => setVisible(false)}
-      message="Are you sure you want to proceed?"
+      onHide={setVisible}
+      message={msg}
       header="Confirmation"
       icon="pi pi-exclamation-triangle"
       accept={accept}

@@ -50,7 +50,7 @@ const imgInitialStateImg = {
 
 const LocationDetails = () => {
   const dispatch = useDispatch();
-  const [visible, setVisible] = useState(false);
+  const [dialogStep, setDialogStep] = useState(0);
   const classes = useStyles();
   const [searchParams] = useSearchParams();
   const [showFilteredAdmins, setShowFilteredAdmins] = useState(false);
@@ -133,8 +133,6 @@ const LocationDetails = () => {
   };
 
   const handleRemove = () => {
-    console.log('movidaa');
-
     setRemoving(true);
     dispatch(removeLocation(locationId || '', {
       success: () => {
@@ -172,7 +170,20 @@ const LocationDetails = () => {
 
   return (
     <Container itemId={locationId} idText="Location ID" sectionTitle="STAR OF TEXAS VETERINARY HOSPITAL" goBack={() => navigate(prevLocation)}>
-      <Dialog visible={visible} setVisible={setVisible} accept={handleRemove} reject={() => setVisible(false)} />
+      <Dialog
+        visible={dialogStep === 1}
+        setVisible={() => setDialogStep(0)}
+        accept={() => setTimeout(() => setDialogStep(2), 300)}
+        reject={() => setDialogStep(0)}
+        msg="Are you sure you want to delete the location?"
+      />
+      <Dialog
+        visible={dialogStep === 2}
+        setVisible={() => setDialogStep(0)}
+        accept={() => handleRemove()}
+        reject={() => setDialogStep(0)}
+        msg="Deleting this, will also delete application users associated with this location. "
+      />
       <div className={classes.wrapper}>
         <div className={classes.inputs}>
           <Title title="LOCATION INFORMATION" costumeStyles="p-pb-4" />
@@ -228,7 +239,7 @@ const LocationDetails = () => {
               disabled: validateInputs(),
             }}
             remove={{
-              handler: () => setVisible(true),
+              handler: () => setDialogStep(1),
               label: 'Remove Location',
               disabled: false,
               hidden: isNewLocation,

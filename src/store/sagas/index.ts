@@ -5,10 +5,10 @@ import {
   CHECK_SIGNED_IN, LOGOUT, REQUEST_SIGN_IN_SG, REQUEST_SIGN_UP_SG,
 } from '../ducks/authDuck';
 import {
-  GET_COMPANIES, GET_COMPANY_DETAILS, SAVE_COMPANY_DATA, GET_COMPANY_ADMINS, GET_ALL_COMPANIES,
+  GET_COMPANIES, GET_COMPANY_DETAILS, SAVE_COMPANY_DATA, GET_COMPANY_ADMINS, GET_ALL_COMPANIES, REMOVE_COMPANY_DATA,
 } from '../ducks/companiesDuck';
 import {
-  getCompanies, getCompanyDetails, saveCompanyData, getCompanyAdmins, getAllCompanies,
+  getCompanies, getCompanyDetails, saveCompanyData, getCompanyAdmins, getAllCompanies, removeCompany,
 } from './companiesSaga';
 import {
   GET_LOCATIONS, SAVE_LOCATION, GET_LOCATION_DETAILS, GET_LOCATION_ADMINS, REMOVE_LOCATION,
@@ -111,6 +111,7 @@ function* actionWatcher() {
   yield takeLatest(REMOVE_LOCATION, removeLocation);
   yield takeLatest(GET_PAYMENT_DATA, getPaymentData);
   yield takeLatest(GET_ALL_COMPANIES, getAllCompanies);
+  yield takeLatest(REMOVE_COMPANY_DATA, removeCompany);
   yield takeLatest(GET_REPORTS_COMPANY, getReportsCompany);
   yield takeLatest(GET_ETHOS_CARDS, getEthosCards);
   yield takeLatest(GET_ETHOS_CARD_DETAILS, getEthosCardDetails);
