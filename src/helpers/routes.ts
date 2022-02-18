@@ -36,11 +36,20 @@ export interface RouteType {
 
 export const routes: RouteType[] = [
   {
-    type: 'default',
+    type: 'nested',
     name: 'Analytics',
     path: 'analytics',
-    Component: Analytics,
     pathName: 'analytics',
+    nestedRoutes: [
+      {
+        index: true,
+        Component: Analytics,
+      },
+      {
+        path: ':companyId',
+        Component: Analytics,
+      },
+    ],
   },
   {
     type: 'nested',

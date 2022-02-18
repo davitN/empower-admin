@@ -7,6 +7,7 @@ export interface AnalyticsTopItem {
 
 export interface AnalyticsData {
   averageSessionLength: number,
+  companyName?: string,
   checkInCount: number,
   churnRate: number,
   completedGoals: number,
@@ -21,13 +22,18 @@ export interface AnalyticsData {
   totalUsers: number,
   welnessContentViewCount: number,
   top7ChoosenEthosCard: AnalyticsTopItem[],
-  topEthosByEmotional: AnalyticsTopItem[],
-  topEthosByEnvironmental: AnalyticsTopItem[],
-  topEthosByMental: AnalyticsTopItem[],
-  topEthosByOccupational: AnalyticsTopItem[],
-  topEthosByPhysical: AnalyticsTopItem[],
-  topEthosBySocial: AnalyticsTopItem[],
-  topEthosBySpiritual: AnalyticsTopItem[]
+  topEthosByEmotional: AnalyticsTopItem,
+  topEthosByEnvironmental: AnalyticsTopItem,
+  topEthosByMental: AnalyticsTopItem,
+  topEthosByOccupational: AnalyticsTopItem,
+  topEthosByPhysical: AnalyticsTopItem,
+  topEthosBySocial: AnalyticsTopItem,
+  topEthosBySpiritual: AnalyticsTopItem,
+  teaPowerUpContentViewCount?: number,
+  teamEthosContentViewCount?: number,
+  teamKickOffContentViewCount?: number,
+  teamPowerDownContentViewCount?: number,
+  teamWelnessContentViewCount?: number,
 }
 
 export interface InitialState {
