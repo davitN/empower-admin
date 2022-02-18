@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'primereact/skeleton';
-import Title from '../components/shared/Title';
 import COLORS from '../services/colors.service';
 import TextInput from '../components/shared/Inputs/TextInput';
 import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
@@ -162,8 +161,7 @@ const CompanyDetails = () => {
   useEffect(() => () => dispatch(resetCompanyDetailsState()), []);
 
   return (
-    <Container sectionTitle={isNewCompany ? 'NEW COMPANY' : values.name} idText="Company ID" itemId={companyId} goBack={() => navigate(prevLocation)}>
-      <Title title="COMPANY INFORMATION" costumeStyles="p-pb-4" />
+    <Container sectionTitle={isNewCompany ? 'NEW COMPANY' : 'COMPANY INFORMATION'} idText="Company ID" itemId={companyId} goBack={() => navigate(prevLocation)}>
       <div className={classes.wrapper}>
         <div className={classNames(classes.inputs)}>
           {!isNewCompany && !companyDetails ? (
