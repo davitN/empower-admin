@@ -55,7 +55,7 @@ const UserDetails = () => {
   const newUserLocationId = searchParams.get('locationId');
 
   const validateInputs = () => (values.firstName.length < 1 || values.lastName.length < 1
-    || values.phone.length < 1 || !values.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/));
+   || !values.email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/));
 
   const handleReset = () => {
     setSending(true);
@@ -158,7 +158,6 @@ const UserDetails = () => {
               <TextInput
                 value={values.phone}
                 label="Phone"
-                required
                 handleChange={(phone) => setValues({ ...values, phone })}
                 placeholder="Enter phone..."
               />
