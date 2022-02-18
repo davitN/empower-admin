@@ -45,10 +45,10 @@ import {
 import { SET_PASSWORD } from '../ducks/setPasswordDuck';
 import { setPassword } from './setPasswordSaga';
 import {
-  GET_APP_ADMINS, GET_APP_ADMINS_ROLES, SAVE_APP_ADMIN_DETAILS, GET_APP_ADMIN_DETAILS,
+  GET_APP_ADMINS, GET_APP_ADMINS_ROLES, SAVE_APP_ADMIN_DETAILS, GET_APP_ADMIN_DETAILS, REMOVE_APP_ADMIN,
 } from '../ducks/appAdminsDuck';
 import {
-  getAppAdmins, getAppAdminsRoles, saveAppAdminDetails, getAppAdminDetails,
+  getAppAdmins, getAppAdminsRoles, saveAppAdminDetails, getAppAdminDetails, removeAppAdmin,
 } from './appAdminsSaga';
 
 import { GET_APP_USER_ACCOUNT, UPDATE_APP_USER_ACCOUNT, RESET_APP_USER_ACCOUNT_PASSWORD } from '../ducks/appUserAccount';
@@ -101,6 +101,7 @@ function* actionWatcher() {
   yield takeLatest(GET_APP_ADMINS_ROLES, getAppAdminsRoles);
   yield takeLatest(SAVE_APP_ADMIN_DETAILS, saveAppAdminDetails);
   yield takeLatest(GET_APP_ADMIN_DETAILS, getAppAdminDetails);
+  yield takeLatest(REMOVE_APP_ADMIN, removeAppAdmin);
   yield takeLatest(GET_APP_USER_ACCOUNT, getAppUserAccount);
   yield takeLatest(UPDATE_APP_USER_ACCOUNT, updateAppUserAccount);
   yield takeLatest(RESET_APP_USER_ACCOUNT_PASSWORD, resetAppUserAccountPassword);

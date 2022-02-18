@@ -73,3 +73,14 @@ export function* getAppAdminDetails({ adminId, callbacks }:{ adminId: string, ca
     notificationService.error(error.response.data.message, '', 500);
   }
 }
+
+export function* removeAppAdmin({ adminId, callbacks }:{ adminId: string, callbacks: CallBacks, type: string }) {
+  try {
+    yield axiosInstance.delete(`/admin/delete_admin/${adminId}`);
+    notificationService.success('Admin was successfully removed', '', 1000);
+    callbacks?.success && callbacks.success();
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response.data.message, '', 500);
+  }
+}

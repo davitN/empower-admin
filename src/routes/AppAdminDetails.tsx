@@ -11,7 +11,7 @@ import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 import Select from '../components/shared/Inputs/Select';
 import TextInput from '../components/shared/Inputs/TextInput';
 import {
-  getAppAdminsRoles, resetAppAdminsState, saveAppAdminDetails, getAppAdminDetails, resetAppAdminDetailsState,
+  getAppAdminsRoles, resetAppAdminsState, saveAppAdminDetails, getAppAdminDetails, resetAppAdminDetailsState, removeAppAdmin,
 } from '../store/ducks/appAdminsDuck';
 import { RootState } from '../store/configureStore';
 import { AppAdmin, AppAdminsRoles } from '../types/appAdmin';
@@ -27,7 +27,8 @@ interface ValuesTypes {
 const AppAdminDetails = () => {
   const classes = useStyles();
   const [searchParams] = useSearchParams();
-  const [isSaving, setSaving] = useState(false);
+  const [updating, setUpdating] = useState(false);
+  const [removing, setRemoving] = useState(false);
   const dispatch = useDispatch();
   const [values, setValues] = useState<ValuesTypes>({
     firstName: '',
@@ -51,7 +52,7 @@ const AppAdminDetails = () => {
   const locationId = searchParams.get('locationId');
 
   const handleSave = () => {
-    setSaving(true);
+    setUpdating(true);
     dispatch(saveAppAdminDetails(
       {
         data: {
@@ -64,10 +65,20 @@ const AppAdminDetails = () => {
         ...(adminId !== 'new' && { adminId }),
       },
       {
-        success: () => setSaving(false),
-        error: () => setSaving(false),
+        success: () => setUpdating(false),
+        error: () => setUpdating(false),
       },
     ));
+  };
+
+  const handleRemove = () => {
+    setRemoving(true);
+    adminId && dispatch(removeAppAdmin(adminId, {
+      success: () => {
+        navigate('/app-admins');
+      },
+      error: () => setRemoving(false),
+    }));
   };
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -134,13 +145,14 @@ const AppAdminDetails = () => {
           <FormsSharedComponent
             save={{
               handler: handleSave,
-              disabled: !isInputsValid || isSaving,
-              loading: isSaving,
+              disabled: !isInputsValid || updating,
+              loading: updating,
             }}
             remove={{
-              handler: () => console.log('rm'),
+              handler: handleRemove,
               label: 'Remove Admin',
-              disabled: isSaving,
+              disabled: updating,
+              loading: removing,
               hidden: isNewAdmin || (!isNewAdmin && !adminDetails),
             }}
             isNewItem={isNewAdmin}

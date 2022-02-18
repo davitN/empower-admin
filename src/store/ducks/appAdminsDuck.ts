@@ -17,6 +17,7 @@ export const SET_APP_ADMIN_DETAILS = 'socialize/appAdmins/setAppAdminDetails';
 export const RESET_APP_ADMIN_DETAILS_STATE = 'socialize/appAdmins/ResetAppAdminDetailsState';
 
 export const SAVE_APP_ADMIN_DETAILS = 'socialize/appAdmins/saveAppAdminDetails';
+export const REMOVE_APP_ADMIN = 'socialize/appAdmins/removeAppAdmin';
 
 const initialState: InitialState = {
   admins: null,
@@ -98,10 +99,18 @@ export const getAppAdminDetails = (adminId: string, callbacks?: CallBacks) => ({
   adminId,
   callbacks,
 });
+
 export const setAppAdminDetails = (data: AppAdmin) => ({
   type: SET_APP_ADMIN_DETAILS,
   payload: data,
 });
+
 export const resetAppAdminDetailsState = () => ({
   type: RESET_APP_ADMIN_DETAILS_STATE,
+});
+
+export const removeAppAdmin = (adminId: string, callbacks?: CallBacks) => ({
+  type: REMOVE_APP_ADMIN,
+  adminId,
+  callbacks,
 });
