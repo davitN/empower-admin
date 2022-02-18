@@ -1,13 +1,93 @@
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { Skeleton } from 'primereact/skeleton';
 import Container from '../components/shared/Container';
 import COLORS from '../services/colors.service';
 import Title from '../components/shared/Title';
 import AnalyticBox from '../components/shared/AnalyticsBox';
 import ProgressBar from '../components/shared/ProgressBar';
+import { getAnalytics } from '../store/ducks/analyticsDuck';
+import { RootState } from '../store/configureStore';
+import { secondsToHms } from '../helpers/utils';
 
 const Analytics = () => {
+  const { analytics } = useSelector((state: RootState) => state.analyticsReducer);
+  const analyticsArr: { title: string, val: number | string, desc: string }[] = analytics ? [
+    {
+      title: 'Total Users',
+      val: analytics.totalUsers,
+      desc: 'The total number of App Users that have been added via the admin panel.',
+    },
+    {
+      title: 'Daily Active Users',
+      val: analytics.dailyActiveUsers,
+      desc: 'The number of users who have opened the app in the last 24 hours.',
+    },
+    {
+      title: 'Monthly Active Users',
+      val: analytics.monthlyActiveUsers,
+      desc: 'The number of monthly users who opened the app in the last 30 days.',
+    },
+    {
+      title: ' Monthly Inactive Users',
+      val: analytics.monthlyActiveUsers,
+      desc: 'The number of users who do not open the app in the last 30 days.',
+    },
+    {
+      title: 'Monthly Retention Rate',
+      val: analytics.monthlyRetentionRate,
+      desc: 'Percentage of users who open the app at least one time in the last 30 days.',
+    },
+    {
+      title: 'Average session length',
+      val: secondsToHms(analytics.averageSessionLength),
+      desc: 'The average amount of time the users spend on the app in a single session.',
+    },
+    {
+      title: 'Stickiness ratio',
+      val: analytics.stickinessRatio,
+      desc: 'The ratio of the number of users who have returned to the app more than one time in the last 30 days.',
+    },
+    {
+      title: 'Power•Up content viewed',
+      val: analytics.powerUpContentViewCount,
+      desc: 'The number of times a piece of Power•Up content from the General Library part of the mobile app was viewed by users.',
+    },
+    {
+      title: 'Power•Down content viewed',
+      val: analytics.powerDownContentViewCount,
+      desc: 'The number of times a piece of Power•Down content from the General Library part of the mobile app was viewed by users.',
+    },
+    {
+      title: 'Wellness content viewed',
+      val: analytics.welnessContentViewCount,
+      desc: 'The number of times a piece of Wellness content from the General Library part of the mobile app was viewed by users.',
+    },
+    {
+      title: 'Goals set',
+      val: analytics.setGoals,
+      desc: 'The number of Goals set/created by all app users.',
+    },
+    {
+      title: 'Goals completed',
+      val: analytics.completedGoals,
+      desc: 'The number of Goals that have been marked as complete by all app users.',
+    },
+    {
+      title: 'Daily Check-Ins Completed',
+      val: analytics.checkInCount,
+      desc: 'The number of Daily Check-Ins that have been completed by all App Users.',
+    },
+  ] : [];
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAnalytics());
+  }, []);
+
   return (
     <Container>
       <h1 className={classNames(classes.text, 'text-5xl')}>
@@ -18,7 +98,9 @@ const Analytics = () => {
       </h1>
       <Title title="ANALYTICS" fontSize="text-2xl" costumeStyles="p-mt-6" />
       <div className={classNames(classes.boxes, 'p-pt-5 p-pb-6')}>
-        {new Array(14).fill(1).map(() => <AnalyticBox title="Daily Check-Ins Completed" value="2,500" desc="The total number of users created through the admin panel" />)}
+        {analytics
+          ? analyticsArr.map((el) => <AnalyticBox title={el.title} value={el.val} desc={el.desc} />)
+          : new Array(10).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="10rem" />)}
       </div>
       <div className={classes.wrapper}>
         <div>

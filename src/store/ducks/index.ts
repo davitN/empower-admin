@@ -12,6 +12,7 @@ import { ethosCardsReducer } from './ethosCardsDuck';
 import { generalContentLibraryReducer } from './generalContentLibraryDuck';
 import { categoriesReducer } from './categoriesDuck';
 import { filtersReducer } from './filtersDuck';
+import { analyticsReducer } from './analyticsDuck';
 
 export {
   mainReducer,
@@ -28,4 +29,5 @@ export {
   generalContentLibraryReducer,
   categoriesReducer,
   filtersReducer,
+  analyticsReducer,
 };

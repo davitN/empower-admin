@@ -84,3 +84,14 @@ export const urlValidator = (str: string) => {
   const regex = new RegExp(expression);
   return !!str.match(regex);
 };
+
+export const secondsToHms = (minute: number) => {
+  const h = Math.floor(minute / 3600);
+  const m = Math.floor((minute % 3600) / 60);
+  const s = Math.floor((minute % 3600) % 60);
+
+  const hDisplay = h > 0 ? h : '00';
+  const mDisplay = m > 0 ? m : '00';
+  const sDisplay = s > 0 ? s : '00';
+  return `${hDisplay}:${mDisplay}:${sDisplay}`;
+};

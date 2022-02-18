@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 import COLORS from '../../services/colors.service';
 
-const AnalyticBox = ({ title, value, desc }: { title: string, value: string, desc: string }) => {
+const AnalyticBox = ({ title, value, desc }: { title: string, value: string | number, desc: string }) => {
   const classes = useStyles();
   return (
     <div>
