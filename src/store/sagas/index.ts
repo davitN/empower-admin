@@ -11,10 +11,10 @@ import {
   getCompanies, getCompanyDetails, saveCompanyData, getCompanyAdmins, getAllCompanies,
 } from './companiesSaga';
 import {
-  GET_LOCATIONS, SAVE_LOCATION, GET_LOCATION_DETAILS, GET_LOCATION_ADMINS,
+  GET_LOCATIONS, SAVE_LOCATION, GET_LOCATION_DETAILS, GET_LOCATION_ADMINS, REMOVE_LOCATION,
 } from '../ducks/locationsDuck';
 import {
-  getLocations, saveLocationData, getLocationDetails, getLocationAdmins,
+  getLocations, saveLocationData, getLocationDetails, getLocationAdmins, removeLocation,
 } from './locationsSaga';
 import {
   getAppUsers, getAppUserDetails, saveAppUserDetails, sendResetPassword, getAllAppUsers, getAppUserLastMonthProgress, removeAppUser,
@@ -108,6 +108,7 @@ function* actionWatcher() {
   yield takeLatest(GET_ALL_APP_USERS, getAllAppUsers);
   yield takeLatest(GET_COMPANY_ADMINS, getCompanyAdmins);
   yield takeLatest(GET_LOCATION_ADMINS, getLocationAdmins);
+  yield takeLatest(REMOVE_LOCATION, removeLocation);
   yield takeLatest(GET_PAYMENT_DATA, getPaymentData);
   yield takeLatest(GET_ALL_COMPANIES, getAllCompanies);
   yield takeLatest(GET_REPORTS_COMPANY, getReportsCompany);

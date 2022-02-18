@@ -10,6 +10,7 @@ export const SET_LOCATIONS = 'socialize/locations/setLocations';
 export const RESET_LOCATIONS_STATE = 'socialize/locations/resetLocationsState';
 
 export const SAVE_LOCATION = 'socialize/locations/saveLocation';
+export const REMOVE_LOCATION = 'socialize/locations/removeLocation';
 
 export const GET_LOCATION_DETAILS = 'socialize/locations/getLocationDetails';
 export const RESET_LOCATION_DETAILS = 'socialize/locations/resetLocationDetails';
@@ -84,6 +85,12 @@ export const resetLocationsState = () => ({
 export const saveLocation = (data: SaveDataOptions, callbacks?: CallBacks) => ({
   type: SAVE_LOCATION,
   data,
+  callbacks,
+});
+
+export const removeLocation = (id: string, callbacks?: CallBacks) => ({
+  type: REMOVE_LOCATION,
+  id,
   callbacks,
 });
 

@@ -76,3 +76,14 @@ export function* getLocationAdmins({ params, callbacks }:{ params: GetLocationAd
     );
   }
 }
+
+export function* removeLocation({ id, callbacks }:{ id: string, callbacks: CallBacks, type: string }) {
+  try {
+    yield axiosInstance.delete(`/location/delete/${id}`);
+    notificationService.success('Location was successfully removed', '', 1000);
+    callbacks?.success && callbacks.success();
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response?.data?.message, '', 500);
+  }
+}

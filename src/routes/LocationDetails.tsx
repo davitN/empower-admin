@@ -11,7 +11,7 @@ import TextInput from '../components/shared/Inputs/TextInput';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 import readImgAsync from '../helpers/utils/readImgAsync';
 import {
-  saveLocation, getLocationDetails, getLocationAdmins, resetLocationAdminsState,
+  saveLocation, getLocationDetails, getLocationAdmins, resetLocationAdminsState, removeLocation,
 } from '../store/ducks/locationsDuck';
 import { RootState } from '../store/configureStore';
 import { LocationItem } from '../types/locations';
@@ -21,6 +21,7 @@ import { getAppUsers, resetAppUsersState } from '../store/ducks/appUsersDuck';
 import { GetAppUsersData } from '../types/appUsers';
 import notificationService from '../services/notification.service';
 import { AppAdminsData } from '../types/appAdmin';
+import Dialog from '../components/shared/Dialog';
 
 interface ValuesTypes {
   name: string,
@@ -49,6 +50,7 @@ const imgInitialStateImg = {
 
 const LocationDetails = () => {
   const dispatch = useDispatch();
+  const [visible, setVisible] = useState(false);
   const classes = useStyles();
   const [searchParams] = useSearchParams();
   const [showFilteredAdmins, setShowFilteredAdmins] = useState(false);
@@ -82,6 +84,7 @@ const LocationDetails = () => {
     },
   });
   const [saving, setSaving] = useState<boolean>(false);
+  const [removing, setRemoving] = useState<boolean>(false);
   const navigate = useNavigate();
   const [values, setValues] = useState<ValuesTypes>(initialState);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -129,6 +132,19 @@ const LocationDetails = () => {
     }));
   };
 
+  const handleRemove = () => {
+    console.log('movidaa');
+
+    setRemoving(true);
+    dispatch(removeLocation(locationId || '', {
+      success: () => {
+        setRemoving(false);
+        navigate(`/companies/${locationDetails.company['_id']}`);
+      },
+      error: () => setRemoving(false),
+    }));
+  };
+
   useEffect(() => {
     if (isNewLocation) {
       // if new location, check if exist company name in router state and set company name otherwise redirect to companies page
@@ -156,6 +172,7 @@ const LocationDetails = () => {
 
   return (
     <Container itemId={locationId} idText="Location ID" sectionTitle="STAR OF TEXAS VETERINARY HOSPITAL" goBack={() => navigate(prevLocation)}>
+      <Dialog visible={visible} setVisible={setVisible} accept={handleRemove} reject={() => setVisible(false)} />
       <div className={classes.wrapper}>
         <div className={classes.inputs}>
           <Title title="LOCATION INFORMATION" costumeStyles="p-pb-4" />
@@ -211,10 +228,11 @@ const LocationDetails = () => {
               disabled: validateInputs(),
             }}
             remove={{
-              handler: () => console.log('remove'),
+              handler: () => setVisible(true),
               label: 'Remove Location',
               disabled: false,
               hidden: isNewLocation,
+              loading: removing,
             }}
           />
         </div>
