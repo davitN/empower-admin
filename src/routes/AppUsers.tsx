@@ -155,7 +155,7 @@ const tableHeaders = (navigate: any) => [
     name: 'LOCATION',
     body: ({ companyId, location }: { companyId: AdditionalData, location: AdditionalData }) => (
       <div onClick={() => navigate(`/locations/${location['_id']}`)} style={{ cursor: 'pointer' }}>
-        <p className="p-pb-2">{location.name}</p>
+        <p className="p-pb-2">{location?.name}</p>
         <img style={{ width: '5rem', height: '1.5rem' }} src={location?.logo?.imgURL || companyId?.logo?.imgURL} alt="" />
       </div>
     ),
