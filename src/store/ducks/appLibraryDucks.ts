@@ -9,6 +9,7 @@ export const SET_APP_LIBRARIES = 'socialize/appLibraries/setAppLibraries';
 export const RESET_APP_LIBRARIES_STATE = 'socialize/appLibraries/resetAppLibrariesState';
 
 export const SAVE_APP_LIBRARY = 'socialize/appLibraries/saveAppLibrary';
+export const REMOVE_APP_LIBRARY = 'socialize/appLibraries/removeAppLibrary';
 
 const initialState: InitialState = {
   libraries: null,
@@ -48,5 +49,11 @@ export const resetAppLibrariesState = () => ({
 export const saveAppLibrary = (data: SaveAppLibrary, callbacks?: CallBacks) => ({
   type: SAVE_APP_LIBRARY,
   data,
+  callbacks,
+});
+
+export const removeAppLibrary = (id: string, callbacks?: CallBacks) => ({
+  type: REMOVE_APP_LIBRARY,
+  id,
   callbacks,
 });

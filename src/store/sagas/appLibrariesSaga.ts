@@ -43,3 +43,20 @@ export function* saveAppLibrary({ data, callbacks }:{ data: SaveAppLibrary, call
     notificationService.error(error.response.data.message, '', 500);
   }
 }
+
+export function* removeAppLibrary({ id, callbacks }:{ id: string, callbacks: CallBacks, type:string }) {
+  try {
+    yield axiosInstance.get(`/content/how_to/delete/${id}`);
+    notificationService.success('Item has been successfully removed', '', 1000);
+    callbacks?.success && callbacks.success();
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    yield put(
+      notifyAction({
+        type: 'error',
+        message: error.response?.data.message,
+        showError: false,
+      }),
+    );
+  }
+}

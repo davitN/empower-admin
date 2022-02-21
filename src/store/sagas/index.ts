@@ -72,8 +72,8 @@ import { GET_CATEGORIES, GET_CATEGORY_DETAILS, SAVE_CATEGORY } from '../ducks/ca
 import { getCategories, getCategoryDetails, saveCategory } from './categoriesSaga';
 import { getAnalytics } from './analyticsSaga';
 import { GET_ANALYTICS } from '../ducks/analyticsDuck';
-import { GET_APP_LIBRARIES, SAVE_APP_LIBRARY } from '../ducks/appLibraryDucks';
-import { getAppLibraries, saveAppLibrary } from './appLibrariesSaga';
+import { GET_APP_LIBRARIES, REMOVE_APP_LIBRARY, SAVE_APP_LIBRARY } from '../ducks/appLibraryDucks';
+import { getAppLibraries, removeAppLibrary, saveAppLibrary } from './appLibrariesSaga';
 
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
@@ -131,6 +131,7 @@ function* actionWatcher() {
   yield takeLatest(GET_ANALYTICS, getAnalytics);
   yield takeLatest(GET_APP_LIBRARIES, getAppLibraries);
   yield takeLatest(SAVE_APP_LIBRARY, saveAppLibrary);
+  yield takeLatest(REMOVE_APP_LIBRARY, removeAppLibrary);
 }
 
 export default function* rootSaga() {
