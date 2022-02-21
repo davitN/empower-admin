@@ -7,6 +7,7 @@ import useGetData from '../helpers/hooks/useGetDataV2';
 import { getAppLibraries, removeAppLibrary, resetAppLibrariesState } from '../store/ducks/appLibraryDucks';
 import { RootState } from '../store/configureStore';
 import ConfirmDialog from '../components/shared/ConfirmDialog';
+import { Media } from '../types/main';
 
 const AppLibrary = () => {
   const dispatch = useDispatch();
@@ -77,5 +78,9 @@ const tableHeaders = [
   {
     name: 'NAME',
     field: 'title',
+  },
+  {
+    name: 'See content',
+    body: ({ content }: { content: Media }) => <a href={content.URL}>See content</a>,
   },
 ];
