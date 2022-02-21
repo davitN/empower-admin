@@ -72,6 +72,8 @@ export const handleFileUpload = (file: File, setUploadedFile: Function, keys?: {
         file,
         [keys?.duration || 'duration']: duration,
         preview: URL.createObjectURL(file),
+        width: 0,
+        height: 0,
       });
     };
     video.src = URL.createObjectURL(file);

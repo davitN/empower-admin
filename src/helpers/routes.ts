@@ -17,6 +17,8 @@ import GeneralContentLibraryDetails from '../routes/GeneralContentLibraryDetails
 import UserLastMonthProgress from '../routes/UserLastMonthProgress';
 import Categories from '../routes/Categories';
 import CategoryDetails from '../routes/CategoryDetails';
+import AppLibrary from '../routes/AppLibrary';
+import AppLibraryDetails from '../routes/AppLibraryDetails';
 
 export interface RouteType {
   type: 'nested' | 'default';
@@ -100,6 +102,26 @@ export const routes: RouteType[] = [
       {
         path: ':itemName/:mode/:id',
         Component: AppContentDetail,
+      },
+    ],
+  },
+  {
+    type: 'nested',
+    name: 'App Library',
+    path: 'app-library',
+    pathName: 'appLibrary',
+    nestedRoutes: [
+      {
+        index: true,
+        Component: AppLibrary,
+      },
+      {
+        path: ':mode/:id',
+        Component: AppLibraryDetails,
+      },
+      {
+        path: ':mode',
+        Component: AppLibraryDetails,
       },
     ],
   },

@@ -21,6 +21,7 @@ import {
   categoriesReducer,
   filtersReducer,
   analyticsReducer,
+  appLibrariesReducer,
 } from './ducks';
 import { RESET_STORE } from './ducks/mainDuck';
 
@@ -42,6 +43,7 @@ const appReducer = combineReducers({
   categoriesReducer,
   filtersReducer,
   analyticsReducer,
+  appLibrariesReducer,
 });
 
 export type RootState = ReturnType<typeof appReducer>;

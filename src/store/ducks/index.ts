@@ -13,6 +13,7 @@ import { generalContentLibraryReducer } from './generalContentLibraryDuck';
 import { categoriesReducer } from './categoriesDuck';
 import { filtersReducer } from './filtersDuck';
 import { analyticsReducer } from './analyticsDuck';
+import { appLibrariesReducer } from './appLibraryDucks';
 
 export {
   mainReducer,
@@ -30,4 +31,5 @@ export {
   categoriesReducer,
   filtersReducer,
   analyticsReducer,
+  appLibrariesReducer,
 };

@@ -36,4 +36,21 @@ export interface Image {
 export interface Audio {
   URL: string,
   duration: number,
+  height: number,
+  width: number
+}
+
+export interface Media {
+  URL: string,
+  duration: number,
+  height: number,
+  width: number
+}
+
+export interface UploadedFile {
+  duration: number,
+  height: number,
+  width: number,
+  preview: string,
+  file: File
 }
