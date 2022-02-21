@@ -31,7 +31,10 @@ interface PropTypes {
   costumeClasses?: string,
   customFilters?: ReactNode,
   saveFilters?: boolean,
-  tableId?: string
+  tableId?: string,
+  hideEdit?: boolean,
+  showRemove?: boolean,
+  handleRemove?: (data: any) => void
 }
 
 const Table = ({
@@ -49,6 +52,9 @@ const Table = ({
   customFilters,
   saveFilters,
   tableId = '',
+  hideEdit,
+  showRemove,
+  handleRemove,
 }: PropTypes) => {
   const filters = useSelector((state: RootState) => state.filtersReducer);
   const classes = useStyles();
@@ -56,6 +62,12 @@ const Table = ({
   const editAction = (rowData: any) => (
     <ButtonComponent customClasses={classNames(classes.actionButton, 'p-ml-auto')} handleClick={handleEdit ? () => handleEdit(rowData) : undefined}>
       <i className="pi pi-cog" style={{ color: COLORS.white }} />
+    </ButtonComponent>
+  );
+
+  const removeAction = (rowData: any) => (
+    <ButtonComponent customClasses={classNames(classes.actionButton, 'p-ml-auto')} handleClick={handleRemove ? () => handleRemove(rowData) : undefined}>
+      <i className="pi pi-trash" style={{ color: COLORS.white }} />
     </ButtonComponent>
   );
 
@@ -110,7 +122,8 @@ const Table = ({
       >
         {data && header.map(({ name, field, body }) => <Column field={field} header={name} key={name} body={body} />)}
         {!data && header.map(({ name, field }) => <Column field={field} header={name} key={name} body={<Skeleton />} />)}
-        <Column body={data ? editAction : <Skeleton />} header="Settings" className={classes.setting} />
+        { !hideEdit && <Column body={data ? editAction : <Skeleton />} header="Settings" className={classes.setting} />}
+        { showRemove && <Column body={data ? removeAction : <Skeleton />} header="Remove" className={classes.setting} />}
       </DataTable>
       {handlePageChange && data && data?.data?.length > 0 && LIMIT < data.count && (
         <Paginator

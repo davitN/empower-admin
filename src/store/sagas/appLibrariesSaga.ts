@@ -46,7 +46,7 @@ export function* saveAppLibrary({ data, callbacks }:{ data: SaveAppLibrary, call
 
 export function* removeAppLibrary({ id, callbacks }:{ id: string, callbacks: CallBacks, type:string }) {
   try {
-    yield axiosInstance.get(`/content/how_to/delete/${id}`);
+    yield axiosInstance.delete(`/content/how_to/delete/${id}`);
     notificationService.success('Item has been successfully removed', '', 1000);
     callbacks?.success && callbacks.success();
   } catch (error: any) {
