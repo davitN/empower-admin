@@ -20,7 +20,7 @@ export interface AnalyticsData {
   setGoals: number,
   stickinessRatio: number,
   totalUsers: number,
-  welnessContentViewCount: number,
+  wellnessContentViewCount: number,
   top7ChoosenEthosCard: AnalyticsTopItem[],
   topEthosByEmotional: AnalyticsTopItem,
   topEthosByEnvironmental: AnalyticsTopItem,
@@ -29,11 +29,11 @@ export interface AnalyticsData {
   topEthosByPhysical: AnalyticsTopItem,
   topEthosBySocial: AnalyticsTopItem,
   topEthosBySpiritual: AnalyticsTopItem,
-  teaPowerUpContentViewCount?: number,
+  teamPowerUpContentViewCount?: number,
   teamEthosContentViewCount?: number,
   teamKickOffContentViewCount?: number,
   teamPowerDownContentViewCount?: number,
-  teamWelnessContentViewCount?: number,
+  teamWellnessContentViewCount?: number,
 }
 
 export interface InitialState {

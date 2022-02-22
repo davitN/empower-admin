@@ -65,7 +65,7 @@ const Analytics = () => {
     },
     {
       title: 'Wellness content viewed',
-      val: analytics.welnessContentViewCount,
+      val: analytics.wellnessContentViewCount,
       desc: 'The number of times a piece of Wellness content from the General Library part of the mobile app was viewed by users.',
     },
     {
@@ -98,12 +98,12 @@ const Analytics = () => {
     },
     {
       title: 'Team - Wellness Content Completed',
-      val: analytics.teamWelnessContentViewCount || 0,
+      val: analytics.teamWellnessContentViewCount || 0,
       desc: 'The number of times the Team Wellness Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only.',
     },
     {
       title: 'Team - Power•Up Content Completed',
-      val: analytics.teaPowerUpContentViewCount || 0,
+      val: analytics.teamPowerUpContentViewCount || 0,
       desc: 'The number of times the Team Power•Up Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only.',
     },
     {
