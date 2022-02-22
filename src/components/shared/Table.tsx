@@ -120,8 +120,8 @@ const Table = ({
         tableClassName={classes.table}
         emptyMessage="Data not found..."
       >
-        {data && header.map(({ name, field, body }) => <Column field={field} header={name} key={name} body={body} />)}
-        {!data && header.map(({ name, field }) => <Column field={field} header={name} key={name} body={<Skeleton />} />)}
+        {data && header?.map(({ name, field, body }) => <Column field={field} header={name} key={name} body={body} />)}
+        {!data && header?.map(({ name, field }) => <Column field={field} header={name} key={name} body={<Skeleton />} />)}
         { !hideEdit && <Column body={data ? editAction : <Skeleton />} header="Settings" className={classes.setting} />}
         { showRemove && <Column body={data ? removeAction : <Skeleton />} header="Remove" className={classes.setting} />}
       </DataTable>

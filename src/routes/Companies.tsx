@@ -24,7 +24,7 @@ const Companies = () => {
         searchValue={params?.filter || ''}
         handleSearch={(val) => handleParamsChange({ filter: val })}
         data={companies}
-        header={tableHeaders}
+        header={tableHeaders(navigate)}
         tableTitle="COMPANIES"
         handleEdit={({ _id }) => navigate(`${_id}`)}
         handlePageChange={(val) => handlePageChange(val)}
@@ -39,7 +39,7 @@ const Companies = () => {
 
 export default Companies;
 
-const tableHeaders = [
+const tableHeaders = (navigate: any) => [
   {
     name: 'COMPANY',
     field: 'name',
@@ -55,5 +55,9 @@ const tableHeaders = [
   {
     name: 'USERS',
     field: 'userCount',
+  },
+  {
+    name: 'Analytics',
+    body: ({ _id }: { _id: string }) => <div style={{ cursor: 'pointer' }} onClick={() => navigate(`/analytics/${_id}`)}>View analytics</div>,
   },
 ];
