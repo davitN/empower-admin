@@ -25,7 +25,7 @@ interface PropTypes {
   handleAdd?: () => void,
   tableTitle?: string,
   handleSearch?: (keyword: string) => void,
-  searchValue: string | null,
+  searchValue?: string | null,
   LIMIT?: number,
   buttonText?: string,
   costumeClasses?: string,

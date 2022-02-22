@@ -74,6 +74,8 @@ import { getAnalytics } from './analyticsSaga';
 import { GET_ANALYTICS } from '../ducks/analyticsDuck';
 import { GET_APP_LIBRARIES, REMOVE_APP_LIBRARY, SAVE_APP_LIBRARY } from '../ducks/appLibraryDucks';
 import { getAppLibraries, removeAppLibrary, saveAppLibrary } from './appLibrariesSaga';
+import { GET_FOR_YOU, REMOVE_FOR_YOU, SAVE_FOR_YOU } from '../ducks/forYouDucks';
+import { getForYou, removeForYou, saveForYou } from './forYouSaga';
 
 function* actionWatcher() {
   yield takeLatest(CHECK_SIGNED_IN, checkSignedInSaga);
@@ -132,6 +134,9 @@ function* actionWatcher() {
   yield takeLatest(GET_APP_LIBRARIES, getAppLibraries);
   yield takeLatest(SAVE_APP_LIBRARY, saveAppLibrary);
   yield takeLatest(REMOVE_APP_LIBRARY, removeAppLibrary);
+  yield takeLatest(GET_FOR_YOU, getForYou);
+  yield takeLatest(SAVE_FOR_YOU, saveForYou);
+  yield takeLatest(REMOVE_FOR_YOU, removeForYou);
 }
 
 export default function* rootSaga() {

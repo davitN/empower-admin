@@ -14,6 +14,7 @@ import { categoriesReducer } from './categoriesDuck';
 import { filtersReducer } from './filtersDuck';
 import { analyticsReducer } from './analyticsDuck';
 import { appLibrariesReducer } from './appLibraryDucks';
+import { forYouReducer } from './forYouDucks';
 
 export {
   mainReducer,
@@ -32,4 +33,5 @@ export {
   filtersReducer,
   analyticsReducer,
   appLibrariesReducer,
+  forYouReducer,
 };

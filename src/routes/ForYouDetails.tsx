@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Container from '../components/shared/Container';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 import Label from '../components/shared/Inputs/Label';
@@ -7,10 +9,13 @@ import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 import Title from '../components/shared/Title';
 import UploadButton from '../components/shared/UploadButton';
 import { handleFileUpload } from '../helpers/utils';
+import { saveForYou } from '../store/ducks/forYouDucks';
 import { ForYouTypes } from '../types/forYou';
 
 const ForYouDetails = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [saving, setSaving] = useState(false);
   const [values, setValues] = useState<{ type: ForYouTypes }>({
     type: 'KICK_OFF',
@@ -18,7 +23,24 @@ const ForYouDetails = () => {
   const [uploadedFile, setUploadedFIle] = useState<any>(null);
 
   const handleSave = () => {
-    console.log('clicked');
+    if (uploadedFile) {
+      setSaving(true);
+      dispatch(saveForYou({
+        data: {
+          type: values.type,
+          width: uploadedFile.width,
+          height: uploadedFile.height,
+          duration: uploadedFile.duration,
+        },
+        file: uploadedFile.file,
+      }, {
+        success: () => {
+          setSaving(false);
+          navigate('/app-library');
+        },
+        error: () => setSaving(false),
+      }));
+    }
   };
 
   return (

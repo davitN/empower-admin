@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Container from '../components/shared/Container';
 import Table from '../components/shared/Table';
 import useGetData from '../helpers/hooks/useGetDataV2';
@@ -8,14 +8,17 @@ import { getAppLibraries, removeAppLibrary, resetAppLibrariesState } from '../st
 import { RootState } from '../store/configureStore';
 import ConfirmDialog from '../components/shared/ConfirmDialog';
 import { Media } from '../types/main';
+import { getForYou, removeForYou, resetForYouState } from '../store/ducks/forYouDucks';
 
 const AppLibrary = () => {
   const dispatch = useDispatch();
   const [removing, setRemoving] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<string>('');
-  const [visible, setVisible] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<'library' | 'forYou' | null>(null);
   const navigate = useNavigate();
   const { libraries } = useSelector((state: RootState) => state.appLibrariesReducer);
+  const forYou = useSelector((state: RootState) => state.forYouReducer);
+
   const { params, handleParamsChange } = useGetData({
     getDataAction: getAppLibraries,
     resetState: resetAppLibrariesState,
@@ -28,7 +31,7 @@ const AppLibrary = () => {
       error: () => {
         setRemoving(false);
         setSelectedId('');
-        setVisible(false);
+        setModalType(null);
       },
       success: () => {
         setRemoving(false);
@@ -38,19 +41,42 @@ const AppLibrary = () => {
           offset: 0,
           limit: 0,
         }));
-        setVisible(false);
+        setModalType(null);
       },
     }));
   };
+
+  const handleRemoveForYou = () => {
+    setRemoving(true);
+    dispatch(removeForYou(selectedId, {
+      error: () => {
+        setRemoving(false);
+        setSelectedId('');
+        setModalType(null);
+      },
+      success: () => {
+        setRemoving(false);
+        setSelectedId('');
+        dispatch(resetForYouState());
+        dispatch(getForYou());
+        setModalType(null);
+      },
+    }));
+  };
+
+  useEffect(() => {
+    dispatch(getForYou());
+  }, []);
+
   return (
     <Container sectionTitle="How To">
       <ConfirmDialog
-        visible={visible}
+        visible={Boolean(modalType)}
         loading={removing}
-        title="Remove App Library"
+        title={`Remove ${modalType === 'forYou' ? 'For You' : 'Library'}`}
         description="Are you sure you want to proceed?"
-        handleClose={() => setVisible(false)}
-        handleSuccess={() => handleRemove()}
+        handleClose={() => setModalType(null)}
+        handleSuccess={() => (modalType === 'library' ? handleRemove() : handleRemoveForYou())}
       />
       <Table
         searchValue={params?.filter || ''}
@@ -60,7 +86,7 @@ const AppLibrary = () => {
         handleSearch={(val) => handleParamsChange({ filter: val })}
         handleAdd={() => navigate('new')}
         handleRemove={({ _id }) => {
-          setVisible(true);
+          setModalType('library');
           setSelectedId(_id);
         }}
         buttonText="+ Add"
@@ -70,14 +96,12 @@ const AppLibrary = () => {
 
       <Table
         costumeClasses="p-mt-6"
-        searchValue={params?.filter || ''}
-        data={libraries || null}
-        header={tableHeaders}
+        data={forYou ? { data: forYou } : null}
+        header={forYouHeaders}
         tableTitle="FOR YOU"
-        handleSearch={(val) => handleParamsChange({ filter: val })}
         handleAdd={() => navigate('/for-you/new')}
         handleRemove={({ _id }) => {
-          setVisible(true);
+          setModalType('forYou');
           setSelectedId(_id);
         }}
         buttonText="+ Add"
@@ -98,5 +122,16 @@ const tableHeaders = [
   {
     name: 'See content',
     body: ({ content }: { content: Media }) => <a href={content.URL}>See content</a>,
+  },
+];
+
+const forYouHeaders = [
+  {
+    name: 'TYPE',
+    field: 'type',
+  },
+  {
+    name: 'See content',
+    body: ({ URL }: { URL: string }) => <a href={URL}>See content</a>,
   },
 ];
