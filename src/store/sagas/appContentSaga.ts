@@ -168,3 +168,14 @@ export function* getAppContentItemInfo({ params }: { params: { companyId: string
     );
   }
 }
+
+export function* removeCommunityItem({ id, callbacks }:{ id: string, callbacks: CallBacks, type: string }) {
+  try {
+    yield axiosInstance.delete(`/content/community_data/delete/${id}`);
+    callbacks?.success && callbacks.success();
+    notificationService.success('Item has been successfully removed', '', 1000);
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response.data.message, '', 500);
+  }
+}

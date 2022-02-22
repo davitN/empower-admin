@@ -13,10 +13,11 @@ import Select from '../shared/Inputs/Select';
 import { RootState } from '../../store/configureStore';
 import { AppContentCategory, CommunityArticleType, GetCommunityDataItem } from '../../types/appContent';
 import {
-  getAppContentCategory, getCommunityDataItem, resetCommunityDataItem, saveCommunityData,
+  getAppContentCategory, getCommunityDataItem, removeCommunityItem, resetCommunityDataItem, saveCommunityData,
 } from '../../store/ducks/appContentDuck';
 import FormSharedComponent from '../shared/FormsSharedComponent';
 import { urlValidator, handleImgUpload } from '../../helpers/utils';
+import ConfirmDialog from '../shared/ConfirmDialog';
 
 const CommunityArticle = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,8 @@ const CommunityArticle = () => {
   const classes = useStyles();
   const isEditing = mode === 'edit' && id;
   const { categories, communityDataItem } : ReducerTypes = useSelector((state: RootState) => state.appContentReducer);
-
+  const [removing, setRemoving] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
   const modifiedCategories = categories && categories.map(({ _id, name }) => ({ _id, name }));
   const [saving, setSaving] = useState(false);
   const [uploadedFile, setUploadedFIle] = useState<any>(null);
@@ -90,6 +92,22 @@ const CommunityArticle = () => {
       },
     ));
   };
+
+  const handleRemove = () => {
+    setRemoving(true);
+    id && dispatch(removeCommunityItem(id, {
+      error: () => {
+        setRemoving(false);
+        setVisible(false);
+      },
+      success: () => {
+        setRemoving(false);
+        navigate('/app-content');
+        setVisible(false);
+      },
+    }));
+  };
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   useEffect(() => {
@@ -137,6 +155,14 @@ const CommunityArticle = () => {
 
   return (
     <div className={classes.root}>
+      <ConfirmDialog
+        visible={visible}
+        loading={removing}
+        title="Remove item"
+        description="Are you sure you want to proceed?"
+        handleClose={() => setVisible(false)}
+        handleSuccess={() => handleRemove()}
+      />
       <div className={classes.gridWrapper}>
         {isEditing && !communityDataItem ? (
           <div className={classes.gridInputsWrapper}>
@@ -295,7 +321,7 @@ const CommunityArticle = () => {
             loading: saving,
           }}
           remove={{
-            handler: undefined,
+            handler: () => setVisible(true),
             label: 'Delete Content',
             hidden: !isEditing,
             disabled: saving,

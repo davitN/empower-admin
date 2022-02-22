@@ -26,6 +26,7 @@ export const RESET_APP_CONTENT_ITEM_STATE = 'socialize/content/resetAppContentIt
 
 export const SAVE_APP_CONTENT_ITEM = 'socialize/content/saveAppContentItem';
 export const SAVE_COMMUNITY_DATA = 'socialize/content/saveCommunityData';
+export const REMOVE_COMMUNITY_DATA = 'socialize/content/removeCommunityData';
 
 export const GET_APP_CONTENT_CATEGORIES = 'socialize/content/getAppContentCategories';
 export const SET_APP_CONTENT_CATEGORIES = 'socialize/content/setAppContentCategories';
@@ -198,4 +199,10 @@ export const setAppContentItemInfo = (data: GetAppContentItemInfo) => ({
 });
 export const resetAppContentItemInfo = () => ({
   type: RESET_APP_CONTENT_ITEM_INFO_STATE,
+});
+
+export const removeCommunityItem = (id: string, callbacks?: CallBacks) => ({
+  type: REMOVE_COMMUNITY_DATA,
+  id,
+  callbacks,
 });

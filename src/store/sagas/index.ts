@@ -31,6 +31,7 @@ import {
   SAVE_COMMUNITY_DATA,
   GET_COMMUNITY_DATA_ITEM,
   GET_APP_CONTENT_ITEM_INFO,
+  REMOVE_COMMUNITY_DATA,
 } from '../ducks/appContentDuck';
 import {
   getAppContent,
@@ -41,6 +42,7 @@ import {
   saveCommunityData,
   getCommunityDataItem,
   getAppContentItemInfo,
+  removeCommunityItem,
 } from './appContentSaga';
 import { SET_PASSWORD } from '../ducks/setPasswordDuck';
 import { setPassword } from './setPasswordSaga';
@@ -94,6 +96,7 @@ function* actionWatcher() {
   yield takeLatest(GET_APP_CONTENT, getAppContent);
   yield takeLatest(GET_COMMUNITY_DATA, getCommunityData);
   yield takeLatest(GET_APP_CONTENT_ITEM, getAppContentItem);
+  yield takeLatest(REMOVE_COMMUNITY_DATA, removeCommunityItem);
   yield takeLatest(SAVE_APP_CONTENT_ITEM, saveAppContentItem);
   yield takeLatest(GET_APP_CONTENT_CATEGORIES, getAppContentCategory);
   yield takeLatest(SAVE_COMMUNITY_DATA, saveCommunityData);
