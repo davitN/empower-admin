@@ -56,10 +56,26 @@ const AppLibrary = () => {
         searchValue={params?.filter || ''}
         data={libraries || null}
         header={tableHeaders}
-        tableTitle="CATEGORIES"
+        tableTitle="LIBRARIES"
         handleSearch={(val) => handleParamsChange({ filter: val })}
-        handleEdit={({ _id }) => navigate(`edit/${_id}`)}
         handleAdd={() => navigate('new')}
+        handleRemove={({ _id }) => {
+          setVisible(true);
+          setSelectedId(_id);
+        }}
+        buttonText="+ Add"
+        hideEdit
+        showRemove
+      />
+
+      <Table
+        costumeClasses="p-mt-6"
+        searchValue={params?.filter || ''}
+        data={libraries || null}
+        header={tableHeaders}
+        tableTitle="FOR YOU"
+        handleSearch={(val) => handleParamsChange({ filter: val })}
+        handleAdd={() => navigate('/for-you/new')}
         handleRemove={({ _id }) => {
           setVisible(true);
           setSelectedId(_id);

@@ -19,6 +19,7 @@ import Categories from '../routes/Categories';
 import CategoryDetails from '../routes/CategoryDetails';
 import AppLibrary from '../routes/AppLibrary';
 import AppLibraryDetails from '../routes/AppLibraryDetails';
+import ForYouDetails from '../routes/ForYouDetails';
 
 export interface RouteType {
   type: 'nested' | 'default';
@@ -116,14 +117,17 @@ export const routes: RouteType[] = [
         Component: AppLibrary,
       },
       {
-        path: ':mode/:id',
-        Component: AppLibraryDetails,
-      },
-      {
         path: ':mode',
         Component: AppLibraryDetails,
       },
     ],
+  },
+  {
+    type: 'default',
+    name: 'Account',
+    path: 'for-you/:mode',
+    pathName: 'forYou',
+    Component: ForYouDetails,
   },
   {
     type: 'nested',
