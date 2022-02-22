@@ -124,10 +124,11 @@ export const routes: RouteType[] = [
   },
   {
     type: 'default',
-    name: 'Account',
+    name: 'For You',
     path: 'for-you/:mode',
     pathName: 'forYou',
     Component: ForYouDetails,
+    hiddenInNav: true,
   },
   {
     type: 'nested',
