@@ -94,22 +94,20 @@ const AppLibrary = () => {
         showRemove
       />
 
-      <div style={{ display: 'none' }}>
-        <Table
-          costumeClasses="p-mt-6"
-          data={forYou ? { data: forYou } : null}
-          header={forYouHeaders}
-          tableTitle="FOR YOU"
-          handleAdd={() => navigate('/for-you/new')}
-          handleRemove={({ _id }) => {
-            setModalType('forYou');
-            setSelectedId(_id);
-          }}
-          buttonText="+ Add"
-          hideEdit
-          showRemove
-        />
-      </div>
+      <Table
+        costumeClasses="p-mt-6"
+        data={forYou ? { data: forYou } : null}
+        header={forYouHeaders}
+        tableTitle="FOR YOU"
+        handleAdd={() => navigate('/for-you/new')}
+        handleRemove={({ _id }) => {
+          setModalType('forYou');
+          setSelectedId(_id);
+        }}
+        buttonText="+ Add"
+        hideEdit
+        showRemove
+      />
     </Container>
   );
 };
