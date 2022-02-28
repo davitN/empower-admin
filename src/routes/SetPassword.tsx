@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import classNames from 'classnames';
@@ -11,7 +11,7 @@ import { setPassword } from '../store/ducks/setPasswordDuck';
 const SetPassword = () => {
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
 
   const classes = useStyles();
   const [showError, setShowError] = useState<string>('');
@@ -34,9 +34,11 @@ const SetPassword = () => {
       success: () => {
         setSending(false);
         setSucceed(true);
+        window.location.replace('https://empowerofyou.com/empower-welcome/');
       },
     }));
   };
+
   return (
     <div className={classNames('p-d-flex p-flex-column p-shadow-1 p-p-4 sm:p-p-6', classes.root)}>
       {!showError && !succeed && (
@@ -66,12 +68,12 @@ const SetPassword = () => {
           </ButtonComponent>
         </>
       )}
-      {succeed && (
+      {/* {succeed && (
       <p className={classes.blue}>
         {pathname === '/set_password'
           ? 'You&apos;ve successfully registered, please use your email and password to sign in the app.' : 'Password was changed successfully'}
       </p>
-      )}
+      )} */}
       {showError && <p className={classes.red}>{showError}</p>}
     </div>
   );
