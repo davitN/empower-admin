@@ -131,6 +131,23 @@ const forYouHeaders = [
     field: 'type',
   },
   {
+    name: 'TITLE',
+    field: 'title',
+  },
+  {
+    name: 'Subtitle',
+    field: 'subTitle',
+  },
+  {
+    name: 'description',
+    body: ({ description }: { description: string }) => {
+      if (description?.length > 20) {
+        return `${description?.slice(0, 20)}...`;
+      }
+      return description;
+    },
+  },
+  {
     name: 'See content',
     body: ({ content }: { content: Media }) => <a href={content.URL}>See content</a>,
   },

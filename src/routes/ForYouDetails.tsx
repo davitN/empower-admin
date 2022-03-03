@@ -6,6 +6,7 @@ import Container from '../components/shared/Container';
 import FormsSharedComponent from '../components/shared/FormsSharedComponent';
 import Label from '../components/shared/Inputs/Label';
 import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
+import TextInput from '../components/shared/Inputs/TextInput';
 import Title from '../components/shared/Title';
 import UploadButton from '../components/shared/UploadButton';
 import { handleFileUpload } from '../helpers/utils';
@@ -17,8 +18,11 @@ const ForYouDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [saving, setSaving] = useState(false);
-  const [values, setValues] = useState<{ type: ForYouTypes }>({
+  const [values, setValues] = useState<ValuesTypes>({
     type: 'KICK_OFF',
+    title: '',
+    subTitle: '',
+    description: '',
   });
   const [uploadedFile, setUploadedFIle] = useState<any>(null);
 
@@ -27,10 +31,10 @@ const ForYouDetails = () => {
       setSaving(true);
       dispatch(saveForYou({
         data: {
-          type: values.type,
           width: uploadedFile.width,
           height: uploadedFile.height,
           duration: uploadedFile.duration,
+          ...values,
         },
         file: uploadedFile.file,
       }, {
@@ -63,20 +67,25 @@ const ForYouDetails = () => {
               ))}
             </div>
           </div>
-          <div className="p-mt-5">
-            <Title title="Upload video/audio file" costumeStyles="p-mr-4 p-mb-2" fontSize="text-xl" />
-            <UploadButton
-              uploadedFile={uploadedFile?.file}
-              handleUpload={(val: any) => handleFileUpload(val, setUploadedFIle)}
-              fileType=".mp3, .mp4"
-            />
+          <div className={classes.gridInputsWrapper}>
+            <TextInput required label="Title" value={values.title} handleChange={(title) => setValues({ ...values, title })} />
+            <TextInput required label="Subtitle" value={values.subTitle} handleChange={(subTitle) => setValues({ ...values, subTitle })} />
+            <TextInput required label="Description" value={values.description} handleChange={(description) => setValues({ ...values, description })} />
+            <div className="p-mt-2">
+              <Title title="Upload video/audio file" costumeStyles="p-mr-4 p-mb-2" fontSize="text-xl" />
+              <UploadButton
+                uploadedFile={uploadedFile?.file}
+                handleUpload={(val: any) => handleFileUpload(val, setUploadedFIle)}
+                fileType=".mp3, .mp4"
+              />
+            </div>
           </div>
         </div>
         <div className={classes.justifyEnd}>
           <FormsSharedComponent
             save={{
               handler: handleSave,
-              disabled: (!uploadedFile) || saving,
+              disabled: (!uploadedFile || !values.title || !values.subTitle || !values.description) || saving,
               loading: saving,
             }}
             isNewItem
@@ -101,6 +110,11 @@ const useStyles = createUseStyles({
     gridTemplateRows: 'repeat( auto-fit, minmax(0, max-content) )',
     gap: '1rem',
     justifyItems: 'end',
+  },
+  gridInputsWrapper: {
+    marginTop: '2rem',
+    display: 'grid',
+    gridRowGap: '1.5rem',
   },
 });
 
@@ -130,3 +144,10 @@ const forYouTypes: { label: string, value: ForYouTypes }[] = [
     value: 'ACCOUNTABILITY',
   },
 ];
+
+interface ValuesTypes {
+  type: ForYouTypes,
+  title: string,
+  subTitle: string,
+  description: string,
+}

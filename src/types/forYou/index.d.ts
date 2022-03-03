@@ -6,7 +6,10 @@ export interface ForYouItem {
   contentType: 'AUDIO' | 'VIDEO',
   type: ForYouTypes,
   _id: string,
-  content: Media
+  content: Media,
+  title: string,
+  subTitle: string,
+  description: string
 }
 
 export interface SaveForYou{
