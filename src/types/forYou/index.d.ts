@@ -2,10 +2,11 @@ import { Media } from '../main';
 
 export type ForYouTypes = 'KICK_OFF' | 'ETHOS' | 'WELNESS' | 'POWER_UP' | 'POWER_DOWN' | 'ACCOUNTABILITY';
 
-export interface ForYouItem extends Media {
+export interface ForYouItem {
   contentType: 'AUDIO' | 'VIDEO',
   type: ForYouTypes,
-  _id: string
+  _id: string,
+  content: Media
 }
 
 export interface SaveForYou{

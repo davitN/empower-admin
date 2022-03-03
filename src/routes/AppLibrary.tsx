@@ -132,6 +132,6 @@ const forYouHeaders = [
   },
   {
     name: 'See content',
-    body: ({ URL }: { URL: string }) => <a href={URL}>See content</a>,
+    body: ({ content }: { content: Media }) => <a href={content.URL}>See content</a>,
   },
 ];
