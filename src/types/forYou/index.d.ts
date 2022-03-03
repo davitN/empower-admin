@@ -1,6 +1,6 @@
 import { Media } from '../main';
 
-export type ForYouTypes = 'KICK_OFF' | 'ETHOS' | 'WELNESS' | 'POWER_UP' | 'POWER_DOWN' | 'ACCOUNTABILITY';
+export type ForYouTypes = 'KICK_OFF' | 'ETHOS' | 'WELNESS' | 'POWER_UP' | 'POWER_DOWN';
 
 export interface ForYouItem {
   contentType: 'AUDIO' | 'VIDEO',

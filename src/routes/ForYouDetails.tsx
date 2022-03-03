@@ -139,10 +139,6 @@ const forYouTypes: { label: string, value: ForYouTypes }[] = [
     label: 'Wellness',
     value: 'WELNESS',
   },
-  {
-    label: 'Accountability',
-    value: 'ACCOUNTABILITY',
-  },
 ];
 
 interface ValuesTypes {
