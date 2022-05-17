@@ -22,6 +22,7 @@ export default ProgressBarComponent;
 const useStyles = createUseStyles({
   root: {
     height: '0.8rem',
+    backgroundColor: 'transparent !important',
     '& > div': {
       background: `${COLORS.orange} !important`,
     },

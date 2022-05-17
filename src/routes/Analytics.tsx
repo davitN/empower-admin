@@ -112,32 +112,39 @@ const Analytics = () => {
       desc: 'he number of times the Team Power•Down Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only.',
     },
   ] : [];
-  const topEthosByDimension: { title: string, val: string | number }[] = analytics ? [
+  const topEthosByDimension: { firstTitle: string; title: string, val: string | number }[] = analytics ? [
     {
+      firstTitle: 'Emotional',
       title: analytics.topEthosByEmotional.title,
       val: analytics.topEthosByEmotional.count,
     },
     {
+      firstTitle: 'Environmental',
       title: analytics.topEthosByEnvironmental.title,
       val: analytics.topEthosByEnvironmental.count,
     },
     {
+      firstTitle: 'Mental',
       title: analytics.topEthosByMental.title,
       val: analytics.topEthosByMental.count,
     },
     {
+      firstTitle: 'Occupational',
       title: analytics.topEthosByOccupational.title,
       val: analytics.topEthosByOccupational.count,
     },
     {
+      firstTitle: 'Physical',
       title: analytics.topEthosByPhysical.title,
       val: analytics.topEthosByPhysical.count,
     },
     {
+      firstTitle: 'Social',
       title: analytics.topEthosBySocial.title,
       val: analytics.topEthosBySocial.count,
     },
     {
+      firstTitle: 'Spiritual',
       title: analytics.topEthosBySpiritual.title,
       val: analytics.topEthosBySpiritual.count,
     },
@@ -169,7 +176,7 @@ const Analytics = () => {
           {
              analytics?.top7ChoosenEthosCard.map((item) => (
                <ProgressBar
-                 firstTitle="PHYSICAL - "
+                 firstTitle=""
                  secondTitle={`${item.title}-${item.count}`}
                  value={(25 * Math.random()).toString()}
                  customStyles="p-mb-3"
@@ -184,8 +191,8 @@ const Analytics = () => {
           {
              topEthosByDimension?.map((item) => (
                <ProgressBar
-                 firstTitle={item.title}
-                 secondTitle={` - ${item.val}`}
+                 firstTitle={`${item.firstTitle}  `}
+                 secondTitle={`${item.title} - ${item.val}`}
                  value={(25 * Math.random()).toString()}
                  customStyles="p-mb-3"
                  key={item.title}
