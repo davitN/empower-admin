@@ -169,7 +169,7 @@ const LocationDetails = () => {
   }, [locationDetails]);
 
   return (
-    <Container itemId={locationId} idText="Location ID" sectionTitle="STAR OF TEXAS VETERINARY HOSPITAL" goBack={() => navigate(prevLocation)}>
+    <Container itemId={locationId} idText="Location ID" goBack={() => navigate(prevLocation)}>
       <Dialog
         visible={dialogStep === 1}
         setVisible={() => setDialogStep(0)}
