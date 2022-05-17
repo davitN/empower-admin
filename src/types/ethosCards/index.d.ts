@@ -1,7 +1,9 @@
 export interface EthosCard {
   audio?: {
     URL: string,
-    duration: number
+    duration: number,
+    height: number,
+    width: number
   },
   createdAt: Date,
   description: string,

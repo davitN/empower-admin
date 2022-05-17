@@ -63,7 +63,7 @@ const EthosCardsDetails = () => {
         title: ethosCardDetails?.title || '',
         description: ethosCardDetails?.description || '',
         image: ethosCardDetails?.image || null,
-        audio: ethosCardDetails?.audio || null,
+        audio: ethosCardDetails.audio ? ethosCardDetails.audio : null,
       });
     }
   }, [isNewItem, ethosCardDetails]);
