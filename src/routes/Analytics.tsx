@@ -178,7 +178,6 @@ const Analytics = () => {
                <ProgressBar
                  firstTitle=""
                  secondTitle={`${item.title}-${item.count}`}
-                 value={(25 * Math.random()).toString()}
                  customStyles="p-mb-3"
                  key={item.title}
                />
@@ -193,7 +192,6 @@ const Analytics = () => {
                <ProgressBar
                  firstTitle={`${item.firstTitle}  `}
                  secondTitle={`${item.title} - ${item.val}`}
-                 value={(25 * Math.random()).toString()}
                  customStyles="p-mb-3"
                  key={item.title}
                />

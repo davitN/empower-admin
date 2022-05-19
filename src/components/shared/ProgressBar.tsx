@@ -1,10 +1,9 @@
-import { ProgressBar } from 'primereact/progressbar';
 import { createUseStyles } from 'react-jss';
 import COLORS from '../../services/colors.service';
 
 const ProgressBarComponent = ({
-  firstTitle, secondTitle, value, customStyles,
-}: { firstTitle: string, secondTitle:string, value: string, customStyles?: any }) => {
+  firstTitle, secondTitle, customStyles,
+}: { firstTitle: string, secondTitle:string, customStyles?: any }) => {
   const classes = useStyles();
   return (
     <div className={customStyles}>
@@ -12,7 +11,7 @@ const ProgressBarComponent = ({
         {firstTitle}
         <span>{secondTitle}</span>
       </p>
-      <ProgressBar value={value} showValue={false} className={classes.root} />
+      {/* <ProgressBar value={value} showValue={false} className={classes.root} /> */}
     </div>
   );
 };
