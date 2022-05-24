@@ -31,10 +31,23 @@ export function* getAppUsers({ data, callbacks }:{ data: GetAppUsersOptions, cal
   }
 }
 
-export function* getAllAppUsers({ data, callbacks }:{ data: GetDataParams, callbacks: CallBacks, type:string }) {
+export function* getAllAppUsers({ data, callbacks }:{ data: any, callbacks: CallBacks, type:string }) {
   try {
+    const filterData = { ...data };
+    if (data.filter && data.filter.firstName) {
+      filterData['firstName'] = data.filter.firstName;
+    }
+
+    if (data.filter && data.filter.lastName) {
+      filterData['lastName'] = data.filter.lastName;
+    }
+
+    if (data.filter && data.filter.email) {
+      filterData['email'] = data.filter.email;
+    }
+
     const res: GetAppUsersData = yield axiosInstance.get('/app_user/get_app_users', {
-      params: data,
+      params: filterData,
     });
     yield put(setAllAppUsers(res));
     callbacks?.success && callbacks.success();

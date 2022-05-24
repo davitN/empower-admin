@@ -3,6 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/configureStore';
 import { set } from '../../store/ducks/filtersDuck';
 
+interface UserSearch {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 interface PropTypes {
   getDataAction: Function | undefined,
   resetState?: Function | undefined,
@@ -19,12 +25,16 @@ const useGetData = ({
 }: PropTypes) => {
   const dispatch = useDispatch();
   const filters = useSelector((state: RootState) => state.filtersReducer);
-  const [searchValue, setSearchValue] = useState<string | null>(null);
+  const [searchValue, setSearchValue] = useState<string | null | UserSearch>(null);
   const setTimeoutRef = useRef<any>();
   const params = useRef<any>({
     offset: 0,
     limit: LIMIT,
-    filter: null,
+    filter: tableId ? {
+      firstName: '',
+      lastName: '',
+      email: '',
+    } : null,
     ...(initialParams && { ...initialParams }),
     ...(saveFIlters && tableId && filters[tableId] && { ...filters[tableId] }),
   });

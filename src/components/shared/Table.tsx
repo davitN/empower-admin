@@ -13,28 +13,35 @@ import Input from './Inputs/TextInput';
 import Title from './Title';
 import { RootState } from '../../store/configureStore';
 
+interface UserSearch {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 interface PropTypes {
-  data: any,
+  data: any;
   header: Array<{
-    name: string,
-    field?: string,
-    body?: (val: any) => any
-  }>
-  handlePageChange?: (page: number) => void,
-  handleEdit?: (data: any) => void,
-  handleAdd?: () => void,
-  tableTitle?: string,
-  handleSearch?: (keyword: string) => void,
-  searchValue?: string | null,
-  LIMIT?: number,
-  buttonText?: string,
-  costumeClasses?: string,
-  customFilters?: ReactNode,
-  saveFilters?: boolean,
-  tableId?: string,
-  hideEdit?: boolean,
-  showRemove?: boolean,
-  handleRemove?: (data: any) => void
+    name: string;
+    field?: string;
+    body?: (val: any) => any;
+  }>;
+  handlePageChange?: (page: number) => void;
+  handleEdit?: (data: any) => void;
+  handleAdd?: () => void;
+  tableTitle?: string;
+  handleSearch?: (keyword: string, key?: string) => void;
+  searchValue?: string | null;
+  userSearch?: UserSearch;
+  LIMIT?: number;
+  buttonText?: string;
+  costumeClasses?: string;
+  customFilters?: ReactNode;
+  saveFilters?: boolean;
+  tableId?: string;
+  hideEdit?: boolean;
+  showRemove?: boolean;
+  handleRemove?: (data: any) => void;
 }
 
 const Table = ({
@@ -45,7 +52,8 @@ const Table = ({
   handleAdd,
   tableTitle,
   handleSearch,
-  searchValue = '',
+  userSearch,
+  searchValue,
   LIMIT = 10,
   buttonText,
   costumeClasses,
@@ -60,13 +68,19 @@ const Table = ({
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState<number>(0);
   const editAction = (rowData: any) => (
-    <ButtonComponent customClasses={classNames(classes.actionButton, 'p-ml-auto')} handleClick={handleEdit ? () => handleEdit(rowData) : undefined}>
+    <ButtonComponent
+      customClasses={classNames(classes.actionButton, 'p-ml-auto')}
+      handleClick={handleEdit ? () => handleEdit(rowData) : undefined}
+    >
       <i className="pi pi-cog" style={{ color: COLORS.white }} />
     </ButtonComponent>
   );
 
   const removeAction = (rowData: any) => (
-    <ButtonComponent customClasses={classNames(classes.actionButton, 'p-ml-auto')} handleClick={handleRemove ? () => handleRemove(rowData) : undefined}>
+    <ButtonComponent
+      customClasses={classNames(classes.actionButton, 'p-ml-auto')}
+      handleClick={handleRemove ? () => handleRemove(rowData) : undefined}
+    >
       <i className="pi pi-trash" style={{ color: COLORS.white }} />
     </ButtonComponent>
   );
@@ -87,43 +101,91 @@ const Table = ({
         {tableTitle && <Title title={tableTitle} fontSize="text-xl" />}
         <div className={classNames(classes.wrapper, 'p-ml-4')}>
           {handleSearch && (
-          <Input
-            icon={<i className="pi pi-search" />}
-            placeholder="Search..."
-            value={searchValue || ''}
-            handleChange={(val) => {
-              if (handleSearch) {
-                handleSearch(val);
-                setCurrentPage(0);
-              }
-            }}
-            customClasses={classes.input}
-          />
+            <div className={classNames(classes.wrapper, 'p-ml-4')}>
+              {userSearch ? (
+                <>
+                  <Input
+                    icon={<i className="pi pi-search" />}
+                    placeholder="First Name ..."
+                    value={userSearch.firstName}
+                    handleChange={(val) => {
+                      if (handleSearch) {
+                        handleSearch(val, 'firstName');
+                        setCurrentPage(0);
+                      }
+                    }}
+                    customClasses={classes.input}
+                  />
+
+                  <div className="p-mx-2">
+                    <Input
+                      icon={<i className="pi pi-search" />}
+                      placeholder="Last Name..."
+                      value={userSearch.lastName}
+                      handleChange={(val) => {
+                        if (handleSearch) {
+                          handleSearch(val, 'lastName');
+                          setCurrentPage(0);
+                        }
+                      }}
+                      customClasses={classes.input}
+                    />
+                  </div>
+
+                  <Input
+                    icon={<i className="pi pi-search" />}
+                    placeholder="Email ..."
+                    value={userSearch.email}
+                    handleChange={(val) => {
+                      if (handleSearch) {
+                        handleSearch(val, 'email');
+                        setCurrentPage(0);
+                      }
+                    }}
+                    customClasses={classes.input}
+                  />
+                </>
+              ) : (
+                <Input
+                  icon={<i className="pi pi-search" />}
+                  placeholder="Search..."
+                  value={searchValue || ''}
+                  handleChange={(val) => {
+                    if (handleSearch) {
+                      handleSearch(val);
+                      setCurrentPage(0);
+                    }
+                  }}
+                  customClasses={classes.input}
+                />
+              )}
+            </div>
           )}
           {customFilters}
-          {(handleAdd && buttonText) && (
-          <ButtonComponent
-            bgColor={COLORS.lightBlue}
-            textColor={COLORS.white}
-            customClasses={classNames(classes.button, 'p-ml-5')}
-            handleClick={handleAdd || undefined}
-          >
-            {buttonText}
-          </ButtonComponent>
+          {handleAdd && buttonText && (
+            <ButtonComponent
+              bgColor={COLORS.lightBlue}
+              textColor={COLORS.white}
+              customClasses={classNames(classes.button, 'p-ml-5')}
+              handleClick={handleAdd || undefined}
+            >
+              {buttonText}
+            </ButtonComponent>
           )}
         </div>
       </div>
       <DataTable
-        value={(data?.data || new Array(10).fill(0))}
+        value={data?.data || new Array(10).fill(0)}
         responsiveLayout="scroll"
         rows={LIMIT}
         tableClassName={classes.table}
         emptyMessage="Data not found..."
       >
         {data && header?.map(({ name, field, body }) => <Column field={field} header={name} key={name} body={body} />)}
-        {!data && header?.map(({ name, field }) => <Column field={field} header={name} key={name} body={<Skeleton />} />)}
-        { !hideEdit && <Column body={data ? editAction : <Skeleton />} header="Settings" className={classes.setting} />}
-        { showRemove && <Column body={data ? removeAction : <Skeleton />} header="Remove" className={classes.setting} />}
+        {!data
+          && header?.map(({ name, field }) => <Column field={field} header={name} key={name} body={<Skeleton />} />)}
+        {!hideEdit && <Column body={data ? editAction : <Skeleton />} header="Settings" className={classes.setting} />}
+        {showRemove && <Column body={data ? removeAction : <Skeleton />} header="Remove" className={classes.setting} />}
       </DataTable>
       {handlePageChange && data && data?.data?.length > 0 && LIMIT < data.count && (
         <Paginator
@@ -265,8 +327,8 @@ const useStyles = createUseStyles({
     marginLeft: 'auto',
   },
   input: {
-    maxWidth: '16rem',
-    minWidth: '15rem',
+    maxWidth: '12rem',
+    minWidth: '11rem',
     '& > input': {
       borderRadius: '1rem',
       paddingTop: '0.5rem !important',
@@ -295,10 +357,22 @@ const useStyles = createUseStyles({
 
 const template = {
   layout: 'PrevPageLink PageLinks NextPageLink',
-  PrevPageLink: ({ onClick, disabled }: { onClick: () => void, disabled: boolean }) => {
-    return <i className="pi pi-angle-double-left" onClick={onClick} style={{ opacity: (disabled && 0.5) || 1, cursor: 'pointer' }} />;
+  PrevPageLink: ({ onClick, disabled }: { onClick: () => void; disabled: boolean }) => {
+    return (
+      <i
+        className="pi pi-angle-double-left"
+        onClick={onClick}
+        style={{ opacity: (disabled && 0.5) || 1, cursor: 'pointer' }}
+      />
+    );
   },
-  NextPageLink: ({ onClick, disabled }: { onClick: () => void, disabled: boolean }) => {
-    return <i className={classNames('pi pi-angle-double-right')} style={{ opacity: (disabled && 0.5) || 1, cursor: 'pointer' }} onClick={onClick} />;
+  NextPageLink: ({ onClick, disabled }: { onClick: () => void; disabled: boolean }) => {
+    return (
+      <i
+        className={classNames('pi pi-angle-double-right')}
+        style={{ opacity: (disabled && 0.5) || 1, cursor: 'pointer' }}
+        onClick={onClick}
+      />
+    );
   },
 };

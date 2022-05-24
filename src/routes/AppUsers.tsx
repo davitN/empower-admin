@@ -17,11 +17,11 @@ import { GetLocationsData, LocationItem } from '../types/locations';
 const LIMIT = 8;
 
 interface AdditionalData {
-  _id: string,
-  name: string,
+  _id: string;
+  name: string;
   logo?: {
-    imgURL: string
-  }
+    imgURL: string;
+  };
 }
 
 const AppUsers = () => {
@@ -33,11 +33,11 @@ const AppUsers = () => {
   const [selectedLocation, setSelectedLocation] = useState<null | string>(filters?.users?.locationId || null);
   const { allUsers }: { allUsers: GetAppUsersData | null } = useSelector((state: RootState) => state.appUsersReducer);
   const { companies }: { companies: CompaniesTypes | null } = useSelector((state: RootState) => state.companiesReducer);
-  const { locations }: { locations: GetLocationsData | null } = useSelector((state: RootState) => state.locationsReducer);
+  const { locations }: { locations: GetLocationsData | null } = useSelector(
+    (state: RootState) => state.locationsReducer,
+  );
 
-  const {
-    params, handleParamsChange, handlePageChange,
-  } = useGetData({
+  const { params, handleParamsChange, handlePageChange } = useGetData({
     LIMIT,
     resetOnUnmount: true,
     getDataAction: getAllAppUsers,
@@ -47,18 +47,14 @@ const AppUsers = () => {
     saveFIlters: true,
   });
 
-  const {
-    handleParamsChange: companiesHandleSearch,
-  } = useGetData({
+  const { handleParamsChange: companiesHandleSearch } = useGetData({
     LIMIT: 20,
     resetOnUnmount: true,
     getDataAction: getCompanies,
     resetState: resetCompaniesState,
   });
 
-  const {
-    handleParamsChange: handleLocationsParamsChange,
-  } = useGetData({
+  const { handleParamsChange: handleLocationsParamsChange } = useGetData({
     LIMIT: 20,
     resetOnUnmount: true,
     getDataAction: getLocations,
@@ -75,8 +71,14 @@ const AppUsers = () => {
   return (
     <div className={classes.root}>
       <Table
-        searchValue={params.filter || ''}
-        handleSearch={(val) => handleParamsChange({ filter: val })}
+        userSearch={params.filter}
+        handleSearch={(val, key) => {
+          const searchFilter = { ...params.filter };
+          if (key) {
+            searchFilter[key] = val;
+          }
+          handleParamsChange({ filter: searchFilter });
+        }}
         tableId="users"
         saveFilters
         data={allUsers}
@@ -87,13 +89,16 @@ const AppUsers = () => {
         handlePageChange={(val) => handlePageChange(val)}
         customFilters={(
           <div className="p-d-flex">
-            <div style={{ width: '15rem' }} className="p-mx-4">
+            <div style={{ width: '11rem' }} className="p-mx-2">
               <Autocomplete
                 data={companies?.data}
                 placeholder="Select company"
                 getOptionLabel={(option: CompanyItem) => option.name}
                 getOptionValue={(option: CompanyItem) => option.name}
-                selectedValue={(Array.isArray(companies?.data) && companies?.data?.find((el) => el['_id'] === selectedCompany)) || null}
+                selectedValue={
+                  (Array.isArray(companies?.data) && companies?.data?.find((el) => el['_id'] === selectedCompany))
+                  || null
+                }
                 setSelectedValue={(item: CompanyItem) => {
                   setSelectedCompany(item['_id']);
                   handleParamsChange({ companyId: item['_id'] });
@@ -101,13 +106,16 @@ const AppUsers = () => {
                 handleSearch={(val) => companiesHandleSearch({ filter: val })}
               />
             </div>
-            <div style={{ width: '15rem' }}>
+            <div style={{ width: '11rem' }}>
               <Autocomplete
                 data={locations?.data}
                 placeholder="Select location"
                 getOptionLabel={(option: CompanyItem) => option.name}
                 getOptionValue={(option: CompanyItem) => option.name}
-                selectedValue={(Array.isArray(locations?.data) && locations?.data?.find((el) => el['_id'] === selectedLocation)) || null}
+                selectedValue={
+                  (Array.isArray(locations?.data) && locations?.data?.find((el) => el['_id'] === selectedLocation))
+                  || null
+                }
                 setSelectedValue={(item: LocationItem) => {
                   setSelectedLocation(item['_id']);
                   handleParamsChange({ locationId: item['_id'] });
@@ -153,17 +161,25 @@ const tableHeaders = (navigate: any) => [
   },
   {
     name: 'LOCATION',
-    body: ({ companyId, location }: { companyId: AdditionalData, location: AdditionalData }) => (
+    body: ({ companyId, location }: { companyId: AdditionalData; location: AdditionalData }) => (
       <div onClick={() => navigate(`/locations/${location['_id']}`)} style={{ cursor: 'pointer' }}>
         <p className="p-pb-2">{location?.name}</p>
-        <img style={{ width: '5rem', height: '1.5rem' }} src={location?.logo?.imgURL || companyId?.logo?.imgURL} alt="" />
+        <img
+          style={{ width: '5rem', height: '1.5rem' }}
+          src={location?.logo?.imgURL || companyId?.logo?.imgURL}
+          alt=""
+        />
       </div>
     ),
   },
   {
     name: 'View Progress',
     body: ({ _id }: { _id: string }) => (
-      <i className="pi pi-eye" style={{ margin: 'auto', fontSize: '1.5rem' }} onClick={() => navigate(`/app-users/user-progress/${_id}`)} />
+      <i
+        className="pi pi-eye"
+        style={{ margin: 'auto', fontSize: '1.5rem' }}
+        onClick={() => navigate(`/app-users/user-progress/${_id}`)}
+      />
     ),
   },
 ];
