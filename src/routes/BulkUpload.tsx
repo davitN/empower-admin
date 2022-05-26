@@ -1,8 +1,9 @@
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import AxiosResponse from 'axios';
 import Container from '../components/shared/Container';
 import Button from '../components/shared/Inputs/Button';
 import COLORS from '../services/colors.service';
@@ -15,9 +16,15 @@ import { GetLocationsData, LocationItem } from '../types/locations';
 import Autocomplete from '../components/shared/Inputs/Autocomplete';
 import useGetData from '../helpers/hooks/useGetDataV2';
 import axiosInstance from '../services/interceptor.service';
+import notificationService from '../services/notification.service';
+
+interface IRow {
+  message: string;
+  row: number;
+}
 
 const BulkUpload = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState<any>(null);
   const [selectedCompany, setSelectedCompany] = useState<null | string>(null);
   const [selectedLocation, setSelectedLocation] = useState<null | string>(null);
   const { companies }: { companies: CompaniesTypes | null } = useSelector((state: RootState) => state.companiesReducer);
@@ -62,7 +69,18 @@ const BulkUpload = () => {
     const formData = new FormData();
     if (selectedFile && selectedLocation) {
       formData.append('file', selectedFile);
-      axiosInstance.post(`/app_user/bulk_registration/${selectedLocation}`, formData);
+      axiosInstance.post<IRow[]>(`/app_user/bulk_registration/${selectedLocation}`, formData).then((data) => {
+        setLoading(false);
+        if (Array.isArray(data)) {
+          if (data && data.length > 0) {
+            data.forEach((item: IRow) => {
+              notificationService.error(item.message, '', 5000);
+            });
+          } else {
+            notificationService.success('all data uploaded');
+          }
+        }
+      });
     }
   };
 
@@ -76,12 +94,19 @@ const BulkUpload = () => {
     }
   }, [selectedCompany]);
 
+  const selectFile = (e: ChangeEvent<HTMLInputElement>) => {
+    const { target } = e;
+    if (target && target['files']) {
+      setSelectedFile(target['files'][0]);
+    }
+  };
+
   return (
     <Container sectionTitle="Bulk Upload" goBack={() => navigate(prevLocation)}>
       <div className={classes.wrapper}>
         <div className={classNames(classes.inputs)}>
 
-          <input accept=".csv" onChange={(e) => setSelectedFile(e.target.files[0])} type="file" />
+          <input accept=".csv" onChange={(e) => selectFile(e)} type="file" />
 
           <Autocomplete
             data={companies?.data}
