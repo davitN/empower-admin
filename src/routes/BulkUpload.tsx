@@ -3,7 +3,6 @@ import { createUseStyles } from 'react-jss';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import AxiosResponse from 'axios';
 import Container from '../components/shared/Container';
 import Button from '../components/shared/Inputs/Button';
 import COLORS from '../services/colors.service';
