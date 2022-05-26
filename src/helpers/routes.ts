@@ -216,7 +216,7 @@ export const routes: RouteType[] = [
   },
   {
     type: 'default',
-    name: 'Bulk registration',
+    name: 'Bulk Registration',
     path: 'bulk-upload',
     pathName: 'bulk',
     Component: BulkUpload,

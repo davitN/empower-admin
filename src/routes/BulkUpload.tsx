@@ -43,14 +43,14 @@ const BulkUpload = () => {
   }, []);
 
   const { handleParamsChange: companiesHandleSearch } = useGetData({
-    LIMIT: 20,
+    LIMIT: 2000000,
     resetOnUnmount: true,
     getDataAction: getCompanies,
     resetState: resetCompaniesState,
   });
 
   const { handleParamsChange: handleLocationsParamsChange } = useGetData({
-    LIMIT: 20,
+    LIMIT: 2000000,
     resetOnUnmount: true,
     getDataAction: getLocations,
     resetState: resetLocationsState,
@@ -69,6 +69,12 @@ const BulkUpload = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   useEffect(() => () => dispatch(resetAppUserDetails()), []);
+
+  useEffect(() => {
+    if (selectedCompany) {
+      handleLocationsParamsChange({ companyId: selectedCompany });
+    }
+  }, [selectedCompany]);
 
   return (
     <Container sectionTitle="Bulk Upload" goBack={() => navigate(prevLocation)}>
