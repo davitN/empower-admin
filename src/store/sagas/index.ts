@@ -17,10 +17,10 @@ import {
   getLocations, saveLocationData, getLocationDetails, getLocationAdmins, removeLocation,
 } from './locationsSaga';
 import {
-  getAppUsers, getAppUserDetails, saveAppUserDetails, sendResetPassword, getAllAppUsers, getAppUserLastMonthProgress, removeAppUser,
+  getAppUsers, getAppUserDetails, saveAppUserDetails, saveAppUserDetailsAll, sendResetPassword, getAllAppUsers, getAppUserLastMonthProgress, removeAppUser,
 } from './appUsersSaga';
 import {
-  GET_APP_USERS, GET_APP_USER_DETAILS, SAVE_APP_USER_DETAILS, SEND_RESET_PASSWORD, GET_ALL_APP_USERS, GET_APP_USER_LAST_MONTH_PROGRESS, REMOVE_APP_USER_DETAILS,
+  GET_APP_USERS, GET_APP_USER_DETAILS, SAVE_APP_USER_DETAILS, SEND_RESET_PASSWORD, GET_ALL_APP_USERS, GET_APP_USER_LAST_MONTH_PROGRESS, REMOVE_APP_USER_DETAILS, SAVE_APP_USER_DETAILS_ALL,
 } from '../ducks/appUsersDuck';
 import {
   GET_APP_CONTENT,
@@ -93,6 +93,7 @@ function* actionWatcher() {
   yield takeLatest(GET_APP_USERS, getAppUsers);
   yield takeLatest(GET_APP_USER_DETAILS, getAppUserDetails);
   yield takeLatest(SAVE_APP_USER_DETAILS, saveAppUserDetails);
+  yield takeLatest(SAVE_APP_USER_DETAILS_ALL, saveAppUserDetailsAll);
   yield takeLatest(GET_APP_CONTENT, getAppContent);
   yield takeLatest(GET_COMMUNITY_DATA, getCommunityData);
   yield takeLatest(GET_APP_CONTENT_ITEM, getAppContentItem);

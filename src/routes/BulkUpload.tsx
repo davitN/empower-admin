@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Container from '../components/shared/Container';
 import Button from '../components/shared/Inputs/Button';
 import COLORS from '../services/colors.service';
-import { resetAppUserDetails } from '../store/ducks/appUsersDuck';
+import { resetAppUserDetails, saveAppUserDetailsAll } from '../store/ducks/appUsersDuck';
 import { RootState } from '../store/configureStore';
 import { getCompanies, resetCompaniesState } from '../store/ducks/companiesDuck';
 import { resetLocationsState, getLocations } from '../store/ducks/locationsDuck';
@@ -14,7 +14,6 @@ import { CompanyItem, CompaniesTypes } from '../types/companies';
 import { GetLocationsData, LocationItem } from '../types/locations';
 import Autocomplete from '../components/shared/Inputs/Autocomplete';
 import useGetData from '../helpers/hooks/useGetDataV2';
-import axiosInstance from '../services/interceptor.service';
 import notificationService from '../services/notification.service';
 
 interface IRow {
@@ -68,18 +67,25 @@ const BulkUpload = () => {
     const formData = new FormData();
     if (selectedFile && selectedLocation) {
       formData.append('file', selectedFile);
-      axiosInstance.post<IRow[]>(`/app_user/bulk_registration/${selectedLocation}`, formData).then((data) => {
-        setLoading(false);
-        if (Array.isArray(data)) {
-          if (data && data.length > 0) {
-            data.forEach((item: IRow) => {
-              notificationService.error(item.message, '', 5000);
-            });
-          } else {
-            notificationService.success('all data uploaded');
-          }
-        }
-      });
+      dispatch(saveAppUserDetailsAll(
+        {
+          selectedLocation,
+          formData,
+        },
+        {
+          error: () => setLoading(false),
+          success: (data: IRow[]) => {
+            setLoading(false);
+            if (data && data.length > 0) {
+              data.forEach((item: IRow) => {
+                notificationService.error(item.message, '', 5000);
+              });
+            } else {
+              notificationService.success('all data uploaded');
+            }
+          },
+        },
+      ));
     }
   };
 

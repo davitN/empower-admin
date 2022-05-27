@@ -13,6 +13,7 @@ export const SET_APP_USER_DETAILS = 'socialize/appUsers/setAppUserDetails';
 export const RESET_APP_USER_DETAILS = 'socialize/appUsers/resetAppUserDetails';
 
 export const SAVE_APP_USER_DETAILS = 'socialize/appUsers/saveAppUserDetails';
+export const SAVE_APP_USER_DETAILS_ALL = 'socialize/appUsers/saveAppUserDetailsAll';
 export const REMOVE_APP_USER_DETAILS = 'socialize/appUsers/removeAppUserDetails';
 export const SEND_RESET_PASSWORD = 'socialize/appUsers/sendResetPassword';
 
@@ -111,6 +112,12 @@ export const resetAppUserDetails = () => ({
 
 export const saveAppUserDetails = (data: SaveAppUserDetails, callbacks?: CallBacks) => ({
   type: SAVE_APP_USER_DETAILS,
+  data,
+  callbacks,
+});
+
+export const saveAppUserDetailsAll = (data: any, callbacks?: CallBacks) => ({
+  type: SAVE_APP_USER_DETAILS_ALL,
   data,
   callbacks,
 });
