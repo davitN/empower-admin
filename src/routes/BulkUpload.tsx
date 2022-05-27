@@ -146,6 +146,7 @@ const BulkUpload = () => {
             customClasses={classNames(classes.button, 'p-py-2 p-px-4')}
             handleClick={handleSave}
             loading={loading}
+            disabled={!selectedLocation || !selectedFile}
           >
             Upload users (csv)
           </Button>
