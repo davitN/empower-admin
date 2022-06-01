@@ -30,7 +30,7 @@ const useGetData = ({
   const params = useRef<any>({
     offset: 0,
     limit: LIMIT,
-    filter: tableId ? {
+    filter: tableId === 'users' ? {
       firstName: '',
       lastName: '',
       email: '',

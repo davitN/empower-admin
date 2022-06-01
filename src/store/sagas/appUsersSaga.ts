@@ -5,12 +5,17 @@ import axiosInstance from '../../services/interceptor.service';
 import {
   setAppUsers, setAppUserDetails, setAllAppUsers, setAppUserLastMonthProgress,
 } from '../ducks/appUsersDuck';
-import { CallBacks, GetDataParams } from '../../types/main';
+import { CallBacks } from '../../types/main';
 import { notifyAction } from '../ducks/mainDuck';
 import {
   GetAppUsersData, GetAppUsersOptions, GetAppUserDetailsOptions, GetAppUserDetailsData, SaveAppUserDetails, LastMonthProgressItems,
 } from '../../types/appUsers';
 import notificationService from '../../services/notification.service';
+
+interface IRow {
+  message: string;
+  row: number;
+}
 
 export function* getAppUsers({ data, callbacks }:{ data: GetAppUsersOptions, callbacks: CallBacks, type:string }) {
   try {
@@ -83,6 +88,17 @@ export function* saveAppUserDetails({ data, callbacks }:{ data: SaveAppUserDetai
     }
     callbacks?.success && callbacks.success();
     notificationService.success(data.userId ? 'User has been successfully saved' : 'User has been successfully added', '', 500);
+  } catch (error: any) {
+    callbacks?.error && callbacks.error();
+    notificationService.error(error.response.data.message, '', 500);
+  }
+}
+
+export function* saveAppUserDetailsAll({ data, callbacks }:{ data: any, callbacks: CallBacks, type: string }) {
+  try {
+    const res: IRow[] = yield axiosInstance.post(`/app_user/bulk_registration/${data.selectedLocation}`, data.formData);
+    callbacks?.success && callbacks.success(res);
+    // notificationService.success(data.userId ? 'User has been successfully saved' : 'User has been successfully added', '', 500);
   } catch (error: any) {
     callbacks?.error && callbacks.error();
     notificationService.error(error.response.data.message, '', 500);

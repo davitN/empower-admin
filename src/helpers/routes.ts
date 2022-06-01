@@ -20,6 +20,7 @@ import CategoryDetails from '../routes/CategoryDetails';
 import AppLibrary from '../routes/AppLibrary';
 import AppLibraryDetails from '../routes/AppLibraryDetails';
 import ForYouDetails from '../routes/ForYouDetails';
+import BulkUpload from '../routes/BulkUpload';
 
 export interface RouteType {
   type: 'nested' | 'default';
@@ -212,6 +213,13 @@ export const routes: RouteType[] = [
     path: 'user-profile',
     pathName: 'userProfile',
     Component: AppUserAccount,
+  },
+  {
+    type: 'default',
+    name: 'Bulk Registration',
+    path: 'bulk-upload',
+    pathName: 'bulk',
+    Component: BulkUpload,
   },
   {
     type: 'default',
