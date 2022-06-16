@@ -7,7 +7,7 @@ export interface AnalyticsTopItem {
 
 export interface AnalyticsData {
   averageSessionLength: number,
-  companyName?: string,
+  displayName?: string,
   checkInCount: number,
   churnRate: number,
   completedGoals: number,

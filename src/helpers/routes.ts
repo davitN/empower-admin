@@ -53,6 +53,10 @@ export const routes: RouteType[] = [
         path: ':companyId',
         Component: Analytics,
       },
+      {
+        path: 'by_location/:locationId',
+        Component: Analytics,
+      },
     ],
   },
   {

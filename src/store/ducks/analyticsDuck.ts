@@ -27,9 +27,10 @@ export const analyticsReducer = (state = initialState, action: AnyAction) => {
   }
 };
 
-export const getAnalytics = (id?: string, callbacks?: CallBacks) => ({
+export const getAnalytics = (companyId?: string, locationId?: string, callbacks?: CallBacks) => ({
   type: GET_ANALYTICS,
-  id,
+  companyId,
+  locationId,
   callbacks,
 });
 
