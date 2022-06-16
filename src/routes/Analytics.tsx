@@ -15,146 +15,151 @@ import { secondsToHms } from '../helpers/utils';
 
 const Analytics = () => {
   const navigate = useNavigate();
-  const { companyId } = useParams();
+  const { companyId, locationId } = useParams();
   const { analytics } = useSelector((state: RootState) => state.analyticsReducer);
-  const analyticsArr: { title: string, val: number | string, desc: string }[] = analytics ? [
-    {
-      title: 'Total Users',
-      val: analytics.totalUsers,
-      desc: 'The total number of App Users that have been added via the admin panel.',
-    },
-    {
-      title: 'Daily Active Users',
-      val: analytics.dailyActiveUsers,
-      desc: 'The number of users who have opened the app in the last 24 hours.',
-    },
-    {
-      title: 'Monthly Active Users',
-      val: analytics.monthlyActiveUsers,
-      desc: 'The number of monthly users who opened the app in the last 30 days.',
-    },
-    {
-      title: ' Monthly Inactive Users',
-      val: analytics.monthlyInactiveUsers,
-      desc: 'The number of users who do not open the app in the last 30 days.',
-    },
-    {
-      title: 'Monthly Retention Rate',
-      val: analytics.monthlyRetentionRate,
-      desc: 'Percentage of users who open the app at least one time in the last 30 days.',
-    },
-    {
-      title: 'Average session length',
-      val: secondsToHms(analytics.averageSessionLength),
-      desc: 'The average amount of time the users spend on the app in a single session.',
-    },
-    {
-      title: 'Stickiness ratio',
-      val: analytics.stickinessRatio,
-      desc: 'The ratio of the number of users who have returned to the app more than one time in the last 30 days.',
-    },
-    {
-      title: 'Power•Up content viewed',
-      val: analytics.powerUpContentViewCount,
-      desc: 'The number of times a piece of Power•Up content from the General Library part of the mobile app was viewed by users.',
-    },
-    {
-      title: 'Power•Down content viewed',
-      val: analytics.powerDownContentViewCount,
-      desc: 'The number of times a piece of Power•Down content from the General Library part of the mobile app was viewed by users.',
-    },
-    {
-      title: 'Wellness content viewed',
-      val: analytics.wellnessContentViewCount,
-      desc: 'The number of times a piece of Wellness content from the General Library part of the mobile app was viewed by users.',
-    },
-    {
-      title: 'Goals set',
-      val: analytics.setGoals,
-      desc: 'The number of Goals set/created by all app users.',
-    },
-    {
-      title: 'Goals completed',
-      val: analytics.completedGoals,
-      desc: 'The number of Goals that have been marked as complete by all app users.',
-    },
-    {
-      title: 'Daily Check-Ins Completed',
-      val: analytics.checkInCount,
-      desc: 'The number of Daily Check-Ins that have been completed by all App Users.',
-    },
-
-  ] : [];
-  const companyAnalytics: { title: string, val: number | string, desc: string }[] | [] = analytics?.companyName ? [
-    {
-      title: 'Team - Kickoff Content Completed',
-      val: analytics.teamKickOffContentViewCount || 0,
-      desc: 'The number of times the Team Kickoff Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only.',
-    },
-    {
-      title: 'Team - Ethos Content Completed',
-      val: analytics.teamEthosContentViewCount || 0,
-      desc: 'The number of times the Team Ethos How To Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only',
-    },
-    {
-      title: 'Team - Wellness Content Completed',
-      val: analytics.teamWellnessContentViewCount || 0,
-      desc: 'The number of times the Team Wellness Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only.',
-    },
-    {
-      title: 'Team - Power•Up Content Completed',
-      val: analytics.teamPowerUpContentViewCount || 0,
-      desc: 'The number of times the Team Power•Up Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only.',
-    },
-    {
-      title: 'Team - Power•Down Content Completed',
-      val: analytics.teamPowerDownContentViewCount || 0,
-      desc: 'he number of times the Team Power•Down Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only.',
-    },
-  ] : [];
-  const topEthosByDimension: { firstTitle: string; title: string, val: string | number }[] = analytics ? [
-    {
-      firstTitle: 'Emotional',
-      title: analytics.topEthosByEmotional.title,
-      val: analytics.topEthosByEmotional.count,
-    },
-    {
-      firstTitle: 'Environmental',
-      title: analytics.topEthosByEnvironmental.title,
-      val: analytics.topEthosByEnvironmental.count,
-    },
-    {
-      firstTitle: 'Mental',
-      title: analytics.topEthosByMental.title,
-      val: analytics.topEthosByMental.count,
-    },
-    {
-      firstTitle: 'Occupational',
-      title: analytics.topEthosByOccupational.title,
-      val: analytics.topEthosByOccupational.count,
-    },
-    {
-      firstTitle: 'Physical',
-      title: analytics.topEthosByPhysical.title,
-      val: analytics.topEthosByPhysical.count,
-    },
-    {
-      firstTitle: 'Social',
-      title: analytics.topEthosBySocial.title,
-      val: analytics.topEthosBySocial.count,
-    },
-    {
-      firstTitle: 'Spiritual',
-      title: analytics.topEthosBySpiritual.title,
-      val: analytics.topEthosBySpiritual.count,
-    },
-  ] : [];
+  const analyticsArr: { title: string; val: number | string; desc: string }[] = analytics
+    ? [
+        {
+          title: 'Total Users',
+          val: analytics.totalUsers,
+          desc: 'The total number of App Users that have been added via the admin panel.',
+        },
+        {
+          title: 'Daily Active Users',
+          val: analytics.dailyActiveUsers,
+          desc: 'The number of users who have opened the app in the last 24 hours.',
+        },
+        {
+          title: 'Monthly Active Users',
+          val: analytics.monthlyActiveUsers,
+          desc: 'The number of monthly users who opened the app in the last 30 days.',
+        },
+        {
+          title: ' Monthly Inactive Users',
+          val: analytics.monthlyInactiveUsers,
+          desc: 'The number of users who do not open the app in the last 30 days.',
+        },
+        {
+          title: 'Monthly Retention Rate',
+          val: analytics.monthlyRetentionRate,
+          desc: 'Percentage of users who open the app at least one time in the last 30 days.',
+        },
+        {
+          title: 'Average session length',
+          val: secondsToHms(analytics.averageSessionLength),
+          desc: 'The average amount of time the users spend on the app in a single session.',
+        },
+        {
+          title: 'Stickiness ratio',
+          val: analytics.stickinessRatio,
+          desc: 'The ratio of the number of users who have returned to the app more than one time in the last 30 days.',
+        },
+        {
+          title: 'Power•Up content viewed',
+          val: analytics.powerUpContentViewCount,
+          desc: 'The number of times a piece of Power•Up content from the General Library part of the mobile app was viewed by users.',
+        },
+        {
+          title: 'Power•Down content viewed',
+          val: analytics.powerDownContentViewCount,
+          desc: 'The number of times a piece of Power•Down content from the General Library part of the mobile app was viewed by users.',
+        },
+        {
+          title: 'Wellness content viewed',
+          val: analytics.wellnessContentViewCount,
+          desc: 'The number of times a piece of Wellness content from the General Library part of the mobile app was viewed by users.',
+        },
+        {
+          title: 'Goals set',
+          val: analytics.setGoals,
+          desc: 'The number of Goals set/created by all app users.',
+        },
+        {
+          title: 'Goals completed',
+          val: analytics.completedGoals,
+          desc: 'The number of Goals that have been marked as complete by all app users.',
+        },
+        {
+          title: 'Daily Check-Ins Completed',
+          val: analytics.checkInCount,
+          desc: 'The number of Daily Check-Ins that have been completed by all App Users.',
+        },
+      ]
+    : [];
+  const companyAnalytics: { title: string; val: number | string; desc: string }[] | [] = analytics?.displayName
+    ? [
+        {
+          title: 'Team - Kickoff Content Completed',
+          val: analytics.teamKickOffContentViewCount || 0,
+          desc: 'The number of times the Team Kickoff Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only.',
+        },
+        {
+          title: 'Team - Ethos Content Completed',
+          val: analytics.teamEthosContentViewCount || 0,
+          desc: 'The number of times the Team Ethos How To Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only',
+        },
+        {
+          title: 'Team - Wellness Content Completed',
+          val: analytics.teamWellnessContentViewCount || 0,
+          desc: 'The number of times the Team Wellness Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only.',
+        },
+        {
+          title: 'Team - Power•Up Content Completed',
+          val: analytics.teamPowerUpContentViewCount || 0,
+          desc: 'The number of times the Team Power•Up Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only.',
+        },
+        {
+          title: 'Team - Power•Down Content Completed',
+          val: analytics.teamPowerDownContentViewCount || 0,
+          desc: 'he number of times the Team Power•Down Content (which can be viewed in the app on both the "For You"/Home screen and the Team screen) is tapped and viewed by a user from this company only.',
+        },
+      ]
+    : [];
+  const topEthosByDimension: { firstTitle: string; title: string; val: string | number }[] = analytics
+    ? [
+        {
+          firstTitle: 'Emotional',
+          title: analytics.topEthosByEmotional.title,
+          val: analytics.topEthosByEmotional.count,
+        },
+        {
+          firstTitle: 'Environmental',
+          title: analytics.topEthosByEnvironmental.title,
+          val: analytics.topEthosByEnvironmental.count,
+        },
+        {
+          firstTitle: 'Mental',
+          title: analytics.topEthosByMental.title,
+          val: analytics.topEthosByMental.count,
+        },
+        {
+          firstTitle: 'Occupational',
+          title: analytics.topEthosByOccupational.title,
+          val: analytics.topEthosByOccupational.count,
+        },
+        {
+          firstTitle: 'Physical',
+          title: analytics.topEthosByPhysical.title,
+          val: analytics.topEthosByPhysical.count,
+        },
+        {
+          firstTitle: 'Social',
+          title: analytics.topEthosBySocial.title,
+          val: analytics.topEthosBySocial.count,
+        },
+        {
+          firstTitle: 'Spiritual',
+          title: analytics.topEthosBySpiritual.title,
+          val: analytics.topEthosBySpiritual.count,
+        },
+      ]
+    : [];
   const classes = useStyles();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAnalytics(companyId || '', { error: () => navigate('/analytics') }));
-  }, [companyId]);
+    dispatch(getAnalytics(companyId, locationId, { error: () => navigate('/analytics') }));
+  }, [companyId, locationId]);
 
   return (
     <Container>
@@ -164,40 +169,44 @@ const Analytics = () => {
         BEGINS WITH
         <span>YOU</span>
       </h1>
-      <Title title={`${analytics?.companyName || ''} ANALYTICS`} fontSize="text-2xl" costumeStyles="p-mt-6" />
+      <Title title={`${analytics?.displayName || ''} ANALYTICS`} fontSize="text-2xl" costumeStyles="p-mt-6" />
       <div className={classNames(classes.boxes, 'p-pt-5 p-pb-6')}>
         {analytics
-          ? [...analyticsArr, ...companyAnalytics].map((el) => <AnalyticBox title={el.title} value={el.val} desc={el.desc} />)
-          : new Array(10).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="10rem" />)}
+          ? [...analyticsArr, ...companyAnalytics].map((el) => (
+              <AnalyticBox title={el.title} value={el.val} desc={el.desc} />
+            ))
+          : new Array(10)
+              .fill(0)
+              .map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="10rem" />)}
       </div>
       <div className={classes.wrapper}>
         <div>
           <Title title="Top 7 Ethos Cards" costumeStyles="p-mb-5" />
-          {
-             analytics?.top7ChoosenEthosCard.map((item) => (
-               <ProgressBar
-                 firstTitle=""
-                 secondTitle={`${item.title}-${item.count}`}
-                 customStyles="p-mb-3"
-                 key={item.title}
-               />
-             ))
-            || new Array(7).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" className="p-mb-3" />)
-          }
+          {analytics?.top7ChoosenEthosCard.map((item) => (
+            <ProgressBar
+              firstTitle=""
+              secondTitle={`${item.title}-${item.count}`}
+              customStyles="p-mb-3"
+              key={item.title}
+            />
+          )) ||
+            new Array(7)
+              .fill(0)
+              .map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" className="p-mb-3" />)}
         </div>
         <div>
           <Title title="Top Ethos by Dimension" costumeStyles="p-mb-5" />
-          {
-             topEthosByDimension?.map((item) => (
-               <ProgressBar
-                 firstTitle={`${item.firstTitle}  `}
-                 secondTitle={`${item.title} - ${item.val}`}
-                 customStyles="p-mb-3"
-                 key={item.title}
-               />
-             ))
-           || new Array(7).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" className="p-mb-3" />)
-          }
+          {topEthosByDimension?.map((item) => (
+            <ProgressBar
+              firstTitle={`${item.firstTitle}  `}
+              secondTitle={`${item.title} - ${item.val}`}
+              customStyles="p-mb-3"
+              key={item.title}
+            />
+          )) ||
+            new Array(7)
+              .fill(0)
+              .map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" className="p-mb-3" />)}
         </div>
       </div>
     </Container>

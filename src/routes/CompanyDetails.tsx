@@ -10,7 +10,11 @@ import RadioButtonComponent from '../components/shared/Inputs/RadioButton';
 import Label from '../components/shared/Inputs/Label';
 import {
   getCompanyAdmins,
-  getCompanyDetails, removeCompanyData, resetCompanyAdminsState, resetCompanyDetailsState, saveCompanyData,
+  getCompanyDetails,
+  removeCompanyData,
+  resetCompanyAdminsState,
+  resetCompanyDetailsState,
+  saveCompanyData,
 } from '../store/ducks/companiesDuck';
 import { RootState } from '../store/configureStore';
 import { CompanyItem } from '../types/companies';
@@ -25,19 +29,19 @@ import { AppAdminsData } from '../types/appAdmin';
 import Dialog from '../components/shared/Dialog';
 
 interface InputsTypes {
-  name: string,
-  paymentType: string,
-  price: number | null,
-  showCommunitySection: boolean,
-  code: null | string,
-  width?: number,
-  height?: number
+  name: string;
+  paymentType: string;
+  price: number | null;
+  showCommunitySection: boolean;
+  code: null | string;
+  width?: number;
+  height?: number;
 }
 
 interface ImgTypes {
-  newImg: any,
-  imgPrev: string | null,
-  thumbnail?: any
+  newImg: any;
+  imgPrev: string | null;
+  thumbnail?: any;
 }
 
 const imgInitialState = {
@@ -63,7 +67,9 @@ const CompanyDetails = () => {
   const { locations } = useSelector((state: RootState) => state.locationsReducer);
   const [showFilteredAdmins, setShowFilteredAdmins] = useState(false);
   const {
-    searchValue: locationsSearchValue, handleSearch: locationsHandleSearch, handlePageChange: locationsHandlePageChange,
+    searchValue: locationsSearchValue,
+    handleSearch: locationsHandleSearch,
+    handlePageChange: locationsHandlePageChange,
   } = useGetData({
     getDataAction: isNewCompany ? undefined : getLocations,
     resetState: isNewCompany ? undefined : resetLocationsState,
@@ -74,7 +80,9 @@ const CompanyDetails = () => {
   });
 
   const {
-    searchValue: adminsSearchValue, handleSearch: adminsHandleSearch, handlePageChange: adminsHandlePageChange,
+    searchValue: adminsSearchValue,
+    handleSearch: adminsHandleSearch,
+    handlePageChange: adminsHandlePageChange,
   } = useGetData({
     getDataAction: isNewCompany ? undefined : getCompanyAdmins,
     resetState: isNewCompany ? undefined : resetCompanyAdminsState,
@@ -84,7 +92,9 @@ const CompanyDetails = () => {
       companyId,
     },
   });
-  const { companyDetails, admins } : { companyDetails: CompanyItem, admins: AppAdminsData } = useSelector((state: RootState) => state.companiesReducer);
+  const { companyDetails, admins }: { companyDetails: CompanyItem; admins: AppAdminsData } = useSelector(
+    (state: RootState) => state.companiesReducer
+  );
   const [img, setImg] = useState<ImgTypes>(imgInitialState);
   const [values, setValues] = useState<InputsTypes>({
     name: '',
@@ -98,12 +108,7 @@ const CompanyDetails = () => {
   const [saving, setSaving] = useState<boolean>(false);
   const paidTill = companyDetails && companyDetails?.paidTill;
   const handleImgUpload = async (e: any) => {
-    const {
-      img: newImg,
-      imgPrev,
-      imgDimension,
-      thumbnail,
-    } = await readImgAsync(e);
+    const { img: newImg, imgPrev, imgDimension, thumbnail } = await readImgAsync(e);
 
     setImg({
       newImg,
@@ -116,34 +121,42 @@ const CompanyDetails = () => {
 
   const handleSave = () => {
     setSaving(true);
-    dispatch(saveCompanyData({
-      logo: img.newImg,
-      thumbnail: img.thumbnail,
-      data: values,
-      companyId: isNewCompany ? null : companyId,
-    }, {
-      success: () => {
-        setSaving(false);
-        navigate('/companies/');
-      },
-      error: () => setSaving(false),
-    }));
+    dispatch(
+      saveCompanyData(
+        {
+          logo: img.newImg,
+          thumbnail: img.thumbnail,
+          data: values,
+          companyId: isNewCompany ? null : companyId,
+        },
+        {
+          success: () => {
+            setSaving(false);
+            navigate('/companies/');
+          },
+          error: () => setSaving(false),
+        }
+      )
+    );
   };
 
-  const validateInputs = () : boolean => values.name.length < 1 || (values.paymentType === paymentType.all && !values.price) || !img.imgPrev;
+  const validateInputs = (): boolean =>
+    values.name.length < 1 || (values.paymentType === paymentType.all && !values.price) || !img.imgPrev;
 
   const domainName = window.location.href.replace(window.location.pathname, '');
   const paymentURL = `${domainName}/payments/?companyId=${companyId}&companyName=${values.name}&paidTill=${paidTill}`;
 
   const handleRemove = () => {
     setRemoving(true);
-    dispatch(removeCompanyData(companyId || '', {
-      success: () => {
-        setRemoving(false);
-        navigate('/companies');
-      },
-      error: () => setRemoving(false),
-    }));
+    dispatch(
+      removeCompanyData(companyId || '', {
+        success: () => {
+          setRemoving(false);
+          navigate('/companies');
+        },
+        error: () => setRemoving(false),
+      })
+    );
   };
 
   useEffect(() => {
@@ -175,7 +188,12 @@ const CompanyDetails = () => {
   useEffect(() => () => dispatch(resetCompanyDetailsState()), []);
 
   return (
-    <Container sectionTitle={isNewCompany ? 'NEW COMPANY' : 'COMPANY INFORMATION'} idText="Company ID" itemId={companyId} goBack={() => navigate(prevLocation)}>
+    <Container
+      sectionTitle={isNewCompany ? 'NEW COMPANY' : 'COMPANY INFORMATION'}
+      idText="Company ID"
+      itemId={companyId}
+      goBack={() => navigate(prevLocation)}
+    >
       <Dialog
         visible={dialogStep === 1}
         setVisible={() => setDialogStep(0)}
@@ -194,7 +212,9 @@ const CompanyDetails = () => {
         <div className={classNames(classes.inputs)}>
           {!isNewCompany && !companyDetails ? (
             <>
-              {new Array(8).fill(0).map((_, index) => <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" />)}
+              {new Array(8).fill(0).map((_, index) => (
+                <Skeleton key={`${index + 1}loader`} width="100%" height="2rem" />
+              ))}
             </>
           ) : (
             <>
@@ -231,16 +251,16 @@ const CompanyDetails = () => {
                 type="number"
               />
               {!isNewCompany && values.paymentType === paymentType.all && (
-              <TextInput
-                value={paymentURL}
-                handleClick={(e) => {
-                  notificationService.info('Link Copied', '', 1000);
-                  navigator.clipboard.writeText(e.target.value);
-                }}
-                label="Payment Page"
-                placeholder="Enter payment page..."
-                readOnly
-              />
+                <TextInput
+                  value={paymentURL}
+                  handleClick={(e) => {
+                    notificationService.info('Link Copied', '', 1000);
+                    navigator.clipboard.writeText(e.target.value);
+                  }}
+                  label="Payment Page"
+                  placeholder="Enter payment page..."
+                  readOnly
+                />
               )}
               <div className="p-d-flex p-flex-column">
                 <Label label="Community Section" required costumeStyles="p-mb-3" />
@@ -306,11 +326,13 @@ const CompanyDetails = () => {
             searchValue={locationsSearchValue || ''}
             handleSearch={(val) => locationsHandleSearch(val)}
             data={locations}
-            header={locationsHeader}
+            header={locationsHeader(navigate)}
             tableTitle="LOCATIONS"
             handleEdit={({ _id }) => navigate(`/locations/${_id}`)}
             handlePageChange={(val) => locationsHandlePageChange(val)}
-            handleAdd={() => navigate(`/locations/new/?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)}
+            handleAdd={() =>
+              navigate(`/locations/new/?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)
+            }
             buttonText="+ Add location"
             costumeClasses={classes.tablePadding}
           />
@@ -328,13 +350,19 @@ const CompanyDetails = () => {
               adminsHandlePageChange(val);
               !showFilteredAdmins && setShowFilteredAdmins(true);
             }}
-            handleAdd={() => navigate(`/app-admins/CompanyAdmin/new?companyId=${companyId}&companyName=${companyDetails.name.replace(' ', '_')}`)}
+            handleAdd={() =>
+              navigate(
+                `/app-admins/CompanyAdmin/new?companyId=${companyId}&companyName=${companyDetails.name.replace(
+                  ' ',
+                  '_'
+                )}`
+              )
+            }
             buttonText="+ Add admin"
             costumeClasses={classes.tablePadding}
           />
         </>
       )}
-
     </Container>
   );
 };
@@ -392,14 +420,22 @@ const useStyles = createUseStyles({
   },
 });
 
-const locationsHeader = [
+const locationsHeader = (navigate: any) => [
   {
     name: 'LOCATION NAME',
     field: 'name',
   },
   {
     name: 'LOCATION ID',
-    field: 'company',
+    field: '_id',
+  },
+  {
+    name: 'Analytics',
+    body: ({ _id }: { _id: string }) => (
+      <div style={{ cursor: 'pointer' }} onClick={() => navigate(`/analytics/by_location/${_id}`)}>
+        View analytics
+      </div>
+    ),
   },
 ];
 
