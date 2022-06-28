@@ -8,9 +8,17 @@ import { CallBacks } from '../../types/main';
 import { setAnalytics } from '../ducks/analyticsDuck';
 import { notifyAction } from '../ducks/mainDuck';
 
-export function* getAnalytics({ id, callbacks }:{ id?: string, callbacks: CallBacks, type:string }) {
+export function* getAnalytics({ companyId, locationId, callbacks }:{ companyId: string, locationId:string, callbacks: CallBacks, type:string }) {
   try {
-    const res: AnalyticsData = yield axiosInstance.get(`/report/get_analytics/${id || ''}`);
+    let customEndpoint = '/report/get_analytics';
+
+    if(companyId) {
+      customEndpoint = `/report/get_analytics_by_company/${companyId}`;
+    } else if(locationId) {
+      customEndpoint = `/report/get_analytics_by_location/${locationId}`;
+    }
+
+    const res: AnalyticsData = yield axiosInstance.get(customEndpoint);
     yield put(setAnalytics(res));
     callbacks?.success && callbacks.success();
   } catch (error: any) {
